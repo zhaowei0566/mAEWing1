@@ -6,7 +6,7 @@
 #define LOG_ARRAY_SIZE 90000 ///< Number of data points in the logging array. 50 Hz * 60 sec/min * 30 minutes = 90000
 
 #define NUM_DOUBLE_VARS 6	///< Number of variables that will be logged as doubles
-#define NUM_FLOAT_VARS 53	///< Number of variables that will be logged as floats
+#define NUM_FLOAT_VARS 49	///< Number of variables that will be logged as floats
 #define NUM_INT_VARS 2		///< Number of variables that will be logged as ints
 #define NUM_SHORT_VARS 7	///< Number of variables that will be logged as shorts
 

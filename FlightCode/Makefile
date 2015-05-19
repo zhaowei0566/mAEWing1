@@ -21,8 +21,8 @@ GUIDANCE = guidance/empty_guidance.c
 
 ##### NAVIGATION #####
 # Point to the desired navigation code here
-#NAVIGATION = navigation/micronav_ahrs.c
-NAVIGATION = navigation/EKF_15state_quat.c
+NAVIGATION = navigation/micronav_ahrs.c
+#NAVIGATION = navigation/EKF_15state_quat.c
 
 ##### MISSION MANAGER #####
 MISSION = mission/pilot_excite_switch.c
@@ -61,7 +61,7 @@ endif
 ifeq ($(strip $(AIRCRAFT)),FENRIR)
 AIRCRAFT_CONFIG = aircraft/fenrir_config.h
 DATALOG_CONFIG = datalog/fenrir_datalog.h
-SENSORS = sensors/AirData/AMS_pressure.c sensors/GPS/gps_crescent.c sensors/IMU/IMU_iSensor.c sensors/PWM/ATMEGA328_PWM.c sensors/GPIO/gpio.c 
+SENSORS = sensors/AirData/AMS_pressure.c sensors/GPS/gps_oemstar.c sensors/IMU/IMU_iSensor.c sensors/PWM/ATMEGA328_PWM.c sensors/GPIO/gpio.c 
 ACTUATORS = actuators/actuator_PWM.c
 endif
 
