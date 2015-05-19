@@ -36,7 +36,7 @@ static double ail_input(double da_in);
 
 #ifdef AIRCRAFT_FENRIR
 	static double roll_gain  = 0;  // gain for roll damper
-	static double pitch_gain = -0.7;  // gain for pitch damper
+	static double pitch_gain = -0.2;  // gain for pitch damper
 #endif
 
 /// *****************************************************************************************
