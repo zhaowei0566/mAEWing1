@@ -45,12 +45,19 @@
 
 // MPC5200 PWM output command calibration parameters
 #define PWMOUT_DTHR_CAL {1382,3514} ///< linear calibration for throttle, pwm 1.292ms (motor off) to 1.800ms (100% pwr), from ESC data. Note motor on value is 1.307ms Register values from MPC Servo Calibration.xls
-#define PWMOUT_DE_CAL  	{3187.48135330877,         -440.032738984808,           3563.2530032122,          4152.66719476349} ///< cubic calibration for elevator
-#define PWMOUT_DA_CAL {-3949.94314376911,          -1612.4535310541,         -3617.18883292111,          4148.76052793776} ///< cubic calibration for aileron
-#define PWMOUT_L1_CAL   {-4916.88439646273,         -898.131519137911,          -3786.1540992213,          4160.03587333384} ///< cubic calibration for L1
-#define PWMOUT_R1_CAL {5818.23395090899,          1853.76128543605,          4481.12563741373,          4143.81674527199} ///< cubic calibration for right R1
-#define PWMOUT_L4_CAL {-4233.27399934203,         -73.8877080196649,         -4389.15537428131,          4151.68672167028} ///< cubic calibration for left L4
-#define PWMOUT_R4_CAL {3853.56546973834,          1980.29663900381,          4299.82908236724,          4126.44944122779} ///< cubic calibration for right R4
+//#define PWMOUT_DE_CAL  	{3187.48135330877,         -440.032738984808,           3563.2530032122,          4152.66719476349} ///< cubic calibration for elevator
+//#define PWMOUT_DA_CAL {-3949.94314376911,          -1612.4535310541,         -3617.18883292111,          4148.76052793776} ///< cubic calibration for aileron
+//#define PWMOUT_L1_CAL   {-4916.88439646273,         -898.131519137911,          -3786.1540992213,          4160.03587333384} ///< cubic calibration for L1
+//#define PWMOUT_R1_CAL {5818.23395090899,          1853.76128543605,          4481.12563741373,          4143.81674527199} ///< cubic calibration for right R1
+//#define PWMOUT_L4_CAL {-4233.27399934203,         -73.8877080196649,         -4389.15537428131,          4151.68672167028} ///< cubic calibration for left L4
+//#define PWMOUT_R4_CAL {3853.56546973834,          1980.29663900381,          4299.82908236724,          4126.44944122779} ///< cubic calibration for right R4
+
+#define PWMOUT_DE_CAL  	{1911.32283751203,          1147.71588601632,           3774.0739169425,          4141.33301264713} ///< cubic calibration for elevator
+#define PWMOUT_DA_CAL {-3788.24386190134,         -1732.59543436438,         -3667.16090812048,          4152.75520343179} ///< cubic calibration for aileron
+#define PWMOUT_L1_CAL   {5940.25534751177,         -43.7236873668368,          4443.09325030927,          4152.60424812884} ///< cubic calibration for L1
+#define PWMOUT_R1_CAL {-10849.3455485626,          2988.07225069245,         -4666.40932628751,           4125.0996053587} ///< cubic calibration for right R1
+#define PWMOUT_L4_CAL {-4358.13693715785,         -661.830996921641,          -4399.3232061363,          4044.49546233805} ///< cubic calibration for left L4
+#define PWMOUT_R4_CAL {4514.22769175101,          1815.87623367166,          4524.67612685886,          4122.85412269983} ///< cubic calibration for right R4
 
 // Pilot inceptor channels
 #define THR_INCP_CH		1 ///<  input channel for pilot throttle inceptor

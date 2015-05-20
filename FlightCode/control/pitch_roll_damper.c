@@ -48,13 +48,14 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	double q     	  = sensorData_ptr->imuData_ptr->q; // Pitch rate
 	double pitch_incp = sensorData_ptr->inceptorData_ptr->pitch;
 	double roll_incp  = sensorData_ptr->inceptorData_ptr->roll;
+	double thr_incp  = sensorData_ptr->inceptorData_ptr->throttle;
 	
 	controlData_ptr->pitch_cmd_pilot = elev_input(pitch_incp);
 	controlData_ptr->pitch_cmd_damper = pitch_damper(q);
 	controlData_ptr->roll_cmd_pilot = ail_input(roll_incp);
 	controlData_ptr->roll_cmd_damper = roll_damper(p);
 	
-	controlData_ptr->dthr = 0; 		// throttle [ND]
+	controlData_ptr->dthr = thr_incp; 		// throttle [ND]
     controlData_ptr->de = controlData_ptr->pitch_cmd_pilot + controlData_ptr->pitch_cmd_damper;		// Elevator deflection [rad]
 	controlData_ptr->da = controlData_ptr->roll_cmd_pilot + controlData_ptr->roll_cmd_damper; 		// Aileron deflection [rad]
 	controlData_ptr->l1 = 0;		// L1 [rad]

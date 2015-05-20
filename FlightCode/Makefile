@@ -21,8 +21,8 @@ GUIDANCE = guidance/empty_guidance.c
 
 ##### NAVIGATION #####
 # Point to the desired navigation code here
-NAVIGATION = navigation/micronav_ahrs.c
-#NAVIGATION = navigation/EKF_15state_quat.c
+#NAVIGATION = navigation/micronav_ahrs.c
+NAVIGATION = navigation/EKF_15state_quat.c
 
 ##### MISSION MANAGER #####
 MISSION = mission/pilot_excite_switch.c
