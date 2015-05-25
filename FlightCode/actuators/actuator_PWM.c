@@ -81,7 +81,7 @@ extern void init_actuators(){
 extern void set_actuators(struct control *controlData_ptr) {
 	
 	// Enforce surface limits and apply calibration
-	dthr_cnts = controlData_ptr->dthr;//polyval(dthr_cal, saturation(controlData_ptr->dthr,THROTTLE_MIN,THROTTLE_MAX),dthr_ord);
+	dthr_cnts = polyval(dthr_cal, saturation(controlData_ptr->dthr,THROTTLE_MIN,THROTTLE_MAX),dthr_ord);
 	de_cnts   = polyval(de_cal, saturation(controlData_ptr->de,ELEVATOR_MIN,ELEVATOR_MAX),de_ord);
 	da_cnts = polyval(da_cal, saturation(controlData_ptr->da,AILERON_MIN,AILERON_MAX),da_ord);
 	l1_cnts   = polyval(l1_cal, saturation(controlData_ptr->l1,L1_MIN,L1_MAX),l1_ord);

@@ -142,7 +142,8 @@ void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct 
 	read_pwm(&pwm_signals[0]);
 
 	// Apply calibration equations
-	inceptorData_ptr->throttle = 	((double)pwm_signals[THR_INCP_CH] - 2253.55)/1594.98731343284*(5440-2720) + 2720;
+	//inceptorData_ptr->throttle = 	((double)pwm_signals[THR_INCP_CH] - 2253.55)/1594.98731343284*(5440-2720) + 2720;
+	inceptorData_ptr->throttle = 	polyval(incp_thr_cal, (double)pwm_signals[THR_INCP_CH]/PWMIN_SCALING,incp_thr_ord);
 	inceptorData_ptr->pitch = 	polyval(incp_pitch_cal, (double)pwm_signals[PITCH_INCP_CH]/PWMIN_SCALING,incp_pitch_ord);
 	inceptorData_ptr->yaw = 	polyval(incp_yaw_cal, (double)pwm_signals[YAW_INCP_CH]/PWMIN_SCALING,incp_yaw_ord);
 	inceptorData_ptr->roll = 	polyval(incp_roll_cal, (double)pwm_signals[ROLL_INCP_CH]/PWMIN_SCALING,incp_roll_ord);
