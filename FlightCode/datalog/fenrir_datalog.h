@@ -6,7 +6,7 @@
 #define LOG_ARRAY_SIZE 90000 ///< Number of data points in the logging array. 50 Hz * 60 sec/min * 30 minutes = 90000
 
 #define NUM_DOUBLE_VARS 6	///< Number of variables that will be logged as doubles
-#define NUM_FLOAT_VARS 49	///< Number of variables that will be logged as floats
+#define NUM_FLOAT_VARS 54	///< Number of variables that will be logged as floats
 #define NUM_INT_VARS 2		///< Number of variables that will be logged as ints
 #define NUM_SHORT_VARS 7	///< Number of variables that will be logged as shorts
 
@@ -42,7 +42,9 @@ char* saveAsFloatNames[NUM_FLOAT_VARS] = {
 			"de", "da", "l1", "r1",
 			"l4", "r4", "dthr",
 			"pitch_cmd_pilot","pitch_cmd_damper","pitch_cmd_excite",
-			"roll_cmd_pilot","roll_cmd_damper","roll_cmd_excite"};
+			"roll_cmd_pilot","roll_cmd_damper","roll_cmd_excite",
+			"phi_cmd","theta_cmd","ias_cmd","h_cmd",
+			"init_alt"};
 								
 /// double pointer array to variables that will be saved as floats
 double* saveAsFloatPointers[NUM_FLOAT_VARS] = {
@@ -64,7 +66,9 @@ double* saveAsFloatPointers[NUM_FLOAT_VARS] = {
 			&controlData.de, &controlData.da, &controlData.l1, &controlData.r1, 
 			&controlData.l4, &controlData.r4, &controlData.dthr,
 			&controlData.pitch_cmd_pilot, &controlData.pitch_cmd_damper, &controlData.pitch_cmd_excite,
-			&controlData.roll_cmd_pilot, &controlData.roll_cmd_damper, &controlData.roll_cmd_excite};
+			&controlData.roll_cmd_pilot, &controlData.roll_cmd_damper, &controlData.roll_cmd_excite,
+			&controlData.phi_cmd, &controlData.theta_cmd, &controlData.ias_cmd, &controlData.h_cmd,
+			&controlData.init_alt};
 
 /// char array of variable names for ints
 char* saveAsIntNames[NUM_INT_VARS] = {"imuStatus","gpsStatus"};

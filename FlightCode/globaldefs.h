@@ -147,6 +147,11 @@ struct control {
 	double roll_cmd_pilot;
 	double roll_cmd_damper;
 	double roll_cmd_excite;
+	double phi_cmd;
+	double theta_cmd;
+	double ias_cmd;
+	double init_alt;
+	double h_cmd;
 };
 
 /// Navigation Filter Data Structure
