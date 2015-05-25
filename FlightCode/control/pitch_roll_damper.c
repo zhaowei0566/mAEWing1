@@ -55,9 +55,9 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	controlData_ptr->roll_cmd_pilot = ail_input(roll_incp);
 	controlData_ptr->roll_cmd_damper = roll_damper(p);
 	
-	controlData_ptr->dthr = thr_incp; 		// throttle [ND]
-    controlData_ptr->de = controlData_ptr->pitch_cmd_pilot + controlData_ptr->pitch_cmd_damper;		// Elevator deflection [rad]
-	controlData_ptr->da = controlData_ptr->roll_cmd_pilot + controlData_ptr->roll_cmd_damper; 		// Aileron deflection [rad]
+	controlData_ptr->dthr = thr_incp - THROTTLE_TRIM; 		// throttle [ND]
+    controlData_ptr->de = controlData_ptr->pitch_cmd_pilot + controlData_ptr->pitch_cmd_damper - PITCH_SURF_TRIM;		// Elevator deflection [rad]
+	controlData_ptr->da = controlData_ptr->roll_cmd_pilot + controlData_ptr->roll_cmd_damper - ROLL_SURF_TRIM; 		// Aileron deflection [rad]
 	controlData_ptr->l1 = 0;		// L1 [rad]
     controlData_ptr->r1 = 0; 		// R1 [rad]
 	controlData_ptr->l4 = controlData_ptr->pitch_cmd_pilot + controlData_ptr->roll_cmd_pilot; 		// L4 [rad]

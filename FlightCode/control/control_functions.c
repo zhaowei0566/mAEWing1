@@ -23,5 +23,5 @@ extern void add_trim_bias(struct control * controlData_ptr){
 	// Bias controller commands with approximate trim values (set in aircraft/XXX_config.h)				
 	controlData_ptr->dthr += THROTTLE_TRIM;    // throttle
 	controlData_ptr->de   += PITCH_SURF_TRIM;  // elevator
-	controlData_ptr->da   -= ROLL_SURF_TRIM;   // aileron
+	controlData_ptr->da   += ROLL_SURF_TRIM;   // aileron
 }
