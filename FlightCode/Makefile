@@ -17,7 +17,8 @@ AIRCRAFT = FENRIR
 ##### GUIDANCE LAW #####
 # Point to the desired guidance code here
 GUIDANCE = guidance/empty_guidance.c
-#GUIDANCE = guidance/waypoint_guidance.c
+#GUIDANCE = guidance/straight_level.c
+#GUIDANCE = guidance/doublet_phi_theta.c
 
 ##### NAVIGATION #####
 # Point to the desired navigation code here
@@ -30,6 +31,8 @@ MISSION = mission/pilot_excite_switch.c
 ##### FLIGHT CONTROL LAW #####
 # Point to the desired flight control law code here
 CONTROL =  control/pitch_roll_damper.c
+#CONTROL =  control/attitude_tracker.c
+#CONTROL =  control/alt_speed_tracker.c
 
 ##### MATLAB RTW AUTOCODE #####
 # Make sure #include "simstruc.h" and #include "fixedpoint.h" are commented out in the <modelname>.h file
