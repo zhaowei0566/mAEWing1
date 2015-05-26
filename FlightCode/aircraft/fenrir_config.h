@@ -45,7 +45,7 @@
 #define PWMOUT_R4_CH	7 ///<  PWM output channel for R4 Flutter Suppression Surface
 
 // MPC5200 PWM output command calibration parameters
-#define PWMOUT_DTHR_CAL {1382,3514} ///< linear calibration for throttle, pwm 1.292ms (motor off) to 1.800ms (100% pwr), from ESC data. Note motor on value is 1.307ms Register values from MPC Servo Calibration.xls
+#define PWMOUT_DTHR_CAL {2720, 2720} ///< linear calibration for throttle, pwm 1.292ms (motor off) to 1.800ms (100% pwr), from ESC data. Note motor on value is 1.307ms Register values from MPC Servo Calibration.xls
 #define PWMOUT_DE_CAL  	{1095.64213101247,          2899.78934330606,          4140.25244356822} ///< calibration for elevator
 #define PWMOUT_DA_CAL   {-1347.85533818094,         -2977.58276132794,         4138.71988951024} ///< calibration for aileron
 #define PWMOUT_L1_CAL   {5940.25534751177,         -43.7236873668368,          4443.09325030927,          4152.60424812884} ///< cubic calibration for L1
@@ -61,7 +61,7 @@
 
 // Pilot inceptor calibration parameters
 #define PWMIN_SCALING 10000 	///< scaling parameter to apply to PWM readings prior to applying calibration
-#define THR_INCP_CAL	{0.00098716683119, -2.527147087857848}	///<  linear calibration for pilot throttle inceptor
+#define THR_INCP_CAL	{6.27781267245976, -1.41309798036129}	///<  linear calibration for pilot throttle inceptor
 #define PITCH_INCP_CAL	{-111.529886096001,	96.8294668116000,	-21.5238268564487,	0.763949002413993}	///<  linear calibration for pilot pitch inceptor
 #define YAW_INCP_CAL	{84.7756193670826,	-76.8786260771467,	17.1754736690082,	-0.535104948804940}	///<  linear calibration for pilot yaw inceptor
 #define ROLL_INCP_CAL	{-42.3502385103704,	40.4850850262976,	-6.72738032331522,	-0.496271142735041}	///<  linear calibration for pilot roll inceptor
