@@ -84,15 +84,15 @@ static double altitude_control(double alt_ref, double altitude, double pitch, do
 	//eliminate wind-up on theta integral
 	if      (de >= ELEVATOR_MAX-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 0; de = ELEVATOR_MAX-PITCH_SURF_TRIM;}  //stop integrating
 	else if (de >= ELEVATOR_MAX-PITCH_SURF_TRIM && e[1] > 0) {anti_windup[1] = 1; de = ELEVATOR_MAX-PITCH_SURF_TRIM;}
-	else if (de <= -ELEVATOR_MAX-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 1; de = -ELEVATOR_MAX-PITCH_SURF_TRIM;}
-	else if (de <= -ELEVATOR_MAX-PITCH_SURF_TRIM && e[1] > 0) {anti_windup[1] = 0; de = -ELEVATOR_MAX-PITCH_SURF_TRIM;}  //stop integrating
+	else if (de <= ELEVATOR_MIN-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 1; de = ELEVATOR_MIN-PITCH_SURF_TRIM;}
+	else if (de <= ELEVATOR_MIN-PITCH_SURF_TRIM && e[1] > 0) {anti_windup[1] = 0; de = ELEVATOR_MIN-PITCH_SURF_TRIM;}  //stop integrating
 	else {anti_windup[1] = 1;}
 
 	//eliminate wind-up on altitude integral
 	if      (de >= ELEVATOR_MAX-PITCH_SURF_TRIM && e[2] < 0) {anti_windup[2] = 1;}
 	else if (de >= ELEVATOR_MAX-PITCH_SURF_TRIM && e[2] > 0) {anti_windup[2] = 0;}  //stop integrating
-	else if (de <= -ELEVATOR_MAX-PITCH_SURF_TRIM && e[2] < 0) {anti_windup[2] = 0;}  //stop integrating
-	else if (de <= -ELEVATOR_MAX-PITCH_SURF_TRIM && e[2] > 0) {anti_windup[2] = 1;}
+	else if (de <= ELEVATOR_MIN-PITCH_SURF_TRIM && e[2] < 0) {anti_windup[2] = 0;}  //stop integrating
+	else if (de <= ELEVATOR_MIN-PITCH_SURF_TRIM && e[2] > 0) {anti_windup[2] = 1;}
 	else {anti_windup[2] = 1;}
 
 	return de;  //rad
@@ -131,8 +131,8 @@ static double roll_control (double phi_ref, double roll_angle, double rollrate, 
 	//eliminate windup
 	if      (da >= AILERON_MAX-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 1; da = AILERON_MAX-ROLL_SURF_TRIM;}
 	else if (da >= AILERON_MAX-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 0; da = AILERON_MAX-ROLL_SURF_TRIM;}  //stop integrating
-	else if (da <= -AILERON_MAX-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 0; da = -AILERON_MAX-ROLL_SURF_TRIM;}  //stop integrating
-	else if (da <= -AILERON_MAX-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 1; da = -AILERON_MAX-ROLL_SURF_TRIM;}
+	else if (da <= AILERON_MIN-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 0; da = AILERON_MIN-ROLL_SURF_TRIM;}  //stop integrating
+	else if (da <= AILERON_MIN-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 1; da = AILERON_MIN-ROLL_SURF_TRIM;}
 	else {anti_windup[0] = 1;}
 
     return da;
