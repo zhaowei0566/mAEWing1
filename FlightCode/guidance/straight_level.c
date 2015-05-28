@@ -22,5 +22,6 @@ extern void get_guidance(double time, struct sensordata *sensorData_ptr, struct 
 		controlData_ptr->phi_cmd = 0; 
 		controlData_ptr->theta_cmd = 0;
 		controlData_ptr->ias_cmd = 23;
+		controlData_ptr->h_cmd = 0;
 	}
 
