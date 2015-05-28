@@ -21,8 +21,9 @@
 
 extern void get_guidance(double time, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr, struct mission *missionData_ptr){
 	
-	controlData_ptr->phi_cmd = doublet(3, time, 6, 25*D2R); // Roll angle command
-	controlData_ptr->theta_cmd = doublet(14, time, 6, 8*D2R); // Pitch angle command
+	
+	controlData_ptr->theta_cmd = doublet(1, time, 6, 4*D2R); // Pitch angle command
+	controlData_ptr->phi_cmd = doublet(10, time, 6, -15*D2R); // Roll angle command
 	controlData_ptr->ias_cmd = 23; // Speed command
 
 }
