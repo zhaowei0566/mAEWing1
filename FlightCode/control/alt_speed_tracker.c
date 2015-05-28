@@ -22,8 +22,8 @@ static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 
 /// Roll, Pitch, Altitude, & Speed Controller Gains
 #ifdef AIRCRAFT_FENRIR
-	static double roll_gain[3]  = {-0.64,-0.20,-0.07};  // PI gains for roll tracker and roll damper
-	static double pitch_gain[3] = {-0.90,-0.30,-0.08};  // PI gains for theta tracker and pitch damper
+	static double roll_gain[3]  = {0.64,0.20,0};  // PI gains for roll tracker and roll damper
+	static double pitch_gain[3] = {-0.90,-0.30,0};  // PI gains for theta tracker and pitch damper
 	static double alt_gain[2] 	= {0.023,0.0010}; 		// PI gains for altitude tracker
 	static double v_gain[2] 	= {0.091, 0.020};		// PI gains for speed tracker
 #endif
@@ -129,10 +129,10 @@ static double roll_control (double phi_ref, double roll_angle, double rollrate, 
 	da  = roll_gain[0]*e[0] + roll_gain[1]*integrator[0] - roll_gain[2]*rollrate;
 
 	//eliminate windup
-	if      (da >= AILERON_MAX-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 1; da = AILERON_MAX-ROLL_SURF_TRIM;}
-	else if (da >= AILERON_MAX-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 0; da = AILERON_MAX-ROLL_SURF_TRIM;}  //stop integrating
-	else if (da <= AILERON_MIN-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 0; da = AILERON_MIN-ROLL_SURF_TRIM;}  //stop integrating
-	else if (da <= AILERON_MIN-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 1; da = AILERON_MIN-ROLL_SURF_TRIM;}
+	if      (da >= AILERON_MAX-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 1; da = AILERON_MAX-ROLL_SURF_TRIM;}
+	else if (da >= AILERON_MAX-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 0; da = AILERON_MAX-ROLL_SURF_TRIM;}  //stop integrating
+	else if (da <= AILERON_MIN-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 0; da = AILERON_MIN-ROLL_SURF_TRIM;}  //stop integrating
+	else if (da <= AILERON_MIN-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 1; da = AILERON_MIN-ROLL_SURF_TRIM;}
 	else {anti_windup[0] = 1;}
 
     return da;
