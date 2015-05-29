@@ -39,6 +39,11 @@ static double ail_input(double da_in);
 	static double pitch_gain = -0.2;  // gain for pitch damper
 #endif
 
+#ifdef AIRCRAFT_SKOLL
+	static double roll_gain  = 0;  // gain for roll damper
+	static double pitch_gain = -0.2;  // gain for pitch damper
+#endif
+
 /// *****************************************************************************************
 
 extern void get_control(double time, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr, struct mission *missionData_ptr) {

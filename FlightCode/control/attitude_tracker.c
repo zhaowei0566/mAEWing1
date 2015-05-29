@@ -46,6 +46,13 @@ static short anti_windup[3]={1,1,1};   // integrates when anti_windup is 1
 	static double pitch_gain[3] = {-0.90,-0.30,0};  // PI gains for theta tracker and pitch damper
 	static double v_gain[2] 	= {0.091, 0.020};		// PI gains for speed tracker
 #endif
+
+#ifdef AIRCRAFT_SKOLL
+	static double roll_gain[3]  = {0.64,0.20,0};  // PI gains for roll tracker and roll damper
+	static double pitch_gain[3] = {-0.90,-0.30,0};  // PI gains for theta tracker and pitch damper
+	static double v_gain[2] 	= {0.091, 0.020};		// PI gains for speed tracker
+#endif
+
 static double da; // Delta aileron
 static double de; // Delta elevator
 static double dthr;
@@ -55,6 +62,10 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 /// Return control outputs based on references and feedback signals.
 
 #ifdef AIRCRAFT_FENRIR
+	double base_pitch_cmd= 0.1222;  	// (Trim value) 7 deg
+#endif
+
+#ifdef AIRCRAFT_SKOLL
 	double base_pitch_cmd= 0.1222;  	// (Trim value) 7 deg
 #endif
 
