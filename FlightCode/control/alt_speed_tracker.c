@@ -65,8 +65,8 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
     controlData_ptr->da   = roll_control(controlData_ptr->phi_cmd, phi, p, TIMESTEP);
 	controlData_ptr->l1   = 0;		// L1 [rad]
     controlData_ptr->r1   = 0; 		// R1 [rad]
-	controlData_ptr->l4   = 0; 		// L4 [rad]
-	controlData_ptr->r4   = 0; 		// R4 [rad]
+	controlData_ptr->l4   = de + da; 		// L4 [rad]
+	controlData_ptr->r4   = de - da; 		// R4 [rad]
 }
 
 static double altitude_control(double alt_ref, double altitude, double pitch, double pitchrate, double delta_t)
