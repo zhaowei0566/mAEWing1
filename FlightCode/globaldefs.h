@@ -125,6 +125,16 @@ struct inceptor {
 	double roll;		///< roll stick command from the pilot, ND
 };
 
+/// Accelerometer Data structure
+struct accel {
+	double lf;	///< left front accel
+	double lr;	///< left rear accel
+	double cf;	///< center front accel
+	double cr;	///< center rear accel
+	double rf;	///< right front accel
+	double rr;	///< right rear accel
+};
+
 /// Mission manager Data structure
 struct mission {
 	unsigned short mode;			///< mode variable; 0 = dump data, 1 = manual control, 2 = autopilot control
@@ -188,7 +198,8 @@ struct sensordata {
 	struct gps *gpsData_l_ptr;			///< pointer to left gps data structure
 	struct gps *gpsData_r_ptr;			///< pointer to right gps data structure
 	struct airdata *adData_ptr;			///< pointer to airdata data structure
-	struct inceptor *inceptorData_ptr;	///< pointer to pilot inceptor data structure
+	struct inceptor *inceptorData_ptr;	///< pointer to accelerometer data structure
+	struct accel *accelData_ptr;
 };
 
 /// Datalogging data structure

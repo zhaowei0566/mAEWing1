@@ -62,6 +62,7 @@ int main(int argc, char **argv) {
 	struct  gps   		gpsData;
 	struct  airdata 	adData;
 	struct  inceptor 	inceptorData;
+	struct  accel		accelData;
 
 	// sensor data
 	struct sensordata sensorData;
@@ -107,6 +108,7 @@ int main(int argc, char **argv) {
 	sensorData.gpsData_ptr = &gpsData;
 	sensorData.adData_ptr = &adData;
 	sensorData.inceptorData_ptr = &inceptorData;
+	sensorData.accelData_ptr = &accelData;
 
 	// Set main thread to highest priority
 	struct sched_param param;

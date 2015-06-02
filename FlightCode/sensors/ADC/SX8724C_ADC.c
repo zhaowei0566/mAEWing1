@@ -36,7 +36,7 @@ int read_adc(uint16_t *signal_counts_ptr){
 	unsigned char   DataBuf[2], command[8] = {RegACCfg0,SetRegACCfg0,SetRegACCfg1,SetRegACCfg2,SetRegACCfg3,SetRegACCfg4,SetRegACCfg5,RegACOutLsb};
 	cyg_i2c_device * device;
 
-	for(k = 0; k < 3; k++){			// Changed from  k < 2
+	for(k = 0; k < 2; k++){			// Changed from  k < 2
 		if(k == 1){
 			device = &SX8724C_ADC_1;		// Changed from &SX8724C_ADC_1
 		}else if(k == 2){

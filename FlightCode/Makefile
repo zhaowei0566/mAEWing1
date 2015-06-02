@@ -73,7 +73,7 @@ endif
 ifeq ($(strip $(AIRCRAFT)),SKOLL)
 AIRCRAFT_CONFIG = aircraft/skoll_config.h
 DATALOG_CONFIG = datalog/skoll_datalog.h
-SENSORS = sensors/AirData/AMS_pressure.c sensors/GPS/gps_crescent.c sensors/IMU/IMU_iSensor.c sensors/PWM/ATMEGA328_PWM.c sensors/GPIO/gpio.c 
+SENSORS = sensors/AirData/AMS_pressure.c sensors/GPS/gps_crescent.c sensors/IMU/IMU_iSensor.c sensors/PWM/ATMEGA328_PWM.c sensors/GPIO/gpio.c  sensors/ADC/SX8724C_ADC.c
 ACTUATORS = actuators/actuator_PWM.c
 endif
 

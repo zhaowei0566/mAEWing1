@@ -91,7 +91,11 @@ void init_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct
 	init_imu();		/* IMU */
 	init_airdata();		/* Ps,Pd */			
 	init_gpio();	
-		
+	
+	#if(defined(AIRCRAFT_SKOLL))
+		init_adc();
+	#endif
+	
 	// initialize as no data, no lock
 	sensorData_ptr->gpsData_ptr->err_type = got_invalid;
 	sensorData_ptr->gpsData_l_ptr->err_type = got_invalid;
@@ -110,7 +114,12 @@ void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct 
 	struct airdata *adData_ptr = sensorData_ptr->adData_ptr;
 	struct inceptor *inceptorData_ptr = sensorData_ptr->inceptorData_ptr;	
 	uint16_t pwm_signals[4];
-
+	
+	#if(defined(AIRCRAFT_SKOLL))
+		uint16_t signal_counts[24];
+		struct accel *accelData_ptr = sensorData_ptr->accelData_ptr;
+	#endif
+	
 	int adstatus;
 
 	// IMU Sensor
@@ -138,6 +147,17 @@ void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct 
 	adData_ptr->ias_filt   = lp_filter(adData_ptr->ias, u_speed, y_speed);	// filtered AIRSPEED
 	//**** End Air Data ****
 
+	#if(defined(AIRCRAFT_SKOLL))		// Read ADC chip
+		adstatus = read_adc(&signal_counts[0]);
+		
+		accelData_ptr->rf = (double)signal_counts[3]; 	// right wing front accel, ADC0 AC3
+		accelData_ptr->rr = (double)signal_counts[5]; 	// right wing rear accel, ADC0 AC5
+		accelData_ptr->cf = (double)signal_counts[10]; 	// center body front accel, ADC0 AC7
+		accelData_ptr->lf = (double)signal_counts[11]; 	// left wing front accel, ADC1 AC3
+		accelData_ptr->lr = (double)signal_counts[13]; 	// left wing rear accel, ADC1 AC5
+		accelData_ptr->cr = (double)signal_counts[15];	// center body rear accel, ADC1 AC7
+	#endif
+	
 	// Read 4 PWM signals from ATMega328
 	read_pwm(&pwm_signals[0]);
 
