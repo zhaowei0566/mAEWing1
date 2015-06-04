@@ -107,10 +107,10 @@ AC.Aero.Cl.p = -0.5486;
 % Yaw rate derivative
 AC.Aero.Cl.r = 0.0035; % No data
 % Control derivatives
-AC.Aero.Cl.L1 = -0.0200; AC.Aero.Cl.R1 = 0.0200;
-AC.Aero.Cl.L2 = -0.0550; AC.Aero.Cl.R2 = 0.0550;
-AC.Aero.Cl.L3 = -0.0853; AC.Aero.Cl.R3 = 0.0853;
-AC.Aero.Cl.L4 = -0.0924; AC.Aero.Cl.R4 = 0.0924;
+AC.Aero.Cl.L1 = 0.0200; AC.Aero.Cl.R1 = -0.0200;
+AC.Aero.Cl.L2 = 0.0550; AC.Aero.Cl.R2 = -0.0550;
+AC.Aero.Cl.L3 = 0.0853; AC.Aero.Cl.R3 = -0.0853;
+AC.Aero.Cl.L4 = 0.0924; AC.Aero.Cl.R4 = -0.0924;
 
 %% Pitch moment coefficient
 % Taken from mat-file provided by AK on 05/04/2015
