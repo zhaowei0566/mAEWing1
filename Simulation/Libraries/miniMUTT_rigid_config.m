@@ -261,8 +261,8 @@ AC.Actuator.R4.PosLim = 25*d2r;   % [rad]
 AC.Actuator.R4.NegLim = -25*d2r;  %[rad]
 
 %Throttle
-AC.Actuator.throttle.PosLim = inf;  % [nd]
-AC.Actuator.throttle.NegLim = -inf; %[nd]
+AC.Actuator.throttle.PosLim = 1;  % [nd]
+AC.Actuator.throttle.NegLim = 0; %[nd]
 
 %% Configure Sensor Noise Parameters
 % same as UltraSticks
