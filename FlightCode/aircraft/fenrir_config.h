@@ -50,7 +50,7 @@
 #define PWMOUT_DA_CAL   {-1347.85533818094,         -2977.58276132794,         4138.71988951024} ///< calibration for aileron
 #define PWMOUT_L1_CAL   {5940.25534751177,         -43.7236873668368,          4443.09325030927,          4152.60424812884} ///< cubic calibration for L1
 #define PWMOUT_R1_CAL   {-10849.3455485626,          2988.07225069245,         -4666.40932628751,           4125.0996053587} ///< cubic calibration for right R1
-#define PWMOUT_L4_CAL   {-1294.07607429153,         -3418.06657782746,         4050.86295420798} ///< calibration for left L4
+#define PWMOUT_L4_CAL   {-1101.51849541299,         -3244.62801793984,         4040.52380610288} ///< calibration for left L4
 #define PWMOUT_R4_CAL   {1395.10662658164,          3298.25092852368,          4114.38621239469} ///< calibration for right R4
 
 // Pilot inceptor channels
