@@ -15,16 +15,17 @@ AC.type = ('');
 
 %% Inertia, Mass and CG location
 % Gross aircraft mass [kg] (including relevant hardware)
-AC.Mass  = 6.3500; % PS 05/03/2015
+AC.Mass  = 7.37; % BRT XX Fenrir weight
 
 % CG location [x y z], [m]
 % PS 05/03/2015 (taken from website, word of mouth from AK)
 AC.Geometry.rCG = [0.59 0 0]; 
 
+% BRT from CR testing 2015-06-05
 % Gross moments of inertia [Jx Jy Jz Jxz] [kg*m^2]
-AC.Inertia.Ixx = 2.63700; %   
-AC.Inertia.Iyy = 0.32700; %  
-AC.Inertia.Izz = 2.81800; %   
+AC.Inertia.Ixx = 3.098; %   
+AC.Inertia.Iyy = 0.464; %  
+AC.Inertia.Izz = 3.315; %   
 AC.Inertia.Matrix = [AC.Inertia.Ixx     0               0;...
                         0           AC.Inertia.Iyy      0;...
                         0               0               AC.Inertia.Izz];

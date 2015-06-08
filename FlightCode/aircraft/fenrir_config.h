@@ -15,7 +15,7 @@
 // Control Surface Trims -- PLACEHOLDERS
 // TO DO -- DEFINE TRIMS FOR ALL FLUTTER SUPRESSION SURFACES
 #define THROTTLE_TRIM      0.72		///< [ND], approximate throttle trim value
-#define PITCH_SURF_TRIM   -0.1196 	///< [rad], approximate elevator trim value
+#define PITCH_SURF_TRIM   -0.0882 	///< [rad], approximate elevator trim value
 #define ROLL_SURF_TRIM    -0.0882 	///< [rad], approximate aileron trim value
 
 

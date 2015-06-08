@@ -42,8 +42,18 @@ static short anti_windup[3]={1,1,1};   // integrates when anti_windup is 1
 /// ****************************************************************************************
 /// Roll and pitch angle digital controller - parameters and variables
 #ifdef AIRCRAFT_FENRIR
+	/*	
 	static double roll_gain[3]  = {0.64,0.20,0};  // PI gains for roll tracker and roll damper
 	static double pitch_gain[3] = {-0.90,-0.30,0};  // PI gains for theta tracker and pitch damper
+	static double v_gain[2] 	= {0.091, 0.020};		// PI gains for speed tracker
+	*/
+	/*
+	static double roll_gain[3]  = {0.15,0.50,0};  // PI gains for roll tracker and roll damper
+	static double pitch_gain[3] = {-0.3,-0.50,0};  // PI gains for theta tracker and pitch damper
+	static double v_gain[2] 	= {0.091, 0.020};		// PI gains for speed tracker
+	*/
+	static double roll_gain[3]  = {0.15,0.30,0};  // PI gains for roll tracker and roll damper
+	static double pitch_gain[3] = {-0.3,-0.40,0};  // PI gains for theta tracker and pitch damper
 	static double v_gain[2] 	= {0.091, 0.020};		// PI gains for speed tracker
 #endif
 
