@@ -9,6 +9,9 @@ function [AC] = miniMUTT_rigid_config()
 %
 % SVN Info: $Id: Ultrastick_config.m 765 2012-01-25 20:14:05Z murch $
 
+% AC.Geometry, let's use X positive forward, y right wing, z down...
+% reference point is the nose
+
 %% Aircraft and type
 AC.aircraft = 'minimutt_rigid';
 AC.type = ('');
@@ -19,7 +22,7 @@ AC.Mass  = 7.37; % BRT XX Fenrir weight
 
 % CG location [x y z], [m]
 % PS 05/03/2015 (taken from website, word of mouth from AK)
-AC.Geometry.rCG = [0.59 0 0]; 
+AC.Geometry.rCG = [-0.59 0 0]; 
 
 % BRT from CR testing 2015-06-05
 % Gross moments of inertia [Jx Jy Jz Jxz] [kg*m^2]
@@ -34,7 +37,7 @@ AC.Inertia.Matrix = [AC.Inertia.Ixx     0               0;...
 
 % Aerodynamic force application point (usually the aerodynamic center)[x y z]
 % TO BE CHECKED PS 05/03/2015 (word of mouth from AK)
-AC.Geometry.AeroCenter = [0.58 0 0]; 
+AC.Geometry.AeroCenter = [-0.58 0 0]; 
 % Mean aerodynamic chord [m]
 AC.Geometry.c = 0.3210;
 % Wing span [m]
@@ -132,7 +135,7 @@ AC.Aero.Cm.L4 = -0.1870;    AC.Aero.Cm.R4 = -0.1870;
 % Sideslip derivative
 AC.Aero.Cn.beta = 0.03;
 % Yaw rate derivative
-AC.Aero.Cn.r = -0.0054; % From email-communication by AK on 05/04/2015
+AC.Aero.Cn.r = -0.0577; % BRT estimated from vertical volume coefficient
 % Roll-rate derivative
 AC.Aero.Cn.p = 0.0; 
 % Moment coefficients for control surfaces
@@ -148,12 +151,11 @@ AC.Aero.Cn.L4 = 0.0;    AC.Aero.Cn.R4 = 0.0;
 % For UltraStick120 coordinates are negative for propeller placed in front
 % of reference point
 % CR: Propulsion is applied at -32.99, 0, -1.24 inches
-AC.Geometry.rProp = [0.838 0 -0.031]; % [m] Propeller in front of reference point
+AC.Geometry.rProp = [-32.99*0.0254 0 -1.24*0.0254]; % [m]
 
 % Thrust alignment orientation, radians
 % CR: The thrust line is pointed down 1.64 degrees
-AC.Prop.Angles = [0 0 -1.24]/180*pi;
-
+AC.Prop.Angles = [0 1.64 0]/180*pi;
 
 % Using an APC 12 x 6E propeller, EFlite Power 25 motor
 % Coefficient of thrust polynomial model 
