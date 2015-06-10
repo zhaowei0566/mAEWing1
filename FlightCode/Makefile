@@ -12,14 +12,15 @@
 ##### AIRCRAFT SELECTION #####
 # Select the desired aircraft configuration file here
 #AIRCRAFT = HIL_SIM
-#AIRCRAFT = FENRIR
-AIRCRAFT = SKOLL
+AIRCRAFT = FENRIR
+#AIRCRAFT = SKOLL
 
 ##### GUIDANCE LAW #####
 # Point to the desired guidance code here
 #GUIDANCE = guidance/empty_guidance.c
-GUIDANCE = guidance/straight_level.c
+#GUIDANCE = guidance/straight_level.c
 #GUIDANCE = guidance/doublet_phi_theta.c
+GUIDANCE = guidance/pilot_guidance.c
 
 ##### NAVIGATION #####
 # Point to the desired navigation code here
@@ -27,14 +28,17 @@ GUIDANCE = guidance/straight_level.c
 NAVIGATION = navigation/EKF_15state_quat.c
 
 ##### MISSION MANAGER #####
-MISSION = mission/pilot_excite_switch.c
+#MISSION = mission/pilot_excite_switch.c
+MISSION = mission/tres_claw_switch.c
 
 ##### FLIGHT CONTROL LAW #####
 # Point to the desired flight control law code here
 #CONTROL =  control/manual_control.c
 #CONTROL =  control/pitch_roll_damper.c
 #CONTROL =  control/attitude_tracker.c
-CONTROL =  control/alt_speed_tracker.c
+#CONTROL =  control/alt_speed_tracker.c
+#CONTROL =  control/dos_claw.c
+CONTROL =  control/tres_claw.c
 
 ##### MATLAB RTW AUTOCODE #####
 # Make sure #include "simstruc.h" and #include "fixedpoint.h" are commented out in the <modelname>.h file

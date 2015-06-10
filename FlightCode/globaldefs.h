@@ -140,6 +140,7 @@ struct mission {
 	unsigned short mode;			///< mode variable; 0 = dump data, 1 = manual control, 2 = autopilot control
 	unsigned short run_num;			///< counter for number of autopilot engagements
 	unsigned short run_excitation;  ///< mode variable; 0 = no excitation, 1 = start excitations
+	unsigned short claw_mode;		///< mode variable; 3 position depending on claw to run
 };
 
 /// Control Data structure
@@ -162,6 +163,7 @@ struct control {
 	double ias_cmd;
 	double init_alt;
 	double h_cmd;
+	double zdot_cmd;
 };
 
 /// Navigation Filter Data Structure
