@@ -20,7 +20,7 @@ clc
 addpath ../Libraries
 addpath ../Controllers
 warning off Simulink:Engine:SaveWithParameterizedLinks_Warning
-warning off Simulink:Commands:LoadMdlParameterizedLink 
+warning off Simulink:Commands:LoadMdlParameterizedLink
 warning off Simulink:ID:DuplicateSID
 
 %% Load airframe configuration and trim condition
@@ -36,13 +36,15 @@ SampleTime = 0.02; % sec
 % referenced in the "UAV_SIL/Control Software/Control Software" block.
 flightcode_var = Simulink.Variant('controller_mode == 1 || controller_mode == 3 || controller_mode == 5 || controller_mode == 7 || controller_mode == 9');
 baseline_control_var = Simulink.Variant('controller_mode == 2');
-
+autoland_control_var = Simulink.Variant('controller_mode == 4');
 %% Set controller mode
 % Use this variable to quickly change what controller is used in the
 % simulation.
 %
 % 1 = baseline controller (C implementation)
-controller_mode = 2;
+% 2 = baseline controller (Simulink)
+% 4 = autoland controller for minimutt (Simulink)
+controller_mode = 4;
 
 % Load controller parameters or compile flight code
 switch controller_mode
@@ -54,6 +56,25 @@ switch controller_mode
         baseline_gains;   % Declare baseline controller gains
         pitch_gains = [kp_PT, ki_PT, kp_PD];
         roll_gains = [kp_RT, ki_RT, kp_RD];
+    case 4 % Auto-Land controller in Simulink.        
+%         roll_gains = [0.15, .3, 0]; %Flight Code for Fenrir24/25
+        roll_gains = [0.5, .1, 0.01];
+%         pitch_gains = [-0.3, -0.4, 0];  %Flight Code for Fenrir24/25
+        pitch_gains = [-0.15, -0.1, -0.01];  
+        autothrottle_gains = [0.091, 0.02];  %Flight-Code for Fenrir24/25
+        sinkrate_gains  = [-0.025,  -0.05 ]; 
+
+        
+        
+        theta_sat = 20;   % [deg]
+        engage_flare = 4; % [m]
+        
+        approach_sinkrate = 3; %[m/s]
+        approach_speed = 23; % [m/s]
+        landing_sinkrate = 0.5;  % [m/s]
+        landing_speed = 15; % [m/s]
+        
+        autoland_flag = true;
 end
 
 % Advanced Users: Include guidance, system ID, or fault injection codes.
@@ -64,30 +85,30 @@ end
 % input the reference commands from the simulink diagram.
 % GUIDANCE = '../../Software/FlightCode/guidance/straight_level.c';
 % GUIDANCE = '../../Software/FlightCode/guidance/doublet_phi_theta.c';
- GUIDANCE = '-DSIMULINK_GUIDANCE';
+GUIDANCE = '-DSIMULINK_GUIDANCE';
 
 %%%%%% SYSTEM ID SELECTION %%%%%
 % Point to the desired system ID code here
 % SYSTEM_ID = '../../Software/FlightCode/system_id/chirp_sysid.c';
- SYSTEM_ID = '../../Software/FlightCode/system_id/systemid_none.c';
+SYSTEM_ID = '../../Software/FlightCode/system_id/systemid_none.c';
 
 %%%%%% SURFACE FAULT MODE SELECTION %%%%%
 % Point to the desired fault code here
 % SURFACE_FAULT = '../../Software/FlightCode/faults/fault_onesurf.c';
 % SURFACE_FAULT = '../../Software/FlightCode/faults/fault_onesurf_SingleStep.c';
- SURFACE_FAULT = '../../Software/FlightCode/faults/surffault_none.c';
+SURFACE_FAULT = '../../Software/FlightCode/faults/surffault_none.c';
 
 
 %%%%%% SENS0R FAULT MODE SELECTION %%%%%
 % Point to the desired fault code here
- SENSOR_FAULT = '../../Software/FlightCode/faults/sensfault_none.c';
+SENSOR_FAULT = '../../Software/FlightCode/faults/sensfault_none.c';
 
 % Compile control software
 if exist('control_code_path','var')
     eval(['mex -I../../Software/FlightCode/ control_SIL.c  ' control_code_path...
-                       ' ' GUIDANCE ' ' SYSTEM_ID ' ' SURFACE_FAULT ' ' SENSOR_FAULT ...
-                       ' ../../Software/FlightCode/faults/fault_functions.c ' ...
-                       ' ../../Software/FlightCode/system_id/systemid_functions.c ']);
+        ' ' GUIDANCE ' ' SYSTEM_ID ' ' SURFACE_FAULT ' ' SENSOR_FAULT ...
+        ' ../../Software/FlightCode/faults/fault_functions.c ' ...
+        ' ../../Software/FlightCode/system_id/systemid_functions.c ']);
 end
 
 %% Integer Time delay in flight software loop

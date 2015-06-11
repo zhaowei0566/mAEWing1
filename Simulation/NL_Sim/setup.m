@@ -46,7 +46,7 @@ SampleTime = 0.02; % sec
 % conditions.
 
 % Set initial state values
-TrimCondition.InertialIni    = [0 0 -100]';   % Initial Position in Inertial Frame [Xe Ye Ze], [m]
+TrimCondition.InertialIni    = [0 0 -30]';   % Initial Position in Inertial Frame [Xe Ye Ze], [m]
 TrimCondition.LLIni          = [44.7258357 -93.07501316]';     % Initial Latitude/Longitude of Aircraft [Lat Long], [deg]
 TrimCondition.AttitudeIni    = [0 0.0217 155*pi/180]'; % Initial Euler orientation [roll,pitch,yaw] [rad], can't use 0 heading, causes large entry in C matrix for psi
 TrimCondition.RatesIni       = [0 0 0]';      % Initial Body Frame rotation rates [p q r], [rad/s]
@@ -116,7 +116,7 @@ end
 % specify as a target.
 
 % straight and level, (m/s, rad)
-TrimCondition.target = struct('V_s',TrimCondition.VelocitiesIni(1),'gamma',0,'h',100);
+TrimCondition.target = struct('V_s',TrimCondition.VelocitiesIni(1),'gamma',0,'h',30);
 %TrimCondition.target = struct('V_s',15,'gamma',0,'h',350,'L1',0*pi/180,'L2',-0*pi/180,'L4',0*pi/180,'R1',0*pi/180,'R2',-0*pi/180,'R4',0*pi/180); %level flight
 % TrimCondition.target = struct('V_s',TrimCondition.VelocitiesIni(1),'gamma',5/180*pi); % level climb, (m/s, rad)
 % TrimCondition.target = struct('V_s',TrimCondition.VelocitiesIni(1),'gamma',0,'psidot',20/180*pi); % level turn, (m/s, rad, rad/sec)
