@@ -17,7 +17,7 @@ Model {
       ModelRefBlockPath	      "UAV_SIL/Control Input Generator|control_input"
     }
     ModelReference {
-      ModelRefBlockPath	      "UAV_SIL/Control Software/Control Software|baseline_control"
+      ModelRefBlockPath	      "UAV_SIL/Control Software/Control Software|autoland_control"
     }
     NumTestPointedSignals   0
   }
@@ -39,7 +39,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [1548.0, 70.0, 1276.0, 893.0]
+      Location		      [-8.0, 32.0, 1296.0, 776.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -63,8 +63,8 @@ Model {
 	IsActive		[1]
 	ViewObjType		"SimulinkSubsys"
 	LoadSaveID		"2165"
-	Extents			[1226.0, 718.0]
-	ZoomFactor		[1.0]
+	Extents			[1246.0, 602.0]
+	ZoomFactor		[1.25]
 	Offset			[0.0, 0.0]
       }
     }
@@ -73,10 +73,10 @@ Model {
   Creator		  "Paul Freeman"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "brtaylor"
+  LastModifiedBy	  "PC"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Jun 04 17:03:31 2015"
-  RTWModifiedTimeStamp	  355338210
+  LastModifiedDate	  "Tue Jun 09 15:54:03 2015"
+  RTWModifiedTimeStamp	  355766009
   ModelVersionFormat	  "$Id: UAV_SIL.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
@@ -956,7 +956,7 @@ Model {
   }
   System {
     Name		    "UAV_SIL"
-    Location		    [1548, 70, 2824, 963]
+    Location		    [-8, 32, 1288, 808]
     Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -970,7 +970,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "85"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "2177"
+    SIDHighWatermark	    "2184"
     Block {
       BlockType		      Inport
       Name		      "Wind"
@@ -1024,9 +1024,9 @@ Model {
 	ScreenColor		"white"
 	PaperOrientation	"landscape"
 	PaperPositionMode	"auto"
-	PaperType		"usletter"
-	PaperUnits		"inches"
-	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
@@ -1061,14 +1061,14 @@ Model {
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  ZOrder		  5
+	  ZOrder		  37
 	  SrcBlock		  "cmds"
 	  SrcPort		  1
 	  DstBlock		  "miniMUTT"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  6
+	  ZOrder		  38
 	  SrcBlock		  "miniMUTT"
 	  SrcPort		  1
 	  DstBlock		  "controls"
@@ -1099,7 +1099,7 @@ Model {
 	}
 	PropName		"Variants"
       }
-      ModelReferenceVersion   "1.87"
+      ModelReferenceVersion   "1.90"
       List {
 	ListType		OutputPortNames
 	port0			"ref_cmds"
@@ -1125,7 +1125,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Control Software"
-	Location		[1548, 70, 2824, 963]
+	Location		[-8, 32, 1288, 808]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1137,12 +1137,12 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"100"
+	ZoomFactor		"125"
 	Block {
 	  BlockType		  Inport
 	  Name			  "Sensors"
 	  SID			  "2166"
-	  Position		  [765, 223, 795, 237]
+	  Position		  [765, 218, 795, 232]
 	  ZOrder		  -1
 	  BlockMirror		  on
 	  IconDisplay		  "Port number"
@@ -1151,7 +1151,7 @@ Model {
 	  BlockType		  Inport
 	  Name			  "ref_cmds_in"
 	  SID			  "2167"
-	  Position		  [625, 368, 655, 382]
+	  Position		  [625, 363, 655, 377]
 	  ZOrder		  -2
 	  BlockMirror		  on
 	  Port			  "2"
@@ -1162,7 +1162,7 @@ Model {
 	  Name			  "Bus\nCreator"
 	  SID			  "2168"
 	  Ports			  [7, 1]
-	  Position		  [155, 160, 160, 300]
+	  Position		  [155, 155, 160, 295]
 	  ZOrder		  -3
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
@@ -1175,7 +1175,7 @@ Model {
 	  Name			  "Bus\nSelector1"
 	  SID			  "2169"
 	  Ports			  [1, 1]
-	  Position		  [725, 210, 735, 250]
+	  Position		  [725, 205, 735, 245]
 	  ZOrder		  -4
 	  BlockMirror		  on
 	  ShowName		  off
@@ -1192,12 +1192,11 @@ Model {
 	  Position		  [380, 150, 530, 445]
 	  ZOrder		  -5
 	  BlockMirror		  on
-	  ModelNameDialog	  "baseline_control"
-	  SimulationMode	  "Normal"
+	  ModelNameDialog	  "autoland_control"
 	  Variant		  on
 	  Array {
 	    Type		    "Struct"
-	    Dimension		    2
+	    Dimension		    3
 	    MATStruct {
 	      Name		      "flightcode_var"
 	      ModelName		      "flightcode"
@@ -1212,9 +1211,16 @@ Model {
 	      ParameterArgumentValues ""
 	      SimulationMode	      "Normal"
 	    }
+	    MATStruct {
+	      Name		      "autoland_control_var"
+	      ModelName		      "autoland_control"
+	      ParameterArgumentNames  ""
+	      ParameterArgumentValues ""
+	      SimulationMode	      "Accelerator"
+	    }
 	    PropName		    "Variants"
 	  }
-	  ModelReferenceVersion	  "1.143"
+	  ModelReferenceVersion	  "1.212"
 	  List {
 	    ListType		    InputPortNames
 	    port0		    "feedback"
@@ -1223,7 +1229,7 @@ Model {
 	  List {
 	    ListType		    OutputPortNames
 	    port0		    "control_cmd"
-	    port1		    "ref_cmds_out"
+	    port1		    "ref_cmds_out1"
 	  }
 	  List {
 	    ListType		    OutputPortOutputBusAsStructs
@@ -1235,7 +1241,7 @@ Model {
 	    port0		    "off"
 	    port1		    "off"
 	  }
-	  CopyOfModelName	  "baseline_control"
+	  CopyOfModelName	  "autoland_control"
 	  DefaultDataLogging	  off
 	  List {
 	    ListType		    InputPortLatchByDelayingOutsideSignal
@@ -1248,7 +1254,7 @@ Model {
 	  Name			  "Demux"
 	  SID			  "2171"
 	  Ports			  [1, 7]
-	  Position		  [265, 160, 270, 300]
+	  Position		  [265, 155, 270, 295]
 	  ZOrder		  -6
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
@@ -1313,7 +1319,7 @@ Model {
 	  BlockType		  Goto
 	  Name			  "Goto1"
 	  SID			  "2173"
-	  Position		  [25, 278, 110, 302]
+	  Position		  [25, 273, 110, 297]
 	  ZOrder		  -8
 	  BlockMirror		  on
 	  ShowName		  off
@@ -1325,7 +1331,7 @@ Model {
 	  Name			  "Integer Delay"
 	  SID			  "2174"
 	  Ports			  [1, 1]
-	  Position		  [620, 213, 655, 247]
+	  Position		  [620, 208, 655, 242]
 	  ZOrder		  -9
 	  BlockMirror		  on
 	  InputPortMap		  "u0"
@@ -1387,9 +1393,9 @@ Model {
 	    ScreenColor		    "white"
 	    PaperOrientation	    "landscape"
 	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
@@ -1426,14 +1432,14 @@ Model {
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
-	      ZOrder		      7
+	      ZOrder		      37
 	      SrcBlock		      "I"
 	      SrcPort		      1
 	      DstBlock		      "Trim setting MiniMUTT"
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      8
+	      ZOrder		      38
 	      SrcBlock		      "Trim setting MiniMUTT"
 	      SrcPort		      1
 	      DstBlock		      "O"
@@ -1445,7 +1451,7 @@ Model {
 	  BlockType		  Outport
 	  Name			  "control_cmd"
 	  SID			  "2176"
-	  Position		  [60, 223, 90, 237]
+	  Position		  [60, 218, 90, 232]
 	  ZOrder		  -12
 	  BlockMirror		  on
 	  IconDisplay		  "Port number"
@@ -1461,7 +1467,6 @@ Model {
 	  ZOrder		  2
 	  SrcBlock		  "ref_cmds_in"
 	  SrcPort		  1
-	  Points		  [-75, 0]
 	  DstBlock		  "Control Software"
 	  DstPort		  2
 	}
@@ -1549,7 +1554,6 @@ Model {
 	  ZOrder		  13
 	  SrcBlock		  "Integer Delay"
 	  SrcPort		  1
-	  Points		  [-39, 0; 0, -5]
 	  DstBlock		  "Control Software"
 	  DstPort		  1
 	}
@@ -1571,7 +1575,6 @@ Model {
 	  ZOrder		  16
 	  SrcBlock		  "Trim setting"
 	  SrcPort		  1
-	  Points		  [-5, 0]
 	  DstBlock		  "Demux"
 	  DstPort		  1
 	}
@@ -1585,7 +1588,7 @@ Model {
 	Annotation {
 	  SID			  "2177"
 	  Name			  "See \"Software\\Documentation\\UAV_controllaw_ICD.pdf\" for \ndetails on the input/output signals."
-	  Position		  [427, 82, 712, 110]
+	  Position		  [427, 82, 711, 110]
 	  InternalMargins	  [0, 0, 0, 0]
 	  FixedHeight		  off
 	  FixedWidth		  off
@@ -1627,7 +1630,7 @@ Model {
       }
       System {
 	Name			"Flight Data Display"
-	Location		[25, 116, 1240, 860]
+	Location		[-8, 32, 1288, 808]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1639,13 +1642,13 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"80"
+	ZoomFactor		"100"
 	Block {
 	  BlockType		  Scope
 	  Name			  "Altitude"
 	  SID			  "1019"
 	  Ports			  [1]
-	  Position		  [350, 614, 380, 646]
+	  Position		  [350, 644, 380, 676]
 	  ZOrder		  -1
 	  Floating		  off
 	  Location		  [117, 93, 1255, 685]
@@ -1671,7 +1674,7 @@ Model {
 	  Name			  "Bus\nSelector1"
 	  SID			  "979"
 	  Ports			  [1, 17]
-	  Position		  [115, 251, 120, 739]
+	  Position		  [115, 281, 120, 769]
 	  ZOrder		  -2
 	  ShowName		  off
 	  OutputSignals		  "V_s [m/s],alpha [rad],beta [rad],phi [rad],theta [rad],psi [rad],p [rad/s],q [rad/s],r [rad/s],Ax"
@@ -1784,7 +1787,7 @@ Model {
 	  Name			  "Bus\nSelector2"
 	  SID			  "2152"
 	  Ports			  [1, 6]
-	  Position		  [740, 349, 745, 516]
+	  Position		  [740, 379, 745, 546]
 	  ZOrder		  2
 	  ShowName		  off
 	  OutputSignals		  "V_e [m/s].Xdot [m/s],V_e [m/s].Ydot [m/s],V_e [m/s].Zdot [m/s],X_e [m].X [m],X_e [m].Y [m],X_e [m"
@@ -1831,10 +1834,10 @@ Model {
 	  Name			  "Bus\nSelector4"
 	  SID			  "1428"
 	  Ports			  [1, 7]
-	  Position		  [115, 15, 120, 215]
+	  Position		  [115, 45, 120, 245]
 	  ZOrder		  -3
 	  ShowName		  off
-	  OutputSignals		  "throttle [nd],elevator [rad],L1 [rad],aileron [rad],R1 [rad],L4 [rad],R4 [rad]"
+	  OutputSignals		  "throttle [nd],elevator [rad],aileron [rad],L1 [rad],R1 [rad],L4 [rad],R4 [rad]"
 	  Port {
 	    PortNumber		    1
 	    Name		    "<throttle [nd]>"
@@ -1849,13 +1852,13 @@ Model {
 	  }
 	  Port {
 	    PortNumber		    3
-	    Name		    "<L1 [rad]>"
+	    Name		    "<aileron [rad]>"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
 	  Port {
 	    PortNumber		    4
-	    Name		    "<aileron [rad]>"
+	    Name		    "<L1 [rad]>"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
@@ -1883,7 +1886,7 @@ Model {
 	  Name			  "Bus\nSelector5"
 	  SID			  "1434"
 	  Ports			  [1, 6]
-	  Position		  [740, 520, 745, 675]
+	  Position		  [740, 550, 745, 705]
 	  ZOrder		  -4
 	  ShowName		  off
 	  OutputSignals		  "AngAccel [rad/s^2].pdot [rad/s^2],AngAccel [rad/s^2].qdot [rad/s^2],AngAccel [rad/s^2].rdot [rad/"
@@ -1929,18 +1932,18 @@ Model {
 	  BlockType		  Demux
 	  Name			  "Demux"
 	  SID			  "2030"
-	  Ports			  [1, 12]
-	  Position		  [740, 14, 745, 341]
+	  Ports			  [1, 13]
+	  Position		  [740, 46, 745, 374]
 	  ZOrder		  -5
 	  ShowName		  off
-	  Outputs		  "12"
+	  Outputs		  "13"
 	  DisplayOption		  "bar"
 	}
 	Block {
 	  BlockType		  From
 	  Name			  "From"
 	  SID			  "1992"
-	  Position		  [15, 105, 105, 125]
+	  Position		  [15, 135, 105, 155]
 	  ZOrder		  -6
 	  ShowName		  off
 	  GotoTag		  "control_cmds"
@@ -1950,7 +1953,7 @@ Model {
 	  BlockType		  From
 	  Name			  "From1"
 	  SID			  "1994"
-	  Position		  [640, 591, 700, 609]
+	  Position		  [640, 621, 700, 639]
 	  ZOrder		  -7
 	  ShowName		  off
 	  GotoTag		  "States"
@@ -1960,7 +1963,7 @@ Model {
 	  BlockType		  From
 	  Name			  "From2"
 	  SID			  "1995"
-	  Position		  [35, 486, 95, 504]
+	  Position		  [35, 516, 95, 534]
 	  ZOrder		  -8
 	  ShowName		  off
 	  GotoTag		  "Sensors"
@@ -1970,7 +1973,7 @@ Model {
 	  BlockType		  From
 	  Name			  "From3"
 	  SID			  "1996"
-	  Position		  [640, 171, 700, 189]
+	  Position		  [640, 201, 700, 219]
 	  ZOrder		  -9
 	  ShowName		  off
 	  GotoTag		  "ref_cmds"
@@ -1980,7 +1983,7 @@ Model {
 	  BlockType		  From
 	  Name			  "From4"
 	  SID			  "2005"
-	  Position		  [640, 696, 700, 714]
+	  Position		  [640, 726, 700, 744]
 	  ZOrder		  -10
 	  ShowName		  off
 	  GotoTag		  "EnvData"
@@ -1990,640 +1993,21 @@ Model {
 	  BlockType		  From
 	  Name			  "From5"
 	  SID			  "2151"
-	  Position		  [650, 426, 710, 444]
+	  Position		  [650, 456, 710, 474]
 	  ZOrder		  1
 	  ShowName		  off
 	  GotoTag		  "AuxVar"
 	  TagVisibility		  "global"
 	}
 	Block {
-	  BlockType		  Mux
-	  Name			  "Mux2"
-	  SID			  "1957"
-	  Ports			  [2, 1]
-	  Position		  [360, 84, 365, 146]
-	  ZOrder		  -11
-	  ShowName		  off
-	  Inputs		  "2"
-	  DisplayOption		  "bar"
-	}
-	Block {
 	  BlockType		  Scope
-	  Name			  "TAS"
-	  SID			  "998"
-	  Ports			  [1]
-	  Position		  [390, 254, 420, 286]
-	  ZOrder		  -12
-	  Floating		  off
-	  Location		  [5, 48, 1371, 727]
-	  Open			  off
-	  NumInputPorts		  "1"
-	  List {
-	    ListType		    AxesTitles
-	    axes1		    "%<SignalLabel>"
-	  }
-	  ShowLegends		  off
-	  TimeRange		  "45"
-	  YMin			  "14"
-	  YMax			  "19"
-	  SaveName		  "ScopeData3"
-	  DataFormat		  "StructureWithTime"
-	  LimitDataPoints	  off
-	  SampleTime		  "0"
-	  ScrollMode		  off
-	}
-	Block {
-	  BlockType		  Terminator
-	  Name			  "Terminator"
-	  SID			  "2006"
-	  Position		  [730, 695, 750, 715]
-	  ZOrder		  -13
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace"
-	  SID			  "999"
-	  Ports			  [1]
-	  Position		  [250, 607, 310, 623]
-	  ZOrder		  -14
-	  ShowName		  off
-	  VariableName		  "alt"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace1"
-	  SID			  "1000"
-	  Ports			  [1]
-	  Position		  [250, 397, 310, 413]
-	  ZOrder		  -15
-	  ShowName		  off
-	  VariableName		  "psi"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace10"
-	  SID			  "1001"
-	  Ports			  [1]
-	  Position		  [250, 167, 310, 183]
-	  ZOrder		  -16
-	  ShowName		  off
-	  VariableName		  "l_flap"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace11"
-	  SID			  "1002"
-	  Ports			  [1]
-	  Position		  [825, 30, 895, 50]
-	  ZOrder		  -17
-	  ShowName		  off
-	  VariableName		  "phi_cmd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace12"
-	  SID			  "1003"
-	  Ports			  [1]
-	  Position		  [825, 55, 895, 75]
-	  ZOrder		  -18
-	  ShowName		  off
-	  VariableName		  "theta_cmd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace13"
-	  SID			  "1004"
-	  Ports			  [1]
-	  Position		  [250, 427, 310, 443]
-	  ZOrder		  -19
-	  ShowName		  off
-	  VariableName		  "p"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace14"
-	  SID			  "1005"
-	  Ports			  [1]
-	  Position		  [250, 457, 310, 473]
-	  ZOrder		  -20
-	  ShowName		  off
-	  VariableName		  "q"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace15"
-	  SID			  "1006"
-	  Ports			  [1]
-	  Position		  [250, 487, 310, 503]
-	  ZOrder		  -21
-	  ShowName		  off
-	  VariableName		  "r"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace16"
-	  SID			  "1418"
-	  Ports			  [1]
-	  Position		  [250, 17, 310, 33]
-	  ZOrder		  -22
-	  ShowName		  off
-	  VariableName		  "throttle"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace17"
-	  SID			  "1431"
-	  Ports			  [1]
-	  Position		  [250, 697, 310, 713]
-	  ZOrder		  -23
-	  ShowName		  off
-	  VariableName		  "lat"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace18"
-	  SID			  "1432"
-	  Ports			  [1]
-	  Position		  [250, 727, 310, 743]
-	  ZOrder		  -24
-	  ShowName		  off
-	  VariableName		  "lon"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace19"
-	  SID			  "1435"
-	  Ports			  [1]
-	  Position		  [830, 362, 890, 378]
-	  ZOrder		  -25
-	  ShowName		  off
-	  VariableName		  "Xdot"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace2"
-	  SID			  "1007"
-	  Ports			  [1]
-	  Position		  [250, 367, 310, 383]
-	  ZOrder		  -26
-	  ShowName		  off
-	  VariableName		  "theta"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace20"
-	  SID			  "1436"
-	  Ports			  [1]
-	  Position		  [830, 387, 890, 403]
-	  ZOrder		  -27
-	  ShowName		  off
-	  VariableName		  "Ydot"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace21"
-	  SID			  "1437"
-	  Ports			  [1]
-	  Position		  [830, 412, 890, 428]
-	  ZOrder		  -28
-	  ShowName		  off
-	  VariableName		  "Zdot"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace22"
-	  SID			  "1438"
-	  Ports			  [1]
-	  Position		  [830, 437, 890, 453]
-	  ZOrder		  -29
-	  ShowName		  off
-	  VariableName		  "X"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace23"
-	  SID			  "1439"
-	  Ports			  [1]
-	  Position		  [830, 462, 890, 478]
-	  ZOrder		  -30
-	  ShowName		  off
-	  VariableName		  "Y"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace24"
-	  SID			  "1440"
-	  Ports			  [1]
-	  Position		  [830, 487, 890, 503]
-	  ZOrder		  -31
-	  ShowName		  off
-	  VariableName		  "Z"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace25"
-	  SID			  "1953"
-	  Ports			  [1]
-	  Position		  [250, 137, 310, 153]
-	  ZOrder		  -32
-	  ShowName		  off
-	  VariableName		  "r_aileron"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace26"
-	  SID			  "1956"
-	  Ports			  [1]
-	  Position		  [250, 197, 310, 213]
-	  ZOrder		  -33
-	  ShowName		  off
-	  VariableName		  "r_flap"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace27"
-	  SID			  "1961"
-	  Ports			  [1]
-	  Position		  [830, 527, 890, 543]
-	  ZOrder		  -34
-	  ShowName		  off
-	  VariableName		  "pdot"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace28"
-	  SID			  "1962"
-	  Ports			  [1]
-	  Position		  [830, 552, 890, 568]
-	  ZOrder		  -35
-	  ShowName		  off
-	  VariableName		  "qdot"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace29"
-	  SID			  "1963"
-	  Ports			  [1]
-	  Position		  [830, 577, 890, 593]
-	  ZOrder		  -36
-	  ShowName		  off
-	  VariableName		  "rdot"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace3"
-	  SID			  "1008"
-	  Ports			  [1]
-	  Position		  [250, 337, 310, 353]
-	  ZOrder		  -37
-	  ShowName		  off
-	  VariableName		  "phi"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace30"
-	  SID			  "1964"
-	  Ports			  [1]
-	  Position		  [830, 602, 890, 618]
-	  ZOrder		  -38
-	  ShowName		  off
-	  VariableName		  "udot"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace31"
-	  SID			  "1965"
-	  Ports			  [1]
-	  Position		  [830, 627, 890, 643]
-	  ZOrder		  -39
-	  ShowName		  off
-	  VariableName		  "vdot"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace32"
-	  SID			  "1966"
-	  Ports			  [1]
-	  Position		  [830, 652, 890, 668]
-	  ZOrder		  -40
-	  ShowName		  off
-	  VariableName		  "wdot"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace33"
-	  SID			  "1967"
-	  Ports			  [1]
-	  Position		  [250, 517, 310, 533]
-	  ZOrder		  -41
-	  ShowName		  off
-	  VariableName		  "Ax"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace34"
-	  SID			  "1968"
-	  Ports			  [1]
-	  Position		  [250, 547, 310, 563]
-	  ZOrder		  -42
-	  ShowName		  off
-	  VariableName		  "Ay"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace35"
-	  SID			  "1969"
-	  Ports			  [1]
-	  Position		  [250, 577, 310, 593]
-	  ZOrder		  -43
-	  ShowName		  off
-	  VariableName		  "Az"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace36"
-	  SID			  "2117"
-	  Ports			  [1]
-	  Position		  [825, 80, 895, 100]
-	  ZOrder		  -44
-	  ShowName		  off
-	  VariableName		  "psi_cmd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace37"
-	  SID			  "2119"
-	  Ports			  [1]
-	  Position		  [825, 305, 895, 325]
-	  ZOrder		  -45
-	  ShowName		  off
-	  VariableName		  "gamma_cmd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace38"
-	  SID			  "2120"
-	  Ports			  [1]
-	  Position		  [825, 255, 895, 275]
-	  ZOrder		  -46
-	  ShowName		  off
-	  VariableName		  "aoa_cmd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace39"
-	  SID			  "2121"
-	  Ports			  [1]
-	  Position		  [825, 280, 895, 300]
-	  ZOrder		  -47
-	  ShowName		  off
-	  VariableName		  "aos_cmd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace4"
-	  SID			  "1009"
-	  Ports			  [1]
-	  Position		  [250, 307, 310, 323]
-	  ZOrder		  -48
-	  ShowName		  off
-	  VariableName		  "beta"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace40"
-	  SID			  "2124"
-	  Ports			  [1]
-	  Position		  [825, 105, 895, 125]
-	  ZOrder		  -49
-	  ShowName		  off
-	  VariableName		  "p_cmd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace41"
-	  SID			  "2128"
-	  Ports			  [1]
-	  Position		  [825, 155, 895, 175]
-	  ZOrder		  -50
-	  ShowName		  off
-	  VariableName		  "r_cmd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace42"
-	  SID			  "2137"
-	  Ports			  [1]
-	  Position		  [250, 637, 310, 653]
-	  ZOrder		  -51
-	  ShowName		  off
-	  VariableName		  "Pd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace43"
-	  SID			  "2138"
-	  Ports			  [1]
-	  Position		  [250, 667, 310, 683]
-	  ZOrder		  -52
-	  ShowName		  off
-	  VariableName		  "Ps"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace44"
-	  SID			  "2140"
-	  Ports			  [1]
-	  Position		  [825, 130, 895, 150]
-	  ZOrder		  -53
-	  ShowName		  off
-	  VariableName		  "q_cmd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace45"
-	  SID			  "2141"
-	  Ports			  [1]
-	  Position		  [825, 180, 895, 200]
-	  ZOrder		  -54
-	  ShowName		  off
-	  VariableName		  "ias_cmd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace46"
-	  SID			  "2142"
-	  Ports			  [1]
-	  Position		  [825, 205, 895, 225]
-	  ZOrder		  -55
-	  ShowName		  off
-	  VariableName		  "h_cmd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace47"
-	  SID			  "2143"
-	  Ports			  [1]
-	  Position		  [825, 230, 895, 250]
-	  ZOrder		  -56
-	  ShowName		  off
-	  VariableName		  "gndtrk_cmd"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace5"
-	  SID			  "1010"
-	  Ports			  [1]
-	  Position		  [250, 277, 310, 293]
-	  ZOrder		  -57
-	  ShowName		  off
-	  VariableName		  "alpha"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace6"
-	  SID			  "1011"
-	  Ports			  [1]
-	  Position		  [250, 247, 310, 263]
-	  ZOrder		  -58
-	  ShowName		  off
-	  VariableName		  "V_s"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace7"
-	  SID			  "1012"
-	  Ports			  [1]
-	  Position		  [250, 77, 310, 93]
-	  ZOrder		  -59
-	  ShowName		  off
-	  VariableName		  "rudder"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace8"
-	  SID			  "1013"
-	  Ports			  [1]
-	  Position		  [250, 107, 310, 123]
-	  ZOrder		  -60
-	  ShowName		  off
-	  VariableName		  "l_aileron"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  ToWorkspace
-	  Name			  "To Workspace9"
-	  SID			  "1014"
-	  Ports			  [1]
-	  Position		  [250, 47, 310, 63]
-	  ZOrder		  -61
-	  ShowName		  off
-	  VariableName		  "elevator"
-	  MaxDataPoints		  "inf"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  Scope
-	  Name			  "ailerons"
+	  Name			  "L1 / R1"
 	  SID			  "1958"
 	  Ports			  [1]
-	  Position		  [395, 99, 425, 131]
+	  Position		  [395, 129, 425, 161]
 	  ZOrder		  -62
 	  Floating		  off
-	  Location		  [5, 464, 1319, 876]
+	  Location		  [10, 377, 1324, 789]
 	  Open			  off
 	  NumInputPorts		  "1"
 	  ZoomMode		  "xonly"
@@ -2653,10 +2037,723 @@ Model {
 	}
 	Block {
 	  BlockType		  Scope
+	  Name			  "L4 / R4"
+	  SID			  "2178"
+	  Ports			  [1]
+	  Position		  [395, 189, 425, 221]
+	  ZOrder		  3
+	  Floating		  off
+	  Location		  [-117, 339, 1197, 751]
+	  Open			  off
+	  NumInputPorts		  "1"
+	  ZoomMode		  "xonly"
+	  List {
+	    ListType		    AxesTitles
+	    axes1		    "%<SignalLabel>"
+	  }
+	  List {
+	    ListType		    ScopeGraphics
+	    FigureColor		    "[0.5 0.5 0.5]"
+	    AxesColor		    "[0 0 0]"
+	    AxesTickColor	    "[1 1 1]"
+	    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+	    LineStyles		    "-|-|-|-|-|-"
+	    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+	    MarkerStyles	    "none|none|none|none|none|none"
+	  }
+	  ShowLegends		  off
+	  TimeRange		  "20"
+	  YMin			  "-20"
+	  YMax			  "20"
+	  SaveName		  "ScopeData5"
+	  DataFormat		  "StructureWithTime"
+	  LimitDataPoints	  off
+	  SampleTime		  "0"
+	  ScrollMode		  off
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux1"
+	  SID			  "2179"
+	  Ports			  [2, 1]
+	  Position		  [360, 174, 365, 236]
+	  ZOrder		  4
+	  ShowName		  off
+	  Inputs		  "2"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux2"
+	  SID			  "1957"
+	  Ports			  [2, 1]
+	  Position		  [360, 114, 365, 176]
+	  ZOrder		  -11
+	  ShowName		  off
+	  Inputs		  "2"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Scope
+	  Name			  "TAS"
+	  SID			  "998"
+	  Ports			  [1]
+	  Position		  [390, 284, 420, 316]
+	  ZOrder		  -12
+	  Floating		  off
+	  Location		  [5, 48, 1371, 727]
+	  Open			  off
+	  NumInputPorts		  "1"
+	  List {
+	    ListType		    AxesTitles
+	    axes1		    "%<SignalLabel>"
+	  }
+	  ShowLegends		  off
+	  TimeRange		  "45"
+	  YMin			  "14"
+	  YMax			  "19"
+	  SaveName		  "ScopeData3"
+	  DataFormat		  "StructureWithTime"
+	  LimitDataPoints	  off
+	  SampleTime		  "0"
+	  ScrollMode		  off
+	}
+	Block {
+	  BlockType		  Terminator
+	  Name			  "Terminator"
+	  SID			  "2006"
+	  Position		  [730, 725, 750, 745]
+	  ZOrder		  -13
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace"
+	  SID			  "999"
+	  Ports			  [1]
+	  Position		  [250, 637, 310, 653]
+	  ZOrder		  -14
+	  ShowName		  off
+	  VariableName		  "alt"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace1"
+	  SID			  "1000"
+	  Ports			  [1]
+	  Position		  [250, 427, 310, 443]
+	  ZOrder		  -15
+	  ShowName		  off
+	  VariableName		  "psi"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace10"
+	  SID			  "1001"
+	  Ports			  [1]
+	  Position		  [250, 197, 310, 213]
+	  ZOrder		  -16
+	  ShowName		  off
+	  VariableName		  "L4"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace11"
+	  SID			  "1002"
+	  Ports			  [1]
+	  Position		  [825, 50, 895, 70]
+	  ZOrder		  -17
+	  ShowName		  off
+	  VariableName		  "phi_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace12"
+	  SID			  "1003"
+	  Ports			  [1]
+	  Position		  [825, 75, 895, 95]
+	  ZOrder		  -18
+	  ShowName		  off
+	  VariableName		  "theta_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace13"
+	  SID			  "1004"
+	  Ports			  [1]
+	  Position		  [250, 457, 310, 473]
+	  ZOrder		  -19
+	  ShowName		  off
+	  VariableName		  "p"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace14"
+	  SID			  "1005"
+	  Ports			  [1]
+	  Position		  [250, 487, 310, 503]
+	  ZOrder		  -20
+	  ShowName		  off
+	  VariableName		  "q"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace15"
+	  SID			  "1006"
+	  Ports			  [1]
+	  Position		  [250, 517, 310, 533]
+	  ZOrder		  -21
+	  ShowName		  off
+	  VariableName		  "r"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace16"
+	  SID			  "1418"
+	  Ports			  [1]
+	  Position		  [250, 47, 310, 63]
+	  ZOrder		  -22
+	  ShowName		  off
+	  VariableName		  "throttle"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace17"
+	  SID			  "1431"
+	  Ports			  [1]
+	  Position		  [250, 727, 310, 743]
+	  ZOrder		  -23
+	  ShowName		  off
+	  VariableName		  "lat"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace18"
+	  SID			  "1432"
+	  Ports			  [1]
+	  Position		  [250, 757, 310, 773]
+	  ZOrder		  -24
+	  ShowName		  off
+	  VariableName		  "lon"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace19"
+	  SID			  "1435"
+	  Ports			  [1]
+	  Position		  [830, 392, 890, 408]
+	  ZOrder		  -25
+	  ShowName		  off
+	  VariableName		  "Xdot"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace2"
+	  SID			  "1007"
+	  Ports			  [1]
+	  Position		  [250, 397, 310, 413]
+	  ZOrder		  -26
+	  ShowName		  off
+	  VariableName		  "theta"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace20"
+	  SID			  "1436"
+	  Ports			  [1]
+	  Position		  [830, 417, 890, 433]
+	  ZOrder		  -27
+	  ShowName		  off
+	  VariableName		  "Ydot"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace21"
+	  SID			  "1437"
+	  Ports			  [1]
+	  Position		  [830, 442, 890, 458]
+	  ZOrder		  -28
+	  ShowName		  off
+	  VariableName		  "Zdot"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace22"
+	  SID			  "1438"
+	  Ports			  [1]
+	  Position		  [830, 467, 890, 483]
+	  ZOrder		  -29
+	  ShowName		  off
+	  VariableName		  "X"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace23"
+	  SID			  "1439"
+	  Ports			  [1]
+	  Position		  [830, 492, 890, 508]
+	  ZOrder		  -30
+	  ShowName		  off
+	  VariableName		  "Y"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace24"
+	  SID			  "1440"
+	  Ports			  [1]
+	  Position		  [830, 517, 890, 533]
+	  ZOrder		  -31
+	  ShowName		  off
+	  VariableName		  "Z"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace25"
+	  SID			  "1953"
+	  Ports			  [1]
+	  Position		  [250, 167, 310, 183]
+	  ZOrder		  -32
+	  ShowName		  off
+	  VariableName		  "R1"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace26"
+	  SID			  "1956"
+	  Ports			  [1]
+	  Position		  [250, 227, 310, 243]
+	  ZOrder		  -33
+	  ShowName		  off
+	  VariableName		  "R4"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace27"
+	  SID			  "1961"
+	  Ports			  [1]
+	  Position		  [830, 557, 890, 573]
+	  ZOrder		  -34
+	  ShowName		  off
+	  VariableName		  "pdot"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace28"
+	  SID			  "1962"
+	  Ports			  [1]
+	  Position		  [830, 582, 890, 598]
+	  ZOrder		  -35
+	  ShowName		  off
+	  VariableName		  "qdot"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace29"
+	  SID			  "1963"
+	  Ports			  [1]
+	  Position		  [830, 607, 890, 623]
+	  ZOrder		  -36
+	  ShowName		  off
+	  VariableName		  "rdot"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace3"
+	  SID			  "1008"
+	  Ports			  [1]
+	  Position		  [250, 367, 310, 383]
+	  ZOrder		  -37
+	  ShowName		  off
+	  VariableName		  "phi"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace30"
+	  SID			  "1964"
+	  Ports			  [1]
+	  Position		  [830, 632, 890, 648]
+	  ZOrder		  -38
+	  ShowName		  off
+	  VariableName		  "udot"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace31"
+	  SID			  "1965"
+	  Ports			  [1]
+	  Position		  [830, 657, 890, 673]
+	  ZOrder		  -39
+	  ShowName		  off
+	  VariableName		  "vdot"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace32"
+	  SID			  "1966"
+	  Ports			  [1]
+	  Position		  [830, 682, 890, 698]
+	  ZOrder		  -40
+	  ShowName		  off
+	  VariableName		  "wdot"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace33"
+	  SID			  "1967"
+	  Ports			  [1]
+	  Position		  [250, 547, 310, 563]
+	  ZOrder		  -41
+	  ShowName		  off
+	  VariableName		  "Ax"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace34"
+	  SID			  "1968"
+	  Ports			  [1]
+	  Position		  [250, 577, 310, 593]
+	  ZOrder		  -42
+	  ShowName		  off
+	  VariableName		  "Ay"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace35"
+	  SID			  "1969"
+	  Ports			  [1]
+	  Position		  [250, 607, 310, 623]
+	  ZOrder		  -43
+	  ShowName		  off
+	  VariableName		  "Az"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace36"
+	  SID			  "2117"
+	  Ports			  [1]
+	  Position		  [825, 100, 895, 120]
+	  ZOrder		  -44
+	  ShowName		  off
+	  VariableName		  "psi_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace37"
+	  SID			  "2119"
+	  Ports			  [1]
+	  Position		  [825, 325, 895, 345]
+	  ZOrder		  -45
+	  ShowName		  off
+	  VariableName		  "gamma_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace38"
+	  SID			  "2120"
+	  Ports			  [1]
+	  Position		  [825, 275, 895, 295]
+	  ZOrder		  -46
+	  ShowName		  off
+	  VariableName		  "aoa_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace39"
+	  SID			  "2121"
+	  Ports			  [1]
+	  Position		  [825, 300, 895, 320]
+	  ZOrder		  -47
+	  ShowName		  off
+	  VariableName		  "aos_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace4"
+	  SID			  "1009"
+	  Ports			  [1]
+	  Position		  [250, 337, 310, 353]
+	  ZOrder		  -48
+	  ShowName		  off
+	  VariableName		  "beta"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace40"
+	  SID			  "2124"
+	  Ports			  [1]
+	  Position		  [825, 125, 895, 145]
+	  ZOrder		  -49
+	  ShowName		  off
+	  VariableName		  "p_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace41"
+	  SID			  "2128"
+	  Ports			  [1]
+	  Position		  [825, 175, 895, 195]
+	  ZOrder		  -50
+	  ShowName		  off
+	  VariableName		  "r_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace42"
+	  SID			  "2137"
+	  Ports			  [1]
+	  Position		  [250, 667, 310, 683]
+	  ZOrder		  -51
+	  ShowName		  off
+	  VariableName		  "Pd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace43"
+	  SID			  "2138"
+	  Ports			  [1]
+	  Position		  [250, 697, 310, 713]
+	  ZOrder		  -52
+	  ShowName		  off
+	  VariableName		  "Ps"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace44"
+	  SID			  "2140"
+	  Ports			  [1]
+	  Position		  [825, 150, 895, 170]
+	  ZOrder		  -53
+	  ShowName		  off
+	  VariableName		  "q_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace45"
+	  SID			  "2141"
+	  Ports			  [1]
+	  Position		  [825, 200, 895, 220]
+	  ZOrder		  -54
+	  ShowName		  off
+	  VariableName		  "ias_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace46"
+	  SID			  "2142"
+	  Ports			  [1]
+	  Position		  [825, 225, 895, 245]
+	  ZOrder		  -55
+	  ShowName		  off
+	  VariableName		  "h_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace47"
+	  SID			  "2143"
+	  Ports			  [1]
+	  Position		  [825, 250, 895, 270]
+	  ZOrder		  -56
+	  ShowName		  off
+	  VariableName		  "gndtrk_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace48"
+	  SID			  "2184"
+	  Ports			  [1]
+	  Position		  [825, 350, 895, 370]
+	  ZOrder		  5
+	  ShowName		  off
+	  VariableName		  "Zdot_cmd"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace5"
+	  SID			  "1010"
+	  Ports			  [1]
+	  Position		  [250, 307, 310, 323]
+	  ZOrder		  -57
+	  ShowName		  off
+	  VariableName		  "alpha"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace6"
+	  SID			  "1011"
+	  Ports			  [1]
+	  Position		  [250, 277, 310, 293]
+	  ZOrder		  -58
+	  ShowName		  off
+	  VariableName		  "V_s"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace7"
+	  SID			  "1012"
+	  Ports			  [1]
+	  Position		  [250, 107, 310, 123]
+	  ZOrder		  -59
+	  ShowName		  off
+	  VariableName		  "aileron"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace8"
+	  SID			  "1013"
+	  Ports			  [1]
+	  Position		  [250, 137, 310, 153]
+	  ZOrder		  -60
+	  ShowName		  off
+	  VariableName		  "L1"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  ToWorkspace
+	  Name			  "To Workspace9"
+	  SID			  "1014"
+	  Ports			  [1]
+	  Position		  [250, 77, 310, 93]
+	  ZOrder		  -61
+	  ShowName		  off
+	  VariableName		  "elevator"
+	  MaxDataPoints		  "inf"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  Scope
+	  Name			  "aileron"
+	  SID			  "1422"
+	  Ports			  [1]
+	  Position		  [445, 84, 475, 116]
+	  ZOrder		  -71
+	  Floating		  off
+	  Location		  [10, 96, 1282, 407]
+	  Open			  off
+	  NumInputPorts		  "1"
+	  List {
+	    ListType		    AxesTitles
+	    axes1		    "%<SignalLabel>"
+	  }
+	  List {
+	    ListType		    ScopeGraphics
+	    FigureColor		    "[0.5 0.5 0.5]"
+	    AxesColor		    "[0 0 0]"
+	    AxesTickColor	    "[1 1 1]"
+	    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+	    LineStyles		    "-|-|-|-|-|-"
+	    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+	    MarkerStyles	    "none|none|none|none|none|none"
+	  }
+	  ShowLegends		  off
+	  TimeRange		  "45"
+	  YMin			  "-1.5"
+	  YMax			  "2"
+	  SaveName		  "ScopeData4"
+	  DataFormat		  "StructureWithTime"
+	  LimitDataPoints	  off
+	  SampleTime		  "0"
+	  ScrollMode		  off
+	}
+	Block {
+	  BlockType		  Scope
 	  Name			  "alpha"
 	  SID			  "2003"
 	  Ports			  [1]
-	  Position		  [350, 284, 380, 316]
+	  Position		  [350, 314, 380, 346]
 	  ZOrder		  -63
 	  Floating		  off
 	  Location		  [248, 115, 1361, 762]
@@ -2681,7 +2778,7 @@ Model {
 	  Name			  "beta"
 	  SID			  "2004"
 	  Ports			  [1]
-	  Position		  [390, 314, 420, 346]
+	  Position		  [390, 344, 420, 376]
 	  ZOrder		  -64
 	  Floating		  off
 	  Location		  [248, 115, 1361, 762]
@@ -2706,10 +2803,10 @@ Model {
 	  Name			  "elevator"
 	  SID			  "1420"
 	  Ports			  [1]
-	  Position		  [395, 19, 425, 51]
+	  Position		  [395, 49, 425, 81]
 	  ZOrder		  -65
 	  Floating		  off
-	  Location		  [5, 68, 1277, 480]
+	  Location		  [10, 96, 1282, 508]
 	  Open			  off
 	  NumInputPorts		  "1"
 	  ZoomMode		  "xonly"
@@ -2742,7 +2839,7 @@ Model {
 	  Name			  "p"
 	  SID			  "1015"
 	  Ports			  [1]
-	  Position		  [390, 434, 420, 466]
+	  Position		  [390, 464, 420, 496]
 	  ZOrder		  -66
 	  Floating		  off
 	  Location		  [40, 249, 1310, 661]
@@ -2767,10 +2864,10 @@ Model {
 	  Name			  "phi"
 	  SID			  "1017"
 	  Ports			  [1]
-	  Position		  [350, 344, 380, 376]
+	  Position		  [350, 374, 380, 406]
 	  ZOrder		  -67
 	  Floating		  off
-	  Location		  [5, 96, 1307, 670]
+	  Location		  [10, 96, 1286, 670]
 	  Open			  off
 	  NumInputPorts		  "1"
 	  ZoomMode		  "yonly"
@@ -2803,7 +2900,7 @@ Model {
 	  Name			  "psi"
 	  SID			  "2028"
 	  Ports			  [1]
-	  Position		  [350, 404, 380, 436]
+	  Position		  [350, 434, 380, 466]
 	  ZOrder		  -68
 	  Floating		  off
 	  Location		  [32, 145, 1304, 620]
@@ -2829,7 +2926,7 @@ Model {
 	  Name			  "q"
 	  SID			  "1016"
 	  Ports			  [1]
-	  Position		  [350, 459, 380, 491]
+	  Position		  [350, 489, 380, 521]
 	  ZOrder		  -69
 	  Floating		  off
 	  Location		  [2487, -188, 2986, 224]
@@ -2854,7 +2951,7 @@ Model {
 	  Name			  "r"
 	  SID			  "1419"
 	  Ports			  [1]
-	  Position		  [390, 494, 420, 526]
+	  Position		  [390, 524, 420, 556]
 	  ZOrder		  -70
 	  Floating		  off
 	  Location		  [6, 359, 1276, 771]
@@ -2875,45 +2972,10 @@ Model {
 	}
 	Block {
 	  BlockType		  Scope
-	  Name			  "rudder"
-	  SID			  "1422"
-	  Ports			  [1]
-	  Position		  [445, 54, 475, 86]
-	  ZOrder		  -71
-	  Floating		  off
-	  Location		  [5, 56, 1277, 367]
-	  Open			  off
-	  NumInputPorts		  "1"
-	  List {
-	    ListType		    AxesTitles
-	    axes1		    "%<SignalLabel>"
-	  }
-	  List {
-	    ListType		    ScopeGraphics
-	    FigureColor		    "[0.5 0.5 0.5]"
-	    AxesColor		    "[0 0 0]"
-	    AxesTickColor	    "[1 1 1]"
-	    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
-	    LineStyles		    "-|-|-|-|-|-"
-	    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
-	    MarkerStyles	    "none|none|none|none|none|none"
-	  }
-	  ShowLegends		  off
-	  TimeRange		  "45"
-	  YMin			  "-1.5"
-	  YMax			  "2"
-	  SaveName		  "ScopeData4"
-	  DataFormat		  "StructureWithTime"
-	  LimitDataPoints	  off
-	  SampleTime		  "0"
-	  ScrollMode		  off
-	}
-	Block {
-	  BlockType		  Scope
 	  Name			  "theta"
 	  SID			  "1018"
 	  Ports			  [1]
-	  Position		  [390, 374, 420, 406]
+	  Position		  [390, 404, 420, 436]
 	  ZOrder		  -72
 	  Floating		  off
 	  Location		  [42, 201, 1342, 774]
@@ -2948,15 +3010,25 @@ Model {
 	  Name			  "throttle"
 	  SID			  "2029"
 	  Ports			  [1]
-	  Position		  [495, 19, 525, 51]
+	  Position		  [445, 19, 475, 51]
 	  ZOrder		  -73
 	  Floating		  off
-	  Location		  [6, 82, 1278, 494]
+	  Location		  [-30, 156, 1242, 568]
 	  Open			  off
 	  NumInputPorts		  "1"
 	  List {
 	    ListType		    AxesTitles
 	    axes1		    "%<SignalLabel>"
+	  }
+	  List {
+	    ListType		    ScopeGraphics
+	    FigureColor		    "[0.5 0.5 0.5]"
+	    AxesColor		    "[0 0 0]"
+	    AxesTickColor	    "[1 1 1]"
+	    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+	    LineStyles		    "-|-|-|-|-|-"
+	    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+	    MarkerStyles	    "none|none|none|none|none|none"
 	  }
 	  ShowLegends		  off
 	  TimeRange		  "25"
@@ -2989,7 +3061,7 @@ Model {
 	  }
 	  Branch {
 	    ZOrder		    4
-	    Points		    [0, -15; 220, 0; 0, 25]
+	    Points		    [0, -20]
 	    DstBlock		    "throttle"
 	    DstPort		    1
 	  }
@@ -3018,36 +3090,17 @@ Model {
 	  ZOrder		  8
 	  Labels		  [0, 0]
 	  SrcBlock		  "Bus\nSelector4"
-	  SrcPort		  3
-	  Points		  [95, 0]
-	  Branch {
-	    ZOrder		    9
-	    DstBlock		    "To Workspace7"
-	    DstPort		    1
-	  }
-	  Branch {
-	    ZOrder		    10
-	    Points		    [0, -15]
-	    DstBlock		    "rudder"
-	    DstPort		    1
-	  }
-	}
-	Line {
-	  Name			  "<aileron [rad]>"
-	  ZOrder		  11
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector4"
 	  SrcPort		  4
 	  Points		  [95, 0]
 	  Branch {
-	    ZOrder		    12
-	    DstBlock		    "To Workspace8"
+	    ZOrder		    87
+	    Points		    [0, -15]
+	    DstBlock		    "Mux2"
 	    DstPort		    1
 	  }
 	  Branch {
-	    ZOrder		    13
-	    Points		    [0, -15]
-	    DstBlock		    "Mux2"
+	    ZOrder		    86
+	    DstBlock		    "To Workspace8"
 	    DstPort		    1
 	  }
 	}
@@ -3071,28 +3124,10 @@ Model {
 	  }
 	}
 	Line {
-	  Name			  "<L4 [rad]>"
-	  ZOrder		  17
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector4"
-	  SrcPort		  6
-	  DstBlock		  "To Workspace10"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "<R4 [rad]>"
-	  ZOrder		  18
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector4"
-	  SrcPort		  7
-	  DstBlock		  "To Workspace26"
-	  DstPort		  1
-	}
-	Line {
 	  ZOrder		  19
 	  SrcBlock		  "Mux2"
 	  SrcPort		  1
-	  DstBlock		  "ailerons"
+	  DstBlock		  "L1 / R1"
 	  DstPort		  1
 	}
 	Line {
@@ -3401,6 +3436,7 @@ Model {
 	  ZOrder		  64
 	  SrcBlock		  "Demux"
 	  SrcPort		  4
+	  Points		  [60, 0]
 	  DstBlock		  "To Workspace40"
 	  DstPort		  1
 	}
@@ -3436,6 +3472,7 @@ Model {
 	  ZOrder		  69
 	  SrcBlock		  "Demux"
 	  SrcPort		  9
+	  Points		  [60, 0]
 	  DstBlock		  "To Workspace47"
 	  DstPort		  1
 	}
@@ -3575,6 +3612,77 @@ Model {
 	  DstBlock		  "To Workspace24"
 	  DstPort		  1
 	}
+	Line {
+	  Name			  "<L4 [rad]>"
+	  ZOrder		  17
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector4"
+	  SrcPort		  6
+	  Points		  [95, 0]
+	  Branch {
+	    ZOrder		    94
+	    Points		    [0, -15]
+	    DstBlock		    "Mux1"
+	    DstPort		    1
+	  }
+	  Branch {
+	    ZOrder		    93
+	    DstBlock		    "To Workspace10"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  Name			  "<R4 [rad]>"
+	  ZOrder		  18
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector4"
+	  SrcPort		  7
+	  Points		  [93, 0]
+	  Branch {
+	    ZOrder		    92
+	    Points		    [0, -15]
+	    DstBlock		    "Mux1"
+	    DstPort		    2
+	  }
+	  Branch {
+	    ZOrder		    91
+	    DstBlock		    "To Workspace26"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  ZOrder		  90
+	  SrcBlock		  "Mux1"
+	  SrcPort		  1
+	  DstBlock		  "L4 / R4"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "<aileron [rad]>"
+	  ZOrder		  95
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector4"
+	  SrcPort		  3
+	  Points		  [94, 0]
+	  Branch {
+	    ZOrder		    98
+	    Points		    [0, -15]
+	    DstBlock		    "aileron"
+	    DstPort		    1
+	  }
+	  Branch {
+	    ZOrder		    97
+	    DstBlock		    "To Workspace7"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  ZOrder		  169
+	  SrcBlock		  "Demux"
+	  SrcPort		  13
+	  DstBlock		  "To Workspace48"
+	  DstPort		  1
+	}
       }
     }
     Block {
@@ -3654,7 +3762,7 @@ Model {
       "\n\n== SVN Info ==\nLast modified by %<LastModifiedBy> on %<LastModificationDate>"
       MaskDisplayString	      "MODEL INFORMATION\\nUMN UAV Software-in-the-Loop Simulation\\n\\nUniversity of Minnesot"
       "a\\nAerospace Engineering and Mechanics\\nCopyright 2011 Regents of the University of Minnesota. All rights rese"
-      "rved.\\n\\n== SVN Info ==\\nLast modified by brtaylor on 04-Jun-2015 17:02:21"
+      "rved.\\n\\n== SVN Info ==\\nLast modified by PC on 09-Jun-2015 15:53:31"
       HorizontalTextAlignment "Left"
       LeftAlignmentValue      "0.02"
       SourceBlockDiagram      "UAV_SIL"
@@ -3860,7 +3968,7 @@ Model {
     Annotation {
       SID		      "2145"
       Name		      "UMN UAV\nSOFTWARE-IN-THE-LOOP SIMULATION\n(SIL)\n "
-      Position		      [656, 89, 991, 167]
+      Position		      [656, 89, 965, 167]
       InternalMargins	      [0, 0, 0, 0]
       FixedHeight	      off
       FixedWidth	      off
