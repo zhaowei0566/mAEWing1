@@ -8,7 +8,7 @@
 #include AIRCRAFT_UP1DIR
 
 extern void get_system_id( double time, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr, struct mission *missionData_ptr){
-	unsigned short claw_select = missionData_ptr -> claw_select; 	// mode switching
+	unsigned short sysid_select = missionData_ptr -> sysid_select; 	// mode switching
 	double t0;
 	
 	if (time >= 10.0)
@@ -19,15 +19,15 @@ extern void get_system_id( double time, struct sensordata *sensorData_ptr, struc
 	{
 		t0 = 0;
 	}
-	
-	if(claw_select == 2){
+	// multisine pitch
+	if(sysid_select == 2){
 
 	}
-
-	else if(claw_select == 1){
+	// 3-2-1-1 Roll on ganged then surface pairs
+	else if(sysid_select == 1){
 
 	}
-
+	// 3-2-1-1 Pitch on ganged then surface pairs
 	else{
 
 	}

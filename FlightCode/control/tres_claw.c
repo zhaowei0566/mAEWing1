@@ -83,7 +83,6 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	
 	// z dot guidance
 	if(claw_mode == 2){
-		
 		missionData_ptr -> run_excitation = 0;
 		
 		// throttle cut
@@ -115,11 +114,26 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	}
 	else if(claw_mode == 1){
 		missionData_ptr -> run_excitation = 1;
+		
+		if(claw_select == 2){
+			missionData_ptr -> sysid_select = 2;
+		}
+		else if(claw_select == 1){
+			missionData_ptr -> sysid_select = 1;
+		}
+		else{
+			missionData_ptr -> sysid_select = 0;
+		}
+		
+		// reset the z dot states
+		e[3] = 0;
+		integrator[3] = 0;
+		anti_windup[3] = 1;
 	}
 	// pilot controls theta and phi cmd, autothrottle on
 	else{
 		missionData_ptr -> run_excitation = 0;
-	
+		
 		// reset the z dot states
 		e[3] = 0;
 		integrator[3] = 0;
