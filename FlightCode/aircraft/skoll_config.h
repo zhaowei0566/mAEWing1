@@ -22,18 +22,18 @@
 // Control Surface limits, max and min
 #define THROTTLE_MAX 	 1.0
 #define	THROTTLE_MIN	 0.0
-#define	ELEVATOR_MAX	 0.2618	///< [rad], 15deg
-#define	ELEVATOR_MIN	-0.4363 ///< [rad],-25deg
-#define AILERON_MAX	 	 0.3142	///< [rad], 18deg
-#define AILERON_MIN	    -0.3142 ///< [rad],-18deg
-#define	L1_MAX		 	 0.2618	///< [rad], 15deg -- L1 Flutter Suppression Surface
-#define	L1_MIN			-0.2618 ///< [rad],-15deg -- L1 Flutter Suppression Surface
-#define R1_MAX	 	 	 0.2618	///< [rad], 15deg -- R1 Flutter Suppression Surface
-#define R1_MIN		    -0.2618 ///< [rad],-15deg -- R1 Flutter Suppression Surface
-#define L4_MAX	 	     0.2618	///< [rad], 15deg -- L4 Flutter Suppression Surface
-#define L4_MIN		    -0.4363 ///< [rad],-25deg -- L4 Flutter Suppression Surface
-#define R4_MAX	 	     0.2618	///< [rad], 15deg -- R4 Flutter Suppression Surface
-#define R4_MIN		    -0.4363	///< [rad],-25deg -- R4 Flutter Suppression Surface
+#define	ELEVATOR_MAX	 0.6109	///< [rad], 35deg
+#define	ELEVATOR_MIN	-0.6109 ///< [rad],-35deg
+#define AILERON_MAX	 	 0.6109	///< [rad], 35deg
+#define AILERON_MIN	    -0.6109 ///< [rad],-35deg
+#define	L1_MAX		 	 0.6109	///< [rad], 35deg -- L1 Flutter Suppression Surface
+#define	L1_MIN			-0.6109 ///< [rad],-35deg -- L1 Flutter Suppression Surface
+#define R1_MAX	 	 	 0.6109	///< [rad], 35deg -- R1 Flutter Suppression Surface
+#define R1_MIN		    -0.6109 ///< [rad],-35deg -- R1 Flutter Suppression Surface
+#define L4_MAX	 	     0.6109	///< [rad], 35deg -- L4 Flutter Suppression Surface
+#define L4_MIN		    -0.6109 ///< [rad],-35deg -- L4 Flutter Suppression Surface
+#define R4_MAX	 	     0.6109	///< [rad], 35deg -- R4 Flutter Suppression Surface
+#define R4_MIN		    -0.6109	///< [rad],-35deg -- R4 Flutter Suppression Surface
 
 // MPC5200 PWM output channel assignments
 #define PWMOUT_DTHR_CH  0 ///<  PWM output channel for throttle
