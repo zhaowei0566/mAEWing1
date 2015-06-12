@@ -141,6 +141,7 @@ struct mission {
 	unsigned short run_num;			///< counter for number of autopilot engagements
 	unsigned short run_excitation;  ///< mode variable; 0 = no excitation, 1 = start excitations
 	unsigned short claw_mode;		///< mode variable; 3 position depending on claw to run
+	unsigned short claw_select;		///< mode variable; 3 position depending on claw to run
 };
 
 /// Control Data structure

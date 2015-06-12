@@ -8,7 +8,7 @@
 #define NUM_DOUBLE_VARS 6	///< Number of variables that will be logged as doubles
 #define NUM_FLOAT_VARS 61	///< Number of variables that will be logged as floats
 #define NUM_INT_VARS 2		///< Number of variables that will be logged as ints
-#define NUM_SHORT_VARS 8	///< Number of variables that will be logged as shorts
+#define NUM_SHORT_VARS 9	///< Number of variables that will be logged as shorts
 
 //Names of matlab variables MUST match pointers!!
 
@@ -82,10 +82,12 @@ int32_t* saveAsIntPointers[NUM_INT_VARS] = {(int32_t *)&imuData.err_type,(int32_
 
 
 /// char array of variable names for shorts
-char* saveAsShortNames[NUM_SHORT_VARS] = {"mode", "satVisible", "navValid","cpuLoad","adStatus","run_num","run_excitation","claw_mode"};
+char* saveAsShortNames[NUM_SHORT_VARS] = {"mode", "satVisible", "navValid","cpuLoad","adStatus","run_num","run_excitation",
+"claw_mode","claw_select"};
 
 /// uint16_t pointer array to variables that will be saved as shorts
 uint16_t* saveAsShortPointers[NUM_SHORT_VARS] = {&missionData.mode, &gpsData.satVisible,
-												  &gpsData.navValid,&cpuLoad,&adData.status,&missionData.run_num,&missionData.run_excitation,&missionData.claw_mode};
+												  &gpsData.navValid,&cpuLoad,&adData.status,&missionData.run_num,&missionData.run_excitation,
+												  &missionData.claw_mode,&missionData.claw_select};
 #endif	
 

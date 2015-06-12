@@ -12,7 +12,7 @@
 static double roll_control (double phi_ref, double roll_angle, double rollrate, double delta_t);
 static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t);
 static double speed_control(double speed_ref, double airspeed, double delta_t);
-static double zdot_control(double zdot_ref, double zdot, double delta_t);
+static double zdot_control(double zdot_ref, double zdot, double pos_pitch_limit, double neg_pitch_limit, double delta_t);
 
 // initialize pitch and roll angle tracking errors, integrators, and anti wind-up operators
 // 0 values correspond to the roll tracker, 1 values correspond to the theta tracker
@@ -53,6 +53,7 @@ static double dthr;
 extern void get_control(double time, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr, struct mission *missionData_ptr) {
 /// Return control outputs based on references and feedback signals.
 	unsigned short claw_mode = missionData_ptr -> claw_mode; 		// mode switching
+	unsigned short claw_select = missionData_ptr -> claw_select; 	// mode switching
 	
 	#ifdef AIRCRAFT_FENRIR
 		double base_pitch_cmd= 0.0698;  	// (Trim value) 4 deg
@@ -77,22 +78,48 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
     double theta_cmd;
 	double ias_cmd;
 	
-	// z dot guidance, in flare
-	if(claw_mode == 2){
-		controlData_ptr->zdot_cmd = 0.1;
-		controlData_ptr->phi_cmd = 0;
-		controlData_ptr->theta_cmd = zdot_control(controlData_ptr->zdot_cmd, zdot, TIMESTEP);
-		controlData_ptr->ias_cmd = 16;
-	}
+	double pos_pitch_limit;
+	double neg_pitch_limit;
+	
 	// z dot guidance
+	if(claw_mode == 2){
+		
+		missionData_ptr -> run_excitation = 0;
+		
+		// throttle cut
+		if(claw_select == 2){
+			pos_pitch_limit = 8*D2R;
+			neg_pitch_limit = 0;
+			controlData_ptr->zdot_cmd = 0.5;
+			controlData_ptr->phi_cmd = 0;
+			controlData_ptr->theta_cmd = zdot_control(controlData_ptr->zdot_cmd, zdot, pos_pitch_limit, neg_pitch_limit, TIMESTEP);
+			controlData_ptr->ias_cmd = -100;
+		}
+		// flare
+		else if(claw_select == 1){
+			pos_pitch_limit = 8*D2R;
+			neg_pitch_limit = 0;
+			controlData_ptr->zdot_cmd = 0.5;
+			controlData_ptr->phi_cmd = 0;
+			controlData_ptr->theta_cmd = zdot_control(controlData_ptr->zdot_cmd, zdot, pos_pitch_limit, neg_pitch_limit, TIMESTEP);
+			controlData_ptr->ias_cmd = 15;
+		}
+		// approach
+		else{
+			pos_pitch_limit = 20*D2R;
+			neg_pitch_limit = -20*D2R;
+			controlData_ptr->zdot_cmd = 3;
+			controlData_ptr->theta_cmd = zdot_control(controlData_ptr->zdot_cmd, zdot, pos_pitch_limit, neg_pitch_limit, TIMESTEP);
+			controlData_ptr->ias_cmd = 20;	
+		}
+	}
 	else if(claw_mode == 1){
-		controlData_ptr->zdot_cmd = 3;
-		controlData_ptr->theta_cmd = zdot_control(controlData_ptr->zdot_cmd, zdot, TIMESTEP);
-		controlData_ptr->ias_cmd = 20;
+		missionData_ptr -> run_excitation = 1;
 	}
 	// pilot controls theta and phi cmd, autothrottle on
 	else{
-
+		missionData_ptr -> run_excitation = 0;
+	
 		// reset the z dot states
 		e[3] = 0;
 		integrator[3] = 0;
@@ -184,10 +211,9 @@ static double speed_control(double speed_ref, double airspeed, double delta_t)
 	return dthr; // non dimensional
 }
 
-static double zdot_control(double zdot_ref, double zdot, double delta_t)
+static double zdot_control(double zdot_ref, double zdot, double pos_pitch_limit, double neg_pitch_limit, double delta_t)
 {
 	double theta_ref;
-	double pitch_limit = 0.349066; // Pitch angle saturation limit (20 degrees)
 	
 	// pitch attitude tracker
 	e[3] = zdot_ref - zdot;
@@ -195,16 +221,12 @@ static double zdot_control(double zdot_ref, double zdot, double delta_t)
 
     // proportional term + integral term
     theta_ref = zdot_gain[0]*e[3] + zdot_gain[1]*integrator[3];    // theta_ref output
-
-	if	(abs(theta_ref) >= pitch_limit){
-		theta_ref = sign(theta_ref)*pitch_limit;
-	}
 	
 	//eliminate wind-up on theta ref integral
-	if      (theta_ref >= pitch_limit && e[3] < 0) {anti_windup[3] = 0; theta_ref = pitch_limit;}  //stop integrating
-	else if (theta_ref >= pitch_limit && e[3] > 0) {anti_windup[3] = 1; theta_ref = pitch_limit;}
-	else if (theta_ref <= -1*pitch_limit && e[3] < 0) {anti_windup[3] = 1; theta_ref = -1*pitch_limit;}
-	else if (theta_ref <= -1*pitch_limit && e[3] > 0) {anti_windup[3] = 0; theta_ref = -1*pitch_limit;}  //stop integrating
+	if      (theta_ref >= pos_pitch_limit && e[3] < 0) {anti_windup[3] = 0; theta_ref = pos_pitch_limit;}  //stop integrating
+	else if (theta_ref >= pos_pitch_limit && e[3] > 0) {anti_windup[3] = 1; theta_ref = pos_pitch_limit;}
+	else if (theta_ref <= neg_pitch_limit && e[3] < 0) {anti_windup[3] = 1; theta_ref = neg_pitch_limit;}
+	else if (theta_ref <= neg_pitch_limit && e[3] > 0) {anti_windup[3] = 0; theta_ref = neg_pitch_limit;}  //stop integrating
 	else {anti_windup[3] = 1;}
 	
 	return theta_ref;

@@ -206,7 +206,7 @@ int main(int argc, char **argv) {
 					time_excite = get_Time()-t0excite; // Time since in auto mode
 					
 					//**** SYSTEM ID *********************************************************
-					get_system_id(time_excite, &sensorData, &navData, &controlData);
+					get_system_id(time_excite, &sensorData, &navData, &controlData, &missionData);
 					etime_sysid = get_Time() - tic - etime_control - etime_guidance -  etime_mission - etime_nav - etime_daq; // compute execution time
 					//************************************************************************
 				}
