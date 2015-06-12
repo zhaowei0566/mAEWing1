@@ -23,8 +23,8 @@ static short anti_windup[3]={1,1,1};   // integrates when anti_windup is 1
 
 /// Gains
 #ifdef AIRCRAFT_FENRIR
-	static double roll_gain[3]  = {0.50,0.10,0.01};  // PI gains for roll tracker and roll damper
-	static double pitch_gain[3] = {-0.15,-0.10,-0.01};  // PI gains for theta tracker and pitch damper
+	static double roll_gain[3]  = {0.50,0.15,0.01};  // PI gains for roll tracker and roll damper
+	static double pitch_gain[3] = {-0.3,-0.40,-0.01};  // PI gains for theta tracker and pitch damper
 	static double v_gain[2] 	= {0.091, 0.020};		// PI gains for speed tracker
 #endif
 
@@ -40,7 +40,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	unsigned short claw_mode = missionData_ptr -> claw_mode; 		// mode switching
 	
 	#ifdef AIRCRAFT_FENRIR
-		double base_pitch_cmd= 0.1222;  	// (Trim value) 7 deg
+		double base_pitch_cmd= 0.0698;  	// (Trim value) 4 deg
 	#endif
 
 	double phi   = navData_ptr->phi;
