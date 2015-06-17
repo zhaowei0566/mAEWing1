@@ -25,7 +25,7 @@ Model {
       BusOutputAsStruct	      "off"
     }
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.213"
+    ComputedModelVersion    "1.224"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -47,7 +47,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [0.0, 40.0, 836.0, 760.0]
+      Location		      [241.0, 81.0, 836.0, 760.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -72,8 +72,8 @@ Model {
 	ViewObjType		"SimulinkTopLevel"
 	LoadSaveID		"0"
 	Extents			[786.0, 586.0]
-	ZoomFactor		[1.0]
-	Offset			[382.91666666666697, 632.59999999999866]
+	ZoomFactor		[0.8]
+	Offset			[-2.9916666666664469, 189.61190476190467]
       }
     }
   }
@@ -83,9 +83,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "PC"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Jun 09 15:55:39 2015"
-  RTWModifiedTimeStamp	  355766135
-  ModelVersionFormat	  "1.%<AutoIncrement:213>"
+  LastModifiedDate	  "Tue Jun 16 20:18:56 2015"
+  RTWModifiedTimeStamp	  356386733
+  ModelVersionFormat	  "1.%<AutoIncrement:224>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -1021,7 +1021,7 @@ Model {
   }
   System {
     Name		    "autoland_control"
-    Location		    [0, 40, 836, 800]
+    Location		    [241, 81, 1077, 841]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1033,9 +1033,9 @@ Model {
     TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "100"
+    ZoomFactor		    "80"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "573"
+    SIDHighWatermark	    "606"
     Block {
       BlockType		      Inport
       Name		      "feedback"
@@ -1135,7 +1135,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Auto Throttle"
-	Location		[1636, 107, 2276, 1131]
+	Location		[241, 81, 1077, 841]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1626,15 +1626,6 @@ Model {
     }
     Block {
       BlockType		      From
-      Name		      "From16"
-      SID		      "529"
-      Position		      [305, 418, 385, 442]
-      ZOrder		      188
-      BlockMirror	      on
-      GotoTag		      "flare_flag"
-    }
-    Block {
-      BlockType		      From
       Name		      "From17"
       SID		      "452"
       Position		      [830, 915, 895, 935]
@@ -1754,7 +1745,7 @@ Model {
       BlockType		      Goto
       Name		      "Goto"
       SID		      "571"
-      Position		      [650, 392, 715, 408]
+      Position		      [640, 397, 705, 413]
       ZOrder		      204
       BlockMirror	      on
       GotoTag		      "V_s_cmd"
@@ -1861,16 +1852,16 @@ Model {
     Block {
       BlockType		      SubSystem
       Name		      "SWITCH Airspeed for Flare"
-      SID		      "559"
+      SID		      "594"
       Ports		      [1, 1]
-      Position		      [740, 395, 880, 455]
-      ZOrder		      197
+      Position		      [745, 397, 880, 453]
+      ZOrder		      211
       BlockMirror	      on
       NamePlacement	      "alternate"
       RequestExecContextInheritance off
       System {
 	Name			"SWITCH Airspeed for Flare"
-	Location		[0, 40, 836, 800]
+	Location		[241, 81, 1077, 841]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1886,35 +1877,64 @@ Model {
 	Block {
 	  BlockType		  Inport
 	  Name			  "flare_flag"
-	  SID			  "560"
-	  Position		  [280, 113, 310, 127]
+	  SID			  "595"
+	  Position		  [390, 43, 420, 57]
 	  ZOrder		  178
 	  BlockMirror		  on
+	  NamePlacement		  "alternate"
 	  IconDisplay		  "Port number"
 	}
 	Block {
 	  BlockType		  Constant
+	  Name			  "Constant"
+	  SID			  "596"
+	  Position		  [435, 127, 465, 143]
+	  ZOrder		  187
+	  NamePlacement		  "alternate"
+	}
+	Block {
+	  BlockType		  DiscreteIntegrator
+	  Name			  "Discrete-Time\nIntegrator"
+	  SID			  "597"
+	  Ports			  [2, 1]
+	  Position		  [505, 127, 540, 163]
+	  ZOrder		  186
+	  gainval		  "(approach_speed-landing_speed)/3"
+	  ExternalReset		  "rising"
+	  InitialConditionSetting "State (most efficient)"
+	  SampleTime		  "SampleTime"
+	  LimitOutput		  on
+	  UpperSaturationLimit	  "approach_speed-landing_speed"
+	  LowerSaturationLimit	  "0"
+	}
+	Block {
+	  BlockType		  Constant
 	  Name			  "Set Approach Speed"
-	  SID			  "562"
-	  Position		  [345, 139, 520, 161]
+	  SID			  "598"
+	  Position		  [270, 294, 445, 316]
 	  ZOrder		  146
 	  BlockMirror		  on
 	  Value			  "approach_speed"
 	}
 	Block {
-	  BlockType		  Constant
-	  Name			  "Set Landing Speed"
-	  SID			  "561"
-	  Position		  [345, 79, 520, 101]
-	  ZOrder		  165
-	  BlockMirror		  on
-	  Value			  "landing_speed"
+	  BlockType		  Sum
+	  Name			  "Sum"
+	  SID			  "599"
+	  Ports			  [2, 1]
+	  Position		  [580, 190, 600, 210]
+	  ZOrder		  183
+	  ShowName		  off
+	  IconShape		  "round"
+	  Inputs		  "-+|"
+	  InputSameDT		  off
+	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
 	}
 	Block {
 	  BlockType		  Switch
 	  Name			  "Switch2"
-	  SID			  "563"
-	  Position		  [170, 77, 220, 163]
+	  SID			  "600"
+	  Position		  [170, 89, 215, 221]
 	  ZOrder		  172
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
@@ -1923,39 +1943,143 @@ Model {
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
+	  BlockType		  SubSystem
+	  Name			  "Triggered\nSubsystem"
+	  SID			  "601"
+	  Ports			  [1, 1, 0, 1]
+	  Position		  [320, 179, 420, 221]
+	  ZOrder		  182
+	  TreatAsAtomicUnit	  on
+	  RequestExecContextInheritance	off
+	  System {
+	    Name		    "Triggered\nSubsystem"
+	    Location		    [401, 346, 899, 646]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "In1"
+	      SID		      "602"
+	      Position		      [110, 103, 140, 117]
+	      ZOrder		      -1
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      TriggerPort
+	      Name		      "Trigger"
+	      SID		      "603"
+	      Ports		      []
+	      Position		      [225, 20, 245, 40]
+	      ZOrder		      -2
+	      StatesWhenEnabling      "held"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "Out1"
+	      SID		      "604"
+	      Position		      [360, 103, 390, 117]
+	      ZOrder		      -3
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      ZOrder		      1
+	      SrcBlock		      "In1"
+	      SrcPort		      1
+	      DstBlock		      "Out1"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
 	  BlockType		  Outport
-	  Name			  "Airspeed Command"
-	  SID			  "564"
-	  Position		  [85, 113, 115, 127]
+	  Name			  "airspeed_cmd"
+	  SID			  "605"
+	  Position		  [120, 148, 150, 162]
 	  ZOrder		  177
 	  BlockMirror		  on
 	  IconDisplay		  "Port number"
 	}
 	Line {
 	  ZOrder		  1
-	  SrcBlock		  "Set Approach Speed"
+	  SrcBlock		  "Discrete-Time\nIntegrator"
 	  SrcPort		  1
-	  DstBlock		  "Switch2"
-	  DstPort		  3
-	}
-	Line {
-	  ZOrder		  2
-	  SrcBlock		  "flare_flag"
-	  SrcPort		  1
-	  DstBlock		  "Switch2"
-	  DstPort		  2
-	}
-	Line {
-	  ZOrder		  3
-	  SrcBlock		  "Switch2"
-	  SrcPort		  1
-	  DstBlock		  "Airspeed Command"
+	  Points		  [45, 0]
+	  DstBlock		  "Sum"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  4
-	  SrcBlock		  "Set Landing Speed"
+	  ZOrder		  2
+	  SrcBlock		  "Constant"
 	  SrcPort		  1
+	  DstBlock		  "Discrete-Time\nIntegrator"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  3
+	  SrcBlock		  "Triggered\nSubsystem"
+	  SrcPort		  1
+	  DstBlock		  "Sum"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  4
+	  SrcBlock		  "Set Approach Speed"
+	  SrcPort		  1
+	  Points		  [-20, 0; 0, -105]
+	  Branch {
+	    ZOrder		    5
+	    DstBlock		    "Triggered\nSubsystem"
+	    DstPort		    1
+	  }
+	  Branch {
+	    ZOrder		    6
+	    DstBlock		    "Switch2"
+	    DstPort		    3
+	  }
+	}
+	Line {
+	  ZOrder		  7
+	  SrcBlock		  "flare_flag"
+	  SrcPort		  1
+	  Points		  [-15, 0; 0, 105]
+	  Branch {
+	    ZOrder		    8
+	    DstBlock		    "Switch2"
+	    DstPort		    2
+	  }
+	  Branch {
+	    ZOrder		    9
+	    DstBlock		    "Triggered\nSubsystem"
+	    DstPort		    trigger
+	  }
+	  Branch {
+	    ZOrder		    10
+	    DstBlock		    "Discrete-Time\nIntegrator"
+	    DstPort		    2
+	  }
+	}
+	Line {
+	  ZOrder		  11
+	  SrcBlock		  "Switch2"
+	  SrcPort		  1
+	  DstBlock		  "airspeed_cmd"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  12
+	  SrcBlock		  "Sum"
+	  SrcPort		  1
+	  Points		  [9, 0; 0, -184; -369, 0; 0, 94]
 	  DstBlock		  "Switch2"
 	  DstPort		  1
 	}
@@ -1973,7 +2097,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"SWITCH Sinkrate for Flare"
-	Location		[0, 40, 836, 800]
+	Location		[241, 81, 1077, 841]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1985,39 +2109,68 @@ Model {
 	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"125"
+	ZoomFactor		"100"
 	Block {
 	  BlockType		  Inport
 	  Name			  "flare_flag"
 	  SID			  "511"
-	  Position		  [280, 113, 310, 127]
+	  Position		  [390, 43, 420, 57]
 	  ZOrder		  178
 	  BlockMirror		  on
+	  NamePlacement		  "alternate"
 	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant"
+	  SID			  "593"
+	  Position		  [435, 127, 465, 143]
+	  ZOrder		  187
+	  NamePlacement		  "alternate"
+	}
+	Block {
+	  BlockType		  DiscreteIntegrator
+	  Name			  "Discrete-Time\nIntegrator"
+	  SID			  "592"
+	  Ports			  [2, 1]
+	  Position		  [505, 127, 540, 163]
+	  ZOrder		  186
+	  gainval		  "(approach_sinkrate-landing_sinkrate)/3"
+	  ExternalReset		  "rising"
+	  InitialConditionSetting "State (most efficient)"
+	  SampleTime		  "SampleTime"
+	  LimitOutput		  on
+	  UpperSaturationLimit	  "approach_sinkrate-landing_sinkrate"
+	  LowerSaturationLimit	  "0"
 	}
 	Block {
 	  BlockType		  Constant
 	  Name			  "Set Approach Sinkrate"
 	  SID			  "454"
-	  Position		  [345, 139, 520, 161]
+	  Position		  [270, 294, 445, 316]
 	  ZOrder		  146
 	  BlockMirror		  on
 	  Value			  "approach_sinkrate"
 	}
 	Block {
-	  BlockType		  Constant
-	  Name			  "Set Sinkrate for Landing"
-	  SID			  "489"
-	  Position		  [345, 79, 520, 101]
-	  ZOrder		  165
-	  BlockMirror		  on
-	  Value			  "landing_sinkrate"
+	  BlockType		  Sum
+	  Name			  "Sum"
+	  SID			  "585"
+	  Ports			  [2, 1]
+	  Position		  [580, 190, 600, 210]
+	  ZOrder		  183
+	  ShowName		  off
+	  IconShape		  "round"
+	  Inputs		  "-+|"
+	  InputSameDT		  off
+	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
 	}
 	Block {
 	  BlockType		  Switch
 	  Name			  "Switch2"
 	  SID			  "496"
-	  Position		  [170, 77, 220, 163]
+	  Position		  [170, 89, 215, 221]
 	  ZOrder		  172
 	  BlockMirror		  on
 	  NamePlacement		  "alternate"
@@ -2026,18 +2179,77 @@ Model {
 	  SaturateOnIntegerOverflow off
 	}
 	Block {
+	  BlockType		  SubSystem
+	  Name			  "Triggered\nSubsystem"
+	  SID			  "586"
+	  Ports			  [1, 1, 0, 1]
+	  Position		  [320, 179, 420, 221]
+	  ZOrder		  182
+	  TreatAsAtomicUnit	  on
+	  RequestExecContextInheritance	off
+	  System {
+	    Name		    "Triggered\nSubsystem"
+	    Location		    [401, 346, 899, 646]
+	    Open		    off
+	    ModelBrowserVisibility  off
+	    ModelBrowserWidth	    200
+	    ScreenColor		    "white"
+	    PaperOrientation	    "landscape"
+	    PaperPositionMode	    "auto"
+	    PaperType		    "A4"
+	    PaperUnits		    "centimeters"
+	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+	    TiledPageScale	    1
+	    ShowPageBoundaries	    off
+	    ZoomFactor		    "100"
+	    Block {
+	      BlockType		      Inport
+	      Name		      "In1"
+	      SID		      "587"
+	      Position		      [110, 103, 140, 117]
+	      ZOrder		      -1
+	      IconDisplay	      "Port number"
+	    }
+	    Block {
+	      BlockType		      TriggerPort
+	      Name		      "Trigger"
+	      SID		      "588"
+	      Ports		      []
+	      Position		      [225, 20, 245, 40]
+	      ZOrder		      -2
+	      StatesWhenEnabling      "held"
+	    }
+	    Block {
+	      BlockType		      Outport
+	      Name		      "Out1"
+	      SID		      "589"
+	      Position		      [360, 103, 390, 117]
+	      ZOrder		      -3
+	      IconDisplay	      "Port number"
+	    }
+	    Line {
+	      ZOrder		      1
+	      SrcBlock		      "In1"
+	      SrcPort		      1
+	      DstBlock		      "Out1"
+	      DstPort		      1
+	    }
+	  }
+	}
+	Block {
 	  BlockType		  Outport
 	  Name			  "Zdot_cmd"
 	  SID			  "502"
-	  Position		  [120, 113, 150, 127]
+	  Position		  [120, 148, 150, 162]
 	  ZOrder		  177
 	  BlockMirror		  on
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  ZOrder		  263
-	  SrcBlock		  "Set Sinkrate for Landing"
+	  ZOrder		  294
+	  SrcBlock		  "Sum"
 	  SrcPort		  1
+	  Points		  [9, 0; 0, -184; -369, 0; 0, 94]
 	  DstBlock		  "Switch2"
 	  DstPort		  1
 	}
@@ -2052,17 +2264,74 @@ Model {
 	  ZOrder		  264
 	  SrcBlock		  "flare_flag"
 	  SrcPort		  1
-	  DstBlock		  "Switch2"
-	  DstPort		  2
+	  Points		  [-15, 0; 0, 105]
+	  Branch {
+	    ZOrder		    289
+	    DstBlock		    "Discrete-Time\nIntegrator"
+	    DstPort		    2
+	  }
+	  Branch {
+	    ZOrder		    282
+	    DstBlock		    "Triggered\nSubsystem"
+	    DstPort		    trigger
+	  }
+	  Branch {
+	    ZOrder		    274
+	    DstBlock		    "Switch2"
+	    DstPort		    2
+	  }
 	}
 	Line {
 	  ZOrder		  257
 	  SrcBlock		  "Set Approach Sinkrate"
 	  SrcPort		  1
-	  DstBlock		  "Switch2"
-	  DstPort		  3
+	  Points		  [-20, 0; 0, -105]
+	  Branch {
+	    ZOrder		    280
+	    DstBlock		    "Switch2"
+	    DstPort		    3
+	  }
+	  Branch {
+	    ZOrder		    279
+	    DstBlock		    "Triggered\nSubsystem"
+	    DstPort		    1
+	  }
+	}
+	Line {
+	  ZOrder		  292
+	  SrcBlock		  "Triggered\nSubsystem"
+	  SrcPort		  1
+	  DstBlock		  "Sum"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  290
+	  SrcBlock		  "Constant"
+	  SrcPort		  1
+	  DstBlock		  "Discrete-Time\nIntegrator"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  293
+	  SrcBlock		  "Discrete-Time\nIntegrator"
+	  SrcPort		  1
+	  Points		  [45, 0]
+	  DstBlock		  "Sum"
+	  DstPort		  1
 	}
       }
+    }
+    Block {
+      BlockType		      Saturate
+      Name		      "Saturation"
+      SID		      "581"
+      Ports		      [1, 1]
+      Position		      [400, 305, 430, 335]
+      ZOrder		      212
+      BlockMirror	      on
+      InputPortMap	      "u0"
+      UpperLimit	      "approach_theta_sat(2)/180*pi-TrimCondition.AttitudeIni(2)"
+      LowerLimit	      "approach_theta_sat(1)/180*pi-TrimCondition.AttitudeIni(2)"
     }
     Block {
       BlockType		      Selector
@@ -2388,7 +2657,7 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Sink Rate"
-	Location		[1636, 107, 2276, 1131]
+	Location		[241, 81, 1077, 841]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -2400,7 +2669,7 @@ Model {
 	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"80"
+	ZoomFactor		"150"
 	Block {
 	  BlockType		  Inport
 	  Name			  "Zdot_cmd [m/s]"
@@ -2420,18 +2689,6 @@ Model {
 	  NamePlacement		  "alternate"
 	  Port			  "2"
 	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  Saturate
-	  Name			  "Saturation"
-	  SID			  "434"
-	  Ports			  [1, 1]
-	  Position		  [465, 265, 495, 295]
-	  ZOrder		  38
-	  BlockMirror		  on
-	  InputPortMap		  "u0"
-	  UpperLimit		  "theta_sat/180*pi"
-	  LowerLimit		  "-theta_sat/180*pi"
 	}
 	Block {
 	  BlockType		  Sum
@@ -2461,7 +2718,7 @@ Model {
 	  RequestExecContextInheritance	off
 	  System {
 	    Name		    "ZDot Tracker"
-	    Location		    [1636, 107, 2276, 1131]
+	    Location		    [241, 81, 1077, 841]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -2507,8 +2764,8 @@ Model {
 	      SourceBlock	      "Actuator_Lib/Anti Windup"
 	      SourceType	      "Integrator Anti-Windup"
 	      ContentPreviewEnabled   off
-	      MAX_DEF		      "theta_sat/180*pi"
-	      MIN_DEF		      "-theta_sat/180*pi"
+	      MAX_DEF		      "approach_theta_sat(2)/180*pi"
+	      MIN_DEF		      "approach_theta_sat(1)/180*pi"
 	      gain_sign		      off
 	    }
 	    Block {
@@ -2669,23 +2926,16 @@ Model {
 	  SrcPort		  1
 	  Points		  [-20, 0]
 	  Branch {
+	    ZOrder		    63
+	    DstBlock		    "Pitch"
+	    DstPort		    1
+	  }
+	  Branch {
 	    ZOrder		    60
 	    Points		    [0, -35; 136, 0; 0, 25]
 	    DstBlock		    "ZDot Tracker"
 	    DstPort		    1
 	  }
-	  Branch {
-	    ZOrder		    59
-	    DstBlock		    "Saturation"
-	    DstPort		    1
-	  }
-	}
-	Line {
-	  ZOrder		  44
-	  SrcBlock		  "Saturation"
-	  SrcPort		  1
-	  DstBlock		  "Pitch"
-	  DstPort		  1
 	}
       }
     }
@@ -2711,18 +2961,6 @@ Model {
       Position		      [790, 765, 835, 845]
       ZOrder		      156
       BlockMirror	      on
-      Criteria		      "u2 ~= 0"
-      InputSameDT	      off
-      SaturateOnIntegerOverflow	off
-    }
-    Block {
-      BlockType		      Switch
-      Name		      "Switch1"
-      SID		      "534"
-      Position		      [185, 385, 230, 475]
-      ZOrder		      190
-      BlockMirror	      on
-      NamePlacement	      "alternate"
       Criteria		      "u2 ~= 0"
       InputSameDT	      off
       SaturateOnIntegerOverflow	off
@@ -2773,66 +3011,6 @@ Model {
 	  BlockType		  Outport
 	  Name			  "Out1"
 	  SID			  "508"
-	  Position		  [360, 103, 390, 117]
-	  ZOrder		  -3
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  ZOrder		  1
-	  SrcBlock		  "In1"
-	  SrcPort		  1
-	  DstBlock		  "Out1"
-	  DstPort		  1
-	}
-      }
-    }
-    Block {
-      BlockType		      SubSystem
-      Name		      "Triggered\nSubsystem1"
-      SID		      "530"
-      Ports		      [1, 1, 0, 1]
-      Position		      [255, 391, 350, 409]
-      ZOrder		      189
-      BlockMirror	      on
-      NamePlacement	      "alternate"
-      TreatAsAtomicUnit	      on
-      RequestExecContextInheritance off
-      System {
-	Name			"Triggered\nSubsystem1"
-	Location		[401, 346, 899, 646]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"A4"
-	PaperUnits		"centimeters"
-	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Inport
-	  Name			  "In1"
-	  SID			  "531"
-	  Position		  [110, 103, 140, 117]
-	  ZOrder		  -1
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  TriggerPort
-	  Name			  "Trigger"
-	  SID			  "532"
-	  Ports			  []
-	  Position		  [225, 20, 245, 40]
-	  ZOrder		  -2
-	  StatesWhenEnabling	  "held"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "Out1"
-	  SID			  "533"
 	  Position		  [360, 103, 390, 117]
 	  ZOrder		  -3
 	  IconDisplay		  "Port number"
@@ -2952,17 +3130,6 @@ Model {
     }
     Block {
       BlockType		      Goto
-      Name		      "p2"
-      SID		      "440"
-      Position		      [325, 310, 385, 330]
-      ZOrder		      70
-      BlockMirror	      on
-      NamePlacement	      "alternate"
-      ShowName		      off
-      GotoTag		      "glide_cmd"
-    }
-    Block {
-      BlockType		      Goto
       Name		      "p3"
       SID		      "394"
       Position		      [335, 565, 370, 585]
@@ -3015,6 +3182,17 @@ Model {
       NamePlacement	      "alternate"
       ShowName		      off
       GotoTag		      "da"
+    }
+    Block {
+      BlockType		      Goto
+      Name		      "p8"
+      SID		      "582"
+      Position		      [325, 310, 385, 330]
+      ZOrder		      209
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      ShowName		      off
+      GotoTag		      "glide_cmd"
     }
     Block {
       BlockType		      Goto
@@ -3280,10 +3458,10 @@ Model {
       DstPort		      2
     }
     Line {
-      ZOrder		      407
+      ZOrder		      582
       SrcBlock		      "SWITCH Airspeed for Flare"
       SrcPort		      1
-      Points		      [-11, 0]
+      Points		      [-16, 0]
       Branch {
 	ZOrder			463
 	DstBlock		"Auto Throttle"
@@ -3291,34 +3469,17 @@ Model {
       }
       Branch {
 	ZOrder			462
-	Points			[0, -25]
+	Points			[0, -20]
 	DstBlock		"Goto"
 	DstPort			1
       }
     }
     Line {
-      ZOrder		      125
+      ZOrder		      583
       SrcBlock		      "Sink Rate"
       SrcPort		      1
-      DstBlock		      "p2"
+      DstBlock		      "Saturation"
       DstPort		      1
-    }
-    Line {
-      ZOrder		      127
-      SrcBlock		      "Auto Throttle"
-      SrcPort		      1
-      Points		      [0, 10; -53, 0]
-      Branch {
-	ZOrder			324
-	Points			[0, -60]
-	DstBlock		"Triggered\nSubsystem1"
-	DstPort			1
-      }
-      Branch {
-	ZOrder			323
-	DstBlock		"Switch1"
-	DstPort			3
-      }
     }
     Line {
       ZOrder		      128
@@ -3488,33 +3649,10 @@ Model {
       DstPort		      1
     }
     Line {
-      ZOrder		      310
-      SrcBlock		      "Triggered\nSubsystem1"
+      ZOrder		      516
+      SrcBlock		      "Auto Throttle"
       SrcPort		      1
-      DstBlock		      "Switch1"
-      DstPort		      1
-    }
-    Line {
-      ZOrder		      312
-      SrcBlock		      "From16"
-      SrcPort		      1
-      Points		      [0, 0]
-      Branch {
-	ZOrder			319
-	DstBlock		"Triggered\nSubsystem1"
-	DstPort			trigger
-      }
-      Branch {
-	ZOrder			314
-	DstBlock		"Switch1"
-	DstPort			2
-      }
-    }
-    Line {
-      ZOrder		      325
-      SrcBlock		      "Switch1"
-      SrcPort		      1
-      Points		      [-37, 0; 0, 125]
+      Points		      [-180, 0; 0, 105]
       DstBlock		      "Mux"
       DstPort		      1
     }
@@ -3548,7 +3686,7 @@ Model {
       DstPort		      1
     }
     Line {
-      ZOrder		      408
+      ZOrder		      581
       SrcBlock		      "From13"
       SrcPort		      1
       DstBlock		      "SWITCH Airspeed for Flare"
@@ -3643,6 +3781,34 @@ Model {
       DstBlock		      "Mux1"
       DstPort		      13
     }
+    Line {
+      ZOrder		      584
+      SrcBlock		      "Saturation"
+      SrcPort		      1
+      DstBlock		      "p8"
+      DstPort		      1
+    }
+    Annotation {
+      SID		      "606"
+      Name		      "Does not include Variable Theta Protection for Flare"
+      Position		      [183, 356, 430, 371]
+      InternalMargins	      [0, 0, 0, 0]
+      FixedHeight	      off
+      FixedWidth	      off
+      HorizontalAlignment     "left"
+      VerticalAlignment	      "top"
+    }
+    Annotation {
+      SID		      "584"
+      Name		      "XXX AW needs protection switch"
+      Position		      [554, 236, 707, 251]
+      InternalMargins	      [0, 0, 0, 0]
+      FixedHeight	      off
+      FixedWidth	      off
+      HorizontalAlignment     "left"
+      VerticalAlignment	      "top"
+      ZOrder		      -1
+    }
     Annotation {
       SID		      "391"
       Position		      [437, 518, 439, 533]
@@ -3651,5 +3817,33 @@ Model {
       FixedWidth	      off
       ZOrder		      -1
     }
+  }
+}
+#Finite State Machines
+#
+#   Stateflow 80000001
+#
+#
+Stateflow {
+  machine {
+    id			    1
+    name		    "autoland_control"
+    created		    "16-Jun-2015 19:29:54"
+    isLibrary		    0
+    firstTarget		    2
+    sfVersion		    80000001
+  }
+  target {
+    id			    2
+    name		    "sfun"
+    description		    "Default Simulink S-Function Target."
+    machine		    1
+    linkNode		    [1 0 3]
+  }
+  target {
+    id			    3
+    name		    "rtw"
+    machine		    1
+    linkNode		    [1 2 0]
   }
 }
