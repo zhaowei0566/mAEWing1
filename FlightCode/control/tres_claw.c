@@ -3,6 +3,7 @@
 
 #include "../globaldefs.h"
 #include "control_interface.h"
+#include "../system_id/systemid_interface.h"
 
 // ***********************************************************************************
 #include AIRCRAFT_UP1DIR            // for Flight Code
@@ -10,7 +11,7 @@
 
 /// Definition of local functions: ****************************************************
 static double roll_control (double phi_ref, double roll_angle, double rollrate, double delta_t);
-static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t);
+static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t, unsigned short high_gain);
 static double speed_control(double speed_ref, double airspeed, double delta_t);
 static double zdot_control(double zdot_ref, double zdot, double pos_pitch_limit, double neg_pitch_limit, double delta_t);
 
@@ -31,10 +32,11 @@ static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 #endif
 
 #ifdef AIRCRAFT_SKOLL
-	static double roll_gain[3]  = {0.50,0.15,0.01};  // PI gains for roll tracker and roll damper
-	static double pitch_gain[3] = {-0.3,-0.40,-0.01};  // PI gains for theta tracker and pitch damper
-	static double v_gain[2] 	= {0.091, 0.020};		// PI gains for speed tracker
-	static double zdot_gain[2]  = {-0.025,-0.05};		// PI gains for zdot tracker
+	static double roll_gain[3]  = {0.85,0.6,0.0};  		// PI gains for roll tracker and roll damper
+	static double pitch_gain[3] = {-0.45,-0.6,-0.035};  	// PI gains for theta tracker and pitch damper
+	static double alt_gain[3]   = {-0.9,-1,-0.1};  		// PI gains for theta tracker and pitch damper
+	static double v_gain[2]     = {0.1, 0.020};		// PI gains for speed tracker
+	static double zdot_gain[2]  = {-0.01,-0.05};		// PI gains for zdot tracker
 #endif
 
 #ifdef AIRCRAFT_HATI
@@ -54,6 +56,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 /// Return control outputs based on references and feedback signals.
 	unsigned short claw_mode = missionData_ptr -> claw_mode; 		// mode switching
 	unsigned short claw_select = missionData_ptr -> claw_select; 	// mode switching
+	unsigned short gain_select;
 	
 	#ifdef AIRCRAFT_FENRIR
 		double base_pitch_cmd= 0.0698;  	// (Trim value) 4 deg
@@ -75,11 +78,17 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	double zdot  = navData_ptr->vd;
 	
 	double phi_cmd;
-    double theta_cmd;
+    	double theta_cmd;
 	double ias_cmd;
 	
-	double pos_pitch_limit;
-	double neg_pitch_limit;
+	static double pos_pitch_limit;
+	static double neg_pitch_limit;
+	static int t0_latched = FALSE;
+	static double t0 = 0;
+	static int t1_latched = FALSE;
+	static double t1 = 0;
+	double diff_time;
+	double diffy;	
 	
 	// z dot guidance
 	if(claw_mode == 2){
@@ -87,8 +96,6 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 		
 		// throttle cut
 		if(claw_select == 2){
-			pos_pitch_limit = 8*D2R;
-			neg_pitch_limit = 0;
 			controlData_ptr->zdot_cmd = 0.5;
 			controlData_ptr->phi_cmd = 0;
 			controlData_ptr->theta_cmd = zdot_control(controlData_ptr->zdot_cmd, zdot, pos_pitch_limit, neg_pitch_limit, TIMESTEP);
@@ -96,32 +103,48 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 		}
 		// flare
 		else if(claw_select == 1){
-			pos_pitch_limit = 8*D2R;
-			neg_pitch_limit = 0;
-			controlData_ptr->zdot_cmd = 0.5;
+			if(t0_latched == FALSE){
+				t0 = time;
+				t0_latched = TRUE;
+			}
+			diff_time = time - t0;
+			if(diff_time <=3){
+				pos_pitch_limit = 20*D2R-diff_time*(12.0/3.0)*D2R-base_pitch_cmd;
+				neg_pitch_limit = -20*D2R + diff_time*(20.0/3.0)*D2R-base_pitch_cmd;
+				controlData_ptr->zdot_cmd = 3 - diff_time*(2.5/3.0);
+				controlData_ptr->ias_cmd = 20 - diff_time*(5.0/3.0);
+			}
+			else{
+				pos_pitch_limit = 8*D2R-base_pitch_cmd;
+				neg_pitch_limit = 0-base_pitch_cmd;
+				controlData_ptr->zdot_cmd = 0.5;
+				controlData_ptr->ias_cmd = 15;
+			}
 			controlData_ptr->phi_cmd = 0;
 			controlData_ptr->theta_cmd = zdot_control(controlData_ptr->zdot_cmd, zdot, pos_pitch_limit, neg_pitch_limit, TIMESTEP);
-			controlData_ptr->ias_cmd = 15;
 		}
 		// approach
 		else{
-			pos_pitch_limit = 20*D2R;
-			neg_pitch_limit = -20*D2R;
+			t0_latched = FALSE;
+			pos_pitch_limit = 20*D2R-base_pitch_cmd;
+			neg_pitch_limit = -20*D2R-base_pitch_cmd;
 			controlData_ptr->zdot_cmd = 3;
 			controlData_ptr->theta_cmd = zdot_control(controlData_ptr->zdot_cmd, zdot, pos_pitch_limit, neg_pitch_limit, TIMESTEP);
 			controlData_ptr->ias_cmd = 20;	
 		}
 	}
-	else if(claw_mode == 1){
-		missionData_ptr -> run_excitation = 1;
+	else if(claw_mode == 0){
+		controlData_ptr->ias_cmd = 20;
 		
 		if(claw_select == 2){
-			missionData_ptr -> sysid_select = 2;
+			missionData_ptr -> run_excitation = 0;
 		}
 		else if(claw_select == 1){
+			missionData_ptr -> run_excitation = 1;
 			missionData_ptr -> sysid_select = 1;
 		}
 		else{
+			missionData_ptr -> run_excitation = 1;
 			missionData_ptr -> sysid_select = 0;
 		}
 		
@@ -139,16 +162,42 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 		integrator[3] = 0;
 		anti_windup[3] = 1;
 	}
+
+	if((claw_mode == 0)&&(claw_select == 2)){
+		gain_select = 1;
+		if(t1_latched == FALSE){
+			t1 = time;
+			// reset the theta states
+			e[1] = 0;
+			integrator[1] = 0;
+			anti_windup[1] = 1;
+
+			t1_latched = TRUE;
+		}	
+		diffy = time - t1;
+		controlData_ptr->theta_cmd = doublet(3, diffy, 6, 5*D2R); // Pitch angle command
+	}
+	else{
+		if(t1_latched == TRUE){
+			// reset the theta states
+			e[1] = 0;
+			integrator[1] = 0;
+			anti_windup[1] = 1;
+		}
+
+		gain_select = 0;
+		t1_latched = FALSE;
+	}
 	
 	phi_cmd = controlData_ptr->phi_cmd;
-    theta_cmd = controlData_ptr->theta_cmd;
+    	theta_cmd = controlData_ptr->theta_cmd;
 	ias_cmd = controlData_ptr->ias_cmd;
 
 	controlData_ptr->dthr = speed_control(ias_cmd, ias, TIMESTEP);
-	controlData_ptr->de   = pitch_control(theta_cmd, theta, q, TIMESTEP);
-    controlData_ptr->da   = roll_control(phi_cmd, phi, p, TIMESTEP);
+	controlData_ptr->de   = pitch_control(theta_cmd, theta, q, TIMESTEP, gain_select);
+    	controlData_ptr->da   = roll_control(phi_cmd, phi, p, TIMESTEP);
 	controlData_ptr->l1   = 0;		// L1 [rad]
-    controlData_ptr->r1   = 0; 		// R1 [rad]
+    	controlData_ptr->r1   = 0; 		// R1 [rad]
 	controlData_ptr->l4   = de + da; 		// L4 [rad]
 	controlData_ptr->r4   = de - da; 		// R4 [rad]
 }
@@ -187,14 +236,20 @@ theta_cmd  _      |               |       _   de   |          |---------
            |                               -------| Pitch Damper |<-    |
            |                                      |______________|      |
             ------------------------------------------------------------     */
-static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t)
+static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t, unsigned short high_gain)
 {
 	// pitch attitude tracker
 	e[1] = the_ref - pitch;
 	integrator[1] += e[1]*delta_t*anti_windup[1]; //pitch error integral
 
-    // proportional term + integral term               - pitch damper term
-    de = pitch_gain[0]*e[1] + pitch_gain[1]*integrator[1] - pitch_gain[2]*pitchrate;    // Elevator output
+	if(high_gain == 1){
+    		// proportional term + integral term               - pitch damper term
+    		de = alt_gain[0]*e[1] + alt_gain[1]*integrator[1] - alt_gain[2]*pitchrate;    // Elevator output
+	}
+	else{
+    		// proportional term + integral term               - pitch damper term
+    		de = pitch_gain[0]*e[1] + pitch_gain[1]*integrator[1] - pitch_gain[2]*pitchrate;    // Elevator output
+	}
 
 	//eliminate wind-up
 	if      (de >= ELEVATOR_MAX-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 0; de = ELEVATOR_MAX-PITCH_SURF_TRIM;}  //stop integrating
@@ -233,8 +288,8 @@ static double zdot_control(double zdot_ref, double zdot, double pos_pitch_limit,
 	e[3] = zdot_ref - zdot;
 	integrator[3] += e[3]*delta_t*anti_windup[3]; //zdot error integral
 
-    // proportional term + integral term
-    theta_ref = zdot_gain[0]*e[3] + zdot_gain[1]*integrator[3];    // theta_ref output
+    	// proportional term + integral term
+    	theta_ref = zdot_gain[0]*e[3] + zdot_gain[1]*integrator[3];    // theta_ref output
 	
 	//eliminate wind-up on theta ref integral
 	if      (theta_ref >= pos_pitch_limit && e[3] < 0) {anti_windup[3] = 0; theta_ref = pos_pitch_limit;}  //stop integrating
@@ -257,7 +312,7 @@ extern void reset_control(struct control *controlData_ptr){
 	controlData_ptr->de   = 0; 	// elevator
 	controlData_ptr->da   = 0; 	// rudder
 	controlData_ptr->l1   = 0;	// L1 [rad]
-    controlData_ptr->r1   = 0; 	// R1 [rad]
+    	controlData_ptr->r1   = 0; 	// R1 [rad]
 	controlData_ptr->l4   = 0; 	// L4 [rad]
 	controlData_ptr->r4   = 0; 	// R4 [rad]
 }

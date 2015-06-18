@@ -12,8 +12,8 @@
 ##### AIRCRAFT SELECTION #####
 # Select the desired aircraft configuration file here
 #AIRCRAFT = HIL_SIM
-AIRCRAFT = FENRIR
-#AIRCRAFT = SKOLL
+#AIRCRAFT = FENRIR
+AIRCRAFT = SKOLL
 
 ##### GUIDANCE LAW #####
 # Point to the desired guidance code here
@@ -55,8 +55,9 @@ $(RTW_ROOT)rt_nonfinite.c
 
 ##### SYSTEM ID SELECTION #####
 # Point to the desired system ID code here
-SYSTEM_ID = system_id/systemid_none.c
+#SYSTEM_ID = system_id/systemid_none.c
 #SYSTEM_ID = system_id/obes3211_sysid.c
+SYSTEM_ID = system_id/tres_sysid.c
 
 
 #### Determine which aircraft config file, data logging, actuator, and sensor files to compile
@@ -133,8 +134,8 @@ CC=/opt/ecos/gnutools/powerpc-eabi/bin/powerpc-eabi-gcc
 # You may also need to edit the path to point to the appropriate directory.
 
 # Use the following two paths for C code based control laws
-ECOS_LIB_PATH_MPC5200=/cygdrive/c/Users/brtaylor/Documents/Infrastructure/eCos_C/build/lib
-ECOS_INCLUDE_PATH_MPC5200=/cygdrive/c/Users/brtaylor/Documents/Infrastructure/eCos_C/build/include
+ECOS_LIB_PATH_MPC5200=/home/brian/Documents/eCos_C/build/lib
+ECOS_INCLUDE_PATH_MPC5200=/home/brian/Documents/eCos_C/build/include
 
 # Use the following two paths for autocode based control laws
 #ECOS_LIB_PATH_MPC5200=/cygdrive/c/Users/brtaylor/Desktop/UAV_Lab_Infrastructure/Software/eCos_Autocode/build/lib
