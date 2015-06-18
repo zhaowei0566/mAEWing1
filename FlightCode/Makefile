@@ -12,8 +12,8 @@
 ##### AIRCRAFT SELECTION #####
 # Select the desired aircraft configuration file here
 #AIRCRAFT = HIL_SIM
-AIRCRAFT = FENRIR
-#AIRCRAFT = SKOLL
+#AIRCRAFT = FENRIR
+AIRCRAFT = SKOLL
 
 ##### GUIDANCE LAW #####
 # Point to the desired guidance code here
@@ -114,7 +114,7 @@ main.c
 # Path to your MATLAB directory for RTW files. 
 # Cannot have any spaces in the names!
 # Use /cygdrive/c/ instead of C:/
-MATLAB_ROOT = /cygdrive/c/PROGRA~1/MATLAB/R2012b
+MATLAB_ROOT = /cygdrive/c/PROGRA~1/MATLAB/R2014b
 
 #MATLAB_INCLUDES = \
 	-I$(MATLAB_ROOT)/simulink/include \
@@ -133,12 +133,12 @@ CC=/opt/ecos/gnutools/powerpc-eabi/bin/powerpc-eabi-gcc
 # You may also need to edit the path to point to the appropriate directory.
 
 # Use the following two paths for C code based control laws
-ECOS_LIB_PATH_MPC5200=/cygdrive/c/Users/brtaylor/Documents/Infrastructure/eCos_C/build/lib
-ECOS_INCLUDE_PATH_MPC5200=/cygdrive/c/Users/brtaylor/Documents/Infrastructure/eCos_C/build/include
+ECOS_LIB_PATH_MPC5200=/cygdrive/c/UAV/eCos_C/build/lib
+ECOS_INCLUDE_PATH_MPC5200=/cygdrive/c/UAV/eCos_C/build/include
 
 # Use the following two paths for autocode based control laws
-#ECOS_LIB_PATH_MPC5200=/cygdrive/c/Users/brtaylor/Desktop/UAV_Lab_Infrastructure/Software/eCos_Autocode/build/lib
-#ECOS_INCLUDE_PATH_MPC5200=/cygdrive/c/Users/brtaylor/Desktop/UAV_Lab_Infrastructure/Software/eCos_Autocode/build/include
+#ECOS_LIB_PATH_MPC5200=/cygdrive/c/UAV/eCos_Autocode/build/lib
+#ECOS_INCLUDE_PATH_MPC5200=/cygdrive/c/UAV/eCos_Autocode/build/include
 
 ##########################################################################
 # Use the following two includes for C code based control laws
