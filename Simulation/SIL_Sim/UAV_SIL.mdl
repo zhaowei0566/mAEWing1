@@ -75,8 +75,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "PC"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Jun 09 15:54:03 2015"
-  RTWModifiedTimeStamp	  355766009
+  LastModifiedDate	  "Tue Jun 16 20:19:07 2015"
+  RTWModifiedTimeStamp	  356386558
   ModelVersionFormat	  "$Id: UAV_SIL.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
@@ -192,7 +192,7 @@ Model {
 	  $ObjectID		  8
 	  Version		  "1.14.3"
 	  StartTime		  "0.0"
-	  StopTime		  "20"
+	  StopTime		  "40"
 	  AbsTol		  "auto"
 	  FixedStep		  "SampleTime"
 	  InitialStep		  "auto"
@@ -1061,14 +1061,14 @@ Model {
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  ZOrder		  37
+	  ZOrder		  13
 	  SrcBlock		  "cmds"
 	  SrcPort		  1
 	  DstBlock		  "miniMUTT"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  38
+	  ZOrder		  14
 	  SrcBlock		  "miniMUTT"
 	  SrcPort		  1
 	  DstBlock		  "controls"
@@ -1220,7 +1220,7 @@ Model {
 	    }
 	    PropName		    "Variants"
 	  }
-	  ModelReferenceVersion	  "1.212"
+	  ModelReferenceVersion	  "1.224"
 	  List {
 	    ListType		    InputPortNames
 	    port0		    "feedback"
@@ -1432,14 +1432,14 @@ Model {
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
-	      ZOrder		      37
+	      ZOrder		      13
 	      SrcBlock		      "I"
 	      SrcPort		      1
 	      DstBlock		      "Trim setting MiniMUTT"
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      38
+	      ZOrder		      14
 	      SrcBlock		      "Trim setting MiniMUTT"
 	      SrcPort		      1
 	      DstBlock		      "O"
@@ -3436,7 +3436,6 @@ Model {
 	  ZOrder		  64
 	  SrcBlock		  "Demux"
 	  SrcPort		  4
-	  Points		  [60, 0]
 	  DstBlock		  "To Workspace40"
 	  DstPort		  1
 	}
@@ -3472,7 +3471,6 @@ Model {
 	  ZOrder		  69
 	  SrcBlock		  "Demux"
 	  SrcPort		  9
-	  Points		  [60, 0]
 	  DstBlock		  "To Workspace47"
 	  DstPort		  1
 	}
@@ -3762,7 +3760,7 @@ Model {
       "\n\n== SVN Info ==\nLast modified by %<LastModifiedBy> on %<LastModificationDate>"
       MaskDisplayString	      "MODEL INFORMATION\\nUMN UAV Software-in-the-Loop Simulation\\n\\nUniversity of Minnesot"
       "a\\nAerospace Engineering and Mechanics\\nCopyright 2011 Regents of the University of Minnesota. All rights rese"
-      "rved.\\n\\n== SVN Info ==\\nLast modified by PC on 09-Jun-2015 15:53:31"
+      "rved.\\n\\n== SVN Info ==\\nLast modified by PC on 16-Jun-2015 20:18:11"
       HorizontalTextAlignment "Left"
       LeftAlignmentValue      "0.02"
       SourceBlockDiagram      "UAV_SIL"

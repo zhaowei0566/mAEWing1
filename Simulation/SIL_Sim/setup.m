@@ -57,22 +57,26 @@ switch controller_mode
         pitch_gains = [kp_PT, ki_PT, kp_PD];
         roll_gains = [kp_RT, ki_RT, kp_RD];
     case 4 % Auto-Land controller in Simulink.        
-%         roll_gains = [0.15, .3, 0]; %Flight Code for Fenrir24/25
-        roll_gains = [0.5, .1, 0.01];
-%         pitch_gains = [-0.3, -0.4, 0];  %Flight Code for Fenrir24/25
-        pitch_gains = [-0.15, -0.1, -0.01];  
-        autothrottle_gains = [0.091, 0.02];  %Flight-Code for Fenrir24/25
-        sinkrate_gains  = [-0.025,  -0.05 ]; 
-
+%         roll_gains = [0.5, .1, 0.01];        %Flight Code for Fenrir27/28
+%         pitch_gains = [-0.25, -0.4, -0.01];   %Flight Code for Fenrir27/28 
+%         autothrottle_gains = [0.091, 0.02];  %Flight-Code for Fenrir27/28
+%         sinkrate_gains  = [-0.03,  -0.05 ]; %Flight-Code for Fenrir27/28
+        roll_gains = [0.85, 0.6, 0.00];        %
+        pitch_gains = [-0.45, -0.6, -0.035];   % 
+       autothrottle_gains = [0.1, 0.02];  %
+       sinkrate_gains  = [-0.01,  -0.05]; % 
+       
+%        roll_gains = [1, 1, 0.03];        %
+%        pitch_gains = [-0.9, -1, -0.1];   % 
         
-        
-        theta_sat = 20;   % [deg]
-        engage_flare = 4; % [m]
+        approach_theta_sat = [-20 20];   % [deg]
+        landing_theta_sat = [-10 10];   % [deg]
+        engage_flare = 40; % [m]
         
         approach_sinkrate = 3; %[m/s]
-        approach_speed = 23; % [m/s]
+        approach_speed = 20; % [m/s]
         landing_sinkrate = 0.5;  % [m/s]
-        landing_speed = 15; % [m/s]
+        landing_speed = 16; % [m/s]
         
         autoland_flag = true;
 end
