@@ -15,8 +15,8 @@
 // Control Surface Trims -- PLACEHOLDERS
 // TO DO -- DEFINE TRIMS FOR ALL FLUTTER SUPRESSION SURFACES
 #define THROTTLE_TRIM      0.72		///< [ND], approximate throttle trim value
-#define PITCH_SURF_TRIM   -0.1196 	///< [rad], approximate elevator trim value
-#define ROLL_SURF_TRIM    -0.0882 	///< [rad], approximate aileron trim value
+#define PITCH_SURF_TRIM   -0.0872	///< [rad], approximate elevator trim value
+#define ROLL_SURF_TRIM    0.0 	///< [rad], approximate aileron trim value
 
 
 // Control Surface limits, max and min
@@ -24,34 +24,34 @@
 #define	THROTTLE_MIN	 0.0
 #define	ELEVATOR_MAX	 0.6109	///< [rad], 35deg
 #define	ELEVATOR_MIN	-0.6109 ///< [rad],-35deg
-#define AILERON_MAX	 	 0.6109	///< [rad], 35deg
-#define AILERON_MIN	    -0.6109 ///< [rad],-35deg
-#define	L1_MAX		 	 0.6109	///< [rad], 35deg -- L1 Flutter Suppression Surface
-#define	L1_MIN			-0.6109 ///< [rad],-35deg -- L1 Flutter Suppression Surface
-#define R1_MAX	 	 	 0.6109	///< [rad], 35deg -- R1 Flutter Suppression Surface
-#define R1_MIN		    -0.6109 ///< [rad],-35deg -- R1 Flutter Suppression Surface
-#define L4_MAX	 	     0.6109	///< [rad], 35deg -- L4 Flutter Suppression Surface
-#define L4_MIN		    -0.6109 ///< [rad],-35deg -- L4 Flutter Suppression Surface
-#define R4_MAX	 	     0.6109	///< [rad], 35deg -- R4 Flutter Suppression Surface
-#define R4_MIN		    -0.6109	///< [rad],-35deg -- R4 Flutter Suppression Surface
+#define AILERON_MAX	 0.6109	///< [rad], 35deg
+#define AILERON_MIN	-0.6109 ///< [rad],-35deg
+#define	L1_MAX		 0.6109	///< [rad], 35deg -- L1 Flutter Suppression Surface
+#define	L1_MIN	        -0.6109 ///< [rad],-35deg -- L1 Flutter Suppression Surface
+#define R1_MAX	 	 0.6109	///< [rad], 35deg -- R1 Flutter Suppression Surface
+#define R1_MIN		-0.6109 ///< [rad],-35deg -- R1 Flutter Suppression Surface
+#define L4_MAX	 	 0.6109	///< [rad], 35deg -- L4 Flutter Suppression Surface
+#define L4_MIN		-0.6109 ///< [rad],-35deg -- L4 Flutter Suppression Surface
+#define R4_MAX	 	 0.6109	///< [rad], 35deg -- R4 Flutter Suppression Surface
+#define R4_MIN		-0.6109	///< [rad],-35deg -- R4 Flutter Suppression Surface
 
 // MPC5200 PWM output channel assignments
 #define PWMOUT_DTHR_CH  0 ///<  PWM output channel for throttle
 #define PWMOUT_DE_CH  	1 ///<  PWM output channel for elevator
 #define PWMOUT_DA_CH 	3 ///<  PWM output channel for left aileron
 #define PWMOUT_L1_CH 	2 ///<  PWM output channel for L1 Flutter Suppression Surface
-#define PWMOUT_R1_CH 	4 ///<  PWM output channel for R1 Flutter Suppression Surface
+#define PWMOUT_R1_CH 	7 ///<  PWM output channel for R1 Flutter Suppression Surface
 #define PWMOUT_L4_CH 	5 ///<  PWM output channel for L4 Flutter Suppression Surface
-#define PWMOUT_R4_CH	7 ///<  PWM output channel for R4 Flutter Suppression Surface
+#define PWMOUT_R4_CH	4 ///<  PWM output channel for R4 Flutter Suppression Surface
 
 // MPC5200 PWM output command calibration parameters
 #define PWMOUT_DTHR_CAL {2720, 2720} ///< linear calibration for throttle, pwm 1.292ms (motor off) to 1.800ms (100% pwr), from ESC data. Note motor on value is 1.307ms Register values from MPC Servo Calibration.xls
-#define PWMOUT_DE_CAL  	{1095.64213101247,          2899.78934330606,          4140.25244356822} ///< calibration for elevator
-#define PWMOUT_DA_CAL   {-1347.85533818094,         -2977.58276132794,         4138.71988951024} ///< calibration for aileron
-#define PWMOUT_L1_CAL   {5940.25534751177,         -43.7236873668368,          4443.09325030927,          4152.60424812884} ///< cubic calibration for L1
-#define PWMOUT_R1_CAL   {-10849.3455485626,          2988.07225069245,         -4666.40932628751,           4125.0996053587} ///< cubic calibration for right R1
-#define PWMOUT_L4_CAL   {-1294.07607429153,         -3418.06657782746,         4050.86295420798} ///< calibration for left L4
-#define PWMOUT_R4_CAL   {1395.10662658164,          3298.25092852368,          4114.38621239469} ///< calibration for right R4
+#define PWMOUT_DE_CAL  	{-6.85159967976556,	1536.43791765489,	4136.32259505696} ///< calibration for elevator
+#define PWMOUT_DA_CAL   {40.3938273657162,	-1530.84847587925,	4128.05315614618} ///< calibration for aileron
+#define PWMOUT_L1_CAL   {-273.453978463125,	-2224.61597397151,	4138.42773240943} ///< cubic calibration for L1
+#define PWMOUT_R1_CAL   {397.069971071966,	2222.09238806927,	4134.05888915451} ///< cubic calibration for right R1
+#define PWMOUT_L4_CAL   {25.3145068984323,	-1649.2165450339,	4134.66225412391} ///< calibration for left L4
+#define PWMOUT_R4_CAL   {90.0240481839605,	1591.32761218294,	4129.90418118467} ///< calibration for right R4
 
 // Pilot inceptor channels
 #define THR_INCP_CH		1 ///<  input channel for pilot throttle inceptor
