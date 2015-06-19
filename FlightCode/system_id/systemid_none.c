@@ -16,7 +16,7 @@
 #include "../globaldefs.h"
 #include "systemid_interface.h"
 
-extern void get_system_id(double time, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr){
+extern void get_system_id(double time, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr, struct mission *missionData_ptr	){
 	
 }
 
