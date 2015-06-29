@@ -33,12 +33,9 @@ MISSION = mission/tres_claw_switch.c
 
 ##### FLIGHT CONTROL LAW #####
 # Point to the desired flight control law code here
-#CONTROL =  control/manual_control.c
-#CONTROL =  control/pitch_roll_damper.c
-#CONTROL =  control/attitude_tracker.c
-#CONTROL =  control/alt_speed_tracker.c
 #CONTROL =  control/dos_claw.c
 CONTROL =  control/tres_claw.c
+#CONTROL =  control/sstest_claw.c control/ss_baseline.c
 
 ##### MATLAB RTW AUTOCODE #####
 # Make sure #include "simstruc.h" and #include "fixedpoint.h" are commented out in the <modelname>.h file
@@ -55,9 +52,9 @@ $(RTW_ROOT)rt_nonfinite.c
 
 ##### SYSTEM ID SELECTION #####
 # Point to the desired system ID code here
-SYSTEM_ID = system_id/systemid_none.c
+#SYSTEM_ID = system_id/systemid_none.c
 #SYSTEM_ID = system_id/obes3211_sysid.c
-
+SYSTEM_ID = system_id/tres_sysid.c
 
 #### Determine which aircraft config file, data logging, actuator, and sensor files to compile
 ifeq ($(strip $(AIRCRAFT)),HIL_SIM)
@@ -70,14 +67,15 @@ endif
 ifeq ($(strip $(AIRCRAFT)),FENRIR)
 AIRCRAFT_CONFIG = aircraft/fenrir_config.h
 DATALOG_CONFIG = datalog/fenrir_datalog.h
-SENSORS = sensors/AirData/AMS_pressure.c sensors/GPS/gps_crescent.c sensors/IMU/IMU_iSensor.c sensors/PWM/ATMEGA328_PWM.c sensors/GPIO/gpio.c 
+SENSORS = sensors/AirData/AMS_pressure.c sensors/GPS/gps_crescent.c sensors/IMU/IMU_iSensor.c sensors/PWM/ATMEGA328_PWM.c sensors/GPIO/gpio.c  
 ACTUATORS = actuators/actuator_PWM.c
 endif
 
 ifeq ($(strip $(AIRCRAFT)),SKOLL)
 AIRCRAFT_CONFIG = aircraft/skoll_config.h
 DATALOG_CONFIG = datalog/skoll_datalog.h
-SENSORS = sensors/AirData/AMS_pressure.c sensors/GPS/gps_crescent.c sensors/IMU/IMU_iSensor.c sensors/PWM/ATMEGA328_PWM.c sensors/GPIO/gpio.c  sensors/ADC/SX8724C_ADC.c
+#SENSORS = sensors/AirData/AMS_pressure.c sensors/GPS/gps_crescent.c sensors/IMU/IMU_iSensor.c sensors/PWM/ATMEGA328_PWM.c sensors/GPIO/gpio.c  sensors/ADC/SX8724C_ADC.c
+SENSORS = sensors/AirData/AMS_pressure.c sensors/GPS/gps_oemstar.c sensors/IMU/IMU_iSensor.c sensors/PWM/ATMEGA328_PWM.c sensors/GPIO/gpio.c  sensors/ADC/SX8724C_ADC.c
 ACTUATORS = actuators/actuator_PWM.c
 endif
 
