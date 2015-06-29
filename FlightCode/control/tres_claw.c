@@ -33,10 +33,10 @@ static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 
 #ifdef AIRCRAFT_SKOLL
 	// static double roll_gain[3]  = {0.85,0.6,0.01};  		// PI gains for roll tracker and roll damper
-	static double roll_gain[3]  = {0.85,0.15,0.01};  		// PI gains for roll tracker and roll damper
+	static double roll_gain[3]  = {0.5,0.15,0.01};  		// PI gains for roll tracker and roll damper
 	// static double pitch_gain[3] = {-0.45,-0.6,-0.035};  	// PI gains !!! crashed on sköll0 unstable time to double ~ 10s
-	static double pitch_gain[3] = {-0.21,-0.135,0};  	// Ziegler/Nichols like suggestion from unstable oscillation
-	static double alt_gain[3]   = {-0.3,-0.40,-0.01};  	// PI gains for controller testing //from fenrir27
+	static double pitch_gain[3] = {-0.3,-0.40,-0.01};  	// PI gains for controller testing //from fenrir27
+	static double alt_gain[3]   = {-0.21,-0.135,0};  	// Ziegler/Nichols like suggestion from unstable oscillation
 	static double v_gain[2]     = {0.1, 0.020};			// PI gains for speed tracker
 	static double zdot_gain[2]  = {-0.01,-0.05};		// PI gains for zdot tracker
 #endif
