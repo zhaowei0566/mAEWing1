@@ -19,6 +19,14 @@
  * \sa reset_control()
  * \ingroup control_fcns
  */
+ 
+extern void init_control(void
+); 
+ 
+extern void close_control(void
+); 
+ 
+ 
 extern void get_control(double time, 			///< [sec], time since in autopilot mode
 		struct sensordata *sensorData_ptr,	///< pointer to sensorData structure
 		struct nav *navData_ptr,			///< pointer to navData structure
