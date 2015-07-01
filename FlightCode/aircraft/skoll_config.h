@@ -48,8 +48,8 @@
 #define PWMOUT_DTHR_CAL {2720, 2720} ///< linear calibration for throttle, pwm 1.292ms (motor off) to 1.800ms (100% pwr), from ESC data. Note motor on value is 1.307ms Register values from MPC Servo Calibration.xls
 #define PWMOUT_DE_CAL  	{-6.85159967976556,	1536.43791765489,	4136.32259505696} ///< calibration for elevator
 #define PWMOUT_DA_CAL   {40.3938273657162,	-1530.84847587925,	4128.05315614618} ///< calibration for aileron
-#define PWMOUT_L1_CAL   {-273.453978463125,	-2224.61597397151,	4138.42773240943} ///< cubic calibration for L1
-#define PWMOUT_R1_CAL   {397.069971071966,	2222.09238806927,	4134.05888915451} ///< cubic calibration for right R1
+#define PWMOUT_L1_CAL   {-265.573489186189,	-2190.68158467737,	4097.98813549916} ///< cubic calibration for L1
+#define PWMOUT_R1_CAL   {301.742881096192,	2329.6476985925,	4094.62569585923} ///< cubic calibration for right R1
 #define PWMOUT_L4_CAL   {25.3145068984323,	-1649.2165450339,	4134.66225412391} ///< calibration for left L4
 #define PWMOUT_R4_CAL   {90.0240481839605,	1591.32761218294,	4129.90418118467} ///< calibration for right R4
 
