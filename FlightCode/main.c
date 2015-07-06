@@ -130,9 +130,6 @@ int main(int argc, char **argv) {
 	// initialize functions	
 	init_daq(&sensorData, &navData, &controlData);
 	init_telemetry();
-	
-	// initalize controller
-	init_control();
 
 	while(1){
 		missionData.mode = 1; 				// initialize to manual mode
@@ -272,7 +269,6 @@ int main(int argc, char **argv) {
 	 **********************************************************************/
 	pthread_mutex_destroy(&mutex);
 	close_actuators();	
-	close_control();
 	close_nav();
 
 	return 0;
