@@ -94,6 +94,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	static double t1 = 0;
 	double diff_time;
 	double diffy;	
+	static int flarenogps = FALSE;
 	
 	// z dot guidance
 	if(claw_mode == 2){
@@ -135,11 +136,12 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 			}
 			controlData_ptr->phi_cmd = 0;
 			// if GPS is locked, use zdot otherwise just set theta and pray
-			if(sensorData_ptr->gpsData_ptr->navValid == 0){
+			if((sensorData_ptr->gpsData_ptr->navValid == 0)&&(flarenogps == FALSE)){
 				controlData_ptr->theta_cmd = zdot_control(controlData_ptr->zdot_cmd, zdot, pos_pitch_limit, neg_pitch_limit, TIMESTEP);
 			}
 			else{
 				controlData_ptr->theta_cmd = nogps_theta;
+				flarenogps = TRUE;
 			}
 		}
 		// approach
@@ -154,6 +156,10 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 			}
 			else{
 				controlData_ptr->theta_cmd = -5*D2R - base_pitch_cmd;
+				// reset the z dot states
+				e[3] = 0;
+				integrator[3] = 0;
+				anti_windup[3] = 1;
 			}
 			controlData_ptr->ias_cmd = 20;	
 		}
