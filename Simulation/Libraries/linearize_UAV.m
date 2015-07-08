@@ -103,7 +103,7 @@ switch lower(AC.aircraft)
         damp(latmod)
             
     case {'minimutt_rigid'}
-        set(linmodel, 'InputName', {'\delta_t';'\delta_L1'; '\delta_L2' ;'\delta_L3';'\delta_L4';'\delta_R1';'\delta_R2';'\delta_R3';'\delta_R4'});
+        set(linmodel, 'InputName', {'\delta_t';'\delta_L3'; '\delta_R3' ;'\delta_L1';'\delta_L2';'\delta_R2';'\delta_R1';'\delta_L4';'\delta_R4'});
         set(linmodel, 'OutputName',{'phi'; 'theta';'psi';'p';'q';'r';'ax';'ay';'az';'V'; 'beta'; 'alpha'; 'h'; 'gamma'});
         NewStateNames = {'phi';'theta';'psi';'p';'q';'r';'u';'v';'w';'Xe';'Ye';'Ze'};
         linmodel.StateName(1:length(NewStateNames)) = NewStateNames;
@@ -120,7 +120,7 @@ switch lower(AC.aircraft)
         
         Xlon = [7 9 5 2 12 13];
         Ylon = [10 12 5 2 13 7 9];
-        Ilon = [4 5 8 9 1];
+        Ilon = [2 8 3 9 1];
         longmod = modred(linmodel(Ylon,Ilon),setdiff(1:13,Xlon),'Truncate');
         longmod = xperm(longmod,[3 4 2 1 5 6]); % reorder state
         
@@ -139,7 +139,7 @@ switch lower(AC.aircraft)
         % Indices for desired state, outputs, and inputs
         Xlon = [9 5];
         Ylon = [12 5 9];
-        Ilon = [4 5 8 9];
+        Ilon = [2 8 3 9];
         spmod = modred(linmodel(Ylon,Ilon),setdiff(1:13,Xlon),'Truncate');
         
         
@@ -158,7 +158,7 @@ switch lower(AC.aircraft)
         % Indices for desired state, outputs, and inputs
         Xlat = [8 4 6 1 3];
         Ylat = [11 4 6 1 3];
-        Ilat = [3 5 7 9];
+        Ilat = [5 8 6 9];
         latmod = modred(linmodel(Ylat,Ilat),setdiff(1:13,Xlat),'Truncate');
         
         latmod = xperm(latmod,[5 3 4 1 2]); % reorder state
