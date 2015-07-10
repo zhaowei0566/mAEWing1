@@ -11,7 +11,7 @@
 %
 
 %% Clean up
-clear all
+clearvars
 close all
 bdclose all
 clc
@@ -48,27 +48,18 @@ controller_mode = 4;
 
 % Load controller parameters or compile flight code
 switch controller_mode
-    case 1 % Baseline controller in C
+    case 1 % Flight Controller in C
         % Compile Flight Software:
-        control_code_path = '../../Software/FlightCode/control/baseline_control.c';
-        
+        CONTROL =  '../../FlightCode/control/tres_claw.c';
     case 2 % Baseline controller in Simulink.
-        baseline_gains;   % Declare baseline controller gains
-        pitch_gains = [kp_PT, ki_PT, kp_PD];
-        roll_gains = [kp_RT, ki_RT, kp_RD];
+        roll_gains = [0.5, 0.15, 0.00];        %
+        pitch_gains = [-0.3, -0.35, -0.01];
     case 4 % Auto-Land controller in Simulink.        
-%         roll_gains = [0.5, .1, 0.01];        %Flight Code for Fenrir27/28
-%         pitch_gains = [-0.25, -0.4, -0.01];   %Flight Code for Fenrir27/28 
-%         autothrottle_gains = [0.091, 0.02];  %Flight-Code for Fenrir27/28
-%         sinkrate_gains  = [-0.03,  -0.05 ]; %Flight-Code for Fenrir27/28
-        roll_gains = [0.85, 0.6, 0.00];        %
-        pitch_gains = [-0.45, -0.6, -0.035];   % 
-       autothrottle_gains = [0.1, 0.02];  %
-       sinkrate_gains  = [-0.01,  -0.05]; % 
+        roll_gains = [0.5, 0.15, 0.00];        %
+        pitch_gains = [-0.3, -0.4, -0.01];   % 
+        autothrottle_gains = [0.1, 0.02];  %
+        sinkrate_gains  = [-0.01,  -0.05]; % 
        
-%        roll_gains = [1, 1, 0.03];        %
-%        pitch_gains = [-0.9, -1, -0.1];   % 
-        
         approach_theta_sat = [-20 20];   % [deg]
         landing_theta_sat = [-10 10];   % [deg]
         engage_flare = 40; % [m]
@@ -84,35 +75,35 @@ end
 % Advanced Users: Include guidance, system ID, or fault injection codes.
 % Set the path to the .c code in the following variables.
 %
+
 %%%%% GUIDANCE LAW %%%%%
 % Point to the desired guidance code here. Use '-DSIMULINK_GUIDANCE' to
 % input the reference commands from the simulink diagram.
-% GUIDANCE = '../../Software/FlightCode/guidance/straight_level.c';
-% GUIDANCE = '../../Software/FlightCode/guidance/doublet_phi_theta.c';
+% GUIDANCE = '../../FlightCode/guidance/doublet_phi_theta.c';
+% GUIDANCE = '../../FlightCode/guidance/straight_level.c';
+% GUIDANCE = '../../FlightCode/guidance/empty_guidance.c';
 GUIDANCE = '-DSIMULINK_GUIDANCE';
 
 %%%%%% SYSTEM ID SELECTION %%%%%
 % Point to the desired system ID code here
-% SYSTEM_ID = '../../Software/FlightCode/system_id/chirp_sysid.c';
-SYSTEM_ID = '../../Software/FlightCode/system_id/systemid_none.c';
+% SYSTEM_ID = '../../FlightCode/system_id/systemid_none.c';
+SYSTEM_ID = '../../FlightCode/system_id/tres_sysid.c';
 
 %%%%%% SURFACE FAULT MODE SELECTION %%%%%
 % Point to the desired fault code here
-% SURFACE_FAULT = '../../Software/FlightCode/faults/fault_onesurf.c';
-% SURFACE_FAULT = '../../Software/FlightCode/faults/fault_onesurf_SingleStep.c';
-SURFACE_FAULT = '../../Software/FlightCode/faults/surffault_none.c';
-
+SURFACE_FAULT = '../../FlightCode/faults/surffault_none.c';
 
 %%%%%% SENS0R FAULT MODE SELECTION %%%%%
 % Point to the desired fault code here
-SENSOR_FAULT = '../../Software/FlightCode/faults/sensfault_none.c';
+SENSOR_FAULT = '../../FlightCode/faults/sensfault_none.c';
 
 % Compile control software
-if exist('control_code_path','var')
-    eval(['mex -I../../Software/FlightCode/ control_SIL.c  ' control_code_path...
-        ' ' GUIDANCE ' ' SYSTEM_ID ' ' SURFACE_FAULT ' ' SENSOR_FAULT ...
-        ' ../../Software/FlightCode/faults/fault_functions.c ' ...
-        ' ../../Software/FlightCode/system_id/systemid_functions.c ']);
+if exist('CONTROL','var')  % XXX check all conditions
+    eval(['mex -I../../FlightCode/ control_SIL.c '...   
+        GUIDANCE ' '  SYSTEM_ID ' ' CONTROL ' ' ... 
+        '-DAIRCRAFT_UP1DIR=\"../aircraft/skoll_config.h\"' ...
+        ' ../../FlightCode/control/control_functions.c ' ...
+        ' ../../FlightCode/system_id/systemid_functions.c ']);
 end
 
 %% Integer Time delay in flight software loop

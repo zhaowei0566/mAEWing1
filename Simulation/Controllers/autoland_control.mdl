@@ -4,13 +4,17 @@ Model {
   MdlSubVersion		  0
   SavedCharacterEncoding  "windows-1252"
   GraphicalInterface {
-    NumRootInports	    2
+    NumRootInports	    3
     Inport {
       Name		      "feedback"
       BusObject		      ""
     }
     Inport {
       Name		      "ref_cmds"
+      BusObject		      ""
+    }
+    Inport {
+      Name		      "mode_selector"
       BusObject		      ""
     }
     NumRootOutports	    2
@@ -25,7 +29,7 @@ Model {
       BusOutputAsStruct	      "off"
     }
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.224"
+    ComputedModelVersion    "1.225"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -47,7 +51,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [241.0, 81.0, 836.0, 760.0]
+      Location		      [1403.0, 190.0, 836.0, 760.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -73,7 +77,7 @@ Model {
 	LoadSaveID		"0"
 	Extents			[786.0, 586.0]
 	ZoomFactor		[0.8]
-	Offset			[-2.9916666666664469, 189.61190476190467]
+	Offset			[180.42500000000041, 642.845238095238]
       }
     }
   }
@@ -83,9 +87,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "PC"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Jun 16 20:18:56 2015"
-  RTWModifiedTimeStamp	  356386733
-  ModelVersionFormat	  "1.%<AutoIncrement:224>"
+  LastModifiedDate	  "Fri Jul 10 16:40:29 2015"
+  RTWModifiedTimeStamp	  358447228
+  ModelVersionFormat	  "1.%<AutoIncrement:225>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -1021,7 +1025,7 @@ Model {
   }
   System {
     Name		    "autoland_control"
-    Location		    [241, 81, 1077, 841]
+    Location		    [1403, 190, 2239, 950]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1035,7 +1039,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "80"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "606"
+    SIDHighWatermark	    "610"
     Block {
       BlockType		      Inport
       Name		      "feedback"
@@ -1053,6 +1057,16 @@ Model {
       ZOrder		      -2
       BlockMirror	      on
       Port		      "2"
+      IconDisplay	      "Port number"
+    }
+    Block {
+      BlockType		      Inport
+      Name		      "mode_selector"
+      SID		      "607"
+      Position		      [1015, 1228, 1045, 1242]
+      ZOrder		      213
+      BlockMirror	      on
+      Port		      "3"
       IconDisplay	      "Port number"
     }
     Block {
@@ -1080,6 +1094,24 @@ Model {
       SID		      "487"
       Position		      [825, 500, 845, 520]
       ZOrder		      163
+      BlockMirror	      on
+      ShowName		      off
+    }
+    Block {
+      BlockType		      Terminator
+      Name		      " 4"
+      SID		      "609"
+      Position		      [945, 1215, 965, 1235]
+      ZOrder		      215
+      BlockMirror	      on
+      ShowName		      off
+    }
+    Block {
+      BlockType		      Terminator
+      Name		      " 5"
+      SID		      "610"
+      Position		      [945, 1235, 965, 1255]
+      ZOrder		      216
       BlockMirror	      on
       ShowName		      off
     }
@@ -1529,6 +1561,19 @@ Model {
       BlockMirror	      on
       ShowName		      off
       Outputs		      "9"
+      DisplayOption	      "bar"
+    }
+    Block {
+      BlockType		      Demux
+      Name		      "Demux6"
+      SID		      "608"
+      Ports		      [1, 2]
+      Position		      [990, 1214, 995, 1256]
+      ZOrder		      214
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+      ShowName		      off
+      Outputs		      "2"
       DisplayOption	      "bar"
     }
     Block {
@@ -3788,6 +3833,27 @@ Model {
       DstBlock		      "p8"
       DstPort		      1
     }
+    Line {
+      ZOrder		      630
+      SrcBlock		      "mode_selector"
+      SrcPort		      1
+      DstBlock		      "Demux6"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      631
+      SrcBlock		      "Demux6"
+      SrcPort		      1
+      DstBlock		      " 4"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      632
+      SrcBlock		      "Demux6"
+      SrcPort		      2
+      DstBlock		      " 5"
+      DstPort		      1
+    }
     Annotation {
       SID		      "606"
       Name		      "Does not include Variable Theta Protection for Flare"
@@ -3797,6 +3863,7 @@ Model {
       FixedWidth	      off
       HorizontalAlignment     "left"
       VerticalAlignment	      "top"
+      ZOrder		      -1
     }
     Annotation {
       SID		      "584"

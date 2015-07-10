@@ -17,7 +17,7 @@ Model {
       ModelRefBlockPath	      "UAV_SIL/Control Input Generator|control_input"
     }
     ModelReference {
-      ModelRefBlockPath	      "UAV_SIL/Control Software/Control Software|autoland_control"
+      ModelRefBlockPath	      "UAV_SIL/Control Software/Control Software|flightcode"
     }
     NumTestPointedSignals   0
   }
@@ -39,7 +39,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [-8.0, 32.0, 1296.0, 776.0]
+      Location		      [1335.0, 92.0, 1296.0, 770.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -61,11 +61,11 @@ Model {
 	$ObjectID		5
 	$ClassName		"Simulink.EditorInfo"
 	IsActive		[1]
-	ViewObjType		"SimulinkSubsys"
-	LoadSaveID		"2165"
-	Extents			[1246.0, 602.0]
-	ZoomFactor		[1.25]
-	Offset			[0.0, 0.0]
+	ViewObjType		"SimulinkTopLevel"
+	LoadSaveID		"0"
+	Extents			[1246.0, 596.0]
+	ZoomFactor		[0.8]
+	Offset			[-95.116666666666788, 89.5]
       }
     }
   }
@@ -75,8 +75,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "PC"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue Jun 16 20:19:07 2015"
-  RTWModifiedTimeStamp	  356386558
+  LastModifiedDate	  "Fri Jul 10 16:39:22 2015"
+  RTWModifiedTimeStamp	  358437706
   ModelVersionFormat	  "$Id: UAV_SIL.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
@@ -804,6 +804,19 @@ Model {
       Decimation	      "10"
     }
     Block {
+      BlockType		      Constant
+      Value		      "1"
+      VectorParams1D	      on
+      SamplingMode	      "Sample based"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: Inherit from 'Constant value'"
+      LockScale		      off
+      SampleTime	      "inf"
+      FramePeriod	      "inf"
+      PreserveConstantTs      off
+    }
+    Block {
       BlockType		      Delay
       DelayLengthSource	      "Dialog"
       DelayLength	      "2"
@@ -855,6 +868,12 @@ Model {
       LatchByDelayingOutsideSignal off
       LatchInputForFeedbackSignals off
       Interpolate	      on
+    }
+    Block {
+      BlockType		      ManualSwitch
+      CurrentSetting	      "1"
+      varsize		      off
+      SampleTime	      "-1"
     }
     Block {
       BlockType		      ModelReference
@@ -909,6 +928,15 @@ Model {
       SampleTime	      "-1"
     }
     Block {
+      BlockType		      Step
+      Time		      "1"
+      Before		      "0"
+      After		      "1"
+      SampleTime	      "-1"
+      VectorParams1D	      on
+      ZeroCross		      on
+    }
+    Block {
       BlockType		      SubSystem
       ShowPortLabels	      "FromPortIcon"
       Permissions	      "ReadWrite"
@@ -940,6 +968,22 @@ Model {
       ContentPreviewEnabled   off
     }
     Block {
+      BlockType		      Sum
+      IconShape		      "rectangular"
+      Inputs		      "++"
+      CollapseMode	      "All dimensions"
+      CollapseDim	      "1"
+      InputSameDT	      on
+      AccumDataTypeStr	      "Inherit: Inherit via internal rule"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: Same as first input"
+      LockScale		      off
+      RndMeth		      "Floor"
+      SaturateOnIntegerOverflow	on
+      SampleTime	      "-1"
+    }
+    Block {
       BlockType		      Terminator
     }
     Block {
@@ -956,8 +1000,8 @@ Model {
   }
   System {
     Name		    "UAV_SIL"
-    Location		    [-8, 32, 1288, 808]
-    Open		    off
+    Location		    [1335, 92, 2631, 862]
+    Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
     ScreenColor		    "white"
@@ -968,9 +1012,9 @@ Model {
     TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "85"
+    ZoomFactor		    "80"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "2184"
+    SIDHighWatermark	    "2198"
     Block {
       BlockType		      Inport
       Name		      "Wind"
@@ -1061,14 +1105,14 @@ Model {
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  ZOrder		  13
+	  ZOrder		  7
 	  SrcBlock		  "cmds"
 	  SrcPort		  1
 	  DstBlock		  "miniMUTT"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  14
+	  ZOrder		  8
 	  SrcBlock		  "miniMUTT"
 	  SrcPort		  1
 	  DstBlock		  "controls"
@@ -1099,7 +1143,7 @@ Model {
 	}
 	PropName		"Variants"
       }
-      ModelReferenceVersion   "1.90"
+      ModelReferenceVersion   "1.91"
       List {
 	ListType		OutputPortNames
 	port0			"ref_cmds"
@@ -1115,8 +1159,8 @@ Model {
       BlockType		      SubSystem
       Name		      "Control Software"
       SID		      "2165"
-      Ports		      [2, 1]
-      Position		      [595, 530, 745, 625]
+      Ports		      [3, 1]
+      Position		      [595, 532, 745, 628]
       ZOrder		      19
       BlockMirror	      on
       DropShadow	      on
@@ -1125,8 +1169,8 @@ Model {
       RequestExecContextInheritance off
       System {
 	Name			"Control Software"
-	Location		[-8, 32, 1288, 808]
-	Open			on
+	Location		[1335, 92, 2631, 862]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1137,7 +1181,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"125"
+	ZoomFactor		"80"
 	Block {
 	  BlockType		  Inport
 	  Name			  "Sensors"
@@ -1151,10 +1195,20 @@ Model {
 	  BlockType		  Inport
 	  Name			  "ref_cmds_in"
 	  SID			  "2167"
-	  Position		  [625, 363, 655, 377]
+	  Position		  [625, 293, 655, 307]
 	  ZOrder		  -2
 	  BlockMirror		  on
 	  Port			  "2"
+	  IconDisplay		  "Port number"
+	}
+	Block {
+	  BlockType		  Inport
+	  Name			  "mode_selector_in"
+	  SID			  "2185"
+	  Position		  [625, 393, 655, 407]
+	  ZOrder		  33
+	  BlockMirror		  on
+	  Port			  "3"
 	  IconDisplay		  "Port number"
 	}
 	Block {
@@ -1188,11 +1242,12 @@ Model {
 	  BlockType		  ModelReference
 	  Name			  "Control Software"
 	  SID			  "2170"
-	  Ports			  [2, 2]
-	  Position		  [380, 150, 530, 445]
+	  Ports			  [3, 2]
+	  Position		  [380, 152, 530, 448]
 	  ZOrder		  -5
 	  BlockMirror		  on
-	  ModelNameDialog	  "autoland_control"
+	  ModelNameDialog	  "flightcode"
+	  SimulationMode	  "Normal"
 	  Variant		  on
 	  Array {
 	    Type		    "Struct"
@@ -1220,16 +1275,17 @@ Model {
 	    }
 	    PropName		    "Variants"
 	  }
-	  ModelReferenceVersion	  "1.224"
+	  ModelReferenceVersion	  "$Id: flightcode.mdl 810 2012-04-25 16:46:43Z murch $"
 	  List {
 	    ListType		    InputPortNames
 	    port0		    "feedback"
 	    port1		    "ref_cmds"
+	    port2		    "mode_selector"
 	  }
 	  List {
 	    ListType		    OutputPortNames
 	    port0		    "control_cmd"
-	    port1		    "ref_cmds_out1"
+	    port1		    "ref_cmds_out"
 	  }
 	  List {
 	    ListType		    OutputPortOutputBusAsStructs
@@ -1240,13 +1296,15 @@ Model {
 	    ListType		    InputPortLatchByCopyingInsideSignal
 	    port0		    "off"
 	    port1		    "off"
+	    port2		    "off"
 	  }
-	  CopyOfModelName	  "autoland_control"
+	  CopyOfModelName	  "flightcode"
 	  DefaultDataLogging	  off
 	  List {
 	    ListType		    InputPortLatchByDelayingOutsideSignal
 	    port0		    "off"
 	    port1		    "off"
+	    port2		    "off"
 	  }
 	}
 	Block {
@@ -1432,14 +1490,14 @@ Model {
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
-	      ZOrder		      13
+	      ZOrder		      7
 	      SrcBlock		      "I"
 	      SrcPort		      1
 	      DstBlock		      "Trim setting MiniMUTT"
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      14
+	      ZOrder		      8
 	      SrcBlock		      "Trim setting MiniMUTT"
 	      SrcPort		      1
 	      DstBlock		      "O"
@@ -1554,6 +1612,7 @@ Model {
 	  ZOrder		  13
 	  SrcBlock		  "Integer Delay"
 	  SrcPort		  1
+	  Points		  [-70, 0]
 	  DstBlock		  "Control Software"
 	  DstPort		  1
 	}
@@ -1568,21 +1627,29 @@ Model {
 	  ZOrder		  15
 	  SrcBlock		  "Control Software"
 	  SrcPort		  2
+	  Points		  [0, -5]
 	  DstBlock		  "Goto"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  16
-	  SrcBlock		  "Trim setting"
-	  SrcPort		  1
-	  DstBlock		  "Demux"
-	  DstPort		  1
-	}
-	Line {
-	  ZOrder		  17
+	  ZOrder		  21
 	  SrcBlock		  "Control Software"
 	  SrcPort		  1
 	  DstBlock		  "Trim setting"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  18
+	  SrcBlock		  "mode_selector_in"
+	  SrcPort		  1
+	  DstBlock		  "Control Software"
+	  DstPort		  3
+	}
+	Line {
+	  ZOrder		  22
+	  SrcBlock		  "Trim setting"
+	  SrcPort		  1
+	  DstBlock		  "Demux"
 	  DstPort		  1
 	}
 	Annotation {
@@ -1614,6 +1681,132 @@ Model {
     }
     Block {
       BlockType		      SubSystem
+      Name		      "Flare Sequence"
+      SID		      "2194"
+      Ports		      [0, 1]
+      Position		      [985, 799, 1015, 831]
+      ZOrder		      28
+      BlockMirror	      on
+      RequestExecContextInheritance off
+      System {
+	Name			"Flare Sequence"
+	Location		[1335, 92, 2631, 862]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"A4"
+	PaperUnits		"centimeters"
+	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"125"
+	Block {
+	  BlockType		  Constant
+	  Name			  "Constant"
+	  SID			  "2198"
+	  Position		  [175, 20, 205, 50]
+	  ZOrder		  30
+	  BlockMirror		  on
+	  Value			  "2"
+	}
+	Block {
+	  BlockType		  Mux
+	  Name			  "Mux"
+	  SID			  "2197"
+	  Ports			  [2, 1]
+	  Position		  [120, 16, 125, 149]
+	  ZOrder		  29
+	  BlockMirror		  on
+	  ShowName		  off
+	  Inputs		  "2"
+	  DisplayOption		  "bar"
+	}
+	Block {
+	  BlockType		  Step
+	  Name			  "Step"
+	  SID			  "2190"
+	  Position		  [190, 95, 220, 125]
+	  ZOrder		  24
+	  BlockMirror		  on
+	  Time			  "25"
+	  SampleTime		  "0"
+	}
+	Block {
+	  BlockType		  Step
+	  Name			  "Step1"
+	  SID			  "2193"
+	  Position		  [190, 155, 220, 185]
+	  ZOrder		  27
+	  BlockMirror		  on
+	  Time			  "35"
+	  SampleTime		  "0"
+	}
+	Block {
+	  BlockType		  Sum
+	  Name			  "Subtract"
+	  SID			  "2191"
+	  Ports			  [2, 1]
+	  Position		  [150, 82, 175, 198]
+	  ZOrder		  25
+	  BlockMirror		  on
+	  NamePlacement		  "alternate"
+	  InputSameDT		  off
+	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "Flare Mode Selector"
+	  SID			  "2195"
+	  Position		  [30, 78, 60, 92]
+	  ZOrder		  28
+	  BlockMirror		  on
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  ZOrder		  30
+	  SrcBlock		  "Step1"
+	  SrcPort		  1
+	  DstBlock		  "Subtract"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  34
+	  SrcBlock		  "Subtract"
+	  SrcPort		  1
+	  Points		  [-5, 0]
+	  DstBlock		  "Mux"
+	  DstPort		  2
+	}
+	Line {
+	  ZOrder		  29
+	  SrcBlock		  "Step"
+	  SrcPort		  1
+	  DstBlock		  "Subtract"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  33
+	  SrcBlock		  "Mux"
+	  SrcPort		  1
+	  DstBlock		  "Flare Mode Selector"
+	  DstPort		  1
+	}
+	Line {
+	  ZOrder		  36
+	  SrcBlock		  "Constant"
+	  SrcPort		  1
+	  Points		  [-30, 0]
+	  DstBlock		  "Mux"
+	  DstPort		  1
+	}
+      }
+    }
+    Block {
+      BlockType		      SubSystem
       Name		      "Flight Data Display"
       SID		      "972"
       Ports		      []
@@ -1630,7 +1823,7 @@ Model {
       }
       System {
 	Name			"Flight Data Display"
-	Location		[-8, 32, 1288, 808]
+	Location		[1312, 177, 2608, 953]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1642,7 +1835,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"100"
+	ZoomFactor		"80"
 	Block {
 	  BlockType		  Scope
 	  Name			  "Altitude"
@@ -2101,12 +2294,22 @@ Model {
 	  Position		  [390, 284, 420, 316]
 	  ZOrder		  -12
 	  Floating		  off
-	  Location		  [5, 48, 1371, 727]
+	  Location		  [10, 102, 1376, 781]
 	  Open			  off
 	  NumInputPorts		  "1"
 	  List {
 	    ListType		    AxesTitles
 	    axes1		    "%<SignalLabel>"
+	  }
+	  List {
+	    ListType		    ScopeGraphics
+	    FigureColor		    "[0.5 0.5 0.5]"
+	    AxesColor		    "[0 0 0]"
+	    AxesTickColor	    "[1 1 1]"
+	    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+	    LineStyles		    "-|-|-|-|-|-"
+	    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+	    MarkerStyles	    "none|none|none|none|none|none"
 	  }
 	  ShowLegends		  off
 	  TimeRange		  "45"
@@ -2721,9 +2924,10 @@ Model {
 	  Position		  [445, 84, 475, 116]
 	  ZOrder		  -71
 	  Floating		  off
-	  Location		  [10, 96, 1282, 407]
+	  Location		  [8, 461, 1280, 772]
 	  Open			  off
 	  NumInputPorts		  "1"
+	  ZoomMode		  "yonly"
 	  List {
 	    ListType		    AxesTitles
 	    axes1		    "%<SignalLabel>"
@@ -2825,9 +3029,9 @@ Model {
 	    MarkerStyles	    "none|none|none|none|none|none"
 	  }
 	  ShowLegends		  off
-	  TimeRange		  "45"
-	  YMin			  "4"
-	  YMax			  "6.5"
+	  TimeRange		  "40              "
+	  YMin			  "-0.25"
+	  YMax			  "0.2"
 	  SaveName		  "ScopeData1"
 	  DataFormat		  "StructureWithTime"
 	  LimitDataPoints	  off
@@ -3013,7 +3217,7 @@ Model {
 	  Position		  [445, 19, 475, 51]
 	  ZOrder		  -73
 	  Floating		  off
-	  Location		  [-30, 156, 1242, 568]
+	  Location		  [10, 156, 1282, 568]
 	  Open			  off
 	  NumInputPorts		  "1"
 	  List {
@@ -3738,6 +3942,24 @@ Model {
       TagVisibility	      "global"
     }
     Block {
+      BlockType		      ManualSwitch
+      Name		      "Manual Switch1"
+      SID		      "2196"
+      Position		      [885, 754, 920, 816]
+      ZOrder		      29
+      BlockMirror	      on
+      NamePlacement	      "alternate"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Mode"
+      SID		      "2187"
+      Position		      [985, 695, 1015, 725]
+      ZOrder		      21
+      BlockMirror	      on
+      Value		      "0"
+    }
+    Block {
       BlockType		      Reference
       Name		      "Model Info1"
       SID		      "1918"
@@ -3753,18 +3975,29 @@ Model {
       SourceBlock	      "simulink/Model-Wide\nUtilities/Model Info"
       SourceType	      "CMBlock"
       ContentPreviewEnabled   off
-      BlockCM		      "None"
       Frame		      "on"
       DisplayStringWithTags   "MODEL INFORMATION\nUMN UAV Software-in-the-Loop Simulation\n\nUniversity of Minnesota\n"
       "Aerospace Engineering and Mechanics\nCopyright 2011 Regents of the University of Minnesota. All rights reserved."
       "\n\n== SVN Info ==\nLast modified by %<LastModifiedBy> on %<LastModificationDate>"
       MaskDisplayString	      "MODEL INFORMATION\\nUMN UAV Software-in-the-Loop Simulation\\n\\nUniversity of Minnesot"
       "a\\nAerospace Engineering and Mechanics\\nCopyright 2011 Regents of the University of Minnesota. All rights rese"
-      "rved.\\n\\n== SVN Info ==\\nLast modified by PC on 16-Jun-2015 20:18:11"
+      "rved.\\n\\n== SVN Info ==\\nLast modified by PC on 10-Jul-2015 15:13:58"
       HorizontalTextAlignment "Left"
       LeftAlignmentValue      "0.02"
       SourceBlockDiagram      "UAV_SIL"
       TagMaxNumber	      "20"
+    }
+    Block {
+      BlockType		      Mux
+      Name		      "Mux"
+      SID		      "2189"
+      Ports		      [2, 1]
+      Position		      [950, 685, 955, 780]
+      ZOrder		      23
+      BlockMirror	      on
+      ShowName		      off
+      Inputs		      "2"
+      DisplayOption	      "bar"
     }
     Block {
       BlockType		      Reference
@@ -3786,6 +4019,15 @@ Model {
       SourceBlock	      "NonlinearModel_Lib/Nonlinear UAV Model"
       SourceType	      "SubSystem"
       ContentPreviewEnabled   off
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Selector"
+      SID		      "2188"
+      Position		      [985, 740, 1015, 770]
+      ZOrder		      22
+      BlockMirror	      on
+      Value		      "0"
     }
     Block {
       BlockType		      Reference
@@ -3836,7 +4078,7 @@ Model {
       Branch {
 	ZOrder			2
 	Labels			[2, 0]
-	Points			[0, 230]
+	Points			[0, 225]
 	DstBlock		"Control Software"
 	DstPort			1
       }
@@ -3872,6 +4114,7 @@ Model {
       ZOrder		      7
       SrcBlock		      "Control Input Generator"
       SrcPort		      1
+      Points		      [0, -20]
       DstBlock		      "Control Software"
       DstPort		      2
     }
@@ -3961,6 +4204,44 @@ Model {
       SrcBlock		      "Wind"
       SrcPort		      1
       DstBlock		      "Environment"
+      DstPort		      3
+    }
+    Line {
+      ZOrder		      25
+      SrcBlock		      "Mode"
+      SrcPort		      1
+      DstBlock		      "Mux"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      36
+      SrcBlock		      "Selector"
+      SrcPort		      1
+      DstBlock		      "Mux"
+      DstPort		      2
+    }
+    Line {
+      ZOrder		      39
+      SrcBlock		      "Mux"
+      SrcPort		      1
+      Points		      [-3, 0; 0, 35]
+      DstBlock		      "Manual Switch1"
+      DstPort		      1
+    }
+    Line {
+      ZOrder		      37
+      SrcBlock		      "Flare Sequence"
+      SrcPort		      1
+      Points		      [-45, 0]
+      DstBlock		      "Manual Switch1"
+      DstPort		      2
+    }
+    Line {
+      ZOrder		      40
+      SrcBlock		      "Manual Switch1"
+      SrcPort		      1
+      Points		      [-78, 0; 0, -175]
+      DstBlock		      "Control Software"
       DstPort		      3
     }
     Annotation {
