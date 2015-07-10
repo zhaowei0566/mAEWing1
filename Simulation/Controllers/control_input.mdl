@@ -12,7 +12,7 @@ Model {
       BusOutputAsStruct	      "off"
     }
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.90"
+    ComputedModelVersion    "1.91"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -60,7 +60,7 @@ Model {
 	LoadSaveID		"0"
 	Extents			[967.0, 524.0]
 	ZoomFactor		[1.25]
-	Offset			[246.0, 6.8000000000000114]
+	Offset			[197.78333333333336, 194.13333333333341]
       }
     }
   }
@@ -70,9 +70,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "PC"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Jun 08 22:50:11 2015"
-  RTWModifiedTimeStamp	  355704610
-  ModelVersionFormat	  "1.%<AutoIncrement:90>"
+  LastModifiedDate	  "Fri Jul 10 15:14:42 2015"
+  RTWModifiedTimeStamp	  358385984
+  ModelVersionFormat	  "1.%<AutoIncrement:91>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -859,7 +859,7 @@ Model {
     ShowPageBoundaries	    off
     ZoomFactor		    "125"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "37"
+    SIDHighWatermark	    "38"
     Block {
       BlockType		      Constant
       Name		      "Constant"
@@ -868,6 +868,15 @@ Model {
       ZOrder		      -1
       BlockMirror	      on
       Value		      "0"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "Constant1"
+      SID		      "38"
+      Position		      [395, 390, 425, 420]
+      ZOrder		      5
+      BlockMirror	      on
+      Value		      "23"
     }
     Block {
       BlockType		      Reference
@@ -1069,37 +1078,29 @@ Model {
 	    }
 	    Branch {
 	      ZOrder		      13
-	      Points		      [0, 30]
+	      Points		      [0, 60]
 	      Branch {
-		ZOrder			14
+		ZOrder			16
 		DstBlock		"Mux"
-		DstPort			7
+		DstPort			8
 	      }
 	      Branch {
-		ZOrder			15
+		ZOrder			17
 		Points			[0, 30]
 		Branch {
-		  ZOrder		  16
+		  ZOrder		  18
 		  DstBlock		  "Mux"
-		  DstPort		  8
+		  DstPort		  9
 		}
 		Branch {
-		  ZOrder		  17
+		  ZOrder		  19
 		  Points		  [0, 30]
 		  Branch {
-		    ZOrder		    18
-		    DstBlock		    "Mux"
-		    DstPort		    9
-		  }
-		  Branch {
-		    ZOrder		    19
-		    Points		    [0, 30]
-		    Branch {
 		    ZOrder		    20
 		    DstBlock		    "Mux"
 		    DstPort		    10
-		    }
-		    Branch {
+		  }
+		  Branch {
 		    ZOrder		    21
 		    Points		    [0, 30]
 		    Branch {
@@ -1112,7 +1113,6 @@ Model {
 		    Points		    [0, 30]
 		    DstBlock		    "Mux"
 		    DstPort		    12
-		    }
 		    }
 		  }
 		}
@@ -1169,6 +1169,13 @@ Model {
       Points		      [-162, 0; 0, 130]
       DstBlock		      "Mux"
       DstPort		      1
+    }
+    Line {
+      ZOrder		      34
+      SrcBlock		      "Constant1"
+      SrcPort		      1
+      DstBlock		      "Mux"
+      DstPort		      7
     }
     Annotation {
       SID		      "31"
