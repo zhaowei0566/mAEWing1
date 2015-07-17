@@ -73,10 +73,10 @@ Model {
   Creator		  "Paul Freeman"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "PC"
+  LastModifiedBy	  "theis476"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Jul 10 16:39:22 2015"
-  RTWModifiedTimeStamp	  358437706
+  LastModifiedDate	  "Fri Jul 17 14:17:23 2015"
+  RTWModifiedTimeStamp	  359043440
   ModelVersionFormat	  "$Id: UAV_SIL.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
@@ -1068,9 +1068,9 @@ Model {
 	ScreenColor		"white"
 	PaperOrientation	"landscape"
 	PaperPositionMode	"auto"
-	PaperType		"A4"
-	PaperUnits		"centimeters"
-	TiledPaperMargins	[1.270000, 1.270000, 1.270000, 1.270000]
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
@@ -1451,9 +1451,9 @@ Model {
 	    ScreenColor		    "white"
 	    PaperOrientation	    "landscape"
 	    PaperPositionMode	    "auto"
-	    PaperType		    "A4"
-	    PaperUnits		    "centimeters"
-	    TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
+	    PaperType		    "usletter"
+	    PaperUnits		    "inches"
+	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
@@ -1473,7 +1473,6 @@ Model {
 	      Ports		      [1, 1]
 	      Position		      [100, 40, 140, 80]
 	      ZOrder		      31
-	      BlockMirror	      on
 	      BackgroundColor	      "lightBlue"
 	      NamePlacement	      "alternate"
 	      LibraryVersion	      "$Id: Actuator_Lib.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
@@ -3981,7 +3980,7 @@ Model {
       "\n\n== SVN Info ==\nLast modified by %<LastModifiedBy> on %<LastModificationDate>"
       MaskDisplayString	      "MODEL INFORMATION\\nUMN UAV Software-in-the-Loop Simulation\\n\\nUniversity of Minnesot"
       "a\\nAerospace Engineering and Mechanics\\nCopyright 2011 Regents of the University of Minnesota. All rights rese"
-      "rved.\\n\\n== SVN Info ==\\nLast modified by PC on 10-Jul-2015 15:13:58"
+      "rved.\\n\\n== SVN Info ==\\nLast modified by theis476 on 17-Jul-2015 14:14:19"
       HorizontalTextAlignment "Left"
       LeftAlignmentValue      "0.02"
       SourceBlockDiagram      "UAV_SIL"

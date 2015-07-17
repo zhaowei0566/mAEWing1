@@ -54,6 +54,7 @@ struct  nav   navData;
 struct  control controlData;
 struct  mission missionData;
 struct  airdata adData;
+struct  accel accelData;
 // sensor data 
 static struct sensordata sensorData;
 
@@ -94,6 +95,9 @@ static void mdlInitializeSizes(SimStruct *S) {
     sensorData.imuData_ptr = &imuData;
 	sensorData.gpsData_ptr = &gpsData;
 	sensorData.adData_ptr = &adData;
+	sensorData.accelData_ptr = &accelData;
+	
+	init_control();
 }
 
 static void mdlInitializeSampleTimes(SimStruct *S) {
@@ -149,7 +153,13 @@ static void mdlOutputs(SimStruct *S, int_T tid) {
     navData.the = *ssGetInputPortRealSignalPtrs(S, 0)[1]; // theta
     navData.psi = *ssGetInputPortRealSignalPtrs(S, 0)[2]; // psi
     
-    
+    sensorData.accelData_ptr->lf = *ssGetInputPortRealSignalPtrs(S, 0)[8]; // XXX
+	sensorData.accelData_ptr->cf = *ssGetInputPortRealSignalPtrs(S, 0)[8]; // XXX
+	sensorData.accelData_ptr->rf = *ssGetInputPortRealSignalPtrs(S, 0)[8]; // XXX
+	sensorData.accelData_ptr->lr = *ssGetInputPortRealSignalPtrs(S, 0)[8]; // XXX
+	sensorData.accelData_ptr->cr = *ssGetInputPortRealSignalPtrs(S, 0)[8]; // XXX
+	sensorData.accelData_ptr->rr = *ssGetInputPortRealSignalPtrs(S, 0)[8]; // XXX
+	
     //**** EMULATE MISSION ************************************************
 
 				//**** GUIDANCE **********************************************************

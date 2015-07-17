@@ -44,19 +44,22 @@ autoland_control_var = Simulink.Variant('controller_mode == 4');
 % 1 = baseline controller (C implementation)
 % 2 = baseline controller (Simulink)
 % 4 = autoland controller for minimutt (Simulink)
-controller_mode = 4;
+controller_mode = 1;
 
 % Load controller parameters or compile flight code
 switch controller_mode
     case 1 % Flight Controller in C
         % Compile Flight Software:
-        CONTROL =  '../../FlightCode/control/tres_claw.c';
+%         CONTROL =  '../../FlightCode/control/tres_claw.c';
+        CONTROL =  '../../FlightCode/control/sstest_claw.c ../../FlightCode/control/ss_baseline.c';
+        CONTROL =  '../../FlightCode/control/ss_TestFlutterControl.c ../../FlightCode/control/ss_FlutterSuppressionClosedLoop.c';
     case 2 % Baseline controller in Simulink.
         roll_gains = [0.5, 0.15, 0.00];        %
         pitch_gains = [-0.3, -0.35, -0.01];
     case 4 % Auto-Land controller in Simulink.        
         roll_gains = [0.5, 0.15, 0.00];        %
-        pitch_gains = [-0.3, -0.4, -0.01];   % 
+        % pitch_gains = [-0.3, -0.4, -0.01];   % with elevon mixing
+        pitch_gains = [-0.75, -1.0, -0.01];   % with elevon mixing
         autothrottle_gains = [0.1, 0.02];  %
         sinkrate_gains  = [-0.01,  -0.05]; % 
        
@@ -102,6 +105,7 @@ if exist('CONTROL','var')  % XXX check all conditions
     eval(['mex -I../../FlightCode/ control_SIL.c '...   
         GUIDANCE ' '  SYSTEM_ID ' ' CONTROL ' ' ... 
         '-DAIRCRAFT_UP1DIR=\"../aircraft/skoll_config.h\"' ...
+        ' ../../FlightCode/utils/matrix_SIL.c ' ...
         ' ../../FlightCode/control/control_functions.c ' ...
         ' ../../FlightCode/system_id/systemid_functions.c ']);
 end
