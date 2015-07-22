@@ -94,18 +94,21 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	
 	
 // *** STATE SPACE CONTROLLER PART
-if (claw_mode==0) {
+if (claw_mode==0) 
+{
 	ss_input[0] = -q; 		
 	ss_input[1] = -az; 		
 	ss_input[2] = -0.25*(acc_lf+acc_lr+acc_rf+acc_rr);   			
 		
 	get_ss_control(ss_input, ss_output);
 }
-else {
+else 
+{
 	ss_output[0] = 0;
 	reset_ss_control();
-	}
-	controlData_ptr->l4 = controlData_ptr->r4 = ss_output[0]; // L4 R4 [rad]
+}
+
+controlData_ptr->l4 = controlData_ptr->r4 = ss_output[0]; // L4 R4 [rad]
 
 //  	**********************************  
 
