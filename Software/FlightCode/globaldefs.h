@@ -148,9 +148,9 @@ struct airdata {
 
 /// Pilot inceptor Data structure
 struct inceptor {
-	double throttle;	///< throttle stick command from the pilot, ND
+	double select;		///< select command from the pilot, ND
 	double pitch;		///< pitch stick command from the pilot, ND
-	double yaw;			///< yaw stick command from the pilot, ND
+	double mode;		///< mode command from the pilot, ND
 	double roll;		///< roll stick command from the pilot, ND
 };
 

@@ -6,8 +6,8 @@
 #include "mission_interface.h"
 
 extern void run_mission(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct mission *missionData_ptr) {
-	double pilot_mode = sensorData_ptr->inceptorData_ptr->yaw;
-	double pilot_select = sensorData_ptr->inceptorData_ptr->throttle;
+	double pilot_mode = sensorData_ptr->inceptorData_ptr->mode;
+	double pilot_select = sensorData_ptr->inceptorData_ptr->select;
 	
 	if((pilot_mode > -0.2)&&(pilot_mode < 0.2)){
 		missionData_ptr -> claw_mode = 1;
