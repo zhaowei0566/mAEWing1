@@ -19,7 +19,7 @@ Library {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [481.0, 0.0, 1510.0, 967.0]
+      Location		      [481.0, 40.0, 1510.0, 967.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -34,7 +34,7 @@ Library {
 	$PropName		"ExplorerBarInfo"
 	$ObjectID		4
 	$ClassName		"Simulink.ExplorerBarInfo"
-	Visible			[0]
+	Visible			[1]
       }
       Object {
 	$PropName		"EditorsInfo"
@@ -42,10 +42,10 @@ Library {
 	$ClassName		"Simulink.EditorInfo"
 	IsActive		[1]
 	ViewObjType		"SimulinkSubsys"
-	LoadSaveID		"930"
-	Extents			[1460.0, 831.0]
+	LoadSaveID		"807"
+	Extents			[1460.0, 801.0]
 	ZoomFactor		[0.6]
-	Offset			[-338.0, -196.66666666666663]
+	Offset			[-3.3333333333332575, -16.333333333333371]
       }
     }
   }
@@ -53,10 +53,10 @@ Library {
   Creator		  "austinmurch"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "pseiler"
+  LastModifiedBy	  "theis476"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Jun 04 07:51:05 2015"
-  RTWModifiedTimeStamp	  355305064
+  LastModifiedDate	  "Wed Jul 29 10:10:30 2015"
+  RTWModifiedTimeStamp	  360065363
   ModelVersionFormat	  "$Id: Actuator_Lib.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
@@ -946,7 +946,7 @@ Library {
   }
   System {
     Name		    "Actuator_Lib"
-    Location		    [481, 0, 1991, 967]
+    Location		    [481, 40, 1991, 1007]
     Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1008,7 +1008,7 @@ Library {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	"1093"
+	SIDHighWatermark	"1099"
 	Block {
 	  BlockType		  Inport
 	  Name			  "cmds"
@@ -2170,7 +2170,7 @@ Library {
       "=\nLast modified by %<LastModifiedBy> on %<LastModificationDate>"
       MaskDisplayString	      "MODEL INFORMATION\\nActuator Model Library\\n\\nUniversity of Minnesota\\nAerospace Eng"
       "ineering and Mechanics\\nCopyright 2011 Regents of the University of Minnesota. All rights reserved.\\n\\n== SVN"
-      " Info ==\\nLast modified by pseiler on 04-Jun-2015 07:47:21"
+      " Info ==\\nLast modified by theis476 on 29-Jul-2015 10:08:12"
       HorizontalTextAlignment "Left"
       LeftAlignmentValue      "0.02"
       SourceBlockDiagram      "Actuator_Lib"
@@ -2718,7 +2718,7 @@ Library {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	"1147"
+	SIDHighWatermark	"1150"
 	Block {
 	  BlockType		  Inport
 	  Name			  "I"
@@ -3914,8 +3914,8 @@ Library {
       RequestExecContextInheritance off
       System {
 	Name			"miniMUTT"
-	Location		[481, 0, 1991, 967]
-	Open			off
+	Location		[481, 40, 1991, 1007]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -3931,7 +3931,7 @@ Library {
 	  BlockType		  Inport
 	  Name			  "cmds"
 	  SID			  "808"
-	  Position		  [20, 458, 50, 472]
+	  Position		  [20, 448, 50, 462]
 	  ZOrder		  44
 	  IconDisplay		  "Port number"
 	}
@@ -3959,7 +3959,7 @@ Library {
 	  Port {
 	    PortNumber		    1
 	    Name		    "CtrlSurf [rad]"
-	    PropagatedSignals	    "L3 [rad], R3 [rad], L1 [rad], L2 [rad], R2 [rad], R1 [rad], L4 [rad], R4 [rad]"
+	    PropagatedSignals	    "L1 [rad], R1 [rad], L2 [rad], R2 [rad], L3 [rad], R3 [rad], L4 [rad], R4 [rad]"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
@@ -3968,45 +3968,100 @@ Library {
 	  BlockType		  Demux
 	  Name			  "Demux1"
 	  SID			  "1205"
-	  Ports			  [1, 7]
-	  Position		  [170, 17, 180, 913]
+	  Ports			  [1, 9]
+	  Position		  [170, 7, 180, 903]
 	  ZOrder		  77
 	  ShowName		  off
-	  Outputs		  "7"
+	  Outputs		  "9"
 	  DisplayOption		  "bar"
 	  Port {
 	    PortNumber		    2
-	    Name		    "elevator [rad]"
-	    PropagatedSignals	    "elevator [rad]"
+	    Name		    "L1 [rad]"
+	    PropagatedSignals	    "L1 [rad]"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    3
+	    Name		    "R1 [rad]"
+	    PropagatedSignals	    "R1 [rad]"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
 	  Port {
 	    PortNumber		    4
-	    Name		    "aileron [rad]"
-	    PropagatedSignals	    "aileron [rad]"
+	    Name		    "L2 [rad]"
+	    PropagatedSignals	    "L2 [rad]"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    5
+	    Name		    "R2 [rad]"
+	    PropagatedSignals	    "R2 [rad]"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    6
+	    Name		    "L3 [rad]"
+	    PropagatedSignals	    "L3 [rad]"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    7
+	    Name		    "R3 [rad]"
+	    PropagatedSignals	    "R3 [rad]"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    8
+	    Name		    "L4 [rad]"
+	    PropagatedSignals	    "L4 [rad]"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    9
+	    Name		    "R4 [rad]"
+	    PropagatedSignals	    "R4 [rad]"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
 	}
 	Block {
-	  BlockType		  Gain
-	  Name			  "Gain2"
-	  SID			  "1222"
-	  Position		  [435, 540, 465, 570]
-	  ZOrder		  97
-	  ShowName		  off
-	  Gain			  "-1"
-	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
+	  BlockType		  Reference
+	  Name			  "Second-Order Servo Model for L1"
+	  SID			  "1217"
+	  Ports			  [1, 1]
+	  Position		  [500, 134, 720, 176]
+	  ZOrder		  90
+	  BackgroundColor	  "lightBlue"
+	  LibraryVersion	  "$Id: Actuator_Lib.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
+	  FontSize		  12
+	  SourceBlock		  "Actuator_Lib/Second-Order Servo Model"
+	  SourceType		  "Rate and Position Limited Servo"
+	  ContentPreviewEnabled	  off
+	  wn			  "AC.Actuator.L3.wn"
+	  zeta			  "AC.Actuator.L3.zeta"
+	  RL			  "AC.Actuator.L3.RateLim"
+	  POS_hi		  "AC.Actuator.L3.PosLim"
+	  POS_lo		  "AC.Actuator.L3.NegLim"
+	  Port {
+	    PortNumber		    1
+	    Name		    "L1 [rad]"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
 	}
 	Block {
 	  BlockType		  Reference
-	  Name			  "Second-Order Servo Model for L1"
+	  Name			  "Second-Order Servo Model for L2"
 	  SID			  "1219"
 	  Ports			  [1, 1]
-	  Position		  [510, 334, 730, 376]
+	  Position		  [500, 334, 720, 376]
 	  ZOrder		  94
 	  BackgroundColor	  "lightBlue"
 	  LibraryVersion	  "$Id: Actuator_Lib.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
@@ -4021,31 +4076,6 @@ Library {
 	  POS_lo		  "AC.Actuator.L1.NegLim"
 	  Port {
 	    PortNumber		    1
-	    Name		    "L1 [rad]"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "Second-Order Servo Model for L2"
-	  SID			  "1220"
-	  Ports			  [1, 1]
-	  Position		  [510, 434, 730, 476]
-	  ZOrder		  95
-	  BackgroundColor	  "lightBlue"
-	  LibraryVersion	  "$Id: Actuator_Lib.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
-	  FontSize		  12
-	  SourceBlock		  "Actuator_Lib/Second-Order Servo Model"
-	  SourceType		  "Rate and Position Limited Servo"
-	  ContentPreviewEnabled	  off
-	  wn			  "AC.Actuator.L2.wn"
-	  zeta			  "AC.Actuator.L2.zeta"
-	  RL			  "AC.Actuator.L2.RateLim"
-	  POS_hi		  "AC.Actuator.L2.PosLim"
-	  POS_lo		  "AC.Actuator.L2.NegLim"
-	  Port {
-	    PortNumber		    1
 	    Name		    "L2 [rad]"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
@@ -4054,21 +4084,21 @@ Library {
 	Block {
 	  BlockType		  Reference
 	  Name			  "Second-Order Servo Model for L3"
-	  SID			  "1217"
+	  SID			  "1221"
 	  Ports			  [1, 1]
-	  Position		  [515, 134, 735, 176]
-	  ZOrder		  90
+	  Position		  [500, 534, 720, 576]
+	  ZOrder		  96
 	  BackgroundColor	  "lightBlue"
 	  LibraryVersion	  "$Id: Actuator_Lib.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
 	  FontSize		  12
 	  SourceBlock		  "Actuator_Lib/Second-Order Servo Model"
 	  SourceType		  "Rate and Position Limited Servo"
 	  ContentPreviewEnabled	  off
-	  wn			  "AC.Actuator.L3.wn"
-	  zeta			  "AC.Actuator.L3.zeta"
-	  RL			  "AC.Actuator.L3.RateLim"
-	  POS_hi		  "AC.Actuator.L3.PosLim"
-	  POS_lo		  "AC.Actuator.L3.NegLim"
+	  wn			  "AC.Actuator.R2.wn"
+	  zeta			  "AC.Actuator.R2.zeta"
+	  RL			  "AC.Actuator.R2.RateLim"
+	  POS_hi		  "AC.Actuator.R2.PosLim"
+	  POS_lo		  "AC.Actuator.R2.NegLim"
 	  Port {
 	    PortNumber		    1
 	    Name		    "L3 [rad]"
@@ -4104,6 +4134,56 @@ Library {
 	Block {
 	  BlockType		  Reference
 	  Name			  "Second-Order Servo Model for R1"
+	  SID			  "1218"
+	  Ports			  [1, 1]
+	  Position		  [500, 234, 720, 276]
+	  ZOrder		  91
+	  BackgroundColor	  "lightBlue"
+	  LibraryVersion	  "$Id: Actuator_Lib.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
+	  FontSize		  12
+	  SourceBlock		  "Actuator_Lib/Second-Order Servo Model"
+	  SourceType		  "Rate and Position Limited Servo"
+	  ContentPreviewEnabled	  off
+	  wn			  "AC.Actuator.R3.wn"
+	  zeta			  "AC.Actuator.R3.zeta"
+	  RL			  "AC.Actuator.R3.RateLim"
+	  POS_hi		  "AC.Actuator.R3.PosLim"
+	  POS_lo		  "AC.Actuator.R3.NegLim"
+	  Port {
+	    PortNumber		    1
+	    Name		    "R1 [rad]"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Second-Order Servo Model for R2"
+	  SID			  "1220"
+	  Ports			  [1, 1]
+	  Position		  [500, 434, 720, 476]
+	  ZOrder		  95
+	  BackgroundColor	  "lightBlue"
+	  LibraryVersion	  "$Id: Actuator_Lib.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
+	  FontSize		  12
+	  SourceBlock		  "Actuator_Lib/Second-Order Servo Model"
+	  SourceType		  "Rate and Position Limited Servo"
+	  ContentPreviewEnabled	  off
+	  wn			  "AC.Actuator.L2.wn"
+	  zeta			  "AC.Actuator.L2.zeta"
+	  RL			  "AC.Actuator.L2.RateLim"
+	  POS_hi		  "AC.Actuator.L2.PosLim"
+	  POS_lo		  "AC.Actuator.L2.NegLim"
+	  Port {
+	    PortNumber		    1
+	    Name		    "R2 [rad]"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Reference
+	  Name			  "Second-Order Servo Model for R3"
 	  SID			  "1225"
 	  Ports			  [1, 1]
 	  Position		  [500, 634, 720, 676]
@@ -4121,56 +4201,6 @@ Library {
 	  POS_lo		  "AC.Actuator.R1.NegLim"
 	  Port {
 	    PortNumber		    1
-	    Name		    "R1 [rad]"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "Second-Order Servo Model for R2"
-	  SID			  "1221"
-	  Ports			  [1, 1]
-	  Position		  [510, 534, 730, 576]
-	  ZOrder		  96
-	  BackgroundColor	  "lightBlue"
-	  LibraryVersion	  "$Id: Actuator_Lib.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
-	  FontSize		  12
-	  SourceBlock		  "Actuator_Lib/Second-Order Servo Model"
-	  SourceType		  "Rate and Position Limited Servo"
-	  ContentPreviewEnabled	  off
-	  wn			  "AC.Actuator.R2.wn"
-	  zeta			  "AC.Actuator.R2.zeta"
-	  RL			  "AC.Actuator.R2.RateLim"
-	  POS_hi		  "AC.Actuator.R2.PosLim"
-	  POS_lo		  "AC.Actuator.R2.NegLim"
-	  Port {
-	    PortNumber		    1
-	    Name		    "R2 [rad]"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reference
-	  Name			  "Second-Order Servo Model for R3"
-	  SID			  "1218"
-	  Ports			  [1, 1]
-	  Position		  [515, 234, 735, 276]
-	  ZOrder		  91
-	  BackgroundColor	  "lightBlue"
-	  LibraryVersion	  "$Id: Actuator_Lib.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
-	  FontSize		  12
-	  SourceBlock		  "Actuator_Lib/Second-Order Servo Model"
-	  SourceType		  "Rate and Position Limited Servo"
-	  ContentPreviewEnabled	  off
-	  wn			  "AC.Actuator.R3.wn"
-	  zeta			  "AC.Actuator.R3.zeta"
-	  RL			  "AC.Actuator.R3.RateLim"
-	  POS_hi		  "AC.Actuator.R3.PosLim"
-	  POS_lo		  "AC.Actuator.R3.NegLim"
-	  Port {
-	    PortNumber		    1
 	    Name		    "R3 [rad]"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
@@ -4181,7 +4211,7 @@ Library {
 	  Name			  "Second-Order Servo Model for R4"
 	  SID			  "1223"
 	  Ports			  [1, 1]
-	  Position		  [510, 834, 730, 876]
+	  Position		  [500, 834, 720, 876]
 	  ZOrder		  98
 	  BackgroundColor	  "lightBlue"
 	  LibraryVersion	  "$Id: Actuator_Lib.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
@@ -4206,7 +4236,7 @@ Library {
 	  Name			  "throttle limits1"
 	  SID			  "1215"
 	  Ports			  [1, 1]
-	  Position		  [485, 60, 515, 90]
+	  Position		  [485, 40, 515, 70]
 	  ZOrder		  76
 	  InputPortMap		  "u0"
 	  UpperLimit		  "AC.Actuator.throttle.PosLim"
@@ -4232,7 +4262,7 @@ Library {
 	  Labels		  [0, 0]
 	  SrcBlock		  "throttle limits1"
 	  SrcPort		  1
-	  Points		  [377, 0; 0, 385]
+	  Points		  [377, 0; 0, 405]
 	  DstBlock		  "Bus Creator2"
 	  DstPort		  1
 	}
@@ -4267,104 +4297,67 @@ Library {
 	  DstPort		  1
 	}
 	Line {
-	  Name			  "L3 [rad]"
+	  Name			  "L1 [rad]"
 	  ZOrder		  107
 	  Labels		  [0, 0]
-	  SrcBlock		  "Second-Order Servo Model for L3"
+	  SrcBlock		  "Second-Order Servo Model for L1"
 	  SrcPort		  1
 	  DstBlock		  "Bus Creator3"
 	  DstPort		  1
 	}
 	Line {
-	  Name			  "R3 [rad]"
+	  Name			  "R1 [rad]"
 	  ZOrder		  108
 	  Labels		  [0, 0]
-	  SrcBlock		  "Second-Order Servo Model for R3"
+	  SrcBlock		  "Second-Order Servo Model for R1"
 	  SrcPort		  1
 	  DstBlock		  "Bus Creator3"
 	  DstPort		  2
 	}
 	Line {
-	  Name			  "elevator [rad]"
-	  ZOrder		  109
-	  Labels		  [0, 0]
-	  SrcBlock		  "Demux1"
-	  SrcPort		  2
-	  Points		  [162, 0]
-	  Branch {
-	    ZOrder		    111
-	    Points		    [0, 50]
-	    DstBlock		    "Second-Order Servo Model for R3"
-	    DstPort		    1
-	  }
-	  Branch {
-	    ZOrder		    110
-	    Points		    [0, -50]
-	    DstBlock		    "Second-Order Servo Model for L3"
-	    DstPort		    1
-	  }
-	}
-	Line {
-	  Name			  "L1 [rad]"
+	  Name			  "L2 [rad]"
 	  ZOrder		  112
 	  Labels		  [0, 0]
-	  SrcBlock		  "Second-Order Servo Model for L1"
+	  SrcBlock		  "Second-Order Servo Model for L2"
 	  SrcPort		  1
 	  DstBlock		  "Bus Creator3"
 	  DstPort		  3
 	}
 	Line {
-	  ZOrder		  113
+	  Name			  "L2 [rad]"
+	  ZOrder		  156
+	  Labels		  [0, 1]
 	  SrcBlock		  "Demux1"
-	  SrcPort		  3
-	  Points		  [160, 0; 0, 20]
-	  DstBlock		  "Second-Order Servo Model for L1"
+	  SrcPort		  4
+	  DstBlock		  "Second-Order Servo Model for L2"
 	  DstPort		  1
 	}
 	Line {
-	  Name			  "L2 [rad]"
+	  Name			  "R2 [rad]"
 	  ZOrder		  114
 	  Labels		  [0, 0]
-	  SrcBlock		  "Second-Order Servo Model for L2"
+	  SrcBlock		  "Second-Order Servo Model for R2"
 	  SrcPort		  1
 	  DstBlock		  "Bus Creator3"
 	  DstPort		  4
 	}
 	Line {
-	  Name			  "R2 [rad]"
+	  Name			  "L3 [rad]"
 	  ZOrder		  115
 	  Labels		  [0, 0]
-	  SrcBlock		  "Second-Order Servo Model for R2"
+	  SrcBlock		  "Second-Order Servo Model for L3"
 	  SrcPort		  1
 	  DstBlock		  "Bus Creator3"
 	  DstPort		  5
 	}
 	Line {
-	  ZOrder		  116
-	  SrcBlock		  "Gain2"
-	  SrcPort		  1
-	  DstBlock		  "Second-Order Servo Model for R2"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "aileron [rad]"
-	  ZOrder		  117
-	  Labels		  [0, 0]
+	  Name			  "L3 [rad]"
+	  ZOrder		  154
+	  Labels		  [0, 1]
 	  SrcBlock		  "Demux1"
-	  SrcPort		  4
-	  Points		  [160, 0]
-	  Branch {
-	    ZOrder		    120
-	    Points		    [0, -10]
-	    DstBlock		    "Second-Order Servo Model for L2"
-	    DstPort		    1
-	  }
-	  Branch {
-	    ZOrder		    119
-	    Points		    [0, 90]
-	    DstBlock		    "Gain2"
-	    DstPort		    1
-	  }
+	  SrcPort		  6
+	  DstBlock		  "Second-Order Servo Model for L3"
+	  DstPort		  1
 	}
 	Line {
 	  Name			  "R4 [rad]"
@@ -4376,9 +4369,11 @@ Library {
 	  DstPort		  8
 	}
 	Line {
-	  ZOrder		  122
+	  Name			  "R4 [rad]"
+	  ZOrder		  149
+	  Labels		  [0, 1]
 	  SrcBlock		  "Demux1"
-	  SrcPort		  7
+	  SrcPort		  9
 	  DstBlock		  "Second-Order Servo Model for R4"
 	  DstPort		  1
 	}
@@ -4392,28 +4387,57 @@ Library {
 	  DstPort		  7
 	}
 	Line {
-	  ZOrder		  124
+	  Name			  "L4 [rad]"
+	  ZOrder		  150
+	  Labels		  [0, 1]
 	  SrcBlock		  "Demux1"
-	  SrcPort		  6
-	  Points		  [155, 0; 0, 30]
+	  SrcPort		  8
 	  DstBlock		  "Second-Order Servo Model for L4"
 	  DstPort		  1
 	}
 	Line {
-	  Name			  "R1 [rad]"
+	  Name			  "R3 [rad]"
 	  ZOrder		  125
 	  Labels		  [0, 0]
-	  SrcBlock		  "Second-Order Servo Model for R1"
+	  SrcBlock		  "Second-Order Servo Model for R3"
 	  SrcPort		  1
 	  DstBlock		  "Bus Creator3"
 	  DstPort		  6
 	}
 	Line {
-	  ZOrder		  126
+	  Name			  "R3 [rad]"
+	  ZOrder		  151
+	  Labels		  [0, 1]
+	  SrcBlock		  "Demux1"
+	  SrcPort		  7
+	  DstBlock		  "Second-Order Servo Model for R3"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "R2 [rad]"
+	  ZOrder		  155
+	  Labels		  [0, 1]
 	  SrcBlock		  "Demux1"
 	  SrcPort		  5
-	  Points		  [155, 0; 0, 60]
+	  DstBlock		  "Second-Order Servo Model for R2"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "R1 [rad]"
+	  ZOrder		  157
+	  Labels		  [0, 1]
+	  SrcBlock		  "Demux1"
+	  SrcPort		  3
 	  DstBlock		  "Second-Order Servo Model for R1"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "L1 [rad]"
+	  ZOrder		  158
+	  Labels		  [0, 0]
+	  SrcBlock		  "Demux1"
+	  SrcPort		  2
+	  DstBlock		  "Second-Order Servo Model for L1"
 	  DstPort		  1
 	}
       }
@@ -4430,7 +4454,7 @@ Library {
       System {
 	Name			"miniMUTT LinSim"
 	Location		[481, 0, 1991, 967]
-	Open			on
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"

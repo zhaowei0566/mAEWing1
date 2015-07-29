@@ -50,9 +50,7 @@ controller_mode = 1;
 switch controller_mode
     case 1 % Flight Controller in C
         % Compile Flight Software:
-%         CONTROL =  '../../FlightCode/control/tres_claw.c';
-        CONTROL =  '../../FlightCode/control/sstest_claw.c ../../FlightCode/control/ss_baseline.c';
-        CONTROL =  '../../FlightCode/control/ss_TestFlutterControl.c ../../FlightCode/control/ss_FlutterSuppressionClosedLoop.c';
+
     case 2 % Baseline controller in Simulink.
         roll_gains = [0.5, 0.15, 0.00];        %
         pitch_gains = [-0.3, -0.35, -0.01];
@@ -79,6 +77,7 @@ end
 % Set the path to the .c code in the following variables.
 %
 
+
 %%%%% GUIDANCE LAW %%%%%
 % Point to the desired guidance code here. Use '-DSIMULINK_GUIDANCE' to
 % input the reference commands from the simulink diagram.
@@ -87,10 +86,17 @@ end
 % GUIDANCE = '../../FlightCode/guidance/empty_guidance.c';
 GUIDANCE = '-DSIMULINK_GUIDANCE';
 
+%%%%% CONTROL LAW %%%%%
+% CONTROL =  '../../FlightCode/control/tres_claw.c';
+% CONTROL =  '../../FlightCode/control/ss_TestFlutterControl.c ../../FlightCode/control/ss_FlutterSuppression01.c';
+ CONTROL =  '../../FlightCode/control/control_law_for_flutter_suppression.c ../../FlightCode/control/ss_FlutterSuppression01.c';
+% CONTROL =  '../../FlightCode/control/control_law_for_sysid.c ../../FlightCode/control/ss_FlutterSuppression01.c';
+
 %%%%%% SYSTEM ID SELECTION %%%%%
 % Point to the desired system ID code here
 % SYSTEM_ID = '../../FlightCode/system_id/systemid_none.c';
-SYSTEM_ID = '../../FlightCode/system_id/tres_sysid.c';
+ SYSTEM_ID = '../../FlightCode/system_id/tres_sysid.c';
+% SYSTEM_ID = '../../FlightCode/system_id/sysid_pitch_chirps.c';
 
 %%%%%% SURFACE FAULT MODE SELECTION %%%%%
 % Point to the desired fault code here

@@ -99,7 +99,7 @@ switch lower(AC.aircraft)
         if ~isfield(target,'l_flap'),  target.l_flap=0; end
         if ~isfield(target,'r_flap'),  target.r_flap=0; end
     case {'minimutt_rigid'}
-        InputNames = {'elevator', 'L1', 'aileron', 'R1', 'L4', 'R4'};
+        InputNames = {'L1','R1','L2','R2','L3','R3','L4','R4'};
         if ~isfield(target,'L1'),  target.L1=0; end
         if ~isfield(target,'L4'),  target.L4=0; end
         if ~isfield(target,'R1'),  target.R1=0; end

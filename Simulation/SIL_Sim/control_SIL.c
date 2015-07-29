@@ -38,7 +38,7 @@
 #define IP1_SIZE  12		/* size of input port 1*/
 #define IP2_SIZE  2     	/* size of input port 2*/
 #define NOUT 2				/* number of output ports */
-#define OP0_SIZE  7		    /* size of output port 0*/
+#define OP0_SIZE  9		    /* size of output port 0*/
 #define OP1_SIZE  13	    /* size of output port 1*/
 #define NPAR 1				/* number of S-function parameters */
 
@@ -211,12 +211,14 @@ static void mdlOutputs(SimStruct *S, int_T tid) {
 			
     // Assign to block outputs
     y0[0] = controlData.dthr; // Throttle deflection	
-    y0[1] = controlData.de; // Elevator deflection
-    y0[2] = controlData.l1; // L1 Flap
-	y0[3] = controlData.da; // Aileron deflection
-    y0[4] = controlData.r1; // R1 Flap
-	y0[5] = controlData.l4; // L4 Flap
-    y0[6] = controlData.r4; // R4 Flap
+    y0[1] = controlData.l1; // L1 Flap
+    y0[2] = controlData.r1; // R1 Flap
+	y0[3] = controlData.l2; // L2 Flap
+    y0[4] = controlData.r2; // R2 Flap
+	y0[5] = controlData.l3; // L3 Flap
+    y0[6] = controlData.r3; // R3 Flap
+	y0[7] = controlData.l4; // L4 Flap
+    y0[8] = controlData.r4; // R4 Flap
 	
 	y1[0] = controlData.phi_cmd; // Roll angle command
 	y1[1] = controlData.theta_cmd; // Pitch angle command

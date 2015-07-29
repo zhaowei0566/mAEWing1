@@ -4,6 +4,7 @@ Library {
   MdlSubVersion		  0
   SavedCharacterEncoding  "windows-1252"
   LibraryType		  "BlockLibrary"
+  LockLinksToLibrary	  on
   ScopeRefreshTime	  0.035000
   OverrideScopeRefreshTime on
   DisableAllScopes	  off
@@ -18,7 +19,7 @@ Library {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [-8.0, 0.0, 1150.0, 940.0]
+      Location		      [-8.0, 40.0, 1150.0, 940.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -33,7 +34,7 @@ Library {
 	$PropName		"ExplorerBarInfo"
 	$ObjectID		4
 	$ClassName		"Simulink.ExplorerBarInfo"
-	Visible			[0]
+	Visible			[1]
       }
       Object {
 	$PropName		"EditorsInfo"
@@ -42,9 +43,9 @@ Library {
 	IsActive		[1]
 	ViewObjType		"SimulinkSubsys"
 	LoadSaveID		"5"
-	Extents			[1100.0, 804.0]
+	Extents			[1100.0, 774.0]
 	ZoomFactor		[1.0]
-	Offset			[-120.5, 28.0]
+	Offset			[-284.08333333333451, 29.56666666666672]
       }
     }
   }
@@ -52,11 +53,11 @@ Library {
   Creator		  "hpfifer"
   UpdateHistory		  "UpdateHistoryNever"
   ModifiedByFormat	  "%<Auto>"
-  LastModifiedBy	  "pseiler"
+  LastModifiedBy	  "theis476"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu Jun 04 07:44:55 2015"
-  RTWModifiedTimeStamp	  355304687
-  ModelVersionFormat	  "1.%<AutoIncrement:11>"
+  LastModifiedDate	  "Wed Jul 29 09:45:41 2015"
+  RTWModifiedTimeStamp	  360063935
+  ModelVersionFormat	  "1.%<AutoIncrement:13>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -834,7 +835,7 @@ Library {
   }
   System {
     Name		    "CtrlSurfMapping_Lib"
-    Location		    [-8, 0, 1142, 940]
+    Location		    [-8, 40, 1142, 980]
     Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -909,7 +910,7 @@ Library {
 	  Position		  [100, 40, 140, 80]
 	  ZOrder		  2
 	  BackgroundColor	  "lightBlue"
-	  LibraryVersion	  "1.10"
+	  LibraryVersion	  "1.11"
 	  SourceBlock		  "CtrlSurfMapping_Lib/UltraStick"
 	  SourceType		  "SubSystem"
 	  ContentPreviewEnabled	  off
@@ -1168,7 +1169,7 @@ Library {
       RequestExecContextInheritance off
       System {
 	Name			"miniMUTT"
-	Location		[-8, 0, 1142, 940]
+	Location		[-8, 40, 1142, 980]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -1185,7 +1186,7 @@ Library {
 	  BlockType		  Inport
 	  Name			  "CtrlSurfIn"
 	  SID			  "19"
-	  Position		  [20, 458, 50, 472]
+	  Position		  [25, 408, 55, 422]
 	  ZOrder		  8
 	  IconDisplay		  "Port number"
 	}
@@ -1210,114 +1211,57 @@ Library {
 	  BlockType		  Demux
 	  Name			  "Demux1"
 	  SID			  "41"
-	  Ports			  [1, 6]
-	  Position		  [170, 98, 175, 832]
+	  Ports			  [1, 8]
+	  Position		  [170, 10, 175, 820]
 	  ZOrder		  113
 	  ShowName		  off
-	  Outputs		  "6"
+	  Outputs		  "8"
 	  DisplayOption		  "bar"
 	  Port {
 	    PortNumber		    1
-	    Name		    "elevator [rad]"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  Port {
-	    PortNumber		    2
 	    Name		    "L1 [rad]"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
 	  Port {
-	    PortNumber		    3
-	    Name		    "aileron [rad]"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  Port {
-	    PortNumber		    4
+	    PortNumber		    2
 	    Name		    "R1 [rad]"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
 	  Port {
+	    PortNumber		    3
+	    Name		    "L2 [rad]"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    4
+	    Name		    "R2 [rad]"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
 	    PortNumber		    5
-	    Name		    "L4 [rad]"
+	    Name		    "L3 [rad]"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
 	  Port {
 	    PortNumber		    6
-	    Name		    "R4 [rad]"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Gain
-	  Name			  "Gain4"
-	  SID			  "31"
-	  Position		  [435, 450, 465, 480]
-	  ZOrder		  109
-	  ShowName		  off
-	  Gain			  "-1"
-	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  Port {
-	    PortNumber		    1
-	    Name		    "R2 [rad]"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Gain
-	  Name			  "Gain5"
-	  SID			  "42"
-	  Position		  [415, 50, 450, 80]
-	  ZOrder		  114
-	  ShowName		  off
-	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  Port {
-	    PortNumber		    1
-	    Name		    "L3 [rad]"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Gain
-	  Name			  "Gain6"
-	  SID			  "43"
-	  Position		  [415, 150, 450, 180]
-	  ZOrder		  115
-	  ShowName		  off
-	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  Port {
-	    PortNumber		    1
 	    Name		    "R3 [rad]"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
-	}
-	Block {
-	  BlockType		  Gain
-	  Name			  "Gain7"
-	  SID			  "44"
-	  Position		  [435, 350, 470, 380]
-	  ZOrder		  116
-	  ShowName		  off
-	  ParamDataTypeStr	  "Inherit: Inherit via internal rule"
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
 	  Port {
-	    PortNumber		    1
-	    Name		    "L2 [rad]"
+	    PortNumber		    7
+	    Name		    "L4 [rad]"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	  Port {
+	    PortNumber		    8
+	    Name		    "R4 [rad]"
 	    RTWStorageClass	    "Auto"
 	    DataLoggingNameMode	    "SignalName"
 	  }
@@ -1340,116 +1284,56 @@ Library {
 	  DstPort		  1
 	}
 	Line {
-	  Name			  "L3 [rad]"
-	  ZOrder		  76
-	  Labels		  [1, 1]
-	  SrcBlock		  "Gain5"
+	  Name			  "L1 [rad]"
+	  ZOrder		  112
+	  Labels		  [0, 0; -1, 0]
+	  SrcBlock		  "Demux1"
 	  SrcPort		  1
 	  DstBlock		  "Bus Creator3"
 	  DstPort		  1
 	}
 	Line {
-	  Name			  "R3 [rad]"
-	  ZOrder		  74
-	  Labels		  [1, 1]
-	  SrcBlock		  "Gain6"
-	  SrcPort		  1
+	  Name			  "R1 [rad]"
+	  ZOrder		  111
+	  Labels		  [1, 1; -1, 0]
+	  SrcBlock		  "Demux1"
+	  SrcPort		  2
 	  DstBlock		  "Bus Creator3"
 	  DstPort		  2
 	}
 	Line {
-	  Name			  "elevator [rad]"
-	  ZOrder		  40
-	  Labels		  [0, 0]
-	  SrcBlock		  "Demux1"
-	  SrcPort		  1
-	  Points		  [167, 0]
-	  Branch {
-	    ZOrder		    97
-	    Points		    [0, -100]
-	    DstBlock		    "Gain5"
-	    DstPort		    1
-	  }
-	  Branch {
-	    ZOrder		    78
-	    DstBlock		    "Gain6"
-	    DstPort		    1
-	  }
-	}
-	Line {
-	  Name			  "L1 [rad]"
-	  ZOrder		  75
+	  Name			  "R2 [rad]"
+	  ZOrder		  114
 	  Labels		  [-1, 0]
 	  SrcBlock		  "Demux1"
-	  SrcPort		  2
-	  Points		  [171, 0; 0, -20]
-	  DstBlock		  "Bus Creator3"
-	  DstPort		  3
-	}
-	Line {
-	  Name			  "L2 [rad]"
-	  ZOrder		  77
-	  Labels		  [1, 1]
-	  SrcBlock		  "Gain7"
-	  SrcPort		  1
+	  SrcPort		  4
 	  DstBlock		  "Bus Creator3"
 	  DstPort		  4
 	}
 	Line {
-	  Name			  "R2 [rad]"
-	  ZOrder		  73
-	  Labels		  [1, 1]
-	  SrcBlock		  "Gain4"
-	  SrcPort		  1
+	  Name			  "L3 [rad]"
+	  ZOrder		  115
+	  Labels		  [-1, 0]
+	  SrcBlock		  "Demux1"
+	  SrcPort		  5
 	  DstBlock		  "Bus Creator3"
 	  DstPort		  5
 	}
 	Line {
-	  Name			  "aileron [rad]"
-	  ZOrder		  42
+	  Name			  "L2 [rad]"
+	  ZOrder		  113
 	  Labels		  [0, 0]
 	  SrcBlock		  "Demux1"
 	  SrcPort		  3
-	  Points		  [165, 0]
-	  Branch {
-	    ZOrder		    98
-	    Points		    [0, -40]
-	    DstBlock		    "Gain7"
-	    DstPort		    1
-	  }
-	  Branch {
-	    ZOrder		    79
-	    Points		    [0, 60]
-	    DstBlock		    "Gain4"
-	    DstPort		    1
-	  }
+	  DstBlock		  "Bus Creator3"
+	  DstPort		  3
 	}
 	Line {
-	  Name			  "R4 [rad]"
-	  ZOrder		  72
+	  Name			  "R3 [rad]"
+	  ZOrder		  116
 	  Labels		  [-1, 0]
 	  SrcBlock		  "Demux1"
 	  SrcPort		  6
-	  DstBlock		  "Bus Creator3"
-	  DstPort		  8
-	}
-	Line {
-	  Name			  "L4 [rad]"
-	  ZOrder		  70
-	  Labels		  [-1, 0]
-	  SrcBlock		  "Demux1"
-	  SrcPort		  5
-	  Points		  [263, 0; 0, 20]
-	  DstBlock		  "Bus Creator3"
-	  DstPort		  7
-	}
-	Line {
-	  Name			  "R1 [rad]"
-	  ZOrder		  71
-	  Labels		  [-1, 0]
-	  SrcBlock		  "Demux1"
-	  SrcPort		  4
-	  Points		  [258, 0; 0, 40]
 	  DstBlock		  "Bus Creator3"
 	  DstPort		  6
 	}
@@ -1459,6 +1343,24 @@ Library {
 	  SrcPort		  1
 	  DstBlock		  "Demux1"
 	  DstPort		  1
+	}
+	Line {
+	  Name			  "L4 [rad]"
+	  ZOrder		  118
+	  Labels		  [1, 1]
+	  SrcBlock		  "Demux1"
+	  SrcPort		  7
+	  DstBlock		  "Bus Creator3"
+	  DstPort		  7
+	}
+	Line {
+	  Name			  "R4 [rad]"
+	  ZOrder		  119
+	  Labels		  [1, 1]
+	  SrcBlock		  "Demux1"
+	  SrcPort		  8
+	  DstBlock		  "Bus Creator3"
+	  DstPort		  8
 	}
       }
     }
