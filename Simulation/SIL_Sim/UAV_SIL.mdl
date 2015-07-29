@@ -96,8 +96,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "theis476"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Jul 29 11:16:58 2015"
-  RTWModifiedTimeStamp	  360069405
+  LastModifiedDate	  "Wed Jul 29 17:18:35 2015"
+  RTWModifiedTimeStamp	  360091079
   ModelVersionFormat	  "$Id: UAV_SIL.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
@@ -1126,14 +1126,14 @@ Model {
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  ZOrder		  15
+	  ZOrder		  9
 	  SrcBlock		  "cmds"
 	  SrcPort		  1
 	  DstBlock		  "miniMUTT"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  16
+	  ZOrder		  10
 	  SrcBlock		  "miniMUTT"
 	  SrcPort		  1
 	  DstBlock		  "controls"
@@ -1523,14 +1523,14 @@ Model {
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
-	      ZOrder		      15
+	      ZOrder		      9
 	      SrcBlock		      "I"
 	      SrcPort		      1
 	      DstBlock		      "Trim setting MiniMUTT"
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      16
+	      ZOrder		      10
 	      SrcBlock		      "Trim setting MiniMUTT"
 	      SrcPort		      1
 	      DstBlock		      "O"
@@ -4145,7 +4145,6 @@ Model {
       ZOrder		      29
       BlockMirror	      on
       NamePlacement	      "alternate"
-      CurrentSetting	      "0"
     }
     Block {
       BlockType		      Constant
@@ -4178,7 +4177,7 @@ Model {
       "\n\n== SVN Info ==\nLast modified by %<LastModifiedBy> on %<LastModificationDate>"
       MaskDisplayString	      "MODEL INFORMATION\\nUMN UAV Software-in-the-Loop Simulation\\n\\nUniversity of Minnesot"
       "a\\nAerospace Engineering and Mechanics\\nCopyright 2011 Regents of the University of Minnesota. All rights rese"
-      "rved.\\n\\n== SVN Info ==\\nLast modified by theis476 on 29-Jul-2015 11:16:47"
+      "rved.\\n\\n== SVN Info ==\\nLast modified by theis476 on 29-Jul-2015 11:16:58"
       HorizontalTextAlignment "Left"
       LeftAlignmentValue      "0.02"
       SourceBlockDiagram      "UAV_SIL"

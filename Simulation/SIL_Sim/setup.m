@@ -29,7 +29,7 @@ load UAV_modelconfig
 load UAV_trimcondition
 
 %% Simulation sample time
-SampleTime = 0.02; % sec
+SampleTime = 0.01; % sec
 
 %% Set controller variants
 % Each variant corresponds to a different Simulink model that will be
@@ -87,33 +87,32 @@ end
 GUIDANCE = '-DSIMULINK_GUIDANCE';
 
 %%%%% CONTROL LAW %%%%%
-% CONTROL =  '../../FlightCode/control/tres_claw.c';
-% CONTROL =  '../../FlightCode/control/ss_TestFlutterControl.c ../../FlightCode/control/ss_FlutterSuppression01.c';
- CONTROL =  '../../FlightCode/control/control_law_for_flutter_suppression.c ../../FlightCode/control/ss_FlutterSuppression01.c';
-% CONTROL =  '../../FlightCode/control/control_law_for_sysid.c ../../FlightCode/control/ss_FlutterSuppression01.c';
+% CONTROL =  '../../Software/FlightCode/control/tres_claw.c';
+% CONTROL =  '../../Software/FlightCode/control/control_law_for_flutter_suppression.c ../../Software/FlightCode/control/ss_flutter_suppression01.c';
+CONTROL =  '../../Software/FlightCode/control/control_law_for_sysid.c ../../Software/FlightCode/control/ss_flutter_suppression01.c';
 
 %%%%%% SYSTEM ID SELECTION %%%%%
 % Point to the desired system ID code here
-% SYSTEM_ID = '../../FlightCode/system_id/systemid_none.c';
- SYSTEM_ID = '../../FlightCode/system_id/tres_sysid.c';
-% SYSTEM_ID = '../../FlightCode/system_id/sysid_pitch_chirps.c';
+% SYSTEM_ID = '../../Software/FlightCode/system_id/systemid_none.c';
+% SYSTEM_ID = '../../Software/FlightCode/system_id/tres_sysid.c';
+SYSTEM_ID = '../../Software/FlightCode/system_id/sysid_pitch_chirps.c';
 
 %%%%%% SURFACE FAULT MODE SELECTION %%%%%
 % Point to the desired fault code here
-SURFACE_FAULT = '../../FlightCode/faults/surffault_none.c';
+SURFACE_FAULT = '../../Software/FlightCode/faults/surffault_none.c';
 
 %%%%%% SENS0R FAULT MODE SELECTION %%%%%
 % Point to the desired fault code here
-SENSOR_FAULT = '../../FlightCode/faults/sensfault_none.c';
+SENSOR_FAULT = '../../Software/FlightCode/faults/sensfault_none.c';
 
 % Compile control software
 if exist('CONTROL','var')  % XXX check all conditions
-    eval(['mex -I../../FlightCode/ control_SIL.c '...   
+    eval(['mex -I../../Software/FlightCode/ control_SIL.c '...   
         GUIDANCE ' '  SYSTEM_ID ' ' CONTROL ' ' ... 
         '-DAIRCRAFT_UP1DIR=\"../aircraft/skoll_config.h\"' ...
-        ' ../../FlightCode/utils/matrix_SIL.c ' ...
-        ' ../../FlightCode/control/control_functions.c ' ...
-        ' ../../FlightCode/system_id/systemid_functions.c ']);
+        ' ../../Software/FlightCode/utils/matrix_SIL.c ' ...
+        ' ../../Software/FlightCode/control/control_functions.c ' ...
+        ' ../../Software/FlightCode/system_id/systemid_functions.c ']);
 end
 
 %% Integer Time delay in flight software loop
