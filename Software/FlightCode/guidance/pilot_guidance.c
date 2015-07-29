@@ -23,8 +23,8 @@ extern void get_guidance(double time, struct sensordata *sensorData_ptr, struct 
 	double pitch_incp = sensorData_ptr->inceptorData_ptr->pitch;
 	double roll_incp  = sensorData_ptr->inceptorData_ptr->roll;
 	
-	controlData_ptr->theta_cmd = (-20.5487*(pitch_incp-.0360)*(pitch_incp-.0360) + -44.2865*(pitch_incp-.0360))*D2R;
-	controlData_ptr->phi_cmd = -1*(-4.4118*(roll_incp-0.0124)*(roll_incp-0.0124) + 72.5741*(roll_incp-0.0124))*D2R;
-	controlData_ptr->ias_cmd = 23; // Speed command
+	controlData_ptr->theta_cmd = 	20*D2R*pitch_incp;
+	controlData_ptr->phi_cmd =		35*D2R*roll_incp;
+	controlData_ptr->ias_cmd = 		23; // Speed command
 }
 

@@ -9,20 +9,20 @@ extern void run_mission(struct sensordata *sensorData_ptr, struct nav *navData_p
 	double pilot_mode = sensorData_ptr->inceptorData_ptr->mode;
 	double pilot_select = sensorData_ptr->inceptorData_ptr->select;
 	
-	if((pilot_mode > -0.2)&&(pilot_mode < 0.2)){
+	if((pilot_mode > 0.5)&&(pilot_mode < 1.5)){
 		missionData_ptr -> claw_mode = 1;
 	}
-	else if(pilot_mode < -0.4){
+	else if(pilot_mode > 1.5){
 		missionData_ptr -> claw_mode = 2;
 	}
 	else{
 		missionData_ptr -> claw_mode = 0;
 	}
 	
-	if((pilot_select > 0.4)&&(pilot_select < 0.6)){
+	if((pilot_select > 0.5)&&(pilot_select < 1.5)){
 		missionData_ptr -> claw_select = 1;
 	}
-	else if(pilot_select > 0.6){
+	else if(pilot_select > 1.5){
 		missionData_ptr -> claw_select = 2;
 	}
 	else{

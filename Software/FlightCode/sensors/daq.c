@@ -43,15 +43,15 @@
 #include AIRCRAFT_UP1DIR
 
 /// Arrays of calibration coefficients using macros defined in aircraft/XXX_config.h.
-static double incp_thr_cal[] 	= THR_INCP_CAL;
+static double incp_select_cal[] = SELECT_INCP_CAL;
 static double incp_pitch_cal[] 	= PITCH_INCP_CAL;
-static double incp_yaw_cal[] 	= YAW_INCP_CAL;
+static double incp_mode_cal[] 	= MODE_INCP_CAL;
 static double incp_roll_cal[] 	= ROLL_INCP_CAL;
 
 /// Compute order of polynomial calibration (length of array - 1)
-static int incp_thr_ord 	= sizeof(incp_thr_cal)/sizeof(*incp_thr_cal) - 1;
+static int incp_select_ord 	= sizeof(incp_select_cal)/sizeof(*incp_select_cal) - 1;
 static int incp_pitch_ord   = sizeof(incp_pitch_cal)/sizeof(*incp_pitch_cal) - 1;
-static int incp_yaw_ord   	= sizeof(incp_yaw_cal)/sizeof(*incp_yaw_cal) - 1;
+static int incp_mode_ord   	= sizeof(incp_mode_cal)/sizeof(*incp_mode_cal) - 1;
 static int incp_roll_ord 	= sizeof(incp_roll_cal)/sizeof(*incp_roll_cal) - 1;
 
 /// Low Pass Filter for speed and altitude signals initialization
@@ -127,10 +127,10 @@ void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct 
 	
 	/********** PWM Data **********/
 	// Apply calibration equations
-	inceptorData_ptr->select = 	polyval(incp_thr_cal, (double)rabbitData_ptr->pwm_ch_three/PWMIN_SCALING,incp_thr_ord);
-	inceptorData_ptr->pitch = 		polyval(incp_pitch_cal, (double)rabbitData_ptr->pwm_ch_four/PWMIN_SCALING,incp_pitch_ord);
-	inceptorData_ptr->mode = 		polyval(incp_yaw_cal, (double)rabbitData_ptr->pwm_ch_two/PWMIN_SCALING,incp_yaw_ord);
-	inceptorData_ptr->roll = 		polyval(incp_roll_cal, (double)rabbitData_ptr->pwm_ch_one/PWMIN_SCALING,incp_roll_ord);
+	inceptorData_ptr->select = 		polyval(incp_select_cal, (double)rabbitData_ptr->pwm_ch_three,incp_select_ord);
+	inceptorData_ptr->pitch = 		polyval(incp_pitch_cal, (double)rabbitData_ptr->pwm_ch_four,incp_pitch_ord);
+	inceptorData_ptr->mode = 		polyval(incp_mode_cal, (double)rabbitData_ptr->pwm_ch_two,incp_mode_ord);
+	inceptorData_ptr->roll = 		polyval(incp_roll_cal, (double)rabbitData_ptr->pwm_ch_one,incp_roll_ord);
 	/********** End PWM Data **********/
 	
 	/********** GPIO **********/
