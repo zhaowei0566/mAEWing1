@@ -2,7 +2,7 @@
 // brtaylor@umn.edu
 // 2015-07-21
 // 
-// v0.7
+// v0.8
 //
 
 #include <ADC.h>            // ADC library
@@ -16,20 +16,6 @@ byte unpack[18];    // array of bytes for receiving
 
 ADC *adc = new ADC(); // an ADC object
 int ain[6];           // array to store ADC values
-int ain_buff[6];      // array to store ADC values
-
-static double u_a[2] = {0,0}; // input of low pass filter {u(k), u(k-1)}
-static double y_a[2] = {0,0}; // output of low pass filter {y(k), y(k-1)}
-static double u_b[2] = {0,0}; // input of low pass filter {u(k), u(k-1)}
-static double y_b[2] = {0,0}; // output of low pass filter {y(k), y(k-1)}
-static double u_c[2] = {0,0}; // input of low pass filter {u(k), u(k-1)}
-static double y_c[2] = {0,0}; // output of low pass filter {y(k), y(k-1)}
-static double u_d[2] = {0,0}; // input of low pass filter {u(k), u(k-1)}
-static double y_d[2] = {0,0}; // output of low pass filter {y(k), y(k-1)}
-static double u_e[2] = {0,0}; // input of low pass filter {u(k), u(k-1)}
-static double y_e[2] = {0,0}; // output of low pass filter {y(k), y(k-1)}
-static double u_f[2] = {0,0}; // input of low pass filter {u(k), u(k-1)}
-static double y_f[2] = {0,0}; // output of low pass filter {y(k), y(k-1)}
 
 TinyGPSPlus gps;                            // GPS object
 static const uint8_t RXPin = 9, TXPin = 10; // software serial pins
@@ -159,22 +145,6 @@ void loop() {
   // get the frame start time
   start_time = micros();
 
-  // read ADC
-  ain[0] = adc->analogRead(A0, ADC_0);
-  ain[1] = adc->analogRead(A2, ADC_1);
-  ain[2] = adc->analogRead(A1, ADC_0);
-  ain[3] = adc->analogRead(A3, ADC_1);
-  ain[4] = adc->analogRead(A6, ADC_0);
-  ain[5] = adc->analogRead(A15, ADC_1);
-
-  // low pass filter
-  ain_buff[0] = lp_filter(ain[0], u_a, y_a);
-  ain_buff[1] = lp_filter(ain[1], u_b, y_b);
-  ain_buff[2] = lp_filter(ain[2], u_c, y_c);
-  ain_buff[3] = lp_filter(ain[3], u_d, y_d);
-  ain_buff[4] = lp_filter(ain[4], u_e, y_e);
-  ain_buff[5] = lp_filter(ain[5], u_f, y_f);
-
   // make the light blink at roughly 1 Hz
   if(j > 1000){
     digitalWrite(13,LOW);
@@ -208,6 +178,14 @@ static void smartDelay(unsigned long us)
 
 void requestEvent()
 {
+  // read ADC
+  ain[0] = adc->analogRead(A0, ADC_0);
+  ain[1] = adc->analogRead(A2, ADC_1);
+  ain[2] = adc->analogRead(A1, ADC_0);
+  ain[3] = adc->analogRead(A3, ADC_1);
+  ain[4] = adc->analogRead(A6, ADC_0);
+  ain[5] = adc->analogRead(A15, ADC_1);
+  
   // read air data
   Wire.requestFrom(2,2); // 2 bytes from address 0x02
   ps_byte[0] = Wire.read(); // put the data somewhere
@@ -250,18 +228,18 @@ void requestEvent()
   }
 
   /* Analog Data */
-  pack[0]   = (byte) (ain_buff[0] & 0xff);
-  pack[1]   = (byte) ((ain_buff[0] >> 8) & 0xff);
-  pack[2]   = (byte) (ain_buff[1] & 0xff);
-  pack[3]   = (byte) ((ain_buff[1] >> 8) & 0xff);
-  pack[4]   = (byte) (ain_buff[2] & 0xff);
-  pack[5]   = (byte) ((ain_buff[2] >> 8) & 0xff);
-  pack[6]   = (byte) (ain_buff[3] & 0xff);
-  pack[7]   = (byte) ((ain_buff[3] >> 8) & 0xff);
-  pack[8]   = (byte) (ain_buff[4] & 0xff);
-  pack[9]   = (byte) ((ain_buff[4] >> 8) & 0xff);
-  pack[10]  = (byte) (ain_buff[5] & 0xff);
-  pack[11]  = (byte) ((ain_buff[5] >> 8) & 0xff);
+  pack[0]   = (byte) (ain[0] & 0xff);
+  pack[1]   = (byte) ((ain[0] >> 8) & 0xff);
+  pack[2]   = (byte) (ain[1] & 0xff);
+  pack[3]   = (byte) ((ain[1] >> 8) & 0xff);
+  pack[4]   = (byte) (ain[2] & 0xff);
+  pack[5]   = (byte) ((ain[2] >> 8) & 0xff);
+  pack[6]   = (byte) (ain[3] & 0xff);
+  pack[7]   = (byte) ((ain[3] >> 8) & 0xff);
+  pack[8]   = (byte) (ain[4] & 0xff);
+  pack[9]   = (byte) ((ain[4] >> 8) & 0xff);
+  pack[10]  = (byte) (ain[5] & 0xff);
+  pack[11]  = (byte) ((ain[5] >> 8) & 0xff);
 
   /* Air Data */
   pack[12] = ps_byte[0];
@@ -349,19 +327,5 @@ void receiveEvent(size_t howMany)
   tinyservo_g.writeMicroseconds(pwmcmd[6]);
   tinyservo_h.writeMicroseconds(pwmcmd[7]);
   tinyservo_i.writeMicroseconds(pwmcmd[8]);
-}
-
-double lp_filter(double signal, double *u, double *y)
-{
-  const int m=1;  //m = order of denominator of low pass filter
-
-  u[m] = signal;
-
-  y[m] = 0.7304*y[m-1] + 0.2696*u[m-1]; // 200 Hz filter at 1000 Hz
-
-  u[m-1] = u[m];    // initialize past values for next frame
-  y[m-1] = y[m];
-
-  return y[m];
 }
 
