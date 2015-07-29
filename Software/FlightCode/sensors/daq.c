@@ -149,7 +149,6 @@ void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct 
 	/********** End GPIO **********/
 	
 	/********** GPS Data **********/
-	
 	gpsData_ptr->newData = rabbitData_ptr->isUpdated;
 	gpsData_ptr->satVisible = rabbitData_ptr->satVisible;
 	if(gpsData_ptr->satVisible>3){
@@ -163,8 +162,9 @@ void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct 
 	gpsData_ptr->alt = rabbitData_ptr->alt;
 	gpsData_ptr ->courseOverGround = rabbitData_ptr->courseOverGround;
 	gpsData_ptr ->speedOverGround = rabbitData_ptr->speedOverGround;
-	gpsData_ptr->vn = 0;
-	gpsData_ptr->ve = 0;
-	gpsData_ptr->vd = 0;
+	gpsData_ptr->vn = cos(gpsData_ptr ->courseOverGround)*gpsData_ptr ->speedOverGround;
+	gpsData_ptr->ve = sin(gpsData_ptr ->courseOverGround)*gpsData_ptr ->speedOverGround;
+	gpsData_ptr->vd = -1*(gpsData_ptr->alt - gpsData_ptr->alt_prev)/(0.01);
+	gpsData_ptr->alt_prev = gpsData_ptr->alt;
 	/********** End GPS Data **********/
 }

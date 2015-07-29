@@ -72,6 +72,7 @@ struct gps {
 	double lat;	///< [deg], Geodetic latitude
 	double lon;	///< [deg], Geodetic longitude
 	double alt;	///< [m], altitude relative to WGS84
+	double alt_prev;
 	double ve;	///< [m/sec], East velocity
 	double vn;	///< [m/sec], North velocity
 	double vd;	///< [m/sec], Down velocity
