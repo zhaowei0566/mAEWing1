@@ -68,7 +68,7 @@ double lp_filter(double signal, double *u, double *y)
 
 	u[m] = signal;
 
-	y[m] = 0.9608*y[m-1] + 0.0392*u[m-1];	// these coefficients come from a discretized low pass filter with a pole at 2 rad/sec
+	y[m] = 0.9802*y[m-1] + 0.0198*u[m-1];	// these coefficients come from a discretized low pass filter with a pole at 2 rad/sec
 
 	u[m-1] = u[m];		// initialize past values for next frame
 	y[m-1] = y[m];
