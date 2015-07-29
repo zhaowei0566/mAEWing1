@@ -96,9 +96,9 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 // *** STATE SPACE CONTROLLER PART
 if (claw_mode==0) 
 {
-	ss_input[0] = -q; 		
-	ss_input[1] = -az; 		
-	ss_input[2] = -0.25*(acc_lf+acc_lr+acc_rf+acc_rr);   			
+	ss_input[0] = q; 		
+	ss_input[1] = az; 		
+	ss_input[2] = 0.25*(acc_lf+acc_lr+acc_rf+acc_rr);   			
 		
 	get_ss_control(ss_input, ss_output);
 }
@@ -113,12 +113,13 @@ controlData_ptr->l4 = controlData_ptr->r4 = ss_output[0]; // L4 R4 [rad]
 //  	**********************************  
 
 // *** BASELINE CONTROLLER PART	
-	controlData_ptr->dthr = speed_control(ias_cmd, ias, TIMESTEP);
-	controlData_ptr->de   = pitch_control(theta_cmd, theta, q, TIMESTEP);
-	controlData_ptr->da   = roll_control(phi_cmd, phi, p, TIMESTEP);   
-	
-	controlData_ptr->l1   = 0;			// L1 [rad]
-	controlData_ptr->r1   = 0; 			// R1 [rad]
+	controlData_ptr->dthr 		= speed_control(ias_cmd, ias, TIMESTEP); 						// Throttle [nd]
+	controlData_ptr->l3  	  	= pitch_control(theta_cmd, theta, q, TIMESTEP); 	// use elevator L3+R3 [rad]
+	controlData_ptr->r3  		= controlData_ptr->l3; 											//
+	controlData_ptr->l2  		= roll_control(phi_cmd, phi, p, TIMESTEP);		// use aileron L2-R2 [rad]
+	controlData_ptr->r2  		= -controlData_ptr->l2;											//  
+	controlData_ptr->l1   		= 0;															// L1 [rad]
+	controlData_ptr->r1   		= 0; 															// R1 [rad]
 //  	**********************************
 }	
 	
@@ -137,27 +138,16 @@ static double roll_control(double phi_ref, double roll_angle, double rollrate, d
 	da  = roll_gain[0]*e[0] + roll_gain[1]*integrator[0] - roll_gain[2]*rollrate;
 
 	//eliminate windup
-	if      (da >= AILERON_MAX-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 1; da = AILERON_MAX-ROLL_SURF_TRIM;}
-	else if (da >= AILERON_MAX-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 0; da = AILERON_MAX-ROLL_SURF_TRIM;}  //stop integrating
-	else if (da <= AILERON_MIN-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 0; da = AILERON_MIN-ROLL_SURF_TRIM;}  //stop integrating
-	else if (da <= AILERON_MIN-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 1; da = AILERON_MIN-ROLL_SURF_TRIM;}
+	if      (da >= L2_MAX-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 1; da = L2_MAX-ROLL_SURF_TRIM;}
+	else if (da >= L2_MAX-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 0; da = L2_MAX-ROLL_SURF_TRIM;}  //stop integrating
+	else if (da <= L2_MIN-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 0; da = L2_MIN-ROLL_SURF_TRIM;}  //stop integrating
+	else if (da <= L2_MIN-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 1; da = L2_MIN-ROLL_SURF_TRIM;}
 	else {anti_windup[0] = 1;}
 
     return da;
 }
 
 // Pitch get_control law: angles in radians. Rates in rad/s. Time in seconds
-/*                                                  __________
-                   _______________                 |          |  theta
-theta_cmd  _      |               |       _   de   |          |---------
-    ----->|+|---->| Theta Tracker |----->|+|------>| Aircraft |  q      |
-           -      |_______________|       -        |          |-----    |
-           ^            (PI)              ^        |__________|     |   |
-         - |                            - |        ______________   |   |
-           |                              |       |              |  |   |
-           |                               -------| Pitch Damper |<-    |
-           |                                      |______________|      |
-            ------------------------------------------------------------     */
 static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t)
 {
 	// pitch attitude tracker
@@ -168,10 +158,10 @@ static double pitch_control(double the_ref, double pitch, double pitchrate, doub
     		de = pitch_gain[0]*e[1] + pitch_gain[1]*integrator[1] - pitch_gain[2]*pitchrate;    // Elevator output
 
 	//eliminate wind-up
-	if      (de >= ELEVATOR_MAX-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 0; de = ELEVATOR_MAX-PITCH_SURF_TRIM;}  //stop integrating
-	else if (de >= ELEVATOR_MAX-PITCH_SURF_TRIM && e[1] > 0) {anti_windup[1] = 1; de = ELEVATOR_MAX-PITCH_SURF_TRIM;}
-	else if (de <= ELEVATOR_MIN-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 1; de = ELEVATOR_MIN-PITCH_SURF_TRIM;}
-	else if (de <= ELEVATOR_MIN-PITCH_SURF_TRIM && e[1] > 0) {anti_windup[1] = 0; de = ELEVATOR_MIN-PITCH_SURF_TRIM;}  //stop integrating
+	if      (de >= L3_MAX-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 0; de = L3_MAX-PITCH_SURF_TRIM;}  //stop integrating
+	else if (de >= L3_MAX-PITCH_SURF_TRIM && e[1] > 0) {anti_windup[1] = 1; de = L3_MAX-PITCH_SURF_TRIM;}
+	else if (de <= L3_MIN-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 1; de = L3_MIN-PITCH_SURF_TRIM;}
+	else if (de <= L3_MIN-PITCH_SURF_TRIM && e[1] > 0) {anti_windup[1] = 0; de = L3_MIN-PITCH_SURF_TRIM;}  //stop integrating
 	else {anti_windup[1] = 1;}
 
 	return de;  //rad
@@ -225,10 +215,12 @@ extern void reset_control(struct control *controlData_ptr){
 	e[0] = e[1] = e[2] = e[3] = 0;
 
 	controlData_ptr->dthr = 0; 	// throttle
-	controlData_ptr->de   = 0; 	// elevator
-	controlData_ptr->da   = 0; 	// rudder
 	controlData_ptr->l1   = 0;	// L1 [rad]
     controlData_ptr->r1   = 0; 	// R1 [rad]
+	controlData_ptr->l2   = 0;	// L2 [rad]
+    controlData_ptr->r2   = 0; 	// R2 [rad]
+	controlData_ptr->l3   = 0;	// L3 [rad]
+    controlData_ptr->r3   = 0; 	// R3 [rad]	
 	controlData_ptr->l4   = 0; 	// L4 [rad]
 	controlData_ptr->r4   = 0; 	// R4 [rad]
 

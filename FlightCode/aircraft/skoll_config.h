@@ -22,14 +22,19 @@
 // Control Surface limits, max and min
 #define THROTTLE_MAX 	 1.0
 #define	THROTTLE_MIN	 0.0
-#define	ELEVATOR_MAX	 0.6109	///< [rad], 35deg
-#define	ELEVATOR_MIN	-0.6109 ///< [rad],-35deg
-#define AILERON_MAX	 0.6109	///< [rad], 35deg
-#define AILERON_MIN	-0.6109 ///< [rad],-35deg
+
 #define	L1_MAX		 0.6109	///< [rad], 35deg -- L1 Flutter Suppression Surface
-#define	L1_MIN	        -0.6109 ///< [rad],-35deg -- L1 Flutter Suppression Surface
+#define	L1_MIN	    -0.6109 ///< [rad],-35deg -- L1 Flutter Suppression Surface
 #define R1_MAX	 	 0.6109	///< [rad], 35deg -- R1 Flutter Suppression Surface
 #define R1_MIN		-0.6109 ///< [rad],-35deg -- R1 Flutter Suppression Surface
+#define	L2_MAX		 0.6109	///< [rad], 35deg -- L2 Aileron
+#define	L2_MIN		-0.6109 ///< [rad],-35deg -- L2 Aileron
+#define R2_MAX		 0.6109	///< [rad], 35deg -- R2 Aileron
+#define R2_MIN		-0.6109 ///< [rad],-35deg -- R2 Aileron
+#define	L3_MAX	 	 0.6109	///< [rad], 35deg -- L3 Elevator
+#define	L3_MIN		-0.6109 ///< [rad],-35deg -- L3 Elevator
+#define R3_MAX		 0.6109	///< [rad], 35deg -- R3 Elevator
+#define R3_MIN		-0.6109 ///< [rad],-35deg -- R3 Elevator
 #define L4_MAX	 	 0.6109	///< [rad], 35deg -- L4 Flutter Suppression Surface
 #define L4_MIN		-0.6109 ///< [rad],-35deg -- L4 Flutter Suppression Surface
 #define R4_MAX	 	 0.6109	///< [rad], 35deg -- R4 Flutter Suppression Surface

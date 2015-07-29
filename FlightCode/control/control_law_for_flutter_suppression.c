@@ -48,8 +48,8 @@ static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 	static double zdot_gain[2]  = {-0.025,-0.05};		// PI gains for zdot tracker
 #endif
 
-static double da; 		// Delta aileron
-static double de; 		// Delta elevator
+static double de;		// Delta elevator
+static double da;		// Delta aileron
 static double dthr;		// Delta throttle
 
 static double ss_output[1] = {0}; 		// Delta L4R4 for FlutterSuppression
@@ -92,7 +92,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	double ias   = sensorData_ptr->adData_ptr->ias_filt;	// Airspeed
 	double zdot  = navData_ptr->vd; 						// Sink rate from nav filter
 	
-	double az 	 = sensorData_ptr->imuData_ptr->az - base_acc; 			// IMU az measure - 1g
+	double az 	 	= sensorData_ptr->imuData_ptr->az - base_acc; 			// IMU az measure - 1g
 	double acc_lf   = sensorData_ptr->accelData_ptr->lf - base_acc; 	// left forward wing accelerometer measure - 1g
 	double acc_rf   = sensorData_ptr->accelData_ptr->rf - base_acc;		// right forward wing accelerometer measure - 1g
 	double acc_lr   = sensorData_ptr->accelData_ptr->lr - base_acc;		// left rear wing accelerometer measure - 1g
@@ -111,7 +111,6 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	static int t1_latched = FALSE;
 	static double t1 = 0;
 	double diff_time;
-	double diffy;	
 	static int flarenogps = FALSE;
 	static double nogps_theta;
 	
@@ -243,19 +242,21 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 
 	// assign the control commands
 	controlData_ptr->dthr 		= speed_control(ias_cmd, ias, TIMESTEP); 						// Throttle [nd]
-	controlData_ptr->de   		= pitch_control(theta_cmd, theta, q, TIMESTEP, gain_selector); 	// L3+R3 [rad]
-	controlData_ptr->da   		= roll_control(phi_cmd, phi, p, TIMESTEP, gain_selector);		// L2-R2 [rad]
+	controlData_ptr->l3  	  	= pitch_control(theta_cmd, theta, q, TIMESTEP, gain_selector); 	// use elevator L3+R3 [rad]
+	controlData_ptr->r3  		= controlData_ptr->l3; 											//
+	controlData_ptr->l2  		= roll_control(phi_cmd, phi, p, TIMESTEP, gain_selector);		// use aileron L2-R2 [rad]
+	controlData_ptr->r2  		= -controlData_ptr->l2;											//  
 	controlData_ptr->l1   		= 0;															// L1 [rad]
 	controlData_ptr->r1   		= 0; 															// R1 [rad]
 
 	// elevon mixing 
 	if(claw_mode == 0){  // no elevon mixing for experiments
-		controlData_ptr->l4   		= ss_output[0]; 							// L4 [rad]
-		controlData_ptr->r4   		= ss_output[0]; 							// R4 [rad]
+		controlData_ptr->l4   		= ss_output[0]; 											// L4 [rad]
+		controlData_ptr->r4   		= ss_output[0]; 											// R4 [rad]
 	}
 	else{  // elevon mixing for regular operation and landing
-		controlData_ptr->l4   		= de + da; 									// L4 [rad]
-		controlData_ptr->r4   		= de - da; 									// R4 [rad]
+		controlData_ptr->l4   		= controlData_ptr->l3 + controlData_ptr->l2; 				// L4 [rad]
+		controlData_ptr->r4   		= controlData_ptr->r3 + controlData_ptr->r2; 				// R4 [rad]
 	}
 }
 
@@ -279,10 +280,10 @@ static double roll_control (double phi_ref, double roll_angle, double rollrate, 
 	}
 
 	//eliminate windup
-	if      (da >= AILERON_MAX-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 1; da = AILERON_MAX-ROLL_SURF_TRIM;}
-	else if (da >= AILERON_MAX-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 0; da = AILERON_MAX-ROLL_SURF_TRIM;}  //stop integrating
-	else if (da <= AILERON_MIN-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 0; da = AILERON_MIN-ROLL_SURF_TRIM;}  //stop integrating
-	else if (da <= AILERON_MIN-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 1; da = AILERON_MIN-ROLL_SURF_TRIM;}
+	if      (da >= L2_MAX-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 1; da = L2_MAX-ROLL_SURF_TRIM;}
+	else if (da >= L2_MAX-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 0; da = L2_MAX-ROLL_SURF_TRIM;}  //stop integrating
+	else if (da <= L2_MIN-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 0; da = L2_MIN-ROLL_SURF_TRIM;}  //stop integrating
+	else if (da <= L2_MIN-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 1; da = L2_MIN-ROLL_SURF_TRIM;}
 	else {anti_windup[0] = 1;}
 
     return da;
@@ -306,10 +307,10 @@ static double pitch_control(double the_ref, double pitch, double pitchrate, doub
 	}
 
 	//eliminate wind-up
-	if      (de >= ELEVATOR_MAX-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 0; de = ELEVATOR_MAX-PITCH_SURF_TRIM;}  //stop integrating
-	else if (de >= ELEVATOR_MAX-PITCH_SURF_TRIM && e[1] > 0) {anti_windup[1] = 1; de = ELEVATOR_MAX-PITCH_SURF_TRIM;}
-	else if (de <= ELEVATOR_MIN-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 1; de = ELEVATOR_MIN-PITCH_SURF_TRIM;}
-	else if (de <= ELEVATOR_MIN-PITCH_SURF_TRIM && e[1] > 0) {anti_windup[1] = 0; de = ELEVATOR_MIN-PITCH_SURF_TRIM;}  //stop integrating
+	if      (de >= L3_MAX-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 0; de = L3_MAX-PITCH_SURF_TRIM;}  //stop integrating
+	else if (de >= L3_MAX-PITCH_SURF_TRIM && e[1] > 0) {anti_windup[1] = 1; de = L3_MAX-PITCH_SURF_TRIM;}
+	else if (de <= L3_MIN-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 1; de = L3_MIN-PITCH_SURF_TRIM;}
+	else if (de <= L3_MIN-PITCH_SURF_TRIM && e[1] > 0) {anti_windup[1] = 0; de = L3_MIN-PITCH_SURF_TRIM;}  //stop integrating
 	else {anti_windup[1] = 1;}
 
 	return de;  //rad
@@ -365,10 +366,12 @@ extern void reset_control(struct control *controlData_ptr){
 	e[0] = e[1] = e[2] = e[3] = 0;
 
 	controlData_ptr->dthr = 0; 	// throttle
-	controlData_ptr->de   = 0; 	// elevator
-	controlData_ptr->da   = 0; 	// rudder
 	controlData_ptr->l1   = 0;	// L1 [rad]
     controlData_ptr->r1   = 0; 	// R1 [rad]
+	controlData_ptr->l2   = 0;	// L2 [rad]
+    controlData_ptr->r2   = 0; 	// R2 [rad]
+	controlData_ptr->l3   = 0;	// L3 [rad]
+    controlData_ptr->r3   = 0; 	// R3 [rad]	
 	controlData_ptr->l4   = 0; 	// L4 [rad]
 	controlData_ptr->r4   = 0; 	// R4 [rad]
 	

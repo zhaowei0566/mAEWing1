@@ -31,16 +31,15 @@ local_time = time - entry_time;
 		{
 		f = 1.0 + (4.5-1.0)/15.0 * (local_time);
 		controlData_ptr->pitch_cmd_excite = 10.0 * D2R * sin(2.0*3.14159265359 * f * (local_time));			
-		controlData_ptr->l1     = controlData_ptr->l1 +  controlData_ptr->pitch_cmd_excite;
-		controlData_ptr->r1   	= controlData_ptr->r1 +  controlData_ptr->pitch_cmd_excite;	
+		controlData_ptr->l1    += controlData_ptr->pitch_cmd_excite;
+		controlData_ptr->r1    += controlData_ptr->pitch_cmd_excite;	
 		}
 		else if ( (local_time > 20)&& (local_time < 35) ) 
 		{
 		f = 1.0 + (4.5-1.0)/15.0 * (local_time-20.0);
 		controlData_ptr->pitch_cmd_excite = 5.0 * D2R * sin(2.0*3.14159265359 * f * (local_time-20.0));			
-		// controlData_ptr->l2      = controlData_ptr->l2 +  controlData_ptr->pitch_cmd_excite;
-		// controlData_ptr->r2   	= controlData_ptr->r2 +  controlData_ptr->pitch_cmd_excite;	
-		controlData_ptr->de     = controlData_ptr->de +  controlData_ptr->pitch_cmd_excite;
+		controlData_ptr->l2     += controlData_ptr->l2 +  controlData_ptr->pitch_cmd_excite;
+		controlData_ptr->r2   	+= controlData_ptr->r2 +  controlData_ptr->pitch_cmd_excite;	
 		}
 			
 		
@@ -51,19 +50,18 @@ local_time = time - entry_time;
 		{
 		f = 1.0 + (4.5-1.0)/15.0 * (local_time);
 		controlData_ptr->pitch_cmd_excite = 5.0 * D2R * sin(2.0*3.14159265359 * f * (local_time));
-		// controlData_ptr->l3      = controlData_ptr->l3 +  controlData_ptr->pitch_cmd_excite;
-		// controlData_ptr->r3   	= controlData_ptr->r3 +  controlData_ptr->pitch_cmd_excite;	
-		controlData_ptr->de     = controlData_ptr->de +  controlData_ptr->pitch_cmd_excite;
+		controlData_ptr->l3     +=  controlData_ptr->pitch_cmd_excite;
+		controlData_ptr->r3   	+=  controlData_ptr->pitch_cmd_excite;	
 		}
 		else if ( (local_time > 20)&& (local_time < 35) )
 		{
 		f = 1.0 + (4.5-1.0)/15.0 * (local_time-20.0);		
 		controlData_ptr->pitch_cmd_excite = 3.0 * D2R * sin(2.0*3.14159265359 * f * (local_time-20.0));
-		controlData_ptr->l4     = controlData_ptr->l4 +  controlData_ptr->pitch_cmd_excite;
-		controlData_ptr->r4   	= controlData_ptr->r4 +  controlData_ptr->pitch_cmd_excite;
+		controlData_ptr->l4     += 	controlData_ptr->pitch_cmd_excite;
+		controlData_ptr->r4   	+= 	controlData_ptr->pitch_cmd_excite;
 		}			
 	}
-	//  3-2-1-1 for exciting flutter
+	// none
 	else if(sysid_select == 2){
 	}
 }

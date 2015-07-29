@@ -148,10 +148,12 @@ struct mission {
 /// Control Data structure
 struct control {
 	double dthr;		///< [0-1], throttle command
-	double de;			///< [rad], elevator command, +TED
-	double da;			///< [rad], aileron command, +TED left aileron
 	double l1; 			///< [rad], L1 command, +TED
 	double r1;			///< [rad], R1, +TED
+	double l2;			///< [rad], L2, +TED
+	double r2;			///< [rad], R2, +TED
+	double l3;			///< [rad], L3, +TED
+	double r3;			///< [rad], R3, +TED
 	double l4;			///< [rad], L4, +TED
 	double r4;			///< [rad], R4, +TED
 	double pitch_cmd_pilot;
