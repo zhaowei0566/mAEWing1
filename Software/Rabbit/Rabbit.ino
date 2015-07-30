@@ -2,7 +2,7 @@
 // brtaylor@umn.edu
 // 2015-07-21
 // 
-// v0.8
+// v0.9
 //
 
 #include <ADC.h>            // ADC library
@@ -200,12 +200,11 @@ void requestEvent()
   for(int i = 0; i<8; i++){
     pwm_byte[i] = Wire.read(); // put the data somewhere
   }
+
+  gpstime = gps.time.second();
   
   // read GPS
-  if(gps.time.isValid()){
-    gpstime = gps.time.value();
-  }
-  if((gpstime - oldgpstime)){
+  if((gpstime - oldgpstime)>0){
     isupdated = 1;
     oldgpstime = gpstime;
     satVisible = gps.satellites.value();

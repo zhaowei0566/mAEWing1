@@ -7,7 +7,7 @@
 
 #define NUM_DOUBLE_VARS 6	///< Number of variables that will be logged as doubles
 #define NUM_FLOAT_VARS 71	///< Number of variables that will be logged as floats
-#define NUM_INT_VARS 2		///< Number of variables that will be logged as ints
+#define NUM_INT_VARS 1		///< Number of variables that will be logged as ints
 #define NUM_SHORT_VARS 10	///< Number of variables that will be logged as shorts
 
 //Names of matlab variables MUST match pointers!!
@@ -32,7 +32,6 @@ char* saveAsFloatNames[NUM_FLOAT_VARS] = {
 			"h_filt","ias_filt",
 			"Ps","Pd", 
 			"vn", "ve", "vd",
-			"GPS_TOW",
 			"navvn", "navve","navvd",
 			"phi", "theta", "psi",
 			"p_bias", "q_bias", "r_bias",
@@ -43,13 +42,14 @@ char* saveAsFloatNames[NUM_FLOAT_VARS] = {
 			"accel_cr","accel_rf","accel_rr",
 			"l3", "l2", "l1", "r1",
 			"l4", "r4", "dthr","r3", "r2",
-			"pitch_cmd_pilot","pitch_cmd_damper","pitch_cmd_excite",
-			"roll_cmd_pilot","roll_cmd_damper","roll_cmd_excite",
+			"pitch_cmd_pilot","pitch_cmd_excite",
+			"roll_cmd_pilot","roll_cmd_excite",
 			"phi_cmd","theta_cmd","ias_cmd","h_cmd",
 			"init_alt","zdot_cmd",
 			"etime_daq", "etime_nav", "etime_guidance",
 			"etime_control", "etime_sysid",
-			"etime_actuators","etime_datalog","etime_telemetry"};
+			"etime_actuators","etime_datalog","etime_telemetry",
+			"gps_speed","gps_course","gps_update"};
 								
 /// double pointer array to variables that will be saved as floats
 double* saveAsFloatPointers[NUM_FLOAT_VARS] = {
@@ -61,7 +61,6 @@ double* saveAsFloatPointers[NUM_FLOAT_VARS] = {
 			&adData.h_filt, &adData.ias_filt,
 			&adData.Ps, &adData.Pd, 
 			&gpsData.vn, &gpsData.ve, &gpsData.vd, 
-			&gpsData.GPS_TOW, 
 			&navData.vn, &navData.ve, &navData.vd,
 			&navData.phi, &navData.the, &navData.psi,
 			&navData.gb[0], &navData.gb[1], &navData.gb[2],
@@ -72,19 +71,20 @@ double* saveAsFloatPointers[NUM_FLOAT_VARS] = {
 			&accelData.cr, &accelData.rf, &accelData.rr,
 			&controlData.l3, &controlData.l2, &controlData.l1, &controlData.r1, 
 			&controlData.l4, &controlData.r4, &controlData.dthr, &controlData.r3, &controlData.r2,
-			&controlData.pitch_cmd_pilot, &controlData.pitch_cmd_damper, &controlData.pitch_cmd_excite,
-			&controlData.roll_cmd_pilot, &controlData.roll_cmd_damper, &controlData.roll_cmd_excite,
+			&controlData.pitch_cmd_pilot, &controlData.pitch_cmd_excite,
+			&controlData.roll_cmd_pilot, &controlData.roll_cmd_excite,
 			&controlData.phi_cmd, &controlData.theta_cmd, &controlData.ias_cmd, &controlData.h_cmd,
 			&controlData.init_alt, &controlData.zdot_cmd,
 			&etime_daq, &etime_nav, &etime_guidance,
 			&etime_control, &etime_sysid,
-			&etime_actuators, &etime_datalog, &etime_telemetry};
+			&etime_actuators, &etime_datalog, &etime_telemetry,
+			&gpsData.speedOverGround,&gpsData.courseOverGround,&gpsData.update};
 
 /// char array of variable names for ints
-char* saveAsIntNames[NUM_INT_VARS] = {"imuStatus","gpsStatus"};
+char* saveAsIntNames[NUM_INT_VARS] = {"imuStatus"};
 
 /// int32_t pointer array to variables that will be saved as ints
-int32_t* saveAsIntPointers[NUM_INT_VARS] = {(int32_t *)&imuData.err_type,(int32_t *)&gpsData.err_type};
+int32_t* saveAsIntPointers[NUM_INT_VARS] = {(int32_t *)&imuData.err_type};
 
 
 /// char array of variable names for shorts
