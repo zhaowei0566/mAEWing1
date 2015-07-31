@@ -33,12 +33,12 @@ static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 #endif
 
 #ifdef AIRCRAFT_SKOLL
-	static double roll_gain[3]  = {0.5,0.15,0.01};  	// PI gains for roll tracker and roll damper when using Elevons
-	static double pitch_gain[3] = {-0.3,-0.40,-0.01};  	// PI gains for pitch tracker and pitch damper when using Elevons
-	static double roll_gain_single[3]  = {1.5,0.5,0.0};  		// PI gains for roll tracker and roll damper when using only Flap2
-	static double pitch_gain_single[3] = {-0.75,-1.0,-0.0};  	// PI gains for pitch tracker and pitch damper when using only Flap3
-	static double v_gain[2]     = {0.1, 0.020};			// PI gains for speed tracker
-	static double zdot_gain[2]  = {-0.01,-0.05};		// PI gains for zdot tracker
+	static double roll_gain[3]  		= {0.5,0.15,0.01};  	// PI gains for roll tracker and roll damper when using Elevons
+	static double pitch_gain[3] 		= {-0.3,-0.40,-0.01};  	// PI gains for pitch tracker and pitch damper when using Elevons
+	static double roll_gain_single[3]  	= {1.5,0.5,0.0};  		// PI gains for roll tracker and roll damper when using only Flap2
+	static double pitch_gain_single[3] 	= {-0.75,-1.0,-0.0};  	// PI gains for pitch tracker and pitch damper when using only Flap3
+	static double v_gain[2]     		= {0.1, 0.020};			// PI gains for speed tracker
+	static double zdot_gain[2]  		= {-0.01,-0.05};		// PI gains for zdot tracker
 #endif
 
 #ifdef AIRCRAFT_HATI
@@ -69,20 +69,21 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	unsigned short claw_mode 	= missionData_ptr -> claw_mode; 	// mode switching
 	unsigned short claw_select 	= missionData_ptr -> claw_select; 	// mode switching
 	unsigned short gain_selector = 0; 								// gain switching
+	unsigned short flutter_supp_on = 0;
 	
 	#ifdef AIRCRAFT_FENRIR
-		double base_pitch_cmd= 0.0698;  	// (Trim value) 4 deg
-		double base_acc= -9.81;  	// (Trim value) -1g
+		double base_pitch_cmd	= 0.0698;  	// (Trim value) 4 deg
+		double base_acc			= -9.81;  	// (Trim value) -1g
 	#endif
 	
 	#ifdef AIRCRAFT_SKOLL
-		double base_pitch_cmd= 0.0698;  	// (Trim value) 4 deg
-		double base_acc= -9.81;  	// (Trim value) -1g
+		double base_pitch_cmd	= 0.0698;  	// (Trim value) 4 deg
+		double base_acc			= -9.81;  	// (Trim value) -1g
 	#endif
 	
 	#ifdef AIRCRAFT_HATI
-		double base_pitch_cmd= 0.0698;  	// (Trim value) 4 deg
-		double base_acc= -9.81;  	// (Trim value) -1g
+		double base_pitch_cmd	= 0.0698;  	// (Trim value) 4 deg
+		double base_acc			= -9.81;  	// (Trim value) -1g
 	#endif
 	
 	double phi   = navData_ptr->phi; 						// Bank angle
@@ -92,7 +93,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	double ias   = sensorData_ptr->adData_ptr->ias_filt;	// Airspeed
 	double zdot  = navData_ptr->vd; 						// Sink rate from nav filter
 	
-	double az 	 	= sensorData_ptr->imuData_ptr->az - base_acc; 			// IMU az measure - 1g
+	double az 	 	= sensorData_ptr->imuData_ptr->az - base_acc; 		// IMU az measure - 1g
 	double acc_lf   = sensorData_ptr->accelData_ptr->lf - base_acc; 	// left forward wing accelerometer measure - 1g
 	double acc_rf   = sensorData_ptr->accelData_ptr->rf - base_acc;		// right forward wing accelerometer measure - 1g
 	double acc_lr   = sensorData_ptr->accelData_ptr->lr - base_acc;		// left rear wing accelerometer measure - 1g
@@ -108,6 +109,10 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	// Auxiliary  quantities to latch time and check gps
 	static int t0_latched = FALSE;
 	static double t0 = 0;
+	static int t1_latched = FALSE;
+	static double t1 = 0;
+	static int t2_latched = FALSE;
+	static double t2 = 0;
 	double diff_time;
 	static int flarenogps = FALSE;
 	static double nogps_theta;
@@ -117,41 +122,32 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 		missionData_ptr -> run_excitation = 0;
 		gain_selector = 0;
 		
-		// throttle cut 		
-		if(claw_select == 2){
-			controlData_ptr->zdot_cmd = 0.5;
-			controlData_ptr->phi_cmd = 0;
-			// if GPS is locked, use zdot otherwise just set theta and pray
-			if(sensorData_ptr->gpsData_ptr->navValid == 0){
-				controlData_ptr->theta_cmd = zdot_control(controlData_ptr->zdot_cmd, zdot, pos_pitch_limit, neg_pitch_limit, TIMESTEP);
-			}
-			else{
-				controlData_ptr->theta_cmd = 1.0*D2R - base_pitch_cmd;
-			}
-			controlData_ptr->ias_cmd = -100;
-		}
 		// flare				# slow down with linear change in zdot_cmd and ias_cmd, adjust theta protection to positive values
-		else if(claw_select == 1){
+		if(claw_select == 1){
 			if(t0_latched == FALSE){
 				t0 = time;
 				t0_latched = TRUE;
 			}
-			diff_time = time - t0;
-			if(diff_time <=3){
+			
+			diff_time = time - t0; // time in flare
+			
+			if(diff_time <=3){ // ramp commands
 				pos_pitch_limit = 20*D2R-diff_time*(12.0/3.0)*D2R-base_pitch_cmd;
 				neg_pitch_limit = -20*D2R + diff_time*(20.0/3.0)*D2R-base_pitch_cmd;
 				controlData_ptr->zdot_cmd = 3 - diff_time*(2.5/3.0);
 				controlData_ptr->ias_cmd = 20 - diff_time*(3.0/3.0);
 				nogps_theta = -5*D2R + diff_time*(6.0/3.0)*D2R-base_pitch_cmd;
 			}
-			else{
+			else{ // final values
 				pos_pitch_limit = 8*D2R-base_pitch_cmd;
 				neg_pitch_limit = 0-base_pitch_cmd;
 				controlData_ptr->zdot_cmd = 0.5;
 				controlData_ptr->ias_cmd = 17;
 				nogps_theta = 1.0*D2R - base_pitch_cmd;
 			}
-			controlData_ptr->phi_cmd = 0;
+			
+			controlData_ptr->phi_cmd = 0; // wings level
+			
 			// if GPS is locked, use zdot otherwise just set theta and pray
 			if((sensorData_ptr->gpsData_ptr->navValid == 0)&&(flarenogps == FALSE)){
 				controlData_ptr->theta_cmd = zdot_control(controlData_ptr->zdot_cmd, zdot, pos_pitch_limit, neg_pitch_limit, TIMESTEP);
@@ -160,6 +156,22 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 				controlData_ptr->theta_cmd = nogps_theta;
 				flarenogps = TRUE;
 			}
+			
+			// if we're in flare mode and ias is less than 8 m/s, maybe we've landed
+			if(ias<8){
+				if(t1_latched == FALSE){
+					t1 = time;
+					t1_latched = TRUE;
+				}
+				// throttle cutoff if we're below 8 m/s for more than 15 seconds in flare mode
+				if((time-t1) > 15){
+					ias_cmd = -100;	
+				}
+			}
+			else{
+				t1_latched = FALSE;
+			}
+			
 		}
 		// approach 		# constant zdot_cmd and ias_cmd
 		else{
@@ -167,12 +179,14 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 			pos_pitch_limit = 20*D2R-base_pitch_cmd;
 			neg_pitch_limit = -20*D2R-base_pitch_cmd;
 			controlData_ptr->zdot_cmd = 3;
+			
 			// if GPS is locked, use zdot otherwise just set theta and pray
 			if(sensorData_ptr->gpsData_ptr->navValid == 0){
 				controlData_ptr->theta_cmd = zdot_control(controlData_ptr->zdot_cmd, zdot, pos_pitch_limit, neg_pitch_limit, TIMESTEP);
 			}
 			else{
 				controlData_ptr->theta_cmd = -5*D2R - base_pitch_cmd;
+				
 				// reset the z dot states
 				e[3] = 0;
 				integrator[3] = 0;
@@ -185,26 +199,39 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	// use with TRES_SYSID.c
 	else if(claw_mode == 0){  // FLUTTER CONTROLLER WITH EXCITATION AT DIFFERENT SPEEDS
 	
+		if(t2_latched == FALSE){
+			t2 = time;
+			t2_latched = TRUE;
+		}	
+
+		if((time-t2)>20){
+			flutter_supp_on = 0;
+		}
+		else{
+			flutter_supp_on = 1;
+		}
+	
 		gain_selector = 1;
 		ss_input[0] = q; 		
 		ss_input[1] = az; 		
-		ss_input[2] = 0.25*(acc_lf+acc_lr+acc_rf+acc_rr);   			
+		ss_input[2] = 0.25*(acc_lf+acc_lr+acc_rf+acc_rr);   	
+
+
 		
-		get_ss_control(ss_input, ss_output);
+		if(flutter_supp_on == 1){
+			get_ss_control(ss_input, ss_output);
+		}
 		
 		missionData_ptr -> run_excitation = 1;
 			
 		if(claw_select == 2){ 		
 			controlData_ptr->ias_cmd = 30;   					// SPEED SETTING
-			missionData_ptr -> sysid_select = 0;
 		}
-		else if(claw_select == 1){ 	// Chirp Flaps 3, then 4
+		else if(claw_select == 1){
 			controlData_ptr->ias_cmd = 25; 						// SPEED SETTING
-			missionData_ptr -> sysid_select = 0;
 		}
-		else{ 						// Chirp Flaps 1, then 2
+		else{
 			controlData_ptr->ias_cmd = 20; 						// SPEED SETTING
-			missionData_ptr -> sysid_select = 0;
 		}
 		
 		// reset the z dot states
@@ -214,6 +241,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	}
 	// *** REGULAR PILOT MODE ***    # Pilot flies through Fly-by-Attitude control law with active Autothrottle
 	else{
+		t2_latched = FALSE;
 		gain_selector = 0;
 		missionData_ptr -> run_excitation = 0;
 		
@@ -248,7 +276,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	controlData_ptr->r1   		= 0; 															// R1 [rad]
 
 	// elevon mixing 
-	if(claw_mode == 0){  // no elevon mixing for experiments
+	if((claw_mode == 0)&&(flutter_supp_on == 1)){  // no elevon mixing for experiments
 		controlData_ptr->l4   		= ss_output[0]; 											// L4 [rad]
 		controlData_ptr->r4   		= ss_output[0]; 											// R4 [rad]
 	}
