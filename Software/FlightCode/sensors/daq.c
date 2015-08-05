@@ -152,6 +152,7 @@ void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct 
 	/********** End GPIO **********/
 	
 	/********** GPS Data **********/
+	sensorData_ptr->gpsData_ptr->err_type = data_valid;
 	gpsData_ptr->newData = rabbitData_ptr->isUpdated;
 	gpsData_ptr->satVisible = rabbitData_ptr->satVisible;
 	

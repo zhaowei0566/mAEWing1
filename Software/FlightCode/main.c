@@ -170,7 +170,7 @@ int main(int argc, char **argv) {
 			//**** NAVIGATION ********************************************************
 			if(navData.err_type == got_invalid){ // check if NAV filter has been initialized
 
-					if(gpsData.navValid == 0) // check if GPS is locked, comment out if using micronav_ahrs
+				if(gpsData.navValid == 0) // check if GPS is locked, comment out if using micronav_ahrs
 
 					init_nav(&sensorData, &navData, &controlData);// Initialize NAV filter
 			}
