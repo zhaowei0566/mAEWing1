@@ -61,7 +61,6 @@ static double y_alt[2] = {0,0}; //output of altitude low pass filter { y(k), y(k
 static double u_speed[2] = {0,0}; //input of altitude low pass filter { u(k), u(k-1) }
 static double y_speed[2] = {0,0}; //output of altitude low pass filter { y(k), y(k-1) }
 
-
 double lp_filter(double signal, double *u, double *y)
 {
 	const int m=1;  //m = order of denominator of low pass filter
@@ -84,6 +83,10 @@ void init_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct
 }
 
 void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr, struct mission *missionData_ptr){		
+
+	// latching for GPS soft start
+	static int t0_latched = FALSE;
+	static double t0 = 0;
 
 	// local pointers to keep things tidy
 	struct imu *imuData_ptr = sensorData_ptr->imuData_ptr;
@@ -117,12 +120,12 @@ void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct 
 	
 	/********** Accel Data **********/
 	// wing accels
-	accelData_ptr->rf = -0.002686896961612*rabbitData_ptr->rf + 76.3400996473874;
-	accelData_ptr->rr = -0.002693532609047*rabbitData_ptr->rr + 76.0961355496262;
-	accelData_ptr->cf = -0.002675203261056*rabbitData_ptr->cf + 75.9817798096145;
-	accelData_ptr->lf = -0.002664620875213*rabbitData_ptr->lf + 76.5457536998365;
-	accelData_ptr->lr = -0.002657911529701*rabbitData_ptr->lr + 78.1873966679877;
-	accelData_ptr->cr = -0.002693529953637*rabbitData_ptr->cr + 77.7648470255344;
+	accelData_ptr->rf = -0.002681408348421*rabbitData_ptr->rf + 76.3003766664047;
+	accelData_ptr->rr = -0.002677257800799*rabbitData_ptr->rr + 75.7842128534929;
+	accelData_ptr->cf = -0.002664410423979*rabbitData_ptr->cf + 75.8627762877639;
+	accelData_ptr->lf = -0.002696135293239*rabbitData_ptr->lf + 77.4500247791715;
+	accelData_ptr->lr = -0.002724613179355*rabbitData_ptr->lr + 79.9442362701036;
+	accelData_ptr->cr = -0.002709487393916*rabbitData_ptr->cr + 78.2735768503380;
 	/********** End Accel Data **********/
 	
 	/********** PWM Data **********/
@@ -149,22 +152,36 @@ void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct 
 	/********** End GPIO **********/
 	
 	/********** GPS Data **********/
+	sensorData_ptr->gpsData_ptr->err_type = data_valid;
 	gpsData_ptr->newData = rabbitData_ptr->isUpdated;
 	gpsData_ptr->satVisible = rabbitData_ptr->satVisible;
-	if(gpsData_ptr->satVisible>3){
-		gpsData_ptr->navValid = 0;
+	
+	if(gpsData_ptr->satVisible>4){
+		if(t0_latched == FALSE){
+			t0 = imuData_ptr->time;
+			t0_latched = TRUE;
+		}
+		if((imuData_ptr->time-t0)>20){
+			gpsData_ptr->navValid = 0;
+		}
 	}
 	else{
 		gpsData_ptr->navValid = 1;
 	}
-	gpsData_ptr->lat = rabbitData_ptr->lat;
-	gpsData_ptr->lon = rabbitData_ptr->lon;
-	gpsData_ptr->alt = rabbitData_ptr->alt;
-	gpsData_ptr ->courseOverGround = rabbitData_ptr->courseOverGround;
-	gpsData_ptr ->speedOverGround = rabbitData_ptr->speedOverGround;
-	gpsData_ptr->vn = cos(gpsData_ptr ->courseOverGround)*gpsData_ptr ->speedOverGround;
-	gpsData_ptr->ve = sin(gpsData_ptr ->courseOverGround)*gpsData_ptr ->speedOverGround;
-	gpsData_ptr->vd = -1*(gpsData_ptr->alt - gpsData_ptr->alt_prev)/(0.01);
-	gpsData_ptr->alt_prev = gpsData_ptr->alt;
+	gpsData_ptr->update = 0;
+	if(gpsData_ptr->newData == 1){
+		gpsData_ptr->update = 1;
+		gpsData_ptr->cur_time = imuData_ptr->time;
+		gpsData_ptr->lat = rabbitData_ptr->lat;
+		gpsData_ptr->lon = rabbitData_ptr->lon;
+		gpsData_ptr->alt = rabbitData_ptr->alt;
+		gpsData_ptr ->courseOverGround = rabbitData_ptr->courseOverGround;
+		gpsData_ptr ->speedOverGround = rabbitData_ptr->speedOverGround;
+		gpsData_ptr->vn = cos(gpsData_ptr ->courseOverGround)*gpsData_ptr ->speedOverGround;
+		gpsData_ptr->ve = sin(gpsData_ptr ->courseOverGround)*gpsData_ptr ->speedOverGround;
+		gpsData_ptr->vd = -1*(gpsData_ptr->alt - gpsData_ptr->alt_prev)/(gpsData_ptr->cur_time - gpsData_ptr->prev_time);
+		gpsData_ptr->alt_prev = gpsData_ptr->alt;
+		gpsData_ptr->prev_time = gpsData_ptr->cur_time;
+	}
 	/********** End GPS Data **********/
 }

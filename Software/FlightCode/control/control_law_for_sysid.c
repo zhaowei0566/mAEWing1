@@ -3,18 +3,18 @@
 
 #include "../globaldefs.h"
 #include "control_interface.h"
-#include "ss_control_interface.h"
 #include "../system_id/systemid_interface.h"
 
 // ***********************************************************************************
 #include AIRCRAFT_UP1DIR            // for Flight Code
 // ***********************************************************************************
 
-/// Definition of local functions: ****************************************************
-static double roll_control (double phi_ref, double roll_angle, double rollrate, double delta_t, unsigned short gain_selector);
-static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t, unsigned short gain_selector);
+/// Definition of local functions: ***************************************************
+static double roll_control (double phi_ref, double roll_angle, double rollrate, double delta_t, unsigned short baseline_selector);
+static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t, unsigned short baseline_selector);
 static double speed_control(double speed_ref, double airspeed, double delta_t);
 static double zdot_control(double zdot_ref, double zdot, double pos_pitch_limit, double neg_pitch_limit, double delta_t);
+double lowpass(double signal, double *u, double *y);
 
 // initialize pitch and roll angle tracking errors, integrators, and anti wind-up operators
 // [0]: roll tracker, [1] theta tracker, [2] auto throttle, [3] zdot tracker
@@ -22,6 +22,8 @@ static double e[4] = {0,0,0,0};
 static double integrator[4] = {0,0,0,0}; // integrator states for baseline
 static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 
+static double u_de[2] = {0,0}; //input of pitch low pass filter { u(k), u(k-1) }
+static double y_de[2] = {0,0}; //output of pitch low pass filter { y(k), y(k-1) }
 /// ****************************************************************************************
 
 /// Gains
@@ -52,24 +54,20 @@ static double da; 		// Delta aileron
 static double de; 		// Delta elevator
 static double dthr;		// Delta throttle
 
-static double ss_output[1] = {0}; 		// Delta L4R4 for FlutterSuppression
-static double ss_input[3] = {0,0,0};	// Inputs for FlutterSuppression (q,az,acc)
 
 /// *****************************************************************************************
 
 extern void init_control(void) {
-		init_ss_control();
 };
 
 extern void close_control(void) {
-		close_ss_control();
 };
 
 extern void get_control(double time, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr, struct mission *missionData_ptr) {
 /// Return control outputs based on references and feedback signals.
 	unsigned short claw_mode 	= missionData_ptr -> claw_mode; 	// mode switching
 	unsigned short claw_select 	= missionData_ptr -> claw_select; 	// mode switching
-	unsigned short gain_selector = 0; 								// gain switching
+	unsigned short baseline_selector = 0; 								// gain switching
 	
 	#ifdef AIRCRAFT_FENRIR
 		double base_pitch_cmd= 0.0698;  	// (Trim value) 4 deg
@@ -112,13 +110,14 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	static int t1_latched = FALSE;
 	static double t1 = 0;
 	double diff_time;
+	double diff_time1;
 	static int flarenogps = FALSE;
 	static double nogps_theta;
 	
 	// *** Z DOT GUIDANCE ***    # constant sinkrate approach -> wings level flare -> throttle cutoff
 	if(claw_mode == 2){
 		missionData_ptr -> run_excitation = 0;
-		gain_selector = 0;
+		baseline_selector = 0;
 		
 		// throttle cut 		
 		if(claw_select == 2){
@@ -186,26 +185,35 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	}
 	// *** EXPERIMENTS MODE ***    # perform different experiments, selected with claw_select 
 	else if(claw_mode == 0){
-		gain_selector = 1;
 		
-		if(claw_select == 2){ 		// FLUTTER CONTROLLER WITHOUT EXCITATION
-			ss_input[0] = q; 		
-			ss_input[1] = az; 		
-			ss_input[2] = 0.25*(acc_lf+acc_lr+acc_rf+acc_rr);   			
 		
-			get_ss_control(ss_input, ss_output);
-	
-			controlData_ptr->ias_cmd = 30;   					// SPEED SETTING
+		if(claw_select == 2){ 		// Pitch Doublets
+		
+			if(t1_latched == FALSE){
+				t1 = time;
+				t1_latched = TRUE;
+			}
+			diff_time1 = time - t1;
+			
+			if (diff_time1 < 12 ){
+				baseline_selector = 2;  // Run Pitch Double With LowPass
+				controlData_ptr->theta_cmd += doublet(3, diff_time1, 	4, 5*D2R);
+			}
+			else{
+				baseline_selector = 1;  // Run Pitch Double Without LowPass
+				controlData_ptr->theta_cmd += doublet(15, diff_time1, 	4, 5*D2R);
+			}
+			controlData_ptr->ias_cmd = 23;   					// SPEED SETTING
 			missionData_ptr -> run_excitation = 0;
-
+			missionData_ptr -> sysid_select = 2;
 		}
-		else if(claw_select == 1){ 	// Chirp Flaps 3, then 4
-			controlData_ptr->ias_cmd = 20; 						// SPEED SETTING
+		else if(claw_select == 1){ 	// Chirp Flaps 1, then 2
+			controlData_ptr->ias_cmd = 23; 						// SPEED SETTING
 			missionData_ptr -> run_excitation = 1;
 			missionData_ptr -> sysid_select = 1;
 		}
-		else{ 						// Chirp Flaps 1, then 2
-			controlData_ptr->ias_cmd = 20; 						// SPEED SETTING
+		else{ 						// Chirp Flaps 3, then 4
+			controlData_ptr->ias_cmd = 23; 						// SPEED SETTING
 			missionData_ptr -> run_excitation = 1;
 			missionData_ptr -> sysid_select = 0;
 		}
@@ -217,7 +225,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	}
 	// *** REGULAR PILOT MODE ***    # Pilot flies through Fly-by-Attitude control law with active Autothrottle
 	else{
-		gain_selector = 0;
+		baseline_selector = 0;
 		missionData_ptr -> run_excitation = 0;
 		
 		// reset the z dot states
@@ -225,15 +233,6 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 		integrator[3] = 0;
 		anti_windup[3] = 1;
 	}
-	
-	
-	// reset flutter suppression
-	if ((claw_mode != 0)&&(claw_select != 2))
-	{
-		ss_output[0] = ss_input[0] = ss_input[1] = ss_input[2] = 0;
-		reset_ss_control();
-	}
-	
 	
 
 	// assign the reference commands
@@ -243,17 +242,16 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 
 	// assign the control commands
 	controlData_ptr->dthr 		= speed_control(ias_cmd, ias, TIMESTEP); 						// Throttle [nd]
-	controlData_ptr->l3  	  	= pitch_control(theta_cmd, theta, q, TIMESTEP, gain_selector); 	// use elevator L3+R3 [rad]
+	controlData_ptr->l3  	  	= pitch_control(theta_cmd, theta, q, TIMESTEP, baseline_selector); 	// use elevator L3+R3 [rad]
 	controlData_ptr->r3  		= controlData_ptr->l3; 											//
-	controlData_ptr->l2  		= roll_control(phi_cmd, phi, p, TIMESTEP, gain_selector);		// use aileron L2-R2 [rad]
+	controlData_ptr->l2  		= roll_control(phi_cmd, phi, p, TIMESTEP, baseline_selector);		// use aileron L2-R2 [rad]
 	controlData_ptr->r2  		= -controlData_ptr->l2;											//  
 	controlData_ptr->l1   		= 0;															// L1 [rad]
 	controlData_ptr->r1   		= 0; 															// R1 [rad]
 
 	// elevon mixing 
 	if(claw_mode == 0){  // no elevon mixing for experiments
-		controlData_ptr->l4   		= ss_output[0]; 											// L4 [rad]
-		controlData_ptr->r4   		= ss_output[0]; 											// R4 [rad]
+		controlData_ptr->l4 		= controlData_ptr->r4 	= 0; 				// L4 [rad]
 	}
 	else{  // elevon mixing for regular operation and landing
 		controlData_ptr->l4   		= controlData_ptr->l3 + controlData_ptr->l2; 				// L4 [rad]
@@ -262,7 +260,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 }
 
 // Roll get_control law: angles in radians. Rates in rad/s. Time in seconds
-static double roll_control (double phi_ref, double roll_angle, double rollrate, double delta_t, unsigned short gain_selector)
+static double roll_control (double phi_ref, double roll_angle, double rollrate, double delta_t, unsigned short baseline_selector)
 {
 	// ROLL tracking controller implemented here
 
@@ -271,14 +269,15 @@ static double roll_control (double phi_ref, double roll_angle, double rollrate, 
 	integrator[0] += e[0]*delta_t*anti_windup[0]; //roll error integral (rad)
 
 	//proportional term + integral term              - roll damper term
-	if (gain_selector==0)
+	if (baseline_selector==0) // THIS IS THE STANDARD BASELINE PI WITH GANGED IN- AND OUTBOARD SURFACES
 	{
 	da  = roll_gain[0]*e[0] + roll_gain[1]*integrator[0] - roll_gain[2]*rollrate;
 	}
-	else if (gain_selector==1)
+	else if ((baseline_selector==1)||(baseline_selector==2))// THIS IS THE BASELINE PI WITH NBOARD SURFACES
 	{
 	da  = roll_gain_single[0]*e[0] + roll_gain_single[1]*integrator[0] - roll_gain_single[2]*rollrate;
 	}
+
 	//eliminate windup
 	if      (da >= L2_MAX-ROLL_SURF_TRIM && e[0] < 0) {anti_windup[0] = 1; da = L2_MAX-ROLL_SURF_TRIM;}
 	else if (da >= L2_MAX-ROLL_SURF_TRIM && e[0] > 0) {anti_windup[0] = 0; da = L2_MAX-ROLL_SURF_TRIM;}  //stop integrating
@@ -292,20 +291,25 @@ static double roll_control (double phi_ref, double roll_angle, double rollrate, 
 
 
 // Pitch get_control law: angles in radians. Rates in rad/s. Time in seconds
-static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t, unsigned short gain_selector)
+static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t, unsigned short baseline_selector)
 {
 	// pitch attitude tracker
 	e[1] = the_ref - pitch;
 	integrator[1] += e[1]*delta_t*anti_windup[1]; //pitch error integral
 
     // proportional term + integral term               - pitch damper term
-	if (gain_selector==0)
+	if (baseline_selector==0) 		// THIS IS THE STANDARD BASELINE PI WITH GANGED MID- AND OUTBOARD SURFACES
 	{
     de = pitch_gain[0]*e[1] + pitch_gain[1]*integrator[1] - pitch_gain[2]*pitchrate;    // Elevator output
 	}
-	else if (gain_selector==1)
+	else if (baseline_selector==1)  // THIS IS THE BASELINE PI WITH MIDBOARD SURFACES
 	{
     de = pitch_gain_single[0]*e[1] + pitch_gain_single[1]*integrator[1] - pitch_gain_single[2]*pitchrate;    // Elevator output
+	}
+	else if (baseline_selector==2)  // THIS IS THE BASELINE PI WITH MIDBOARD SURFACES AND LOWPASS FILTER
+	{
+    de = pitch_gain_single[0]*e[1] + pitch_gain_single[1]*integrator[1] - pitch_gain_single[2]*pitchrate;    // Elevator output
+	de = lowpass(de,u_de,y_de);
 	}
 	//eliminate wind-up
 if      (de >= L3_MAX-PITCH_SURF_TRIM && e[1] < 0) {anti_windup[1] = 0; de = L3_MAX-PITCH_SURF_TRIM;}  //stop integrating
@@ -359,6 +363,7 @@ static double zdot_control(double zdot_ref, double zdot, double pos_pitch_limit,
 	return theta_ref;
 }
 
+
 // Reset parameters to initial values
 extern void reset_control(struct control *controlData_ptr){
 
@@ -376,6 +381,18 @@ extern void reset_control(struct control *controlData_ptr){
 	controlData_ptr->l4   = 0; 	// L4 [rad]
 	controlData_ptr->r4   = 0; 	// R4 [rad]
 	
-	ss_output[0] = ss_input[0] = ss_input[1] = ss_input[2] = 0;
-	reset_ss_control();
+}
+
+
+double lowpass(double signal, double *u, double *y)
+{
+	const int m=1;  //m = order of denominator of low pass filter
+
+	u[m] = signal;
+
+	y[m] = 0.8187*y[m-1] + 0.1813*u[m-1];	// these coefficients come from a zoh-discretized low pass filter with a pole at 20 rad/sec for 100Hz Sampling rate
+	u[m-1] = u[m];		// initialize past values for next frame
+	y[m-1] = y[m];
+
+	return y[m];
 }

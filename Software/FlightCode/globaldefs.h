@@ -92,6 +92,10 @@ struct gps {
 	double courseOverGround;///< [rad], course over the ground, relative to true North
 	double speedOverGround;	///< [rad], speed over the ground
 	double time;	///< [sec], timestamp of GPS data
+	double cur_time;
+	double prev_time;
+	double start_time;
+	double update;
 	unsigned short newData;	///< [bool], flag set when GPS data has been updated
 	unsigned short satVisible; ///< Number satellites used in the position solution
 	unsigned short navValid;///< flag indicating whether the solution is valid, 0 = valid

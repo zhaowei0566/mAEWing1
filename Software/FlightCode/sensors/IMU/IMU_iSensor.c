@@ -59,8 +59,8 @@ int init_imu() {
 			&write_blk_status, &len );
 
 	// Internal Digital Filter bandwidth setup
-	//command[0] = 0xB803; // Cutoff 50 Hz
-	command[0] = 0xB804; // Cutoff 16 Hz
+	command[0] = 0xB803; // Cutoff 50 Hz
+	//command[0] = 0xB804; // Cutoff 16 Hz
 	//command[0] = 0xB806; // Cutoff 1.6 Hz
 	commandLength = 2; //bytes to write
 		

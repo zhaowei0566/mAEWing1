@@ -89,7 +89,7 @@ GUIDANCE = '-DSIMULINK_GUIDANCE';
 %%%%% CONTROL LAW %%%%%
 % CONTROL =  '../../Software/FlightCode/control/tres_claw.c';
 % CONTROL =  '../../Software/FlightCode/control/control_law_for_flutter_suppression.c ../../Software/FlightCode/control/ss_flutter_suppression01.c';
-CONTROL =  '../../Software/FlightCode/control/control_law_for_sysid.c ../../Software/FlightCode/control/ss_flutter_suppression01.c';
+CONTROL =  '../../Software/FlightCode/control/control_law_for_sysid.c';
 
 %%%%%% SYSTEM ID SELECTION %%%%%
 % Point to the desired system ID code here

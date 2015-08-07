@@ -219,3 +219,10 @@ pip-log.txt
 ## Solidworks
 #####
 ~*.*
+/BCK_JT
+/ControlDesign_JT
+/FlightTests
+/Simulation/Controllers/baseline_control_grt_rtw
+/Models
+/Simulation/Controllers/slprj
+/Simulation/Libraries/slprj

@@ -115,45 +115,45 @@ void read_rabbit_sensor(cyg_i2c_device* device,struct rabbit *rabbitData_ptr){
 	rabbitData_ptr->isUpdated = (unsigned int)localBuffer[25];
 	rabbitData_ptr->satVisible = (unsigned int)localBuffer[26];
 	
-	latitude.b[0] = localBuffer[27];
-	latitude.b[1] = localBuffer[28];
-	latitude.b[2] = localBuffer[29];
-	latitude.b[3] = localBuffer[30];
-	latitude.b[4] = localBuffer[31];
-	latitude.b[5] = localBuffer[32];
-	latitude.b[6] = localBuffer[33];
-	latitude.b[7] = localBuffer[34];
+	latitude.b[7] = localBuffer[27];
+	latitude.b[6] = localBuffer[28];
+	latitude.b[5] = localBuffer[29];
+	latitude.b[4] = localBuffer[30];
+	latitude.b[3] = localBuffer[31];
+	latitude.b[2] = localBuffer[32];
+	latitude.b[1] = localBuffer[33];
+	latitude.b[0] = localBuffer[34];
 	rabbitData_ptr->lat = latitude.val;
 	
-	longitude.b[0] = localBuffer[35];
-	longitude.b[1] = localBuffer[36];
-	longitude.b[2] = localBuffer[37];
-	longitude.b[3] = localBuffer[38];
-	longitude.b[4] = localBuffer[39];
-	longitude.b[5] = localBuffer[40];
-	longitude.b[6] = localBuffer[41];
-	longitude.b[7] = localBuffer[42];
+	longitude.b[7] = localBuffer[35];
+	longitude.b[6] = localBuffer[36];
+	longitude.b[5] = localBuffer[37];
+	longitude.b[4] = localBuffer[38];
+	longitude.b[3] = localBuffer[39];
+	longitude.b[2] = localBuffer[40];
+	longitude.b[1] = localBuffer[41];
+	longitude.b[0] = localBuffer[42];
 	rabbitData_ptr->lon = longitude.val;
 	
-	alt.b[0] = localBuffer[43];
-	alt.b[1] = localBuffer[44];
-	alt.b[2] = localBuffer[45];
-	alt.b[3] = localBuffer[46];
-	alt.b[4] = localBuffer[47];
-	alt.b[5] = localBuffer[48];
-	alt.b[6] = localBuffer[49];
-	alt.b[7] = localBuffer[50];
+	alt.b[7] = localBuffer[43];
+	alt.b[6] = localBuffer[44];
+	alt.b[5] = localBuffer[45];
+	alt.b[4] = localBuffer[46];
+	alt.b[3] = localBuffer[47];
+	alt.b[2] = localBuffer[48];
+	alt.b[1] = localBuffer[49];
+	alt.b[0] = localBuffer[50];
 	rabbitData_ptr->alt = alt.val;
 	
-	track.b[0] = localBuffer[51];
-	track.b[1] = localBuffer[52];
-	track.b[2] = localBuffer[53];
-	track.b[3] = localBuffer[54];
+	track.b[3] = localBuffer[51];
+	track.b[2] = localBuffer[52];
+	track.b[1] = localBuffer[53];
+	track.b[0] = localBuffer[54];
 	rabbitData_ptr->courseOverGround = track.val * D2R;
 	
-	gspeed.b[0] = localBuffer[55];
-	gspeed.b[1] = localBuffer[56];
-	gspeed.b[2] = localBuffer[57];
-	gspeed.b[3] = localBuffer[58];
+	gspeed.b[3] = localBuffer[55];
+	gspeed.b[2] = localBuffer[56];
+	gspeed.b[1] = localBuffer[57];
+	gspeed.b[0] = localBuffer[58];
 	rabbitData_ptr->speedOverGround = gspeed.val;
 }

@@ -29,7 +29,7 @@ Model {
       BusOutputAsStruct	      "off"
     }
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.225"
+    ComputedModelVersion    "1.226"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -51,7 +51,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [1403.0, 190.0, 836.0, 760.0]
+      Location		      [173.0, 163.0, 836.0, 760.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -76,8 +76,8 @@ Model {
 	ViewObjType		"SimulinkTopLevel"
 	LoadSaveID		"0"
 	Extents			[786.0, 586.0]
-	ZoomFactor		[0.8]
-	Offset			[180.42500000000041, 642.845238095238]
+	ZoomFactor		[1.0]
+	Offset			[-24.824999999999591, 635.46190476190441]
       }
     }
   }
@@ -87,9 +87,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "PC"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Fri Jul 10 16:40:29 2015"
-  RTWModifiedTimeStamp	  358447228
-  ModelVersionFormat	  "1.%<AutoIncrement:225>"
+  LastModifiedDate	  "Sun Jul 12 15:11:48 2015"
+  RTWModifiedTimeStamp	  358614634
+  ModelVersionFormat	  "1.%<AutoIncrement:226>"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -1025,7 +1025,7 @@ Model {
   }
   System {
     Name		    "autoland_control"
-    Location		    [1403, 190, 2239, 950]
+    Location		    [173, 163, 1009, 923]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1037,9 +1037,9 @@ Model {
     TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "80"
+    ZoomFactor		    "100"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "610"
+    SIDHighWatermark	    "612"
     Block {
       BlockType		      Inport
       Name		      "feedback"
@@ -1120,11 +1120,12 @@ Model {
       Name		      "Add1"
       SID		      "397"
       Ports		      [2, 1]
-      Position		      [320, 856, 340, 909]
+      Position		      [315, 1046, 335, 1099]
       ZOrder		      6
       BlockMirror	      on
       NamePlacement	      "alternate"
       ShowName		      off
+      Commented		      "on"
       Inputs		      "+-"
       InputSameDT	      off
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
@@ -1135,11 +1136,12 @@ Model {
       Name		      "Add2"
       SID		      "398"
       Ports		      [2, 1]
-      Position		      [320, 801, 340, 854]
+      Position		      [315, 991, 335, 1044]
       ZOrder		      7
       BlockMirror	      on
       NamePlacement	      "alternate"
       ShowName		      off
+      Commented		      "on"
       InputSameDT	      off
       OutDataTypeStr	      "Inherit: Inherit via internal rule"
       SaturateOnIntegerOverflow	off
@@ -1601,11 +1603,12 @@ Model {
       BlockType		      From
       Name		      "From1"
       SID		      "399"
-      Position		      [385, 805, 420, 825]
+      Position		      [380, 995, 415, 1015]
       ZOrder		      8
       BlockMirror	      on
       NamePlacement	      "alternate"
       ShowName		      off
+      Commented		      "on"
       GotoTag		      "de"
     }
     Block {
@@ -1737,22 +1740,24 @@ Model {
       BlockType		      From
       Name		      "From5"
       SID		      "400"
-      Position		      [385, 860, 420, 880]
+      Position		      [380, 1050, 415, 1070]
       ZOrder		      9
       BlockMirror	      on
       NamePlacement	      "alternate"
       ShowName		      off
+      Commented		      "on"
       GotoTag		      "de"
     }
     Block {
       BlockType		      From
       Name		      "From6"
       SID		      "401"
-      Position		      [385, 830, 420, 850]
+      Position		      [380, 1020, 415, 1040]
       ZOrder		      10
       BlockMirror	      on
       NamePlacement	      "alternate"
       ShowName		      off
+      Commented		      "on"
       GotoTag		      "da"
     }
     Block {
@@ -1769,11 +1774,12 @@ Model {
       BlockType		      From
       Name		      "From8"
       SID		      "402"
-      Position		      [385, 885, 420, 905]
+      Position		      [380, 1075, 415, 1095]
       ZOrder		      11
       BlockMirror	      on
       NamePlacement	      "alternate"
       ShowName		      off
+      Commented		      "on"
       GotoTag		      "da"
     }
     Block {
@@ -1818,6 +1824,15 @@ Model {
       SID		      "392"
       Position		      [235, 653, 310, 677]
       ZOrder		      1
+      BlockMirror	      on
+      Value		      "0"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "L4"
+      SID		      "611"
+      Position		      [235, 818, 310, 842]
+      ZOrder		      217
       BlockMirror	      on
       Value		      "0"
     }
@@ -1891,6 +1906,15 @@ Model {
       SID		      "393"
       Position		      [235, 763, 310, 787]
       ZOrder		      2
+      BlockMirror	      on
+      Value		      "0"
+    }
+    Block {
+      BlockType		      Constant
+      Name		      "R4"
+      SID		      "612"
+      Position		      [235, 873, 310, 897]
+      ZOrder		      218
       BlockMirror	      on
       Value		      "0"
     }
@@ -3430,18 +3454,16 @@ Model {
       DstPort		      5
     }
     Line {
-      ZOrder		      58
+      ZOrder		      633
       SrcBlock		      "Add2"
       SrcPort		      1
-      DstBlock		      "Mux"
-      DstPort		      6
+      Points		      [5, 0; -138, 0]
     }
     Line {
-      ZOrder		      59
+      ZOrder		      634
       SrcBlock		      "Add1"
       SrcPort		      1
-      DstBlock		      "Mux"
-      DstPort		      7
+      Points		      [-125, 0; 0, -7]
     }
     Line {
       ZOrder		      60
@@ -3853,6 +3875,20 @@ Model {
       SrcPort		      2
       DstBlock		      " 5"
       DstPort		      1
+    }
+    Line {
+      ZOrder		      637
+      SrcBlock		      "R4"
+      SrcPort		      1
+      DstBlock		      "Mux"
+      DstPort		      7
+    }
+    Line {
+      ZOrder		      638
+      SrcBlock		      "L4"
+      SrcPort		      1
+      DstBlock		      "Mux"
+      DstPort		      6
     }
     Annotation {
       SID		      "606"

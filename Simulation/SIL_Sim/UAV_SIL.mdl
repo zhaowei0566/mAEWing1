@@ -39,7 +39,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [1960.0, 138.0, 1296.0, 776.0]
+      Location		      [1912.0, 56.0, 1296.0, 1040.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -73,7 +73,7 @@ Model {
 	  IsActive		  [1]
 	  ViewObjType		  "SimulinkTopLevel"
 	  LoadSaveID		  "0"
-	  Extents		  [1246.0, 599.0]
+	  Extents		  [1246.0, 863.0]
 	  ZoomFactor		  [1.0]
 	  Offset		  [151.71190476190486, 322.41666666666674]
 	}
@@ -96,8 +96,8 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "theis476"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed Jul 29 17:18:35 2015"
-  RTWModifiedTimeStamp	  360091079
+  LastModifiedDate	  "Fri Aug 07 11:31:40 2015"
+  RTWModifiedTimeStamp	  360847898
   ModelVersionFormat	  "$Id: UAV_SIL.mdl 1030 2014-05-21 20:23:20Z brtaylor $"
   ConfigurationManager	  "none"
   SampleTimeColors	  off
@@ -1021,7 +1021,7 @@ Model {
   }
   System {
     Name		    "UAV_SIL"
-    Location		    [1960, 138, 3256, 914]
+    Location		    [1912, 56, 3208, 1096]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1126,14 +1126,14 @@ Model {
 	  IconDisplay		  "Port number"
 	}
 	Line {
-	  ZOrder		  9
+	  ZOrder		  5
 	  SrcBlock		  "cmds"
 	  SrcPort		  1
 	  DstBlock		  "miniMUTT"
 	  DstPort		  1
 	}
 	Line {
-	  ZOrder		  10
+	  ZOrder		  6
 	  SrcBlock		  "miniMUTT"
 	  SrcPort		  1
 	  DstBlock		  "controls"
@@ -1523,14 +1523,14 @@ Model {
 	      IconDisplay	      "Port number"
 	    }
 	    Line {
-	      ZOrder		      9
+	      ZOrder		      7
 	      SrcBlock		      "I"
 	      SrcPort		      1
 	      DstBlock		      "Trim setting MiniMUTT"
 	      DstPort		      1
 	    }
 	    Line {
-	      ZOrder		      10
+	      ZOrder		      8
 	      SrcBlock		      "Trim setting MiniMUTT"
 	      SrcPort		      1
 	      DstBlock		      "O"
@@ -4177,7 +4177,7 @@ Model {
       "\n\n== SVN Info ==\nLast modified by %<LastModifiedBy> on %<LastModificationDate>"
       MaskDisplayString	      "MODEL INFORMATION\\nUMN UAV Software-in-the-Loop Simulation\\n\\nUniversity of Minnesot"
       "a\\nAerospace Engineering and Mechanics\\nCopyright 2011 Regents of the University of Minnesota. All rights rese"
-      "rved.\\n\\n== SVN Info ==\\nLast modified by theis476 on 29-Jul-2015 11:16:58"
+      "rved.\\n\\n== SVN Info ==\\nLast modified by theis476 on 07-Aug-2015 11:14:26"
       HorizontalTextAlignment "Left"
       LeftAlignmentValue      "0.02"
       SourceBlockDiagram      "UAV_SIL"
@@ -4223,7 +4223,7 @@ Model {
       Position		      [985, 740, 1015, 770]
       ZOrder		      22
       BlockMirror	      on
-      Value		      "0"
+      Value		      "2"
     }
     Block {
       BlockType		      Reference
@@ -4307,12 +4307,10 @@ Model {
       DstPort		      1
     }
     Line {
-      ZOrder		      7
+      ZOrder		      94
       SrcBlock		      "Control Input Generator"
       SrcPort		      1
-      Points		      [0, -20]
-      DstBlock		      "Control Software"
-      DstPort		      2
+      Points		      [-51, 0; 0, -20; -2, 0; 0, -16]
     }
     Line {
       ZOrder		      8
