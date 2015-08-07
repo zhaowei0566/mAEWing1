@@ -18,7 +18,7 @@ extern void get_system_id( double time, struct sensordata *sensorData_ptr, struc
 			controlData_ptr->l3     +=  controlData_ptr->pitch_cmd_excite;
 			controlData_ptr->r3   	+=  controlData_ptr->pitch_cmd_excite;	
 		}
-		else if(time > 20){
+		else if((time > 20) && (time < 35)){
 			f = 1.0 + (4.5-1.0)/15.0 * (time-20.0);		
 			controlData_ptr->pitch_cmd_excite = 3.0 * D2R * sin(2.0*3.14159265359 * f * (time-20.0));
 			controlData_ptr->l4     += 	controlData_ptr->pitch_cmd_excite;

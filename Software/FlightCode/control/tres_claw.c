@@ -63,6 +63,8 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	unsigned short claw_select 	= missionData_ptr -> claw_select; 	// mode switching
 	static int t0_latched = FALSE;	// time latching
 	static double t0 = 0;
+	static int t2_latched = FALSE;	// time latching
+	static double t2 = 0;
 	double flare_time;
 
 	switch(claw_mode){
@@ -70,13 +72,18 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 			t0_latched = FALSE;
 			switch(claw_select){
 				case 0: // chirp, open loop
+					t2_latched = FALSE;
 					reset_tracker();
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 1;
 					open_loop(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				case 1: // 3-2-1-1, open loop then closed loop
-					if(time < 20){
+					if(t2_latched == FALSE){ // get the time since flare started
+						t2 = time;
+						t2_latched = TRUE;
+					}
+					if((time - t2) < 20){
 						reset_tracker();
 						missionData_ptr -> run_excitation = 1;
 						missionData_ptr -> sysid_select = 0;
@@ -84,16 +91,19 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 					}
 					else{
 						missionData_ptr -> run_excitation = 1;
+						missionData_ptr -> sysid_select = 0;
 						pilot_flying(time, trim_speed,sensorData_ptr, navData_ptr, controlData_ptr);
 					}
 					break;
 				default: // theta doublet, inboard surfaces
+						t2_latched = FALSE;
 						missionData_ptr -> run_excitation = 0;
 						pilot_flying_inner(time, trim_speed,sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
 			break;
 		case 2: // autolanding mode
+			t2_latched = FALSE;
 			missionData_ptr -> run_excitation = 0;
 			switch(claw_select){
 				case 0: // approach
@@ -116,6 +126,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 			break;
 		default: // pilot mode
 			missionData_ptr -> run_excitation = 0;
+			t2_latched = FALSE;
 			t0_latched = FALSE;
 			pilot_flying(time, trim_speed,sensorData_ptr, navData_ptr, controlData_ptr);
 			break;
@@ -148,7 +159,7 @@ void open_loop(double time, double ias_cmd, struct sensordata *sensorData_ptr, s
 	controlData_ptr->dthr 	= speed_control(ias_cmd, ias, TIMESTEP);			// Throttle [ND 0-1]
 	controlData_ptr->l1   	= 0;												// L1 [rad]
     controlData_ptr->l2   	= roll_incp*L2_MAX;									// L2 [rad]
-	controlData_ptr->l3   	= pitch_incp*(L3_MAX-15*D2R);						// L3 [rad]
+	controlData_ptr->l3   	= -1*pitch_incp*(L3_MAX-15*D2R);					// L3 [rad]
 	controlData_ptr->l4   	= 0; 												// L4 [rad]
     controlData_ptr->r1   	= 0; 												// R1 [rad]
 	controlData_ptr->r2   	= -1*controlData_ptr->l2; 							// R2 [rad]

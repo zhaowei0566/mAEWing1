@@ -39,7 +39,7 @@
 #define PWMOUT_L1_CAL   {-85.7513589474973,	-792.453247420827,	1504.29009494652} ///< cubic calibration for L1
 #define PWMOUT_L2_CAL   {35.5340038151826, 	-562.077928988189, 	1516.64590571393} ///< cubic calibration for L2
 #define PWMOUT_L3_CAL   {1.1798905448593, 	-564.994966435647,	1520.70656206405} ///< cubic calibration for L3
-#define PWMOUT_L4_CAL   {-596.831036594608, 1537.5} 		  					  ///< linear calibration for L4
+#define PWMOUT_L4_CAL   {25.3079405630903,	-614.741146705727,	1501.07284861335} ///< cubic calibration for L4
 #define PWMOUT_R1_CAL   {136.180046007822,	838.449405891347,	1486.20766520579} ///< cubic calibration for R1
 #define PWMOUT_R2_CAL   {66.2369809598808,	566.774269796776,	1517.74036554249} ///< cubic calibration for R2
 #define PWMOUT_R3_CAL   {77.5242023801802,  585.288492427082,	1523.37006138681} ///< cubic calibration for R3
