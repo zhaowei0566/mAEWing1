@@ -37,13 +37,13 @@
 // MPC5200 PWM output command calibration parameters
 #define PWMOUT_DTHR_CAL {1000, 1000} ///< linear calibration for throttle
 #define PWMOUT_L1_CAL   {-85.7513589474973,	-792.453247420827,	1504.29009494652} ///< cubic calibration for L1
-#define PWMOUT_L2_CAL   {35.5340038151826, 	-562.077928988189, 	1516.64590571393} ///< cubic calibration for L2
-#define PWMOUT_L3_CAL   {1.1798905448593, 	-564.994966435647,	1520.70656206405} ///< cubic calibration for L3
-#define PWMOUT_L4_CAL   {25.3079405630903,	-614.741146705727,	1501.07284861335} ///< cubic calibration for L4
-#define PWMOUT_R1_CAL   {136.180046007822,	838.449405891347,	1486.20766520579} ///< cubic calibration for R1
-#define PWMOUT_R2_CAL   {66.2369809598808,	566.774269796776,	1517.74036554249} ///< cubic calibration for R2
-#define PWMOUT_R3_CAL   {77.5242023801802,  585.288492427082,	1523.37006138681} ///< cubic calibration for R3
-#define PWMOUT_R4_CAL   {67.8821617391311,  588.251190054023,	1515.86404703886} ///< cubic calibration for R4
+#define PWMOUT_L2_CAL   {-11.6110378242746, -567.554213704868,	1518.93277040513} ///< cubic calibration for L2
+#define PWMOUT_L3_CAL   {45.6642773186335,	-584.031484433438,	1517.9985129796} ///< cubic calibration for L3
+#define PWMOUT_L4_CAL   {27.3333932319023,	-614.67048073674,	1499.78543619544} ///< cubic calibration for L4
+#define PWMOUT_R1_CAL   {121.74354941196,	830.722339157839,	1460.87674804886} ///< cubic calibration for R1
+#define PWMOUT_R2_CAL   {109.808187889774,	582.618397498397,	1518.5969945643} ///< cubic calibration for R2
+#define PWMOUT_R3_CAL   {70.6150703129649,	577.841439589334,	1525.5774784222} ///< cubic calibration for R3
+#define PWMOUT_R4_CAL   {50.0946571141479,	606.03678699808,	1516.88467486882} ///< cubic calibration for R4
 
 // Pilot inceptor calibration parameters
 #define SELECT_INCP_CAL	{0.000863352048698032,	-1.58376998680006}	///<  linear calibration for pilot select inceptor
