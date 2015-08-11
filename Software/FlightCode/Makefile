@@ -20,7 +20,8 @@ AIRCRAFT = SKOLL
 #GUIDANCE = guidance/empty_guidance.c
 #GUIDANCE = guidance/straight_level.c
 #GUIDANCE = guidance/doublet_phi_theta.c
-GUIDANCE = guidance/pilot_guidance.c
+#GUIDANCE = guidance/pilot_guidance.c
+GUIDANCE = guidance/theta_phi_doublet_guidance.c
 
 ##### NAVIGATION #####
 # Point to the desired navigation code here
@@ -33,8 +34,8 @@ MISSION = mission/tres_claw_switch.c
 
 ##### FLIGHT CONTROL LAW #####
 # Point to the desired flight control law code here
-# CONTROL =  control/tres_claw.c
-CONTROL =  control/control_law_for_flutter_suppression.c control/ss_flutter_suppression01.c
+CONTROL =  control/tres_claw.c
+#CONTROL =  control/control_law_for_flutter_suppression.c control/ss_flutter_suppression01.c
 
 ##### MATLAB RTW AUTOCODE #####
 # Make sure #include "simstruc.h" and #include "fixedpoint.h" are commented out in the <modelname>.h file
@@ -129,8 +130,8 @@ CC=/opt/ecos/gnutools/powerpc-eabi/bin/powerpc-eabi-gcc
 # You may also need to edit the path to point to the appropriate directory.
 
 # Use the following two paths for C code based control laws
-ECOS_LIB_PATH_MPC5200=/cygdrive/c/UAV/eCos_C/build/lib
-ECOS_INCLUDE_PATH_MPC5200=/cygdrive/c/UAV/eCos_C/build/include
+ECOS_LIB_PATH_MPC5200=/cygdrive/c/eCos_C/build/lib
+ECOS_INCLUDE_PATH_MPC5200=/cygdrive/c/eCos_C/build/include
 
 # Use the following two paths for autocode based control laws
 #ECOS_LIB_PATH_MPC5200=/cygdrive/c/UAV/eCos_Autocode/build/lib
