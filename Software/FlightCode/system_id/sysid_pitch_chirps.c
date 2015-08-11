@@ -25,36 +25,36 @@ if(entry_time_latched == FALSE)
 local_time = time - entry_time;
 	
 		
-	//  apply to L1/R1 L2/R2
+	//  apply to L3/R3 L4/R4    AT 27 M/S BASED ON DYNAMIC PRESSURE SCALING OF 23 M/S EXCITATION
 	if(sysid_select == 1){	
 		if (local_time < 18) 
 		{
 		f = 0.5 + (8.5-1.0)/15.0 * (local_time);
 			if (local_time < 11 ){
-				controlData_ptr->pitch_cmd_excite = 10.0 * D2R * sin(2.0*3.14159265359 * f * (local_time));
+				controlData_ptr->pitch_cmd_excite = 3.6 * D2R * sin(2.0*3.14159265359 * f * (local_time));
 			}
 			else{
-				controlData_ptr->pitch_cmd_excite = 2.0 * D2R * sin(2.0*3.14159265359 * f * (local_time));
+				controlData_ptr->pitch_cmd_excite = 0.75 * D2R * sin(2.0*3.14159265359 * f * (local_time));
 			}
-		controlData_ptr->l1    += controlData_ptr->pitch_cmd_excite;
-		controlData_ptr->r1    += controlData_ptr->pitch_cmd_excite;	
+		controlData_ptr->l3    += controlData_ptr->pitch_cmd_excite;
+		controlData_ptr->r3    += controlData_ptr->pitch_cmd_excite;	
 		}
 		else if ( (local_time > 20)&& (local_time < 38) ) 
 		{
 		f = 0.5 + (8.5-1.0)/15.0 * (local_time-20.0);
 		if ((local_time-20.0) < 11 ){
-			controlData_ptr->pitch_cmd_excite = 10.0 * D2R * sin(2.0*3.14159265359 * f * (local_time-20.0));	
+			controlData_ptr->pitch_cmd_excite = 3.6 * D2R * sin(2.0*3.14159265359 * f * (local_time-20.0));	
 			}
 		else{
-			controlData_ptr->pitch_cmd_excite = 2.0 * D2R * sin(2.0*3.14159265359 * f * (local_time-20.0));
+			controlData_ptr->pitch_cmd_excite = 0.75 * D2R * sin(2.0*3.14159265359 * f * (local_time-20.0));
 		}			
-		controlData_ptr->l2     += controlData_ptr->l2 +  controlData_ptr->pitch_cmd_excite;
-		controlData_ptr->r2   	+= controlData_ptr->r2 +  controlData_ptr->pitch_cmd_excite;
+		controlData_ptr->l4     +=  controlData_ptr->pitch_cmd_excite;
+		controlData_ptr->r4   	+=  controlData_ptr->pitch_cmd_excite;
 		}
 			
 		
 	}
-	//  apply to L3/R3 L4/R4
+	//  apply to L3/R3 L4/R4 AT 23 M/S BASED ON ENERGY CONTENT OF 3-2-1-1 SIGNAL IN PREVIOUS FLIGHT TESTS
 	else if(sysid_select == 0){
 		if (local_time < 18 )
 		{
