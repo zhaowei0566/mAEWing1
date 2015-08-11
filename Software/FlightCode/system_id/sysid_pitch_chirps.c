@@ -29,7 +29,7 @@ local_time = time - entry_time;
 	if(sysid_select == 1){	
 		if (local_time < 18) 
 		{
-		f = 0.5 + (8.5-0.5)/15.0 * (local_time);
+		f = 0.5 + (8.5-0.5)/(2.0*18.0) * (local_time);
 			if (local_time < 11 ){
 				controlData_ptr->pitch_cmd_excite = 3.6 * D2R * sin(2.0*3.14159265359 * f * (local_time));
 			}
@@ -41,7 +41,7 @@ local_time = time - entry_time;
 		}
 		else if ( (local_time > 20)&& (local_time < 38) ) 
 		{
-		f = 0.5 + (8.5-0.5)/15.0 * (local_time-20.0);
+		f = 0.5 + (8.5-0.5)/(2.0*18.0) * (local_time-20.0);
 		if ((local_time-20.0) < 11 ){
 			controlData_ptr->pitch_cmd_excite = 3.6 * D2R * sin(2.0*3.14159265359 * f * (local_time-20.0));	
 			}
@@ -58,7 +58,7 @@ local_time = time - entry_time;
 	else if(sysid_select == 0){
 		if (local_time < 18 )
 		{
-		f = 0.5 + (8.5-0.5)/15.0 * (local_time);
+		f = 0.5 + (8.5-0.5)/(2.0*18.0) * (local_time);
 			if (local_time < 11 ){
 				controlData_ptr->pitch_cmd_excite = 5.0 * D2R * sin(2.0*3.14159265359 * f * (local_time));
 			}
@@ -71,7 +71,7 @@ local_time = time - entry_time;
 		}
 		else if ( (local_time > 20)&& (local_time < 38) )
 		{
-		f = 0.5 + (8.5-0.5)/15.0 * (local_time-20.0);
+		f = 0.5 + (8.5-0.5)/(2.0*18.0) * (local_time-20.0);
 			if ((local_time-20.0) < 12 ){		
 				controlData_ptr->pitch_cmd_excite = 5.0 * D2R * sin(2.0*3.14159265359 * f * (local_time-20.0));
 			}
