@@ -43,7 +43,7 @@ static short anti_windup[3]={1,1,1};   // integrates when anti_windup is 1
 
 double base_pitch_cmd		= 0.0698;  				// Trim value 4 deg
 double trim_speed			= 23;					// Trim airspeed, m/s
-double approach_theta 		= -5*D2R;				// Absolute angle for the initial approach
+double approach_theta 		= -6.5*D2R;				// Absolute angle for the initial approach
 double approach_speed 		= 20;					// Approach airspeed, m/s
 double flare_theta 			= 1*D2R;				// Absolute angle for the flare
 double flare_speed 			= 17;					// Flare airspeed, m/s
@@ -220,7 +220,7 @@ void pilot_flying_inner(double time, double ias_cmd, struct sensordata *sensorDa
 }
 
 void flare_control(double time, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr){
-	double ramp_time = 3.0;
+	double ramp_time = 6.0;
 	double min_speed = 8;
 	double cut_time  = 5;
 	double phi   = navData_ptr->phi;						// roll angle
