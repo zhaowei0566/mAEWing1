@@ -102,6 +102,31 @@ double cos_chirp(double time, double time_start, double duration, double freq_st
 	}
 }
 
+double step_chirp(double time, double time_start, double step_time, double duration, double freq_start, double freq_stop, double amp_start, double amp_stop){
+	double f;		// frequency
+	double a;		// amplitude
+	double excite;	// excitation command, rad
+	
+	if((time > time_start)&&((time - time_start)<duration)){
+		
+		f = freq_start + (freq_stop - freq_start)/(2.0*duration)*(time - time_start);
+		
+		if((time - time_start) < step_time){
+			a = amp_start;
+		}
+		else{
+			a = amp_stop;
+		}
+		
+		excite = a * D2R * sin(2.0 * PI * f * (time-time_start));
+		
+		return excite;
+	}
+	else{
+		return 0;
+	}
+}
+
 void one_multi_sine(double t, double *dsurf, double amp) {
 	// frequencies, phase shifts, and amplitude
 	static double freq[19] = { 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0,

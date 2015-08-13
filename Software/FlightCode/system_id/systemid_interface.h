@@ -72,6 +72,14 @@ double cos_chirp(double time, 	/// current time, sec
 	double amp_start, 			/// initial amplitude, deg
 	double amp_stop);			/// final amplitude, deg
 		
+double step_chirp(double time, 	/// current time, sec
+	double time_start, 			/// start time, sec
+	double step_time,			/// step time, sec
+	double duration, 			/// duration, sec
+	double freq_start, 			/// initial frequency, Hz
+	double freq_stop, 			/// final frequency, Hz
+	double amp_start, 			/// initial amplitude, deg
+	double amp_stop);			/// final amplitude, deg
 		
 /// Auxiliary function that adds a orthogonal multi-sine to one surface
 /*!
