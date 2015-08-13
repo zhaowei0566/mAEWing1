@@ -48,6 +48,7 @@ double approach_speed 		= 20;					// Approach airspeed, m/s
 double flare_theta 			= 1*D2R;				// Absolute angle for the flare
 double flare_speed 			= 17;					// Flare airspeed, m/s
 double pilot_flare_delta	= 1;					// Delta flare airspeed if the pilot is landing, m/s
+double exp_speed			= 27;					// Speed to run the experiments at, m/s
 
 /// *****************************************************************************************
 
@@ -63,47 +64,31 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	unsigned short claw_select 	= missionData_ptr -> claw_select; 	// mode switching
 	static int t0_latched = FALSE;	// time latching
 	static double t0 = 0;
-	static int t2_latched = FALSE;	// time latching
-	static double t2 = 0;
 	double flare_time;
 
 	switch(claw_mode){
 		case 0: // experiment mode
 			t0_latched = FALSE;
 			switch(claw_select){
-				case 0: // chirp, open loop
-					t2_latched = FALSE;
+				case 0: // chirp, open loop L3/R3 at 27 m/s
+					reset_tracker();
+					missionData_ptr -> run_excitation = 1;
+					missionData_ptr -> sysid_select = 0;
+					open_loop(time, exp_speed, sensorData_ptr, navData_ptr, controlData_ptr);
+					break;
+				case 1: // chirp, open loop L4/R4 at 27 m/s
 					reset_tracker();
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 1;
-					open_loop(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
+					open_loop(time, exp_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
-				case 1: // 3-2-1-1, open loop then closed loop
-					if(t2_latched == FALSE){ // get the time since flare started
-						t2 = time;
-						t2_latched = TRUE;
-					}
-					if((time - t2) < 20){
-						reset_tracker();
-						missionData_ptr -> run_excitation = 1;
-						missionData_ptr -> sysid_select = 0;
-						open_loop(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
-					}
-					else{
-						missionData_ptr -> run_excitation = 1;
-						missionData_ptr -> sysid_select = 0;
-						pilot_flying(time, trim_speed,sensorData_ptr, navData_ptr, controlData_ptr);
-					}
-					break;
-				default: // theta doublet, inboard surfaces
-						t2_latched = FALSE;
-						missionData_ptr -> run_excitation = 0;
-						pilot_flying_inner(time, trim_speed,sensorData_ptr, navData_ptr, controlData_ptr);
+				default: // open loop flying
+					missionData_ptr -> run_excitation = 0;
+					open_loop(time, exp_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
 			break;
 		case 2: // autolanding mode
-			t2_latched = FALSE;
 			missionData_ptr -> run_excitation = 0;
 			switch(claw_select){
 				case 0: // approach
@@ -126,7 +111,6 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 			break;
 		default: // pilot mode
 			missionData_ptr -> run_excitation = 0;
-			t2_latched = FALSE;
 			t0_latched = FALSE;
 			pilot_flying(time, trim_speed,sensorData_ptr, navData_ptr, controlData_ptr);
 			break;

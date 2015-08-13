@@ -17,11 +17,11 @@ AIRCRAFT = SKOLL
 
 ##### GUIDANCE LAW #####
 # Point to the desired guidance code here
-#GUIDANCE = guidance/empty_guidance.c
+GUIDANCE = guidance/empty_guidance.c
 #GUIDANCE = guidance/straight_level.c
 #GUIDANCE = guidance/doublet_phi_theta.c
 #GUIDANCE = guidance/pilot_guidance.c
-GUIDANCE = guidance/theta_phi_doublet_guidance.c
+#GUIDANCE = guidance/theta_phi_doublet_guidance.c
 
 ##### NAVIGATION #####
 # Point to the desired navigation code here
@@ -54,7 +54,7 @@ $(RTW_ROOT)rt_nonfinite.c
 # Point to the desired system ID code here
 #SYSTEM_ID = system_id/systemid_none.c
 #SYSTEM_ID = system_id/obes3211_sysid.c
-SYSTEM_ID = system_id/tres_sysid.c
+SYSTEM_ID = system_id/sysid_pitch_chirps.c
 
 #### Determine which aircraft config file, data logging, actuator, and sensor files to compile
 ifeq ($(strip $(AIRCRAFT)),HIL_SIM)
