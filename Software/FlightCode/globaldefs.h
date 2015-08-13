@@ -201,6 +201,7 @@ struct control {
 	double init_alt;
 	double h_cmd;
 	double zdot_cmd;
+	double cmp_status;
 };
 
 /// Navigation Filter Data Structure

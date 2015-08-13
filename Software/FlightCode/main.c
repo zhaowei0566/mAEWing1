@@ -249,8 +249,8 @@ int main(int argc, char **argv) {
 				loop_counter = 0;
 
 				// get current cpu load
-				cyg_cpuload_get (loadhandle, &last100ms, &last1s, &last10s);
-				cpuLoad = (uint16_t)last100ms;
+				//cyg_cpuload_get (loadhandle, &last100ms, &last1s, &last10s);
+				cpuLoad = controlData.cmp_status;
 
 				send_telemetry(&sensorData, &navData, &controlData, &missionData, cpuLoad);
 				

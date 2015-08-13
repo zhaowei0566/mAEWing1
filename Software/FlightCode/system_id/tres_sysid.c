@@ -26,6 +26,9 @@ extern void get_system_id( double time, struct sensordata *sensorData_ptr, struc
 		}
 		else{
 		}		
+		
+		controlData_ptr->cmp_status = time/35.0*100;
+		
 	}
 	else{
 		// reset time if greater than 16 seconds	

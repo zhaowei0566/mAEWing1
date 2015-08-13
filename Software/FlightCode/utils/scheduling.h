@@ -19,7 +19,7 @@
 
 // Update rates
 #define BASE_HZ 100		///< Base frequency of the main thread
-#define TELEMETRY_HZ 25	///< Frequency of the telemetry function
+#define TELEMETRY_HZ 100	///< Frequency of the telemetry function
 #define THREAD1_HZ 10	///< Frequency of thread1
 
 // Time offset of each alarm relative to the start of the BASE_HZ frame, units of sec
