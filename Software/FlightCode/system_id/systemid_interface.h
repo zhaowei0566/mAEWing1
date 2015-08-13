@@ -64,6 +64,15 @@ double doublet3211(double t0,	///< [sec], start time
 		double amplitude		///< [rad], magnitude of pulse
 		);
 
+double cos_chirp(double time, 	/// current time, sec
+	double time_start, 			/// start time, sec
+	double duration, 			/// duration, sec
+	double freq_start, 			/// initial frequency, Hz
+	double freq_stop, 			/// final frequency, Hz
+	double amp_start, 			/// initial amplitude, deg
+	double amp_stop);			/// final amplitude, deg
+		
+		
 /// Auxiliary function that adds a orthogonal multi-sine to one surface
 /*!
  *	\sa two_multi_sine(), three_multi_sine()
