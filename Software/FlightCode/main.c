@@ -101,7 +101,7 @@ int main(int argc, char **argv) {
 	int loop_counter = 0;
 	pthread_mutex_t	mutex;
 
-	uint32_t cpuCalibrationData, last100ms, last1s, last10s;
+	uint32_t cpuCalibrationData;
 	cyg_cpuload_t cpuload;
 	cyg_handle_t loadhandle;
 

@@ -35,6 +35,7 @@ MISSION = mission/tres_claw_switch.c
 ##### FLIGHT CONTROL LAW #####
 # Point to the desired flight control law code here
 CONTROL =  control/tres_claw.c
+#CONTROL =  control/tres_claw_stationeleven.c
 #CONTROL =  control/control_law_for_flutter_suppression.c control/ss_flutter_suppression01.c
 
 ##### MATLAB RTW AUTOCODE #####
@@ -55,6 +56,7 @@ $(RTW_ROOT)rt_nonfinite.c
 #SYSTEM_ID = system_id/systemid_none.c
 #SYSTEM_ID = system_id/obes3211_sysid.c
 SYSTEM_ID = system_id/sysid_pitch_chirps.c
+#SYSTEM_ID = system_id/sysid_pitch_chirps_stationeleven.c
 
 #### Determine which aircraft config file, data logging, actuator, and sensor files to compile
 ifeq ($(strip $(AIRCRAFT)),HIL_SIM)

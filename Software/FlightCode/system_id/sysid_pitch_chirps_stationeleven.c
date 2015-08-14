@@ -36,7 +36,7 @@ extern void get_system_id(double time, struct sensordata *sensorData_ptr, struct
 				controlData_ptr->r4    += controlData_ptr->pitch_cmd_excite;
 			}
 			
-			controlData->cmp_status = time / (2*(duration + tInitial)+2) * 100.0;
+			controlData_ptr->cmp_status = time / (2*(duration + tInitial)+2) * 100.0;
 			
 			break;
 	}
