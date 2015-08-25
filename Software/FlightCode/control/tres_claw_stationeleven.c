@@ -36,7 +36,7 @@ static short anti_windup[3]={1,1,1};   // integrates when anti_windup is 1
 #ifdef AIRCRAFT_SKOLL
 	static double roll_gain[3]  		= {0.5,0.15,0.01};  	// PI gains for roll tracker and roll damper
 	static double roll_gain_single[3]  	= {1.5,0.5,0.0};  		// PI gains for roll tracker and roll damper when using only Flap2
-	static double pitch_gain[3] 		= {-0.3,-0.40,-0.01};  	// PI gains for pitch tracker and pitch damper
+	static double pitch_gain[3] 		= {-0.3,-0.40,-0.00};  	// PI gains for pitch tracker and pitch damper
 	static double pitch_gain_single[3] 	= {-0.75,-1.0,-0.0};  	// PI gains for pitch tracker and pitch damper when using only Flap3
 	static double v_gain[2]     		= {0.1, 0.020};			// PI gains for speed tracker
 #endif
@@ -80,7 +80,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 					missionData_ptr -> sysid_select = 0;
 					open_loop(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
-				case 1: // open loop flying at 30 m/s, ramp from 23 to 30 over 10 seconds
+				case 1: // open loop flying at 35 m/s, ramp from 23 to 35 over 20 seconds
 					reset_tracker();
 					missionData_ptr -> run_excitation = 0;
 					if(t2_latched == FALSE){ // get the time since starting
@@ -88,19 +88,21 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 						t2_latched = TRUE;
 					}
 					
-					if((time - t2) <= 10.0){ // ramp commands
-						speed_cmd = 23.0 + (time - t2)*((30.0 - 23.0)/10.0);
+					if((time - t2) <= 20.0){ // ramp commands
+						speed_cmd = 23.0 + (time - t2)*((35.0 - 23.0)/20.0);
 					}
 					else{ // final values
-						speed_cmd = 30.0;
+						speed_cmd = 35.0;
 					}
 					
 					open_loop(time, speed_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
+					
+					controlData_ptr->cmp_status = speed_cmd;
 					break;
-				default: // open loop flying
+				default: // open loop flying at 23 m/s
 					t2_latched = FALSE;
 					missionData_ptr -> run_excitation = 0;
-					open_loop(time, exp_speed, sensorData_ptr, navData_ptr, controlData_ptr);
+					open_loop(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
 			break;
