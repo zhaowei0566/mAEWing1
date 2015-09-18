@@ -18,13 +18,13 @@
 #define NUM_ALARMS 3	///< Number of alarms
 
 // Update rates
-#define BASE_HZ 100		///< Base frequency of the main thread
-#define TELEMETRY_HZ 100	///< Frequency of the telemetry function
-#define THREAD1_HZ 10	///< Frequency of thread1
+#define BASE_HZ 150			///< Base frequency of the main thread
+#define TELEMETRY_HZ 150	///< Frequency of the telemetry function
+#define THREAD1_HZ 10		///< Frequency of thread1
 
 // Time offset of each alarm relative to the start of the BASE_HZ frame, units of sec
 #define DAQ_OFFSET 			0.0000	///< [sec], time offset of daq() relative to the start of the BASE_HZ frame
-#define ACTUATORS_OFFSET 	0.0080	///< [sec], time offset of actuators() relative to the start of the BASE_HZ frame
+#define ACTUATORS_OFFSET 	0.0055	///< [sec], time offset of actuators() relative to the start of the BASE_HZ frame
 #define THREAD1_OFFSET	 	0.0000	///< [sec], time offset of thread1() relative to the start of the BASE_HZ frame
 
 // Conditional variables, defined in main.c
