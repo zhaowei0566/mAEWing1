@@ -13,7 +13,8 @@
 # Select the desired aircraft configuration file here
 #AIRCRAFT = HIL_SIM
 #AIRCRAFT = FENRIR
-AIRCRAFT = SKOLL
+#AIRCRAFT = SKOLL
+AIRCRAFT = HATI
 
 ##### GUIDANCE LAW #####
 # Point to the desired guidance code here
@@ -34,9 +35,9 @@ MISSION = mission/tres_claw_switch.c
 
 ##### FLIGHT CONTROL LAW #####
 # Point to the desired flight control law code here
-#CONTROL =  control/tres_claw.c
+CONTROL =  control/tres_claw.c
 #CONTROL =  control/tres_claw_stationeleven.c
-CONTROL =  control/control_law_for_flutter_suppression.c control/ss_flutter_suppression01.c
+#CONTROL =  control/control_law_for_flutter_suppression.c control/ss_flutter_suppression01.c
 #CONTROL =  control/claw_delay.c
 
 ##### MATLAB RTW AUTOCODE #####
@@ -77,6 +78,13 @@ endif
 ifeq ($(strip $(AIRCRAFT)),SKOLL)
 AIRCRAFT_CONFIG = aircraft/skoll_config.h
 DATALOG_CONFIG = datalog/skoll_datalog.h
+SENSORS = sensors/IMU/IMU_iSensor.c sensors/GPIO/gpio.c  sensors/Rabbit/rabbit.c
+ACTUATORS = actuators/actuator_PWM.c
+endif
+
+ifeq ($(strip $(AIRCRAFT)),HATI)
+AIRCRAFT_CONFIG = aircraft/hati_config.h
+DATALOG_CONFIG = datalog/hati_datalog.h
 SENSORS = sensors/IMU/IMU_iSensor.c sensors/GPIO/gpio.c  sensors/Rabbit/rabbit.c
 ACTUATORS = actuators/actuator_PWM.c
 endif

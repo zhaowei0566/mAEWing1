@@ -41,6 +41,14 @@ static short anti_windup[3]={1,1,1};   // integrates when anti_windup is 1
 	static double v_gain[2]     		= {0.1, 0.020};			// PI gains for speed tracker
 #endif
 
+#ifdef AIRCRAFT_HATI
+	static double roll_gain[3]  		= {0.5,0.15,0.01};  	// PI gains for roll tracker and roll damper
+	static double roll_gain_single[3]  	= {1.5,0.5,0.0};  		// PI gains for roll tracker and roll damper when using only Flap2
+	static double pitch_gain[3] 		= {-0.3,-0.40,-0.00};  	// PI gains for pitch tracker and pitch damper
+	static double pitch_gain_single[3] 	= {-0.75,-1.0,-0.0};  	// PI gains for pitch tracker and pitch damper when using only Flap3
+	static double v_gain[2]     		= {0.1, 0.020};			// PI gains for speed tracker
+#endif
+
 double base_pitch_cmd		= 0.0698;  				// Trim value 4 deg
 double trim_speed			= 23;					// Trim airspeed, m/s
 double approach_theta 		= -6.5*D2R;				// Absolute angle for the initial approach
