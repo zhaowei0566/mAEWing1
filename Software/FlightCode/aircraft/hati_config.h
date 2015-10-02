@@ -46,9 +46,9 @@
 #define PWMOUT_R4_CAL   {122.582161052627,	596.231384481085,	1520.4578871808} ///< cubic calibration for R4
 
 // Pilot inceptor calibration parameters
-#define SELECT_INCP_CAL	{0.000836842513975917,	-2.55043426045733}	///<  linear calibration for pilot select inceptor
+#define SELECT_INCP_CAL	{0.000863352048698032, -1.58376998680006} ///<  linear calibration for pilot select inceptor
 #define PITCH_INCP_CAL	{0.00130197301142324,	-3.96975198221257}	///<  linear calibration for pilot pitch inceptor
-#define MODE_INCP_CAL	{0.000836904928753969,	-2.55060651670123}	///<  linear calibration for pilot mode inceptor
+#define MODE_INCP_CAL	{0.000850088662947068, -1.56545206486567} ///<  linear calibration for pilot mode inceptor
 #define ROLL_INCP_CAL	{-0.00121277738367002,	3.69435537314005}	///<  linear calibration for pilot roll inceptor
 
 #endif	

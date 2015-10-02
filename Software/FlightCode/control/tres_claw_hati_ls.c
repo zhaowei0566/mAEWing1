@@ -41,14 +41,22 @@ static short anti_windup[3]={1,1,1};   // integrates when anti_windup is 1
 	static double v_gain[2]     		= {0.1, 0.020};			// PI gains for speed tracker
 #endif
 
+#ifdef AIRCRAFT_HATI
+	static double roll_gain[3]  		= {0.5,0.15,0.01};  	// PI gains for roll tracker and roll damper
+	static double roll_gain_single[3]  	= {1.5,0.5,0.0};  		// PI gains for roll tracker and roll damper when using only Flap2
+	static double pitch_gain[3] 		= {-0.3,-0.40,-0.00};  	// PI gains for pitch tracker and pitch damper
+	static double pitch_gain_single[3] 	= {-0.75,-1.0,-0.0};  	// PI gains for pitch tracker and pitch damper when using only Flap3
+	static double v_gain[2]     		= {0.1, 0.020};			// PI gains for speed tracker
+#endif
+
 double base_pitch_cmd		= 0.0698;  				// Trim value 4 deg
-double trim_speed			= 23;					// Trim airspeed, m/s
+double trim_speed			= 20;					// Trim airspeed, m/s
 double approach_theta 		= -6.5*D2R;				// Absolute angle for the initial approach
 double approach_speed 		= 20;					// Approach airspeed, m/s
 double flare_theta 			= 1*D2R;				// Absolute angle for the flare
 double flare_speed 			= 17;					// Flare airspeed, m/s
 double pilot_flare_delta	= 1;					// Delta flare airspeed if the pilot is landing, m/s
-double exp_speed			= 27;					// Speed to run the experiments at, m/s
+double exp_speed			= 23;					// Speed to run the experiments at, m/s
 
 /// *****************************************************************************************
 
@@ -64,50 +72,33 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	unsigned short claw_select 	= missionData_ptr -> claw_select; 	// mode switching
 	static int t0_latched = FALSE;	// time latching
 	static double t0 = 0;
-	static int t2_latched = FALSE;	// time latching
-	static double t2 = 0;
 	double flare_time;
-	double speed_cmd;
 
 	switch(claw_mode){
 		case 0: // experiment mode
 			t0_latched = FALSE;
 			switch(claw_select){
-				case 0: // chirp, open loop L3/R3 and L4/R4 at 23 m/s
-					t2_latched = FALSE;
+				case 0: // chirp, open loop L3/R3, L4/R4  at 23 m/s
 					reset_tracker();
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 0;
-					open_loop(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
+					open_loop(time, exp_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
-				case 1: // open loop flying at 35 m/s, ramp from 23 to 35 over 20 seconds
+				case 1: // 3211, open loop L3/R3, L4/R4  at 17 m/s
 					reset_tracker();
-					missionData_ptr -> run_excitation = 0;
-					if(t2_latched == FALSE){ // get the time since starting
-						t2 = time;
-						t2_latched = TRUE;
-					}
-					
-					if((time - t2) <= 20.0){ // ramp commands
-						speed_cmd = 23.0 + (time - t2)*((35.0 - 23.0)/20.0);
-					}
-					else{ // final values
-						speed_cmd = 35.0;
-					}
-					
-					open_loop(time, speed_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
-					
-					controlData_ptr->cmp_status = speed_cmd;
+					missionData_ptr -> run_excitation = 1;
+					missionData_ptr -> sysid_select = 1;
+					open_loop(time, flare_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
-				default: // open loop flying at 23 m/s
-					t2_latched = FALSE;
-					missionData_ptr -> run_excitation = 0;
+				default: // 3211, open loop L3/R3, L4/R4  at 20 m/s
+					reset_tracker();
+					missionData_ptr -> run_excitation = 1;
+					missionData_ptr -> sysid_select = 1;
 					open_loop(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
 			break;
 		case 2: // autolanding mode
-			t2_latched = FALSE;
 			missionData_ptr -> run_excitation = 0;
 			switch(claw_select){
 				case 0: // approach
@@ -129,7 +120,6 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 			}
 			break;
 		default: // pilot mode
-			t2_latched = FALSE;
 			missionData_ptr -> run_excitation = 0;
 			t0_latched = FALSE;
 			pilot_flying(time, trim_speed,sensorData_ptr, navData_ptr, controlData_ptr);

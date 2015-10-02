@@ -56,7 +56,7 @@ double approach_speed 		= 20;					// Approach airspeed, m/s
 double flare_theta 			= 1*D2R;				// Absolute angle for the flare
 double flare_speed 			= 17;					// Flare airspeed, m/s
 double pilot_flare_delta	= 1;					// Delta flare airspeed if the pilot is landing, m/s
-double exp_speed			= 27;					// Speed to run the experiments at, m/s
+double exp_speed			= 26;					// Speed to run the experiments at, m/s
 
 /// *****************************************************************************************
 
@@ -78,20 +78,22 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 		case 0: // experiment mode
 			t0_latched = FALSE;
 			switch(claw_select){
-				case 0: // chirp, open loop L3/R3 at 27 m/s
+				case 0: // chirp, open loop L3/R3, L4/R4 at 23 m/s
 					reset_tracker();
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 0;
-					open_loop(time, exp_speed, sensorData_ptr, navData_ptr, controlData_ptr);
+					open_loop(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
-				case 1: // chirp, open loop L4/R4 at 27 m/s
+				case 1: // chirp, open loop L3/R3 at 26 m/s
 					reset_tracker();
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 1;
 					open_loop(time, exp_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
-				default: // open loop flying
-					missionData_ptr -> run_excitation = 0;
+				default: // chirp, open loop L4/R4 at 26 m/s
+					reset_tracker();
+					missionData_ptr -> run_excitation = 1;
+					missionData_ptr -> sysid_select = 2;
 					open_loop(time, exp_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
