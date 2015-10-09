@@ -70,7 +70,7 @@ byte modeVal;
 int j = 0;
 
 // servos
-uint8_t servoindex[] = {23,22,21,3,4,5,6,25,32};  // servo indices
+uint8_t servoindex[] = {23,22,21,3,4,5,6,25};     // servo indices
 uint16_t pwmcmd[9];                               // array of microsecond commands
 float cmd;
 
@@ -100,6 +100,7 @@ void setup() {
   for(int i = 0; i < sizeof(servoindex); i++){
     analogWriteFrequency(servoindex[i],333);
   }
+  analogWriteFrequency(32,100);
   
   // setting up ADC0
   adc->setAveraging(1);
@@ -273,17 +274,12 @@ void receiveEvent(size_t howMany)
   pwmcmd[7] = ((unsigned int)unpack[15] << 8) + unpack[14];
   pwmcmd[8] = ((unsigned int)unpack[17] << 8) + unpack[16];
 
-  // resetting the analog write so the frequency is whatever
-  // the interrupt frequency ends up - keeps things in sync
- /* for(int i = 0; i < sizeof(servoindex); i++){
-    digitalWrite(servoindex[i],LOW);
-    analogWriteFrequency(servoindex[i],100);
-  }*/
-
   // setting microsecond commands
   for(int i = 0; i < sizeof(servoindex); i++){
     cmd = (float) pwmcmd[i];
-    analogWrite(servoindex[i],cmd/3000.0*65535.0);
-  }  
+    analogWrite(servoindex[i],cmd/3003.0*65535.0);
+  }
+  cmd = (float) pwmcmd[8];
+  analogWrite(32,cmd/1000.0*65535.0);  
 }
 
