@@ -1,13 +1,12 @@
 // TAYLOR, BRIAN R.
 // brtaylor@umn.edu
-// 2015-07-21
+// 2015-10-12
 // 
-// v1.3
+// v1.6
 //
 
 #include <ADC.h>            // ADC library
 #include <TinyGPS++.h>      // TinyGPS++ library for NMEA parsing
-#include <SoftwareSerial.h> // Software serial library for additional serial lines
 #include <i2c_t3.h>         // I2C library
 
 byte pack[59];      // array of bytes for sending
@@ -17,9 +16,8 @@ ADC *adc = new ADC(); // an ADC object
 int ain[6];           // array to store ADC values
 
 TinyGPSPlus gps;                            // GPS object
-static const uint8_t RXPin = 9, TXPin = 10; // software serial pins
 static const uint32_t GPSBaud = 9600;       // GPS baud rate
-SoftwareSerial GPSSERIAL(RXPin, TXPin);     // software serial to GPS
+#define GPSSERIAL Serial1                   // hardware serial to GPS
 static uint8_t satVisible;                  // number of satellites visible 
 union{                                      // latitude
   double val;
@@ -52,11 +50,6 @@ byte isupdated;                             // byte to store if update [1] or no
 
 int incomingByte; // byte received from Goldy
 
-/* Timing variables to stabilize frame rate */
-unsigned long start_time;
-unsigned long end_time;
-unsigned long frame_time = 10000; // 100 Hz frame rate, us
-
 byte ps_byte[2];  // air data bytes
 byte pd_byte[2];  // air data bytes
 
@@ -70,7 +63,7 @@ byte modeVal;
 int j = 0;
 
 // servos
-uint8_t servoindex[] = {23,22,21,3,4,5,6,25};     // servo indices
+uint8_t servoindex[] = {23,22,21,3,4,5,6,10};     // servo indices
 uint16_t pwmcmd[9];                               // array of microsecond commands
 float cmd;
 
@@ -97,10 +90,10 @@ void setup() {
 
   // setting up the analog frequencies and resolutions for servos
   analogWriteResolution(16);
-  for(int i = 0; i < sizeof(servoindex); i++){
+  for(uint8_t i = 0; i < sizeof(servoindex); i++){
     analogWriteFrequency(servoindex[i],333);
   }
-  analogWriteFrequency(32,100);
+  analogWriteFrequency(32,50);
   
   // setting up ADC0
   adc->setAveraging(1);
@@ -275,11 +268,11 @@ void receiveEvent(size_t howMany)
   pwmcmd[8] = ((unsigned int)unpack[17] << 8) + unpack[16];
 
   // setting microsecond commands
-  for(int i = 0; i < sizeof(servoindex); i++){
+  for(uint8_t i = 0; i < sizeof(servoindex); i++){
     cmd = (float) pwmcmd[i];
     analogWrite(servoindex[i],cmd/3003.0*65535.0);
   }
   cmd = (float) pwmcmd[8];
-  analogWrite(32,cmd/1000.0*65535.0);  
+  analogWrite(32,cmd/20000.0*65535.0);  
 }
 
