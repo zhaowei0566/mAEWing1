@@ -188,6 +188,7 @@ int tftpTransfer(char *outfile, char *txbuf, int len)
 {
 	int res, err;
 	struct sockaddr_in host;
+	res = -1;
 
 	build_bootp_record(&eth0_bootp_data,
 			eth0_name,
@@ -215,9 +216,12 @@ int tftpTransfer(char *outfile, char *txbuf, int len)
 	fprintf(stderr,"Initiating TFTP filetransfer to %s to Host:%16s, length %d\n",
 			outfile, inet_ntoa(host.sin_addr), len);
 
-
-	res = tftp_put( outfile, &host, txbuf, len, TFTP_OCTET, &err);
-
+	while(res < 0){
+		res = tftp_put( outfile, &host, txbuf, len, TFTP_OCTET, &err);
+		sleep(1);
+	}
+	return res;
+/*
 	if (res < 0) {
 		SHOW_RESULT (tftp_put, err);
 		return res;
@@ -226,7 +230,7 @@ int tftpTransfer(char *outfile, char *txbuf, int len)
 		fprintf(stderr,"\n Transfer successful. %d bytes transferred", res);
 		return res;
 	}
-
+*/
 }
 
 char *tftp_error(int err)
