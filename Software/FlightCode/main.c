@@ -99,6 +99,7 @@ int main(int argc, char **argv) {
 	static int t0_latched = FALSE;
 	static int t0excitelatched = FALSE;
 	int loop_counter = 0;
+	int real_loop_counter =0;
 	pthread_mutex_t	mutex;
 
 	uint32_t cpuCalibrationData;
@@ -159,6 +160,7 @@ int main(int argc, char **argv) {
 		while (missionData.mode != 0) {
 
 			loop_counter++; //.increment loop counter
+			real_loop_counter++;
 
 			//**** DATA ACQUISITION **************************************************
 			pthread_cond_wait (&trigger_daq, &mutex); // WAIT FOR DAQ ALARMS
@@ -240,7 +242,9 @@ int main(int argc, char **argv) {
 			//************************************************************************
 
 			//**** DATA LOGGING ******************************************************
-			datalogger();
+			if(real_loop_counter < 80001){
+				datalogger();
+			}
 			etime_datalog = get_Time() - tic - etime_actuators - ACTUATORS_OFFSET; // compute execution time
 			//************************************************************************
 
