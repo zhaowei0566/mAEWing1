@@ -35,8 +35,8 @@ MISSION = mission/tres_claw_switch.c
 
 ##### FLIGHT CONTROL LAW #####
 # Point to the desired flight control law code here
-#CONTROL =  control/tres_claw_hati_hs.c
-CONTROL =  control/tres_claw_hati_ls.c
+CONTROL =  control/tres_claw_hati_hs.c
+#CONTROL =  control/tres_claw_hati_ls.c
 
 ##### MATLAB RTW AUTOCODE #####
 # Make sure #include "simstruc.h" and #include "fixedpoint.h" are commented out in the <modelname>.h file
@@ -55,8 +55,8 @@ $(RTW_ROOT)rt_nonfinite.c
 # Point to the desired system ID code here
 #SYSTEM_ID = system_id/systemid_none.c
 #SYSTEM_ID = system_id/obes3211_sysid.c
-#SYSTEM_ID = system_id/sysid_pitch_chirps_hs.c
-SYSTEM_ID = system_id/sysid_pitch_chirps_ls.c
+SYSTEM_ID = system_id/sysid_pitch_chirps_hs.c
+#SYSTEM_ID = system_id/sysid_pitch_chirps_ls.c
 
 #### Determine which aircraft config file, data logging, actuator, and sensor files to compile
 ifeq ($(strip $(AIRCRAFT)),HIL_SIM)
