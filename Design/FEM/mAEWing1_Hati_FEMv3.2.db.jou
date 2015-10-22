@@ -1,0 +1,53 @@
+$# Creating journal file V:\Wei 
+$# Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing1_Hati_FEM_V3\mAEWing_F
+$# EM_v3.2_same_node\mAEWing1_Hati_FEMv3.2.db.jou at 18-Sep-15 12:55:02
+uil_file_rebuild.start("C:\MSC.Software\Patran_x64\20122/template.db", @
+"V:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing1_Hati_FEM_V3\" // @
+"mAEWing_FEM_v3.2_same_node\mAEWing1_Hati_FEMv3.2.db")
+$# Synchronizing the User Data Manager
+set_current_dir( "V:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEW" // @
+"ing1_Hati_FEM_V3\mAEWing_FEM_v3.2_same_node" )
+$# The current working directory has been changed to the database location 
+$# shown.                                                                     
+$#                                                                            
+$#                                   
+$# Error reported from application FEM
+$#     MPC 888017 does not exist.
+$? NO 2006034 
+nastran_input_import( "V:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1" // @
+"\mAEWing1_Hati_FEM_V3\mAEWing_FEM_v3.2_same_node\sol103_mAEWing1_Hati_FEM" // @
+"v3p2.bdf", "default_group", 11, [TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,  @
+TRUE, FALSE, TRUE, TRUE], [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 0, 0, 0,  @
+0, 0, 0, 0, 0, 0], [-2000000000, -2000000000, -2000000000, -2000000000,  @
+-2000000000, -2000000000, -2000000000, -2000000000, 0, 0, 0] )
+$# Parsing input file...
+$# Importing data...
+$# 4 Coordinate Frames written to database.
+$# 126 Nodes written to database.
+$# 4 Materials written to database.
+$# 131 Elements written to database.
+$# 23 Property Sets written to database.
+$# 65 MPCs written to database.
+$# 27 Executive Control lines/comments written to database.
+$# 4 Case Control lines/comments written to database.
+$# 314 unrecognized Bulk Data lines/comments written to database.
+$# 345 total unrecognized entities/comment lines written to database.
+$# 1 Load Cases written to database.
+$# Reading of MSC.Nastran input file completed.
+ga_view_zoom_set( 39.616444 )
+ga_view_center_set( 20.204388, 57.840015 )
+ga_view_zoom_set( 9.904112 )
+ga_view_center_set( 16.936029, 57.245770 )
+ga_view_zoom_set( 22.036648 )
+ga_view_zoom_set( 30.300390 )
+ga_view_zoom_set( 11.018322 )
+ga_view_zoom_set( 28.096722 )
+ga_view_zoom_set( 20.812386 )
+ga_view_zoom_set( 57.234062 )
+ga_view_center_set( -7.102281, -36.618103 )
+ga_view_center_set( -57.182087, -7.285644 )
+ga_view_center_set( -48.153393, -8.070747 )
+ga_view_zoom_set( 65.261749 )
+ga_view_center_set( -6.360767, -6.564707 )
+$# Flushing the User Data Manager
+$# Journal file stopped recording at 18-Sep-15 12:59:45

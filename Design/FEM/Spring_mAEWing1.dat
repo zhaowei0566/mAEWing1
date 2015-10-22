@@ -35,3 +35,7 @@ $1------$1------$1------$1------$1------$1------$1------$1------$1------
 $                          k1    k2      k3      k4      k5       k6
 PBUSH   10000   K        1.0E6  1.0E6   1.0E6   1.0E6   1.0E6    1.0E6
 PBUSH   20000   K        1.0E6  1.0E6   1.0E6   1.0E6   1.0E6    1.0E6 
+$
+$ Define a very weak spring to ground the vehicle to model free free vibration
+CBUSH   18888   30000   18888                                     0
+PBUSH   30000   K        1.0E-1 1.0E-1  1.0E-1  1.0E-1  1.0E-1   1.0E-1
