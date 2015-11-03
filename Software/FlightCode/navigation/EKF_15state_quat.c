@@ -180,11 +180,11 @@ void init_nav(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct
 	navData_ptr->vd = sensorData_ptr->gpsData_ptr->vd;
 	
 	// ... and initialize states with IMU Data
-	//navData_ptr->the = asin(sensorData_ptr->imuData_ptr->ax/g); // theta from Ax, aircraft at rest
-	//navData_ptr->phi = asin(-sensorData_ptr->imuData_ptr->ay/(g*cos(navData_ptr->the))); // phi from Ay, aircraft at rest
-	navData_ptr->the = 8*D2R;
-	navData_ptr->phi = 0*D2R;
-	navData_ptr->psi = 90.0*D2R;
+	navData_ptr->the = asin(sensorData_ptr->imuData_ptr->ax/g); // theta from Ax, aircraft at rest
+	navData_ptr->phi = asin(-sensorData_ptr->imuData_ptr->ay/(g*cos(navData_ptr->the))); // phi from Ay, aircraft at rest
+	//navData_ptr->the = 8*D2R;
+	//navData_ptr->phi = 0*D2R;
+	navData_ptr->psi = -90.0*D2R;
 	
 	eul2quat(navData_ptr->quat,(navData_ptr->phi),(navData_ptr->the),(navData_ptr->psi));
 	
