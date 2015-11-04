@@ -35,7 +35,7 @@ void read_rabbit(struct rabbit *rabbitData_ptr)
 }
 
 void read_rabbit_sensor(cyg_i2c_device* device,struct rabbit *rabbitData_ptr){
-	uint8_t localBuffer[59];
+	uint8_t localBuffer[67];
 	uint16_t ain_counts[6];
 	uint16_t ps_counts;
 	uint16_t pd_counts;
@@ -58,16 +58,16 @@ void read_rabbit_sensor(cyg_i2c_device* device,struct rabbit *rabbitData_ptr){
 	}alt;
 
 	union{	// ground track
-		float val;
-		byte b[4];
+		double val;
+		byte b[8];
 	}track;
 
 	union{	// ground speed
-		float val;
-		byte b[4];
+		double val;
+		byte b[8];
 	}gspeed;
 	
-	bytesRead = cyg_i2c_rx(device, localBuffer, 59);
+	bytesRead = cyg_i2c_rx(device, localBuffer, 67);
 	
 	/* Analog Data */
 	// pulling the analog data off the buffer
@@ -145,15 +145,23 @@ void read_rabbit_sensor(cyg_i2c_device* device,struct rabbit *rabbitData_ptr){
 	alt.b[0] = localBuffer[50];
 	rabbitData_ptr->alt = alt.val;
 	
-	track.b[3] = localBuffer[51];
-	track.b[2] = localBuffer[52];
-	track.b[1] = localBuffer[53];
-	track.b[0] = localBuffer[54];
+	track.b[7] = localBuffer[51];
+	track.b[6] = localBuffer[52];
+	track.b[5] = localBuffer[53];
+	track.b[4] = localBuffer[54];
+	track.b[3] = localBuffer[55];
+	track.b[2] = localBuffer[56];
+	track.b[1] = localBuffer[57];
+	track.b[0] = localBuffer[58];
 	rabbitData_ptr->courseOverGround = track.val * D2R;
 	
-	gspeed.b[3] = localBuffer[55];
-	gspeed.b[2] = localBuffer[56];
-	gspeed.b[1] = localBuffer[57];
-	gspeed.b[0] = localBuffer[58];
+	gspeed.b[7] = localBuffer[59];
+	gspeed.b[6] = localBuffer[60];
+	gspeed.b[5] = localBuffer[61];
+	gspeed.b[4] = localBuffer[62];
+	gspeed.b[3] = localBuffer[63];
+	gspeed.b[2] = localBuffer[64];
+	gspeed.b[1] = localBuffer[65];
+	gspeed.b[0] = localBuffer[66];
 	rabbitData_ptr->speedOverGround = gspeed.val;
 }

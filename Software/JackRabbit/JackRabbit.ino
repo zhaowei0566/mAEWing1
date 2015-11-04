@@ -1,15 +1,15 @@
 // TAYLOR, BRIAN R.
 // brtaylor@umn.edu
-// 2015-10-12
+// 2015-11-04
 // 
-// v1.6
+// v1.7
 //
 
 #include <ADC.h>            // ADC library
 #include <TinyGPS++.h>      // TinyGPS++ library for NMEA parsing
 #include <i2c_t3.h>         // I2C library
 
-byte pack[59];      // array of bytes for sending
+byte pack[67];      // array of bytes for sending
 byte unpack[18];    // array of bytes for receiving
 int k;
 ADC *adc = new ADC(); // an ADC object
@@ -35,13 +35,13 @@ union{                                      // altitude
 }alt;
 
 union{                                      // ground track
-  float val;
-  byte b[4];
+  double val;
+  byte b[8];
 }track;
 
 union{                                      // ground speed
-  float val;
-  byte b[4];
+  double val;
+  byte b[8];
 }gspeed;
 
 uint32_t gpstime;                           // raw GPS time, used to see if we got an update
@@ -152,18 +152,22 @@ void requestEvent()
     pwm_byte[i] = Wire.read(); // put the data somewhere
   }
 
-  gpstime = gps.time.second();
+  if(gps.time.isValid()){
+    gpstime = gps.time.second();
+  }
   
   // read GPS
   if((gpstime - oldgpstime)>0){
-    isupdated = 1;
-    oldgpstime = gpstime;
-    satVisible = gps.satellites.value();
-    latitude.val = gps.location.lat();
-    longitude.val = gps.location.lng();
-    alt.val = gps.altitude.meters();
-    gspeed.val = gps.speed.mps();
-    track.val = gps.course.deg();
+    if((gps.satellites.isValid())&&(gps.location.isValid())&&(gps.altitude.isValid())&&(gps.speed.isValid())&&(gps.course.isValid())){
+      isupdated = 1;
+      oldgpstime = gpstime;
+      satVisible = gps.satellites.value();
+      latitude.val = gps.location.rawLat().deg + gps.location.rawLat().billionths/1000000000.00;
+      longitude.val = gps.location.rawLng().deg + gps.location.rawLng().billionths/1000000000.00;
+      alt.val = gps.altitude.value()/100.0;
+      gspeed.val = gps.speed.value() * 0.514444;
+      track.val = gps.course.value()/100.0;
+    }
   }
   else{
     isupdated = 0;
@@ -241,12 +245,20 @@ void requestEvent()
   pack[52] = track.b[1];
   pack[53] = track.b[2];
   pack[54] = track.b[3];
-  pack[55] = gspeed.b[0];
-  pack[56] = gspeed.b[1];
-  pack[57] = gspeed.b[2];
-  pack[58] = gspeed.b[3];
+  pack[55] = track.b[4];
+  pack[56] = track.b[5];
+  pack[57] = track.b[6];
+  pack[58] = track.b[7];
+  pack[59] = gspeed.b[0];
+  pack[60] = gspeed.b[1];
+  pack[61] = gspeed.b[2];
+  pack[62] = gspeed.b[3];
+  pack[63] = gspeed.b[4];
+  pack[64] = gspeed.b[5];
+  pack[65] = gspeed.b[6];
+  pack[66] = gspeed.b[7];
 
-  Wire1.write(pack, 59); 
+  Wire1.write(pack, 67); 
 }
 
 void receiveEvent(size_t howMany)
