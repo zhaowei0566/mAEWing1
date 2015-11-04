@@ -135,6 +135,9 @@ int main(int argc, char **argv) {
 	init_daq(&sensorData, &navData, &controlData);
 	init_telemetry();
 	
+	// for initializing recording
+	missionData.recording = 0;
+	
 	// initalize controller
 	init_control();
 
@@ -160,7 +163,7 @@ int main(int argc, char **argv) {
 		while (missionData.mode != 0) {
 
 			loop_counter++; //.increment loop counter
-			real_loop_counter++;
+
 
 			//**** DATA ACQUISITION **************************************************
 			pthread_cond_wait (&trigger_daq, &mutex); // WAIT FOR DAQ ALARMS
@@ -192,7 +195,14 @@ int main(int argc, char **argv) {
 					t0 = get_Time();
 					t0_latched = TRUE;
 				}
-
+				
+				// beginning the data log
+				if(missionData.recording == 0){
+					missionData.recording = 1;
+				}
+				if(missionData.recording == 1){
+					real_loop_counter++;
+				}
 				time = get_Time()-t0; // Time since in auto mode
 
 				//**** GUIDANCE **********************************************************
@@ -242,7 +252,7 @@ int main(int argc, char **argv) {
 			//************************************************************************
 
 			//**** DATA LOGGING ******************************************************
-			if(real_loop_counter < 80001){
+			if((missionData.recording == 1)&&(real_loop_counter < 80001)){
 				datalogger();
 			}
 			etime_datalog = get_Time() - tic - etime_actuators - ACTUATORS_OFFSET; // compute execution time
