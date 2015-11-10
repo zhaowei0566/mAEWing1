@@ -6,4 +6,4 @@
 # mAEWing2
 ## Tasks
 * UMN will send planform and winglet geometry to S&A
-* Aurora should be getting a quote for mold manufacturing soon
+* ~~Aurora should be getting a quote for mold manufacturing soon~~
