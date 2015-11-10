@@ -1,6 +1,6 @@
 # mAEWing1
 ## Tasks
-* VT will send out FEM v4.2 and upload to GitHub
+* ~~VT will send out FEM v4.2 and upload to GitHub~~
 * CM Soft and S&A will begin developing aeroelastic models based on FEM v4.2
 
 # mAEWing2
