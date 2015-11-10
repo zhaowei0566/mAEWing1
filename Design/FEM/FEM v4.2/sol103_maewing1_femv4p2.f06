@@ -1,0 +1,1710 @@
+1
+ 
+ 
+ 
+ 
+                      Warning: This computer program is protected by copyright law and international treaties.       
+                  Unauthorized use, reproduction or distribution of this computer program, or any portion of it, may 
+                                          result in severe civil and criminal penalties.                             
+                         Copyright (C) 2013 MSC Software Corporation and its licensors. All rights reserved.         
+ 
+ 
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * *                                 * *
+                                              * *           MSC Software          * *
+                                              * *               CORP              * *
+                                              * *                                 * *
+                                              * *      M S C   N a s t r a n      * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *     Version 2013.0.0-CL199358   * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *                                 * *
+                                              * *          MAY 30, 2013           * *
+                                              * *                                 * *
+                                              * *              Intel              * *
+                                              * *        MODEL 386/486/586        * *
+                                              * * Windows Server 2008 R2 6.1 7601 * *
+                                              * *        Compiled for 8664        * *
+                                              * *                                 * *
+                                              * * * * * * * * * * * * * * * * * * * *
+                                              * * * * * * * * * * * * * * * * * * * *
+1 News file -  (June 10, 2013):
+  
+               Welcome to MSC Nastran 2013
+  
+  
+   Details of the new capabilities can be found in the MSC Nastran 2013
+     Release Guide available online in the installation documentation
+     sub-directory.
+   Additional information can be found at the MSC Nastran Product Support page:
+  
+      http://simcompanion.mscsoftware.com
+  
+  
+   The support page provides links to these valuable information:
+      * A searchable Knowledge Base containing examples and answers to thousands
+        of frequently asked questions written by MSC Software subject-matter
+        experts.
+      * Peer-to-peer Discussion Forums enabling you to post questions for your
+        MSC Software products and receive answers from other users worldwide.
+      * A list of known issues with the product and any workarounds.
+      * Instructions on how to contact technical support
+      * A mechanism for sending us product feedback or enhancement requests.
+      * Hardware and software requirements.
+      * Examples and Tutorials
+      * and much more.
+  
+   For information on training, please visit our Training web site
+  
+      http://www.mscsoftware.com/Contents/Services/Training/
+  
+   MSC Nastran brings powerful new features and enhancements for engineering
+   solutions.
+  
+   The highlights for the MSC Nastran 2013 release include:
+  •   HPC
+     –   GPU Support for non-symmetric and complex systems encountered in
+           SOL 108, SOL 109, SOL 111 and SOL 112
+     –   Element Assembly Time has been Improved using Parallel Processing in
+           SOL 400
+     –   SOL 700 DMP Improvements for FSI applications
+     –   MSC Nastran now fully utilizes the memory for All Solutions Sequences
+           which reduces the amount of wall time.
+     -   New methods have been introduced to Control Pivoting strategies when
+           Factorizing the System of Equation, to provide a balance between
+           Performance and Accuracy
+  •   Acoustics
+     –   Poroelastic Materials which are Frequency Dependant can be included in
+           Interior Acoustic Simulation to model trim materials
+  •   Durability
+     –   Fatigue Simulations may be performed from within MSC Nastran for
+1          SOL 101, SOL 103, SOL 112 and SOL 200
+     -   There is a new User Guide fully describing this new capability
+  •   Optimization
+     –   Optimization may be performed using Design Life as either a Constraint
+         or an Objective Function.
+     –   Enhancements to Equivalent Radiated Power (ERP)
+  •   Linear Analysis
+     –   Enhancements to Transfer Path Analysis (TPA) to support inter-component
+           forces
+     -   The Definition of Loads in Dynamic Analysis has been Improved.
+  •   Aeroelasticity
+     –   Output enhancements with Monitor Points for SOL 146
+  •   Advanced Nonlinear (SOL 400)
+     –   Support for enforced relative displacement motion SPCD and SPCR
+     –   Export Adams MNF files from SOL 400 for nonlinear preload
+  •   Explicit Dynamics (SOL 700)
+     –   1D-3D Spherical Symmetry and 2D-3D Axial Symmetry Remap for Blast Loads
+     –   Support for Multiple Detonation points with varying ignition times
+     –   Empirical Blast Load Models
+  
+  
+1                                                                          NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE     1
+                                                                                                                                    
+0        N A S T R A N    F I L E    A N D    S Y S T E M    P A R A M E T E R    E C H O                                           
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     NASTRAN BUFFSIZE=8193 $(C:/MSC.SOFTWARE/MSC_NASTRAN/20130/CONF/NAST20130.RCF[2])
+     INIT MASTER(S)                                                                  
+     $ MAEWING1 FEM HISTORY - VIRGINIA TECH                                          
+     $ -- FEB, 27 2015                                                               
+     $  V1.0: MIMIC MAEWING1 CAD MODEL FOR MAEWING1 FINITE ELEMENT MODEL, ALL DATA AR
+     $       AND TEST REPORT AND CAD MODEL                                           
+     $               INCREASE GJ FOR THE SPAR TO TAKE INTO ACCOUNT OF THE FOAM TORSIO
+     $       ASSUME POINT MASS DISTRIBUTION AND VALUES IN THE FUSELAGE BASED ON      
+     $               BFF REPORT (WWW.PAAW.NET) AND PAPER (AIAA 2015-0903)            
+     $       ASSUME STIFFNESS VALUE FOR STIFFENED SPAR TO MATCH MODAL FREQUENCIES WIT
+     $ -- APRIL, 10 2015                                                             
+     $  V1.1: 1) ADD SPRING ELEMENTS THAT CONNECT THE CONTROL SURFACES/BODY FLAPS TO 
+     $                       CBUSH ELEMENT WAS USED, STIFFNESS VALUES ARE            
+     $          GIVEN IN THE PBUSH CARD, THE VALUES ARE 10^6 NOW,                    
+     $                       WHICH ARE SUBJECTED TO CHANGE TO REFLECT THE REAL HINGE 
+     $        2) CHANGE THE POINT MASS LOCATIONS FOR C.S AND B.F, SO THAT THE LINE BE
+     $                        THE SERVOS AND CS/BF IS PERPENDICULAR TO THE HINGE LINE
+     $          THE REAL CONNECTION AS SHOWN IN X56A MODEL                           
+     $        3) CONSIDER THE MASS MOMENT OF INERTIA OF THE FOAM MASS W.R.T THE ELAST
+     $                       SECTION WHICH HAS 3 FLAPS, CMASS2 CARD WAS USED         
+     $        4) CORRECT XI FIELD IN CONM2 CARDS 401-404 501-504 FOR FLAPS           
+     $        5) ADD THE 6 ACCELS TO THE FEM, GRID 9001-9006, CONM2 9001-9006, RBE2-7
+     $        6) GRID 999018 999028 LOCATIONS CHANGED, TO CONNECT ACCELS TO THE SPAR,
+     $           TO INCLUDE THE ACCELS ADDED IN THE CENTERLINE.                      
+     $ -- SEP 14, 2015                                                               
+     $        1)  MODIFY THE RBE3 CONNECTIONS OF BODY FLAPS TO CENTERBODY;           
+     $        2)  2 GRIDS ADDED; MODIFY 2 RBE3 CONNECTIONS; MODIFY REAR SPAR BEAM CON
+1                                                                          NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE     2
+                                                                                                                                    
+0        N A S T R A N    E X E C U T I V E    C O N T R O L    E C H O                                                             
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+     SOL 103                                                                                 
+     CEND                                                                                    
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE     3
+                                                                                                                                    
+0                                                                                                                                   
+0                                        C A S E    C O N T R O L    E C H O                                                        
+                 COMMAND                                                                                                            
+                 COUNT                                                                                                              
+                  1      $ DIRECT TEXT INPUT FOR GLOBAL CASE CONTROL DATA                                        
+                  2      TITLE = MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                                
+                  3      ECHO = SORT                                                                             
+                  4      $ USING NASTRAN DEFAULT VALUES FOR RESVEC                                               
+                  5      SUBCASE 1                                                                               
+                  6      $ SUBCASE NAME : DEFAULT                                                                
+                  7         SUBTITLE=DEFAULT                                                                     
+                  8         METHOD = 101                                                                         
+                  9        $ SPC = 99                                                                            
+                 10         VECTOR(SORT1,REAL)=ALL                                                               
+                 11         SPCFORCES(SORT1,REAL)=ALL                                                            
+                 12         DISP(PUNCH)=ALL                                                                      
+ *** USER WARNING MESSAGE 602 (IFP1D)
+     TWO OR MORE OF THE ABOVE CARD TYPES DETECTED WHERE ONLY ONE IS
+     LEGAL.   THE LAST FOUND WILL BE USED.
+                 13      BEGIN BULK                                                                              
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE     4
+                                                                                                                                    
+0                                                                                                                                   
+                                              I N P U T   B U L K   D A T A   E C H O                                               
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                              $INCLUDE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\GRID_MAEWING1.DAT"
+                              $END OF INCLUDE FILE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\GRID_MAEWING1.DAT"
+                              $INCLUDE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\BEAM_MAEWING1_WS3.DAT"
+                              $END OF INCLUDE FILE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\BEAM_MAEWING1_WS3.DAT"
+                              $INCLUDE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\MAT1_MAEWING1.DAT"
+                              $END OF INCLUDE FILE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\MAT1_MAEWING1.DAT"
+                              $INCLUDE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\CONM2_MAEWING1_HATIWS3.DAT"
+                              $END OF INCLUDE FILE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\CONM2_MAEWING1_HATIWS3.DAT"
+                              $INCLUDE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\RBE2_MAEWING1.DAT"
+                              $END OF INCLUDE FILE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\RBE2_MAEWING1.DAT"
+                              $INCLUDE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\SPRING_MAEWING1.DAT"
+                              $END OF INCLUDE FILE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\SPRING_MAEWING1.DAT"
+                              $INCLUDE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\GVT_ACCELERATIONS.DAT"
+                              $END OF INCLUDE FILE "v:\Wei Zhao\PAAW\Model\FEM\mAEWing1\mAEWing1_FEM_V1\mAEWing_Hati_WS3_FEMsV4\FinalFEMv4p2\HatiWS3_FEMv4p2\GVT_ACCELERATIONS.DAT"
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE     5
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                    1-        CBAR    1031    301     1010    1011    0.      0.      1.
+                    2-        CBAR    1032    301     1010    1012    0.      0.      1.
+                    3-        CBAR    2031    301     2010    2011    0.      0.      1.
+                    4-        CBAR    2032    301     2010    2012    0.      0.      1.
+                    5-        CBAR    3001    3007    3001    9001    0.      0.      1.
+                    6-        CBAR    3002    3007    9001    3002    0.      0.      1.
+                    7-        CBAR    3003    3007    3002    3000    0.      0.      1.
+                    8-        CBAR    3004    3007    3000    28888   0.      0.      1.
+                    9-        CBAR    3005    3007    28888   3004    0.      0.      1.
+                   10-        CBAR    3006    3007    3004    9002    0.      0.      1.
+                   11-        CBAR    3007    3007    9002    18888   0.      0.      1.
+                   12-        CBAR    3008    3007    18888   3005    0.      0.      1.
+                   13-        CBAR    3009    3007    3005    3006    0.      0.      1.
+                   14-        CBAR    3010    3007    3006    3007    0.      0.      1.
+                   15-        CBEAM   1001    1001    3000    999011  0.      0.      1.
+                   16-        CBEAM   1002    1002    1010    999012  0.      0.      1.
+                   17-        CBEAM   1004    1004    1030    999014  0.      0.      1.
+                   18-        CBEAM   1005    1005    1040    999015  0.      0.      1.
+                   19-        CBEAM   1006    1006    1050    999016  0.      0.      1.
+                   20-        CBEAM   1009    1009    1080    1090    0.      0.      1.
+                   21-        CBEAM   1011    1001    999011  1010    0.      0.      1.
+                   22-        CBEAM   1022    1002    999012  1020    0.      0.      1.
+                   23-        CBEAM   1041    1004    999014  102     0.      0.      1.
+                   24-        CBEAM   1042    1004    102     1040    0.      0.      1.
+                   25-        CBEAM   1051    1005    999015  103     0.      0.      1.
+                   26-        CBEAM   1052    1005    103     1050    0.      0.      1.
+                   27-        CBEAM   1066    1006    999016  1060    0.      0.      1.
+                   28-        CBEAM   1071    1007    1060    104     0.      0.      1.
+                   29-        CBEAM   1072    1007    104     999017  0.      0.      1.
+                   30-        CBEAM   1077    1007    999017  1070    0.      0.      1.
+                   31-        CBEAM   1081    1008    1070    105     0.      0.      1.
+                   32-        CBEAM   1082    1008    105     999018  0.      0.      1.
+                   33-        CBEAM   1088    1008    999018  1080    0.      0.      1.
+                   34-        CBEAM   2001    2001    3000    999021  0.      0.      1.
+                   35-        CBEAM   2002    2002    2010    999022  0.      0.      1.
+                   36-        CBEAM   2004    2004    2030    999024  0.      0.      1.
+                   37-        CBEAM   2005    2005    2040    999025  0.      0.      1.
+                   38-        CBEAM   2006    2006    2050    999026  0.      0.      1.
+                   39-        CBEAM   2009    2009    2080    2090    0.      0.      1.
+                   40-        CBEAM   2011    2001    999021  2010    0.      0.      1.
+                   41-        CBEAM   2022    2002    999022  2020    0.      0.      1.
+                   42-        CBEAM   2041    2004    999024  202     0.      0.      1.
+                   43-        CBEAM   2042    2004    202     2040    0.      0.      1.
+                   44-        CBEAM   2051    2005    999025  203     0.      0.      1.
+                   45-        CBEAM   2052    2005    203     2050    0.      0.      1.
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE     6
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                   46-        CBEAM   2066    2006    999026  2060    0.      0.      1.
+                   47-        CBEAM   2071    2007    2060    204     0.      0.      1.
+                   48-        CBEAM   2072    2007    204     999027  0.      0.      1.
+                   49-        CBEAM   2077    2007    999027  2070    0.      0.      1.
+                   50-        CBEAM   2081    2008    2070    205     0.      0.      1.
+                   51-        CBEAM   2082    2008    205     999028  0.      0.      1.
+                   52-        CBEAM   2088    2008    999028  2080    0.      0.      1.
+                   53-        CBEAM   10002   201     1011    3000    0.      0.      1.
+                   54-        CBEAM   10031   202     1012    101001  0.      0.      1.
+                   55-        CBEAM   10032   202     101001  3005    0.      0.      1.
+                   56-        CBEAM   10301   1003    1020    101     0.      0.      1.
+                   57-        CBEAM   10302   1003    101     999013  0.      0.      1.
+                   58-        CBEAM   10303   1003    999013  1030    0.      0.      1.
+                   59-        CBEAM   20002   201     2011    3000    0.      0.      1.
+                   60-        CBEAM   20031   202     2012    202002  0.      0.      1.
+                   61-        CBEAM   20032   202     202002  3005    0.      0.      1.
+                   62-        CBEAM   20301   2003    2020    201     0.      0.      1.
+                   63-        CBEAM   20302   2003    201     999023  0.      0.      1.
+                   64-        CBEAM   20303   2003    999023  2030    0.      0.      1.
+                   65-        CBUSH   11001   10000   10011   10101                           101
+                   66-        CBUSH   11002   10000   10012   10102                           102
+                   67-        CBUSH   11003   10000   10013   10103                           102
+                   68-        CBUSH   11004   20000   10014   10104                           102
+                   69-        CBUSH   18888   30000   18888                                   0
+                   70-        CBUSH   22001   10000   20021   20201                           201
+                   71-        CBUSH   22002   10000   20022   20202                           202
+                   72-        CBUSH   22003   10000   20023   20203                           202
+                   73-        CBUSH   22004   20000   20024   20204                           202
+                   74-        CONM2  *100             100001          101             .123499997      *
+                   75-        *       .0714341328     8.52803339E-08  0.                              *
+                   76-        *       0.              0.              0.              0.              *
+                   77-        *       0.              0.
+                   78-        CONM2  *101             1030            102             .123499997      *
+                   79-        *       .00345837278    0.              0.                              *
+                   80-        *       0.              0.              0.              0.              *
+                   81-        *       0.              0.
+                   82-        CONM2  *102             1050            102             .123499997      *
+                   83-        *       .00345837278    0.              0.                              *
+                   84-        *       0.              0.              0.              0.              *
+                   85-        *       0.              0.
+                   86-        CONM2  *103             1070            102             .123499997      *
+                   87-        *       .00345837278    0.              0.                              *
+                   88-        *       0.              0.              0.              0.              *
+                   89-        *       0.              0.
+                   90-        CONM2   104     1090            .091    2.5     0.      0.
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE     7
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                   91-        CONM2   105     1090            .01309  1.3     0.      0.
+                   92-        CONM2  *200             200001          201             .123499997      *
+                   93-        *       .0714341328     8.52803339E-08  0.                              *
+                   94-        *       0.              0.              0.              0.              *
+                   95-        *       0.              0.
+                   96-        CONM2  *201             2030            202             .123499997      *
+                   97-        *       .00345837278    0.              0.                              *
+                   98-        *       0.              0.              0.              0.              *
+                   99-        *       0.              0.
+                  100-        CONM2  *202             2050            202             .123499997      *
+                  101-        *       .00345837278    0.              0.                              *
+                  102-        *       0.              0.              0.              0.              *
+                  103-        *       0.              0.
+                  104-        CONM2  *203             2070            202             .123499997      *
+                  105-        *       .00345837278    0.              0.                              *
+                  106-        *       0.              0.              0.              0.              *
+                  107-        *       0.              0.
+                  108-        CONM2   204     2090            .091    2.5     0.      0.
+                  109-        CONM2   205     2090            .01309  1.3     0.      0.
+                  110-        CONM2  *301             3002            0               1.02426248      *
+                  111-        *       .0955961198     0.              0.                              *
+                  112-        *       2.044137        0.              .935968399      0.              *
+                  113-        *       0.              0.
+                  114-        CONM2  *302             3004            0               2.30818921      *
+                  115-        *       .0572463907     0.              0.                              *
+                  116-        *       2.044137        0.              .935968399      0.              *
+                  117-        *       0.              0.
+                  118-        CONM2  *303             3006            0               .926555097      *
+                  119-        *       -.0338944793    0.              0.                              *
+                  120-        *       .192183644      0.              .935968399      0.              *
+                  121-        *       0.              0.
+                  122-        CONM2  *401             10001           101             .106000002      *
+                  123-        *       0.              1.17365265      0.                              *
+                  124-        *       0.              0.              0.              0.              *
+                  125-        *       0.              0.
+                  126-        CONM2  *402             10002           102             .0960000008     *
+                  127-        *       -.337247968     1.30560005      0.                              *
+                  128-        *       0.              0.              0.              0.              *
+                  129-        *       0.              0.
+                  130-        CONM2  *403             10003           102             .0960000008     *
+                  131-        *       -.337247968     1.30560005      0.                              *
+                  132-        *       0.              0.              0.              0.              *
+                  133-        *       0.              0.
+                  134-        CONM2  *404             10004           102             .0960000008     *
+                  135-        *       -.337247968     1.30560005      0.                              *
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE     8
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  136-        *       0.              0.              0.              0.              *
+                  137-        *       0.              0.
+                  138-        CONM2  *501             20001           201             .106000002      *
+                  139-        *       0.              -1.17365265     0.                              *
+                  140-        *       0.              0.              0.              0.              *
+                  141-        *       0.              0.
+                  142-        CONM2  *502             20002           202             .0960000008     *
+                  143-        *       -.337247968     -1.30560005     0.                              *
+                  144-        *       0.              0.              0.              0.              *
+                  145-        *       0.              0.
+                  146-        CONM2  *503             20003           202             .0960000008     *
+                  147-        *       -.337247968     -1.30560005     0.                              *
+                  148-        *       0.              0.              0.              0.              *
+                  149-        *       0.              0.
+                  150-        CONM2  *504             20004           102             .0960000008     *
+                  151-        *       -.337247968     -1.30560005     0.                              *
+                  152-        *       0.              0.              0.              0.              *
+                  153-        *       0.              0.
+                  154-        CONM2   9001    9001            .0062   0.      0.      0.
+                  155-        CONM2   9002    9002            .0062   0.      0.      0.
+                  156-        CONM2   9003    9003            .0062   0.      0.      0.
+                  157-        CONM2   9004    9004            .0062   0.      0.      0.
+                  158-        CONM2   9005    9005            .0062   0.      0.      0.
+                  159-        CONM2   9006    9006            .0062   0.      0.      0.
+                  160-        CONM2   9110    1010            .049825 0.      0.      0.
+                  161-        CONM2   9112    1012            .024912 0.      0.      0.
+                  162-        CONM2  *9200            3001            0               .172000006      *
+                  163-        *       4.61999989      0.              0.                              *
+                  164-        *       0.              0.              0.              0.              *
+                  165-        *       0.              0.
+                  166-        CONM2   9210    2010            .049825 0.      0.      0.
+                  167-        CONM2   9212    2012            .024912 0.      0.      0.
+                  168-        CONM2   10088   10088           .0066   0.      0.      0.
+                  169-        CONM2  *170001          1010            102             .000389620283   *
+                  170-        *       -.337638438     0.              0.                              *
+                  171-        *       33.305027       0.              14.2295179      0.              *
+                  172-        *       0.              0.
+                  173-        CONM2  *170002          999012          102             .0812820122     *
+                  174-        *       -.4566333       0.              0.                              *
+                  175-        *       33.305027       0.              14.2295179      0.              *
+                  176-        *       0.              0.
+                  177-        CONM2  *170003          1020            102             .168437168      *
+                  178-        *       -.647636533     0.              0.                              *
+                  179-        *       33.305027       0.              14.2295179      0.              *
+                  180-        *       0.              0.
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE     9
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  181-        CONM2  *170004          999013          102             .17397514       *
+                  182-        *       -.650437236     0.              0.                              *
+                  183-        *       33.305027       0.              14.2295179      0.              *
+                  184-        *       0.              0.
+                  185-        CONM2  *170005          1030            102             .179563478      *
+                  186-        *       -.650045812     0.              0.                              *
+                  187-        *       33.305027       0.              14.2295179      0.              *
+                  188-        *       0.              0.
+                  189-        CONM2  *170006          999014          102             .184583351      *
+                  190-        *       -.649577141     0.              0.                              *
+                  191-        *       33.305027       0.              14.2295179      0.              *
+                  192-        *       0.              0.
+                  193-        CONM2  *170007          1040            102             .190061644      *
+                  194-        *       -.649479985     0.              0.                              *
+                  195-        *       33.305027       0.              14.2295179      0.              *
+                  196-        *       0.              0.
+                  197-        CONM2  *170008          999015          102             .192780033      *
+                  198-        *       -.647618771     0.              0.                              *
+                  199-        *       13.305027       0.              4.2295179       0.              *
+                  200-        *       0.              0.
+                  201-        CONM2  *170009          1050            102             .004021951      *
+                  202-        *       -.0991661549    0.              0.                              *
+                  203-        *       33.305027       0.              14.2295179      0.              *
+                  204-        *       0.              0.
+                  205-        CONM2  *170010          999016          102             .00257041096    *
+                  206-        *       -.0999913514    0.              0.                              *
+                  207-        *       33.305027       0.              14.2295179      0.              *
+                  208-        *       0.              0.
+                  209-        CONM2  *170011          1060            102             .00568708079    *
+                  210-        *       -.149956733     0.              0.                              *
+                  211-        *       33.305027       0.              14.2295179      0.              *
+                  212-        *       0.              0.
+                  213-        CONM2  *170012          999017          102             .0129264146     *
+                  214-        *       -.149901181     0.              0.                              *
+                  215-        *       33.305027       0.              14.2295179      0.              *
+                  216-        *       0.              0.
+                  217-        CONM2  *170013          1070            102             .17611587       *
+                  218-        *       -.203258365     0.              0.                              *
+                  219-        *       33.305027       0.              14.2295179      0.              *
+                  220-        *       0.              0.
+                  221-        CONM2  *170014          999018          102             .18035534       *
+                  222-        *       -.202970371     0.              0.                              *
+                  223-        *       33.305027       0.              14.2295179      0.              *
+                  224-        *       0.              0.
+                  225-        CONM2  *170015          1080            102             .179610029      *
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    10
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  226-        *       -.20290339      0.              0.                              *
+                  227-        *       33.305027       0.              14.2295179      0.              *
+                  228-        *       0.              0.
+                  229-        CONM2  *170016          1090            102             .0180584416     *
+                  230-        *       -.101933859     0.              0.                              *
+                  231-        *       33.305027       0.              14.2295179      0.              *
+                  232-        *       0.              0.
+                  233-        CONM2  *180001          2010            202             .000389620283   *
+                  234-        *       -.337638438     0.              0.                              *
+                  235-        *       33.305027       0.              14.2295179      0.              *
+                  236-        *       0.              0.
+                  237-        CONM2  *180002          999022          202             .0812820122     *
+                  238-        *       -.4566333       0.              0.                              *
+                  239-        *       33.305027       0.              14.2295179      0.              *
+                  240-        *       0.              0.
+                  241-        CONM2  *180003          2020            202             .168437168      *
+                  242-        *       -.647636533     0.              0.                              *
+                  243-        *       33.305027       0.              14.2295179      0.              *
+                  244-        *       0.              0.
+                  245-        CONM2  *180004          999023          202             .17397514       *
+                  246-        *       -.650437236     0.              0.                              *
+                  247-        *       33.305027       0.              14.2295179      0.              *
+                  248-        *       0.              0.
+                  249-        CONM2  *180005          2030            202             .179563478      *
+                  250-        *       -.650045812     0.              0.                              *
+                  251-        *       33.305027       0.              14.2295179      0.              *
+                  252-        *       0.              0.
+                  253-        CONM2  *180006          999024          202             .184583351      *
+                  254-        *       -.649577141     0.              0.                              *
+                  255-        *       33.305027       0.              14.2295179      0.              *
+                  256-        *       0.              0.
+                  257-        CONM2  *180007          2040            202             .190061644      *
+                  258-        *       -.649479985     0.              0.                              *
+                  259-        *       33.305027       0.              14.2295179      0.              *
+                  260-        *       0.              0.
+                  261-        CONM2  *180008          999025          202             .192780033      *
+                  262-        *       -.647618771     0.              0.                              *
+                  263-        *       13.305027       0.              4.2295179       0.              *
+                  264-        *       0.              0.
+                  265-        CONM2  *180009          2050            202             .004021951      *
+                  266-        *       -.0991661549    0.              0.                              *
+                  267-        *       33.305027       0.              14.2295179      0.              *
+                  268-        *       0.              0.
+                  269-        CONM2  *180010          999026          202             .00257041096    *
+                  270-        *       -.0999913514    0.              0.                              *
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    11
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  271-        *       33.305027       0.              14.2295179      0.              *
+                  272-        *       0.              0.
+                  273-        CONM2  *180011          2060            202             .00568708079    *
+                  274-        *       -.149956733     0.              0.                              *
+                  275-        *       33.305027       0.              14.2295179      0.              *
+                  276-        *       0.              0.
+                  277-        CONM2  *180012          999027          202             .0129264146     *
+                  278-        *       -.149901181     0.              0.                              *
+                  279-        *       33.305027       0.              14.2295179      0.              *
+                  280-        *       0.              0.
+                  281-        CONM2  *180013          2070            202             .17611587       *
+                  282-        *       -.203258365     0.              0.                              *
+                  283-        *       33.305027       0.              14.2295179      0.              *
+                  284-        *       0.              0.
+                  285-        CONM2  *180014          999028          202             .18035534       *
+                  286-        *       -.202970371     0.              0.                              *
+                  287-        *       33.305027       0.              14.2295179      0.              *
+                  288-        *       0.              0.
+                  289-        CONM2  *180015          2080            202             .179610029      *
+                  290-        *       -.20290339      0.              0.                              *
+                  291-        *       33.305027       0.              14.2295179      0.              *
+                  292-        *       0.              0.
+                  293-        CONM2  *180016          2090            202             .0180584416     *
+                  294-        *       -.101933859     0.              0.                              *
+                  295-        *       33.305027       0.              14.2295179      0.              *
+                  296-        *       0.              0.
+                  297-        CONM2  *270001          999011          0               .752388179      *
+                  298-        *       .00867679901    0.              0.                              *
+                  299-        *       1.0220685       0.              3.86106944      0.              *
+                  300-        *       0.              0.
+                  301-        CONM2  *280001          999021          0               .752388179      *
+                  302-        *       .00867679901    0.              0.                              *
+                  303-        *       1.0220685       0.              3.86106944      0.              *
+                  304-        *       0.              0.
+                  305-        CORD2R  101             13.64   -1.16   0.      13.64   -1.16   1.      +
+                  306-        +       17.34   -2.75   0.
+                  307-        CORD2R  102             9.753   -16.016 0.      9.753   -16.016 1.      +
+                  308-        +       12.34   -14.97  1.
+                  309-        CORD2R  201             13.64   1.16    0.      13.64   1.16    1.      +
+                  310-        +       17.34   2.75    0.
+                  311-        CORD2R  202             9.753   16.016  0.      9.753   16.016  1.      +
+                  312-        +       12.34   14.97   1.
+                  313-        EIGR    101     MGIV                            20                      +
+                  314-        +       MASS
+                  315-        GRID    1               3.48    -17.87  0.
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    12
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  316-        GRID    2               8.11    -16.    0.
+                  317-        GRID    3               7.22    -27.14  0.
+                  318-        GRID    4               11.86   -25.27  0.
+                  319-        GRID    5               10.97   -36.42  0.
+                  320-        GRID    6               15.61   -34.54  0.
+                  321-        GRID    7               14.72   -45.69  0.
+                  322-        GRID    8               19.35   -43.81  0.
+                  323-        GRID    9               18.46   -54.96  0.
+                  324-        GRID    10              23.1    -53.09  0.
+                  325-        GRID    11              3.48    17.87   0.
+                  326-        GRID    12              8.11    16.     0.
+                  327-        GRID    13              7.22    27.14   0.
+                  328-        GRID    14              11.86   25.27   0.
+                  329-        GRID    15              10.97   36.42   0.
+                  330-        GRID    16              15.61   34.54   0.
+                  331-        GRID    17              14.72   45.69   0.
+                  332-        GRID    18              19.35   43.81   0.
+                  333-        GRID    19              18.46   54.96   0.
+                  334-        GRID    20              23.1    53.09   0.
+                  335-        GRID    101             6.696   -16.571 0.
+                  336-        GRID    102             10.443  -25.841 0.
+                  337-        GRID    103             14.191  -35.115 0.
+                  338-        GRID    104             17.936  -44.384 0.
+                  339-        GRID    105             21.677  -53.663 0.
+                  340-        GRID    201             6.696   16.571  0.
+                  341-        GRID    202             10.443  25.841  0.
+                  342-        GRID    203             14.191  35.115  0.
+                  343-        GRID    204             17.936  44.384  0.
+                  344-        GRID    205             21.677  53.663  0.
+                  345-        GRID    1010            3.09142 -7.65   0.
+                  346-        GRID    1011            .8      -7.65   0.
+                  347-        GRID    1012            8.66    -7.65   0.
+                  348-        GRID    1013            -2.34   -7.65   0.
+                  349-        GRID    1020            5.912   -14.63  0.
+                  350-        GRID    1030            9.09646 -22.51  0.
+                  351-        GRID    1040            11.7031 -28.961 0.
+                  352-        GRID    1050            14.6731 -36.30550.
+                  353-        GRID    1060            17.4955 -43.29410.
+                  354-        GRID    1070            20.24981-50.101 0.
+                  355-        GRID    1080            23.287  -57.626 0.
+                  356-        GRID    1090            24.4    -60.25  0.
+                  357-        GRID    1091            21.9565 -60.25  0.
+                  358-        GRID    1092            30.6965 -60.25  0.
+                  359-        GRID    2010            3.09142 7.65    0.
+                  360-        GRID    2011            .8      7.65    0.
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    13
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  361-        GRID    2012            8.66    7.65    0.
+                  362-        GRID    2013            -2.34   7.65    0.
+                  363-        GRID    2020            5.9121  14.63   0.
+                  364-        GRID    2030            9.0965  22.51   0.
+                  365-        GRID    2040            11.7032 28.961  0.
+                  366-        GRID    2050            14.6731 36.3055 0.
+                  367-        GRID    2060            17.4955 43.2941 0.
+                  368-        GRID    2070            20.2498 50.101  0.
+                  369-        GRID    2080            23.287  57.6259 0.
+                  370-        GRID    2090            24.4    60.250010.
+                  371-        GRID    2091            21.9565 60.250010.
+                  372-        GRID    2092            30.6965 60.250010.
+                  373-        GRID    3000            0.      0.      0.
+                  374-        GRID    3001            -15.55  0.      0.
+                  375-        GRID    3002            -6.25   0.      0.
+                  376-        GRID    3004            3.73    0.      0.
+                  377-        GRID    3005            8.66    0.      0.
+                  378-        GRID    3006            16.771  0.      0.
+                  379-        GRID    3007            18.     0.      0.
+                  380-        GRID    3011            26.8165 -60.25  5.5
+                  381-        GRID    3012            30.6965 -60.25  5.5
+                  382-        GRID    3013            26.8165 -60.25  -5.5
+                  383-        GRID    3014            30.6965 -60.25  -5.5
+                  384-        GRID    4011            26.8165 60.25   5.5
+                  385-        GRID    4012            30.6965 60.25   5.5
+                  386-        GRID    4013            26.8165 60.25   -5.5
+                  387-        GRID    4014            30.6965 60.25   -5.5
+                  388-        GRID    5011    101     1.63    0.      0.
+                  389-        GRID    5012    101     1.63    -12.45  0.
+                  390-        GRID    5021    201     1.63    0.      0.
+                  391-        GRID    5022    201     1.63    12.45   0.
+                  392-        GRID    6011    102     1.03    0.      0.
+                  393-        GRID    6012    102     1.03    -14.75  0.
+                  394-        GRID    6021    202     1.03    0.      0.
+                  395-        GRID    6022    202     1.03    14.75   0.
+                  396-        GRID    7011    102     1.03    -14.88  0.
+                  397-        GRID    7012    102     1.03    -29.63  0.
+                  398-        GRID    7021    202     1.03    14.88   0.
+                  399-        GRID    7022    202     1.03    29.63   0.
+                  400-        GRID    8011    102     1.03    -29.76  0.
+                  401-        GRID    8012    102     1.03    -44.51  0.
+                  402-        GRID    8021    202     1.03    29.76   0.
+                  403-        GRID    8022    202     1.03    44.51   0.
+                  404-        GRID    9001            -12.36  0.      0.
+                  405-        GRID    9002            7.36    0.      0.
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    14
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  406-        GRID    9003            21.04   -56.24  0.
+                  407-        GRID    9004            23.62   -55.2   0.
+                  408-        GRID    9005            21.04   56.24   0.
+                  409-        GRID    9006            23.62   55.2    0.
+                  410-        GRID    10001   101     1.63    -4.7648 0.
+                  411-        GRID    10002   102     1.03    -5.7744 0.
+                  412-        GRID    10003   102     1.03    -20.65440.
+                  413-        GRID    10004   102     1.03    -35.53440.
+                  414-        GRID    10011   101     .01     -4.7648 0.
+                  415-        GRID    10012   102     .01     -5.7744 0.
+                  416-        GRID    10013   102     .01     -20.65440.
+                  417-        GRID    10014   102     .01     -35.53440.
+                  418-        GRID    10088           -11.222 2.355   0.
+                  419-        GRID    10101   101     -.01    -4.7648 0.
+                  420-        GRID    10102   102     -.01    -5.7744 0.
+                  421-        GRID    10103   102     -.01    -20.65440.
+                  422-        GRID    10104   102     -.01    -35.53440.
+                  423-        GRID    18888           8.1603  0.      0.
+                  424-        GRID    20001   201     1.63    4.7648  0.
+                  425-        GRID    20002   202     1.03    5.7744  0.
+                  426-        GRID    20003   202     1.03    20.6544 0.
+                  427-        GRID    20004   202     1.03    35.5344 0.
+                  428-        GRID    20021   201     .01     4.7648  0.
+                  429-        GRID    20022   202     .01     5.7744  0.
+                  430-        GRID    20023   202     .01     20.6544 0.
+                  431-        GRID    20024   202     .01     35.5344 0.
+                  432-        GRID    20201   201     -.01    4.7648  0.
+                  433-        GRID    20202   202     -.01    5.7744  0.
+                  434-        GRID    20203   202     -.01    20.6544 0.
+                  435-        GRID    20204   202     -.01    35.5344 0.
+                  436-        GRID    28888           2.97    0.      0.
+                  437-        GRID    100001          10.17   -4.855  0.
+                  438-        GRID    101001          8.66    -4.206140.
+                  439-        GRID    200001          10.17   4.855   0.
+                  440-        GRID    202002          8.66    4.20614 0.
+                  441-        GRID    888011          .57     -14.698 0.
+                  442-        GRID    888012          3.607   -22.211 0.
+                  443-        GRID    888013          6.426   -29.186 0.
+                  444-        GRID    888014          9.246   -36.162 0.
+                  445-        GRID    888015          12.065  -43.138 0.
+                  446-        GRID    888016          14.885  -50.114 0.
+                  447-        GRID    888017          17.921  -57.626 0.
+                  448-        GRID    888021          .57     14.698  0.
+                  449-        GRID    888022          3.607   22.211  0.
+                  450-        GRID    888023          6.426   29.186  0.
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    15
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  451-        GRID    888024          9.246   36.162  0.
+                  452-        GRID    888025          12.065  43.138  0.
+                  453-        GRID    888026          14.885  50.114  0.
+                  454-        GRID    888027          17.921  57.626  0.
+                  455-        GRID    999011          1.5457  -3.825  0.
+                  456-        GRID    999012          4.5018  -11.14  0.
+                  457-        GRID    999013          7.5043  -18.57  0.
+                  458-        GRID    999014          10.4    -25.735 0.
+                  459-        GRID    999015          13.3003 -32.93550.
+                  460-        GRID    999016          16.0843 -39.8   0.
+                  461-        GRID    999017          18.8726 -46.69750.
+                  462-        GRID    999018          22.4915 -55.69450.
+                  463-        GRID    999021          1.5457  3.825   0.
+                  464-        GRID    999022          4.5018  11.14   0.
+                  465-        GRID    999023          7.5043  18.57   0.
+                  466-        GRID    999024          10.4    25.735  0.
+                  467-        GRID    999025          13.3003 32.9355 0.
+                  468-        GRID    999026          16.0843 39.8    0.
+                  469-        GRID    999027          18.8726 46.6975 0.
+                  470-        GRID    999028          22.4915 55.6945 0.
+                  471-        MAT1    901     2.01E+09        .25     .02493
+                  472-        MAT1    903     6660000.1255000.        .007392
+                  473-        MAT1    905     6660000.1252000.        .01265
+                  474-        MAT1    906     6660000.1252000.        .01265
+                  475-        MAT1    913     6660000.1252000.        .009392
+                  476-        MAT1    923     6660000.1252000.        .007392
+                  477-        MAT1    933     6660000.1238000.        .007392
+                  478-        PARAM   GRDPNT  18888
+                  479-        PARAM   POST    0
+                  480-        PARAM   PRTMAXIMYES
+                  481-        PARAM   VREF    39.37
+                  482-        PARAM   WTMASS  .002591
+                  483-        PBARL   301     905             BAR                                     +
+                  484-        +       0.5     1.48
+                  485-        PBARL   3007    901             BAR                                     +
+                  486-        +       0.50    1.680
+                  487-        PBEAM   201     905     0.686   3.9322E15.179E-2        0.3165E1
+                  488-        PBEAM   202     905     0.482   2.4322E15.179E-2        0.1105E1
+                  489-        PBEAM*  1001            913             1.06099999E+00  2.08092070E+00  +
+                  490-        *       1.52900000E+01  0.00000000E+00  6.56213105E-01  0.00000000E+00  +
+                  491-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  492-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  493-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  494-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  495-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    16
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  496-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  497-        PBEAM*  1002            923             1.70539999E+00  2.86191367E-02  +
+                  498-        *       1.52900000E+01  0.00000000E+00  1.55078515E-01  0.00000000E+00  +
+                  499-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  500-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  501-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  502-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  503-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  504-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  505-        PBEAM*  1003            903             1.06099999E+00  2.02521775E-02  +
+                  506-        *       1.52900000E+01  0.00000000E+00  1.45814642E-01  0.00000000E+00  +
+                  507-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  508-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  509-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  510-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  511-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  512-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  513-        PBEAM*  1004            903             1.06099999E+00  2.88711656E-02  +
+                  514-        *       1.52900000E+01  0.00000000E+00  1.04152314E-01  0.00000000E+00  +
+                  515-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  516-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  517-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  518-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  519-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  520-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  521-        PBEAM*  1005            903             1.06099999E+00  6.29320964E-02  +
+                  522-        *       1.52900000E+01  0.00000000E+00  4.39298116E-02  0.00000000E+00  +
+                  523-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  524-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  525-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  526-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  527-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  528-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  529-        PBEAM*  1006            903             1.06099999E+00  5.08018285E-02  +
+                  530-        *       1.52900000E+01  0.00000000E+00  2.07231920E-02  0.00000000E+00  +
+                  531-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  532-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  533-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  534-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  535-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  536-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  537-        PBEAM*  1007            903             1.06099999E+00  5.08051850E-02  +
+                  538-        *       1.52900000E+01  0.00000000E+00  1.78319514E-02  0.00000000E+00  +
+                  539-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  540-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    17
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  541-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  542-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  543-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  544-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  545-        PBEAM*  1008            903             1.06099999E+00  8.21391568E-02  +
+                  546-        *       1.52900000E+01  0.00000000E+00  3.24861184E-02  0.00000000E+00  +
+                  547-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  548-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  549-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  550-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  551-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  552-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  553-        PBEAM*  1009            933             1.06099999E+00  7.41854543E-03  +
+                  554-        *       1.52900000E+01  0.00000000E+00  5.53186238E-02  0.00000000E+00  +
+                  555-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  556-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  557-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  558-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  559-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  560-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  561-        PBEAM*  2001            913             1.06099999E+00  2.08092070E+00  +
+                  562-        *       1.52900000E+01  0.00000000E+00  6.56213105E-01  0.00000000E+00  +
+                  563-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  564-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  565-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  566-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  567-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  568-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  569-        PBEAM*  2002            923             1.70539999E+00  2.86191367E-02  +
+                  570-        *       1.52900000E+01  0.00000000E+00  1.55078515E-01  0.00000000E+00  +
+                  571-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  572-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  573-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  574-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  575-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  576-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  577-        PBEAM*  2003            903             1.06099999E+00  2.02521775E-02  +
+                  578-        *       1.52900000E+01  0.00000000E+00  1.45814642E-01  0.00000000E+00  +
+                  579-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  580-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  581-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  582-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  583-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  584-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  585-        PBEAM*  2004            903             1.06099999E+00  2.88711656E-02  +
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    18
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  586-        *       1.52900000E+01  0.00000000E+00  1.04152314E-01  0.00000000E+00  +
+                  587-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  588-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  589-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  590-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  591-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  592-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  593-        PBEAM*  2005            903             1.06099999E+00  6.29320964E-02  +
+                  594-        *       1.52900000E+01  0.00000000E+00  4.39298116E-02  0.00000000E+00  +
+                  595-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  596-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  597-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  598-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  599-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  600-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  601-        PBEAM*  2006            903             1.06099999E+00  5.08018285E-02  +
+                  602-        *       1.52900000E+01  0.00000000E+00  2.07231920E-02  0.00000000E+00  +
+                  603-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  604-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  605-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  606-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  607-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  608-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  609-        PBEAM*  2007            903             1.06099999E+00  5.08051850E-02  +
+                  610-        *       1.52900000E+01  0.00000000E+00  1.78319514E-02  0.00000000E+00  +
+                  611-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  612-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  613-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  614-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  615-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  616-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  617-        PBEAM*  2008            903             1.06099999E+00  8.21391568E-02  +
+                  618-        *       1.52900000E+01  0.00000000E+00  3.24861184E-02  0.00000000E+00  +
+                  619-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  620-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  621-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  622-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  623-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  624-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  625-        PBEAM*  2009            933             1.06099999E+00  7.41854543E-03  +
+                  626-        *       1.52900000E+01  0.00000000E+00  5.53186238E-02  0.00000000E+00  +
+                  627-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  628-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  629-        *       1.00000000E+00  1.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  630-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    19
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  631-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00  +
+                  632-        *       0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00
+                  633-        PBUSH   10000   K       1000000.1000000.1000000.1000000.1000000.1000000.
+                  634-        PBUSH   20000   K       1000000.1000000.1000000.1000000.1000000.1000000.
+                  635-        PBUSH   30000   K       .1      .1      .1      .1      .1      .1
+                  636-        RBE2    1301    1090    123456  3011
+                  637-        RBE2    1302    1090    123456  3012
+                  638-        RBE2    1303    1090    123456  3013
+                  639-        RBE2    1304    1090    123456  3014
+                  640-        RBE2    1401    2090    123456  4011
+                  641-        RBE2    1402    2090    123456  4012
+                  642-        RBE2    1403    2090    123456  4013
+                  643-        RBE2    1404    2090    123456  4014
+                  644-        RBE2    1501    10001   123456  5011
+                  645-        RBE2    1502    10001   123456  5012
+                  646-        RBE2    1503    20001   123456  5021
+                  647-        RBE2    1504    20001   123456  5022
+                  648-        RBE2    1601    10002   123456  6011
+                  649-        RBE2    1602    10002   123456  6012
+                  650-        RBE2    1603    20002   123456  6021
+                  651-        RBE2    1604    20002   123456  6022
+                  652-        RBE2    1701    10003   123456  7011
+                  653-        RBE2    1702    10003   123456  7012
+                  654-        RBE2    1703    20003   123456  7021
+                  655-        RBE2    1704    20003   123456  7022
+                  656-        RBE2    1801    10004   123456  8011
+                  657-        RBE2    1802    10004   123456  8012
+                  658-        RBE2    1803    20004   123456  8021
+                  659-        RBE2    1804    20004   123456  8022
+                  660-        RBE2    70001   1030    123456  10102
+                  661-        RBE2    70002   1050    123456  10103
+                  662-        RBE2    70003   1070    123456  10104
+                  663-        RBE2    70004   100001  123456  10101
+                  664-        RBE2    70101   10012   123456  10002
+                  665-        RBE2    70102   10013   123456  10003
+                  666-        RBE2    70103   10014   123456  10004
+                  667-        RBE2    70104   10011   123456  10001
+                  668-        RBE2    80001   2030    123456  20202
+                  669-        RBE2    80002   2050    123456  20203
+                  670-        RBE2    80003   2070    123456  20204
+                  671-        RBE2    80004   200001  123456  20201
+                  672-        RBE2    80201   20022   123456  20002
+                  673-        RBE2    80202   20023   123456  20003
+                  674-        RBE2    80203   20024   123456  20004
+                  675-        RBE2    80204   20021   123456  20001
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    20
+                                                                                                                                    
+0                                                                                                                                   
+                                                  S O R T E D   B U L K   D A T A   E C H O                                         
+                 ENTRY                                                                                                              
+                 COUNT        .   1  ..   2  ..   3  ..   4  ..   5  ..   6  ..   7  ..   8  ..   9  ..  10  .                      
+                  676-        RBE2    500001  1090    123456  1091    1092
+                  677-        RBE2    500002  2090    123456  2091    2092
+                  678-        RBE2    600001  1010    123456  1013
+                  679-        RBE2    600002  2010    123456  2013
+                  680-        RBE2    700001  999018  123456  9003
+                  681-        RBE2    700002  999018  123456  9004
+                  682-        RBE2    700003  999028  123456  9005
+                  683-        RBE2    700004  999028  123456  9006
+                  684-        RBE2    888888  3002    123456  10088
+                  685-        RBE2    900001  101001  123456  100001
+                  686-        RBE2    900002  202002  123456  200001
+                  687-        RBE2    1000001 101     123456  1
+                  688-        RBE2    1000002 101     123456  2
+                  689-        RBE2    1000003 102     123456  3
+                  690-        RBE2    1000004 102     123456  4
+                  691-        RBE2    1000005 103     123456  5
+                  692-        RBE2    1000006 103     123456  6
+                  693-        RBE2    1000007 104     123456  7
+                  694-        RBE2    1000008 104     123456  8
+                  695-        RBE2    1000009 105     123456  9
+                  696-        RBE2    1000010 105     123456  10
+                  697-        RBE2    2000001 201     123456  11
+                  698-        RBE2    2000002 201     123456  12
+                  699-        RBE2    2000003 202     123456  13
+                  700-        RBE2    2000004 202     123456  14
+                  701-        RBE2    2000005 203     123456  15
+                  702-        RBE2    2000006 203     123456  16
+                  703-        RBE2    2000007 204     123456  17
+                  704-        RBE2    2000008 204     123456  18
+                  705-        RBE2    2000009 205     123456  19
+                  706-        RBE2    2000010 205     123456  20
+                  707-        SUPORT  18888   123456
+                              ENDDATA
+                        TOTAL COUNT= 708
+                              INPUT BULK DATA ENTRY COUNT = 713
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    21
+                                                                                                                                    
+0                                                                                                                                   
+                                        M O D E L   S U M M A R Y          BULK = 0
+                                   ENTRY NAME        NUMBER OF ENTRIES
+                                   ----------        -----------------
+                                         CBAR                       14
+                                        CBEAM                       50
+                                        CBUSH                        9
+                                        CONM2                       69
+                                       CORD2R                        4
+                                         EIGR                        1
+                                         GRID                      156
+                                         MAT1                        7
+                                        PARAM                        5
+                                        PBARL                        2
+                                        PBEAM                       20
+                                        PBUSH                        3
+                                         RBE2                       71
+                                       SUPORT                        1
+
+ ^^^     
+ ^^^ >>> IFP OPERATIONS COMPLETE <<< 
+ ^^^     
+ *** USER INFORMATION MESSAGE 4379 (IFP9A)
+     THE USER SUPPLIED PBARL/PBRSECT BULK DATA ENTRIES ARE REPLACED BY THE FOLLOWING PBAR ENTRIES.
+     CONVERSION METHOD FOR PBARL/PBEAML - FINITE ELEMENT METHOD.
+  PBAR             301         905  7.4000E-01  1.3507E-01  1.5417E-02  4.8584E-02  0.0000E+00
+            7.4000E-01  2.5000E-01 -7.4000E-01  2.5000E-01 -7.4000E-01 -2.5000E-01  7.4000E-01 -2.5000E-01
+            8.3334E-01  8.3395E-01  0.0000E+00
+  PBAR            3007         901  8.4000E-01  1.9757E-01  1.7500E-02  5.6937E-02  0.0000E+00
+            8.4000E-01  2.5000E-01 -8.4000E-01  2.5000E-01 -8.4000E-01 -2.5000E-01  8.4000E-01 -2.5000E-01
+            8.3334E-01  8.3409E-01  0.0000E+00
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    22
+                                                                                                                                    
+0                                                                                                                                   
+                           O U T P U T   F R O M   G R I D   P O I N T   W E I G H T   G E N E R A T O R
+0                                                     REFERENCE POINT =    18888
+                                                                M O
+                      *  1.381697E+01 -1.040834E-17  0.000000E+00  0.000000E+00  0.000000E+00  8.741678E-03 *
+                      * -1.040834E-17  1.381697E+01  0.000000E+00  0.000000E+00  0.000000E+00  1.665982E-03 *
+                      *  0.000000E+00  0.000000E+00  1.381697E+01 -8.741678E-03 -1.665982E-03  0.000000E+00 *
+                      *  0.000000E+00  0.000000E+00 -8.741678E-03  9.717641E+03 -3.772563E+00  0.000000E+00 *
+                      *  0.000000E+00  0.000000E+00 -1.665982E-03 -3.772563E+00  1.629746E+03  0.000000E+00 *
+                      *  8.741678E-03  1.665982E-03  0.000000E+00  0.000000E+00  0.000000E+00  9.841488E+03 *
+                                                                 S
+                                           *  1.000000E+00  0.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  1.000000E+00  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+                               DIRECTION
+                          MASS AXIS SYSTEM (S)     MASS              X-C.G.        Y-C.G.        Z-C.G.
+                                  X            1.381697E+01      0.000000E+00 -6.326771E-04  0.000000E+00
+                                  Y            1.381697E+01      1.205751E-04  0.000000E+00  0.000000E+00
+                                  Z            1.381697E+01      1.205751E-04 -6.326771E-04  0.000000E+00
+                                                                I(S)
+                                           *  9.717641E+03  3.772564E+00  0.000000E+00 *
+                                           *  3.772564E+00  1.629746E+03  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  9.841488E+03 *
+                                                                I(Q)
+                                           *  9.717643E+03                             *
+                                           *                1.629744E+03               *
+                                           *                              9.841488E+03 *
+                                                                 Q
+                                           *  9.999999E-01  4.664456E-04  0.000000E+00 *
+                                           * -4.664456E-04  9.999999E-01  0.000000E+00 *
+                                           *  0.000000E+00  0.000000E+00  1.000000E+00 *
+
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    23
+                                                                                                                                    
+0                                                                                                                                   
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    24
+                                                                                                                                    
+0                                                                                                                                   
+0 RESULTANTS ABOUT    18888 IN SUPERELEMENT BASIC SYSTEM COORDINATES.
+
+0                                                  OLOAD    RESULTANT       
+  SUBCASE/    LOAD
+  DAREA ID    TYPE       T1            T2            T3            R1            R2            R3
+0        1     FX    0.000000E+00     ----          ----          ----       0.000000E+00  0.000000E+00                             
+               FY       ----       0.000000E+00     ----       0.000000E+00     ----       0.000000E+00                             
+               FZ       ----          ----       0.000000E+00  0.000000E+00  0.000000E+00     ----                                  
+               MX       ----          ----          ----       0.000000E+00     ----          ----                                  
+               MY       ----          ----          ----          ----       0.000000E+00     ----                                  
+               MZ       ----          ----          ----          ----          ----       0.000000E+00                             
+             TOTALS  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00  0.000000E+00
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    25
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+0                                         G R I D   P O I N T   S I N G U L A R I T Y   T A B L E
+0                             POINT    TYPE   FAILED      STIFFNESS       OLD USET           NEW USET
+                               ID            DIRECTION      RATIO     EXCLUSIVE  UNION   EXCLUSIVE  UNION
+                           888011        G      1         0.00E+00          B        L         SB       S    *
+                           888011        G      2         0.00E+00          B        L         SB       S    *
+                           888011        G      3         0.00E+00          B        L         SB       S    *
+                           888011        G      4         0.00E+00          B        L         SB       S    *
+                           888011        G      5         0.00E+00          B        L         SB       S    *
+                           888011        G      6         0.00E+00          B        L         SB       S    *
+                           888012        G      1         0.00E+00          B        L         SB       S    *
+                           888012        G      2         0.00E+00          B        L         SB       S    *
+                           888012        G      3         0.00E+00          B        L         SB       S    *
+                           888012        G      4         0.00E+00          B        L         SB       S    *
+                           888012        G      5         0.00E+00          B        L         SB       S    *
+                           888012        G      6         0.00E+00          B        L         SB       S    *
+                           888013        G      1         0.00E+00          B        L         SB       S    *
+                           888013        G      2         0.00E+00          B        L         SB       S    *
+                           888013        G      3         0.00E+00          B        L         SB       S    *
+                           888013        G      4         0.00E+00          B        L         SB       S    *
+                           888013        G      5         0.00E+00          B        L         SB       S    *
+                           888013        G      6         0.00E+00          B        L         SB       S    *
+                           888014        G      1         0.00E+00          B        L         SB       S    *
+                           888014        G      2         0.00E+00          B        L         SB       S    *
+                           888014        G      3         0.00E+00          B        L         SB       S    *
+                           888014        G      4         0.00E+00          B        L         SB       S    *
+                           888014        G      5         0.00E+00          B        L         SB       S    *
+                           888014        G      6         0.00E+00          B        L         SB       S    *
+                           888015        G      1         0.00E+00          B        L         SB       S    *
+                           888015        G      2         0.00E+00          B        L         SB       S    *
+                           888015        G      3         0.00E+00          B        L         SB       S    *
+                           888015        G      4         0.00E+00          B        L         SB       S    *
+                           888015        G      5         0.00E+00          B        L         SB       S    *
+                           888015        G      6         0.00E+00          B        L         SB       S    *
+                           888016        G      1         0.00E+00          B        L         SB       S    *
+                           888016        G      2         0.00E+00          B        L         SB       S    *
+                           888016        G      3         0.00E+00          B        L         SB       S    *
+                           888016        G      4         0.00E+00          B        L         SB       S    *
+                           888016        G      5         0.00E+00          B        L         SB       S    *
+                           888016        G      6         0.00E+00          B        L         SB       S    *
+                           888017        G      1         0.00E+00          B        L         SB       S    *
+                           888017        G      2         0.00E+00          B        L         SB       S    *
+                           888017        G      3         0.00E+00          B        L         SB       S    *
+                           888017        G      4         0.00E+00          B        L         SB       S    *
+                           888017        G      5         0.00E+00          B        L         SB       S    *
+                           888017        G      6         0.00E+00          B        L         SB       S    *
+                           888021        G      1         0.00E+00          B        L         SB       S    *
+                           888021        G      2         0.00E+00          B        L         SB       S    *
+                           888021        G      3         0.00E+00          B        L         SB       S    *
+                           888021        G      4         0.00E+00          B        L         SB       S    *
+                           888021        G      5         0.00E+00          B        L         SB       S    *
+                           888021        G      6         0.00E+00          B        L         SB       S    *
+                           888022        G      1         0.00E+00          B        L         SB       S    *
+                           888022        G      2         0.00E+00          B        L         SB       S    *
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    26
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+0                                         G R I D   P O I N T   S I N G U L A R I T Y   T A B L E
+0                             POINT    TYPE   FAILED      STIFFNESS       OLD USET           NEW USET
+                               ID            DIRECTION      RATIO     EXCLUSIVE  UNION   EXCLUSIVE  UNION
+                           888022        G      3         0.00E+00          B        L         SB       S    *
+                           888022        G      4         0.00E+00          B        L         SB       S    *
+                           888022        G      5         0.00E+00          B        L         SB       S    *
+                           888022        G      6         0.00E+00          B        L         SB       S    *
+                           888023        G      1         0.00E+00          B        L         SB       S    *
+                           888023        G      2         0.00E+00          B        L         SB       S    *
+                           888023        G      3         0.00E+00          B        L         SB       S    *
+                           888023        G      4         0.00E+00          B        L         SB       S    *
+                           888023        G      5         0.00E+00          B        L         SB       S    *
+                           888023        G      6         0.00E+00          B        L         SB       S    *
+                           888024        G      1         0.00E+00          B        L         SB       S    *
+                           888024        G      2         0.00E+00          B        L         SB       S    *
+                           888024        G      3         0.00E+00          B        L         SB       S    *
+                           888024        G      4         0.00E+00          B        L         SB       S    *
+                           888024        G      5         0.00E+00          B        L         SB       S    *
+                           888024        G      6         0.00E+00          B        L         SB       S    *
+                           888025        G      1         0.00E+00          B        L         SB       S    *
+                           888025        G      2         0.00E+00          B        L         SB       S    *
+                           888025        G      3         0.00E+00          B        L         SB       S    *
+                           888025        G      4         0.00E+00          B        L         SB       S    *
+                           888025        G      5         0.00E+00          B        L         SB       S    *
+                           888025        G      6         0.00E+00          B        L         SB       S    *
+                           888026        G      1         0.00E+00          B        L         SB       S    *
+                           888026        G      2         0.00E+00          B        L         SB       S    *
+                           888026        G      3         0.00E+00          B        L         SB       S    *
+                           888026        G      4         0.00E+00          B        L         SB       S    *
+                           888026        G      5         0.00E+00          B        L         SB       S    *
+                           888026        G      6         0.00E+00          B        L         SB       S    *
+                           888027        G      1         0.00E+00          B        L         SB       S    *
+                           888027        G      2         0.00E+00          B        L         SB       S    *
+                           888027        G      3         0.00E+00          B        L         SB       S    *
+                           888027        G      4         0.00E+00          B        L         SB       S    *
+                           888027        G      5         0.00E+00          B        L         SB       S    *
+                           888027        G      6         0.00E+00          B        L         SB       S    *
+  
+ *** SYSTEM INFORMATION MESSAGE 4159 (DFMSA)
+     THE DECOMPOSITION OF KLL      YIELDS A MAXIMUM MATRIX-TO-FACTOR-DIAGONAL RATIO OF    1.570385E+04
+ *** USER INFORMATION MESSAGE 3035 (SOLVER)
+                                  FOR DATA BLOCK   KLR     
+    SUPPORT PT.NO.             EPSILON             STRAIN   ENERGY     EPSILONS LARGER THAN 0.001 ARE FLAGGED WITH ASTERISKS
+                1          5.7448518E-11          5.0000668E-02                 
+                2          5.7448518E-11          4.9999982E-02                 
+                3          5.7448518E-11          4.9999818E-02                 
+                4          5.7448518E-11          4.9999800E-02                 
+                5          5.7448518E-11          4.9999416E-02                 
+                6          5.7448518E-11          5.0002396E-02                 
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    27
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+0                                                                                                                                   
+                                                                                                                                    
+                                                                                                                                    
+ *** USER INFORMATION MESSAGE 4415 (PRTPRN)
+     THE FOLLOWING A-SET DEGREES OF FREEDOM HAVE EITHER NULL MASSES OR NULL MASSES AND STIFFNESS.
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    28
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+0                VAXW                                                                                                               
+     POINT           VALUE     POINT           VALUE     POINT           VALUE     POINT           VALUE     POINT           VALUE  
+                                                                                                                                    
+
+ COLUMN           1
+        101 R3  1.00000E+00       102 R3  1.00000E+00       103 R3  1.00000E+00       104 R3  1.00000E+00       105 R3  1.00000E+00
+        201 R3  1.00000E+00       202 R3  1.00000E+00       203 R3  1.00000E+00       204 R3  1.00000E+00       205 R3  1.00000E+00
+       1011 R3  1.00000E+00      1012 R1  1.00000E+00      1012 R3  1.00000E+00      2011 R3  1.00000E+00      2012 R1  1.00000E+00
+       2012 R3  1.00000E+00      3000 R3  1.00000E+00      3001 R1  1.00000E+00      3005 R1  1.00000E+00      3005 R3  1.00000E+00
+       3007 R1  1.00000E+00      3007 R2  1.00000E+00      3007 R3  1.00000E+00      9001 R1  1.00000E+00      9001 R2  1.00000E+00
+       9001 R3  1.00000E+00      9002 R1  1.00000E+00      9002 R2  1.00000E+00      9002 R3  1.00000E+00     18888 R1  1.00000E+00
+      18888 R2  1.00000E+00     18888 R3  1.00000E+00     28888 R1  1.00000E+00     28888 R2  1.00000E+00     28888 R3  1.00000E+00
+ *** USER INFORMATION MESSAGE 5458 (REIG)
+     MODIFIED GIVENS METHOD IS FORCED BY USER  .
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    29
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+        1         2        0.0                 0.0                 0.0                 1.000000E+00        0.0
+        2       189        0.0                 0.0                 0.0                 1.000000E+00        0.0
+        3       188        0.0                 0.0                 0.0                 1.000000E+00        0.0
+        4       187        0.0                 0.0                 0.0                 1.000000E+00        0.0
+        5         3        0.0                 0.0                 0.0                 1.000000E+00        0.0
+        6         1        0.0                 0.0                 0.0                 1.000000E+00        0.0
+        7       190        2.483655E+03        4.983628E+01        7.931690E+00        1.000000E+00        2.483655E+03
+        8       191        4.644894E+03        6.815346E+01        1.084696E+01        1.000000E+00        4.644894E+03
+        9       192        6.939616E+03        8.330436E+01        1.325830E+01        1.000000E+00        6.939616E+03
+       10       193        9.417070E+03        9.704159E+01        1.544465E+01        1.000000E+00        9.417070E+03
+       11       194        3.913441E+04        1.978242E+02        3.148469E+01        1.000000E+00        3.913441E+04
+       12       195        3.950574E+04        1.987605E+02        3.163371E+01        1.000000E+00        3.950574E+04
+       13       196        4.609986E+04        2.147088E+02        3.417196E+01        1.000000E+00        4.609986E+04
+       14       197        7.256723E+04        2.693831E+02        4.287364E+01        1.000000E+00        7.256723E+04
+       15       198        9.682373E+04        3.111651E+02        4.952346E+01        1.000000E+00        9.682373E+04
+       16       199        1.038334E+05        3.222319E+02        5.128479E+01        1.000000E+00        1.038334E+05
+       17       200        1.289819E+05        3.591405E+02        5.715899E+01        1.000000E+00        1.289819E+05
+       18       201        1.750008E+05        4.183310E+02        6.657944E+01        1.000000E+00        1.750008E+05
+       19       202        1.840612E+05        4.290235E+02        6.828121E+01        1.000000E+00        1.840612E+05
+       20       203        1.883798E+05        4.340274E+02        6.907760E+01        1.000000E+00        1.883798E+05
+       21       204        2.445942E+05        4.945647E+02        7.871242E+01        0.0                 0.0
+       22       205        2.887686E+05        5.373719E+02        8.552540E+01        0.0                 0.0
+       23       206        3.076045E+05        5.546211E+02        8.827068E+01        0.0                 0.0
+       24       207        3.144374E+05        5.607472E+02        8.924568E+01        0.0                 0.0
+       25       208        3.962355E+05        6.294724E+02        1.001836E+02        0.0                 0.0
+       26       209        4.402734E+05        6.635310E+02        1.056042E+02        0.0                 0.0
+       27       210        4.530103E+05        6.730604E+02        1.071209E+02        0.0                 0.0
+       28       211        4.662368E+05        6.828153E+02        1.086734E+02        0.0                 0.0
+       29       213        5.980311E+05        7.733247E+02        1.230784E+02        0.0                 0.0
+       30       212        6.015621E+05        7.756043E+02        1.234413E+02        0.0                 0.0
+       31         4        6.054259E+05        7.780912E+02        1.238371E+02        0.0                 0.0
+       32       215        6.680630E+05        8.173512E+02        1.300855E+02        0.0                 0.0
+       33       216        6.686657E+05        8.177198E+02        1.301441E+02        0.0                 0.0
+       34       214        6.805326E+05        8.249440E+02        1.312939E+02        0.0                 0.0
+       35       217        7.208853E+05        8.490497E+02        1.351304E+02        0.0                 0.0
+       36       218        7.248069E+05        8.513560E+02        1.354975E+02        0.0                 0.0
+       37       219        7.271408E+05        8.527255E+02        1.357155E+02        0.0                 0.0
+       38       220        9.384724E+05        9.687479E+02        1.541810E+02        0.0                 0.0
+       39       221        9.725271E+05        9.861678E+02        1.569535E+02        0.0                 0.0
+       40       222        1.307438E+06        1.143432E+03        1.819829E+02        0.0                 0.0
+       41       223        1.310775E+06        1.144891E+03        1.822150E+02        0.0                 0.0
+       42       224        1.408018E+06        1.186599E+03        1.888532E+02        0.0                 0.0
+       43       225        1.414135E+06        1.189174E+03        1.892629E+02        0.0                 0.0
+       44       226        1.669579E+06        1.292122E+03        2.056476E+02        0.0                 0.0
+       45       227        1.758769E+06        1.326186E+03        2.110690E+02        0.0                 0.0
+       46       230        1.763244E+06        1.327872E+03        2.113374E+02        0.0                 0.0
+       47       231        1.763517E+06        1.327975E+03        2.113537E+02        0.0                 0.0
+       48       228        1.864973E+06        1.365640E+03        2.173484E+02        0.0                 0.0
+       49       229        1.866699E+06        1.366272E+03        2.174489E+02        0.0                 0.0
+       50       232        2.247563E+06        1.499187E+03        2.386031E+02        0.0                 0.0
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    30
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+       51       233        2.248087E+06        1.499362E+03        2.386309E+02        0.0                 0.0
+       52       234        2.370380E+06        1.539604E+03        2.450355E+02        0.0                 0.0
+       53       235        2.377529E+06        1.541924E+03        2.454048E+02        0.0                 0.0
+       54       236        2.839472E+06        1.685073E+03        2.681877E+02        0.0                 0.0
+       55       237        2.844072E+06        1.686438E+03        2.684048E+02        0.0                 0.0
+       56       238        3.011106E+06        1.735254E+03        2.761742E+02        0.0                 0.0
+       57       239        3.012731E+06        1.735722E+03        2.762487E+02        0.0                 0.0
+       58       240        3.438606E+06        1.854348E+03        2.951286E+02        0.0                 0.0
+       59       241        3.447496E+06        1.856743E+03        2.955099E+02        0.0                 0.0
+       60       242        3.846375E+06        1.961218E+03        3.121375E+02        0.0                 0.0
+       61       243        3.847256E+06        1.961442E+03        3.121732E+02        0.0                 0.0
+       62         5        4.189828E+06        2.046907E+03        3.257753E+02        0.0                 0.0
+       63       244        4.376264E+06        2.091952E+03        3.329445E+02        0.0                 0.0
+       64       245        4.384227E+06        2.093854E+03        3.332473E+02        0.0                 0.0
+       65       246        5.785430E+06        2.405292E+03        3.828141E+02        0.0                 0.0
+       66       247        6.316674E+06        2.513299E+03        4.000040E+02        0.0                 0.0
+       67       250        6.720878E+06        2.592466E+03        4.126037E+02        0.0                 0.0
+       68       249        6.735268E+06        2.595240E+03        4.130452E+02        0.0                 0.0
+       69       248        7.252355E+06        2.693020E+03        4.286074E+02        0.0                 0.0
+       70       251        8.915754E+06        2.985926E+03        4.752249E+02        0.0                 0.0
+       71         6        1.042926E+07        3.229436E+03        5.139807E+02        0.0                 0.0
+       72         7        1.286150E+07        3.586293E+03        5.707762E+02        0.0                 0.0
+       73       252        1.603731E+07        4.004661E+03        6.373616E+02        0.0                 0.0
+       74       253        1.785899E+07        4.225989E+03        6.725870E+02        0.0                 0.0
+       75       254        1.885555E+07        4.342298E+03        6.910982E+02        0.0                 0.0
+       76       255        1.904489E+07        4.364045E+03        6.945593E+02        0.0                 0.0
+       77       256        2.499798E+07        4.999798E+03        7.957425E+02        0.0                 0.0
+       78       257        2.899321E+07        5.384535E+03        8.569753E+02        0.0                 0.0
+       79       261        3.338323E+07        5.777822E+03        9.195690E+02        0.0                 0.0
+       80       260        3.338886E+07        5.778310E+03        9.196465E+02        0.0                 0.0
+       81         8        3.432306E+07        5.858588E+03        9.324233E+02        0.0                 0.0
+       82       258        3.490013E+07        5.907633E+03        9.402289E+02        0.0                 0.0
+       83         9        3.531467E+07        5.942615E+03        9.457965E+02        0.0                 0.0
+       84       259        3.592186E+07        5.993484E+03        9.538926E+02        0.0                 0.0
+       85       264        4.212424E+07        6.490319E+03        1.032966E+03        0.0                 0.0
+       86       263        4.215173E+07        6.492436E+03        1.033303E+03        0.0                 0.0
+       87       262        4.252145E+07        6.520848E+03        1.037825E+03        0.0                 0.0
+       88        10        4.405471E+07        6.637373E+03        1.056371E+03        0.0                 0.0
+       89       265        4.893242E+07        6.995171E+03        1.113316E+03        0.0                 0.0
+       90        11        4.949467E+07        7.035245E+03        1.119694E+03        0.0                 0.0
+       91       266        5.002746E+07        7.073009E+03        1.125704E+03        0.0                 0.0
+       92       271        5.234108E+07        7.234714E+03        1.151440E+03        0.0                 0.0
+       93       270        5.234109E+07        7.234714E+03        1.151441E+03        0.0                 0.0
+       94       267        5.759423E+07        7.589086E+03        1.207841E+03        0.0                 0.0
+       95       268        5.910769E+07        7.688152E+03        1.223607E+03        0.0                 0.0
+       96       269        6.713428E+07        8.193551E+03        1.304044E+03        0.0                 0.0
+       97        12        7.084222E+07        8.416782E+03        1.339573E+03        0.0                 0.0
+       98        13        7.419614E+07        8.613718E+03        1.370916E+03        0.0                 0.0
+       99        14        8.151603E+07        9.028623E+03        1.436950E+03        0.0                 0.0
+      100       272        1.044124E+08        1.021824E+04        1.626283E+03        0.0                 0.0
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    31
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+      101       274        1.062210E+08        1.030636E+04        1.640308E+03        0.0                 0.0
+      102       275        1.069951E+08        1.034384E+04        1.646274E+03        0.0                 0.0
+      103        15        1.081771E+08        1.040082E+04        1.655343E+03        0.0                 0.0
+      104       273        1.100189E+08        1.048899E+04        1.669375E+03        0.0                 0.0
+      105        16        1.147440E+08        1.071186E+04        1.704845E+03        0.0                 0.0
+      106       278        1.253152E+08        1.119443E+04        1.781648E+03        0.0                 0.0
+      107       279        1.253180E+08        1.119455E+04        1.781668E+03        0.0                 0.0
+      108       276        1.352182E+08        1.162834E+04        1.850707E+03        0.0                 0.0
+      109       277        1.355836E+08        1.164404E+04        1.853206E+03        0.0                 0.0
+      110        17        1.516650E+08        1.231523E+04        1.960030E+03        0.0                 0.0
+      111       280        1.579343E+08        1.256719E+04        2.000130E+03        0.0                 0.0
+      112        18        1.602677E+08        1.265969E+04        2.014852E+03        0.0                 0.0
+      113       281        1.878182E+08        1.370468E+04        2.181167E+03        0.0                 0.0
+      114       282        2.100328E+08        1.449251E+04        2.306554E+03        0.0                 0.0
+      115        19        2.158805E+08        1.469287E+04        2.338443E+03        0.0                 0.0
+      116        20        2.255429E+08        1.501808E+04        2.390202E+03        0.0                 0.0
+      117        21        2.325292E+08        1.524891E+04        2.426939E+03        0.0                 0.0
+      118        22        2.447621E+08        1.564488E+04        2.489959E+03        0.0                 0.0
+      119       284        2.505783E+08        1.582967E+04        2.519370E+03        0.0                 0.0
+      120       283        2.506149E+08        1.583082E+04        2.519553E+03        0.0                 0.0
+      121       285        2.616809E+08        1.617656E+04        2.574579E+03        0.0                 0.0
+      122       288        2.787965E+08        1.669720E+04        2.657442E+03        0.0                 0.0
+      123       289        2.788015E+08        1.669735E+04        2.657466E+03        0.0                 0.0
+      124       286        2.927632E+08        1.711032E+04        2.723193E+03        0.0                 0.0
+      125       287        2.935174E+08        1.713235E+04        2.726698E+03        0.0                 0.0
+      126       292        3.567409E+08        1.888759E+04        3.006052E+03        0.0                 0.0
+      127       290        3.569442E+08        1.889297E+04        3.006909E+03        0.0                 0.0
+      128       291        3.694390E+08        1.922080E+04        3.059085E+03        0.0                 0.0
+      129        23        3.786043E+08        1.945776E+04        3.096798E+03        0.0                 0.0
+      130        24        3.894514E+08        1.973452E+04        3.140847E+03        0.0                 0.0
+      131        25        4.395751E+08        2.096604E+04        3.336850E+03        0.0                 0.0
+      132       294        4.514423E+08        2.124717E+04        3.381592E+03        0.0                 0.0
+      133       295        4.864125E+08        2.205476E+04        3.510124E+03        0.0                 0.0
+      134       293        4.887944E+08        2.210870E+04        3.518708E+03        0.0                 0.0
+      135       296        5.827950E+08        2.414115E+04        3.842183E+03        0.0                 0.0
+      136       297        5.953075E+08        2.439892E+04        3.883209E+03        0.0                 0.0
+      137        26        6.283751E+08        2.506741E+04        3.989603E+03        0.0                 0.0
+      138        27        6.320812E+08        2.514122E+04        4.001350E+03        0.0                 0.0
+      139        28        6.997468E+08        2.645273E+04        4.210083E+03        0.0                 0.0
+      140        29        7.168767E+08        2.677455E+04        4.261302E+03        0.0                 0.0
+      141        30        7.543738E+08        2.746587E+04        4.371329E+03        0.0                 0.0
+      142       298        8.062537E+08        2.839461E+04        4.519142E+03        0.0                 0.0
+      143        31        9.603146E+08        3.098894E+04        4.932043E+03        0.0                 0.0
+      144        32        1.006803E+09        3.173016E+04        5.050012E+03        0.0                 0.0
+      145        33        1.007142E+09        3.173551E+04        5.050862E+03        0.0                 0.0
+      146        34        1.019077E+09        3.192298E+04        5.080701E+03        0.0                 0.0
+      147        35        1.039621E+09        3.224315E+04        5.131657E+03        0.0                 0.0
+      148        36        1.051388E+09        3.242511E+04        5.160616E+03        0.0                 0.0
+      149       299        1.070814E+09        3.272329E+04        5.208073E+03        0.0                 0.0
+      150       303        1.118196E+09        3.343945E+04        5.322053E+03        0.0                 0.0
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    32
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+      151       302        1.168833E+09        3.418820E+04        5.441220E+03        0.0                 0.0
+      152        37        1.181697E+09        3.437582E+04        5.471082E+03        0.0                 0.0
+      153        38        1.234159E+09        3.513059E+04        5.591208E+03        0.0                 0.0
+      154       301        1.295139E+09        3.598804E+04        5.727675E+03        0.0                 0.0
+      155       305        1.298067E+09        3.602870E+04        5.734145E+03        0.0                 0.0
+      156        39        1.298600E+09        3.603610E+04        5.735323E+03        0.0                 0.0
+      157        40        1.329012E+09        3.645562E+04        5.802092E+03        0.0                 0.0
+      158        42        1.343236E+09        3.665019E+04        5.833058E+03        0.0                 0.0
+      159        41        1.345143E+09        3.667618E+04        5.837196E+03        0.0                 0.0
+      160       300        1.436195E+09        3.789716E+04        6.031521E+03        0.0                 0.0
+      161       306        1.467454E+09        3.830736E+04        6.096806E+03        0.0                 0.0
+      162        43        1.631395E+09        4.039054E+04        6.428353E+03        0.0                 0.0
+      163        44        1.653165E+09        4.065914E+04        6.471103E+03        0.0                 0.0
+      164        45        1.686998E+09        4.107309E+04        6.536984E+03        0.0                 0.0
+      165       311        1.788251E+09        4.228772E+04        6.730299E+03        0.0                 0.0
+      166       307        1.788253E+09        4.228775E+04        6.730304E+03        0.0                 0.0
+      167       304        1.794913E+09        4.236642E+04        6.742825E+03        0.0                 0.0
+      168        46        1.821176E+09        4.267524E+04        6.791976E+03        0.0                 0.0
+      169        47        1.831734E+09        4.279876E+04        6.811634E+03        0.0                 0.0
+      170       308        1.884986E+09        4.341642E+04        6.909938E+03        0.0                 0.0
+      171       309        1.953661E+09        4.420024E+04        7.034686E+03        0.0                 0.0
+      172        48        1.973360E+09        4.442252E+04        7.070063E+03        0.0                 0.0
+      173        49        2.005664E+09        4.478464E+04        7.127697E+03        0.0                 0.0
+      174        51        2.181967E+09        4.671154E+04        7.434372E+03        0.0                 0.0
+      175        50        2.187398E+09        4.676962E+04        7.443617E+03        0.0                 0.0
+      176       315        2.279801E+09        4.774726E+04        7.599212E+03        0.0                 0.0
+      177       323        2.320336E+09        4.816987E+04        7.666473E+03        0.0                 0.0
+      178       324        2.324253E+09        4.821051E+04        7.672940E+03        0.0                 0.0
+      179       312        2.325138E+09        4.821968E+04        7.674401E+03        0.0                 0.0
+      180       326        2.344483E+09        4.841986E+04        7.706260E+03        0.0                 0.0
+      181       314        2.344509E+09        4.842013E+04        7.706303E+03        0.0                 0.0
+      182        52        2.345148E+09        4.842672E+04        7.707352E+03        0.0                 0.0
+      183        53        2.367190E+09        4.865377E+04        7.743488E+03        0.0                 0.0
+      184        54        2.488744E+09        4.988731E+04        7.939812E+03        0.0                 0.0
+      185       313        2.546818E+09        5.046600E+04        8.031914E+03        0.0                 0.0
+      186       316        2.680526E+09        5.177379E+04        8.240055E+03        0.0                 0.0
+      187       310        2.681967E+09        5.178771E+04        8.242270E+03        0.0                 0.0
+      188        55        2.713483E+09        5.209110E+04        8.290556E+03        0.0                 0.0
+      189        56        2.758506E+09        5.252148E+04        8.359053E+03        0.0                 0.0
+      190       318        2.986439E+09        5.464832E+04        8.697550E+03        0.0                 0.0
+      191       317        3.009054E+09        5.485485E+04        8.730420E+03        0.0                 0.0
+      192        57        3.233668E+09        5.686535E+04        9.050401E+03        0.0                 0.0
+      193        58        3.236801E+09        5.689289E+04        9.054784E+03        0.0                 0.0
+      194        59        3.506484E+09        5.921557E+04        9.424451E+03        0.0                 0.0
+      195        60        3.554035E+09        5.961573E+04        9.488138E+03        0.0                 0.0
+      196       319        3.892359E+09        6.238877E+04        9.929481E+03        0.0                 0.0
+      197       321        3.997036E+09        6.322212E+04        1.006211E+04        0.0                 0.0
+      198        61        4.156066E+09        6.446756E+04        1.026033E+04        0.0                 0.0
+      199        63        4.168854E+09        6.456666E+04        1.027610E+04        0.0                 0.0
+      200        62        4.180843E+09        6.465944E+04        1.029087E+04        0.0                 0.0
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    33
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+      201       320        4.269674E+09        6.534275E+04        1.039962E+04        0.0                 0.0
+      202        64        4.292582E+09        6.551780E+04        1.042748E+04        0.0                 0.0
+      203        66        4.357546E+09        6.601171E+04        1.050609E+04        0.0                 0.0
+      204        67        4.413956E+09        6.643761E+04        1.057387E+04        0.0                 0.0
+      205        65        4.438107E+09        6.661912E+04        1.060276E+04        0.0                 0.0
+      206        68        4.680989E+09        6.841776E+04        1.088902E+04        0.0                 0.0
+      207        69        4.683541E+09        6.843640E+04        1.089199E+04        0.0                 0.0
+      208        70        5.485317E+09        7.406293E+04        1.178748E+04        0.0                 0.0
+      209        71        5.510660E+09        7.423382E+04        1.181468E+04        0.0                 0.0
+      210        72        5.633005E+09        7.505334E+04        1.194511E+04        0.0                 0.0
+      211        74        6.104382E+09        7.813055E+04        1.243486E+04        0.0                 0.0
+      212        73        6.185582E+09        7.864847E+04        1.251729E+04        0.0                 0.0
+      213       327        6.423151E+09        8.014456E+04        1.275540E+04        0.0                 0.0
+      214       329        6.423355E+09        8.014584E+04        1.275561E+04        0.0                 0.0
+      215       328        6.435585E+09        8.022210E+04        1.276774E+04        0.0                 0.0
+      216       322        6.437029E+09        8.023109E+04        1.276917E+04        0.0                 0.0
+      217        75        7.118721E+09        8.437251E+04        1.342830E+04        0.0                 0.0
+      218        77        7.427453E+09        8.618267E+04        1.371640E+04        0.0                 0.0
+      219        76        7.435324E+09        8.622833E+04        1.372366E+04        0.0                 0.0
+      220        79        7.959834E+09        8.921791E+04        1.419947E+04        0.0                 0.0
+      221        78        7.963666E+09        8.923938E+04        1.420289E+04        0.0                 0.0
+      222        81        8.080247E+09        8.989020E+04        1.430647E+04        0.0                 0.0
+      223        83        8.091523E+09        8.995289E+04        1.431645E+04        0.0                 0.0
+      224        80        8.479024E+09        9.208162E+04        1.465524E+04        0.0                 0.0
+      225       325        8.942713E+09        9.456591E+04        1.505063E+04        0.0                 0.0
+      226        82        9.114689E+09        9.547088E+04        1.519466E+04        0.0                 0.0
+      227        85        9.700138E+09        9.848928E+04        1.567506E+04        0.0                 0.0
+      228        84        9.727334E+09        9.862725E+04        1.569701E+04        0.0                 0.0
+      229        87        1.171599E+10        1.082404E+05        1.722700E+04        0.0                 0.0
+      230        86        1.172075E+10        1.082624E+05        1.723050E+04        0.0                 0.0
+      231        89        1.227113E+10        1.107751E+05        1.763041E+04        0.0                 0.0
+      232        88        1.227589E+10        1.107966E+05        1.763383E+04        0.0                 0.0
+      233        90        1.449370E+10        1.203898E+05        1.916063E+04        0.0                 0.0
+      234        93        1.449503E+10        1.203953E+05        1.916151E+04        0.0                 0.0
+      235        96        1.502881E+10        1.225920E+05        1.951113E+04        0.0                 0.0
+      236        92        1.503277E+10        1.226082E+05        1.951370E+04        0.0                 0.0
+      237        97        1.621480E+10        1.273373E+05        2.026637E+04        0.0                 0.0
+      238        94        1.622948E+10        1.273950E+05        2.027554E+04        0.0                 0.0
+      239        98        1.686479E+10        1.298645E+05        2.066858E+04        0.0                 0.0
+      240        95        1.687361E+10        1.298985E+05        2.067398E+04        0.0                 0.0
+      241        91        1.817926E+10        1.348305E+05        2.145894E+04        0.0                 0.0
+      242       332        2.125437E+10        1.457888E+05        2.320301E+04        0.0                 0.0
+      243       100        2.427829E+10        1.558149E+05        2.479871E+04        0.0                 0.0
+      244        99        2.428015E+10        1.558209E+05        2.479966E+04        0.0                 0.0
+      245       330        2.619278E+10        1.618418E+05        2.575793E+04        0.0                 0.0
+      246       336        2.619278E+10        1.618418E+05        2.575793E+04        0.0                 0.0
+      247       333        2.713021E+10        1.647125E+05        2.621481E+04        0.0                 0.0
+      248       103        2.982842E+10        1.727091E+05        2.748750E+04        0.0                 0.0
+      249       104        2.983091E+10        1.727163E+05        2.748865E+04        0.0                 0.0
+      250       102        2.991632E+10        1.729634E+05        2.752797E+04        0.0                 0.0
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    34
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+      251       101        2.992197E+10        1.729797E+05        2.753057E+04        0.0                 0.0
+      252       331        3.265261E+10        1.807003E+05        2.875935E+04        0.0                 0.0
+      253       337        3.265261E+10        1.807003E+05        2.875935E+04        0.0                 0.0
+      254       334        3.818747E+10        1.954162E+05        3.110145E+04        0.0                 0.0
+      255       110        4.435637E+10        2.106095E+05        3.351955E+04        0.0                 0.0
+      256       109        4.435884E+10        2.106154E+05        3.352048E+04        0.0                 0.0
+      257       106        4.467560E+10        2.113660E+05        3.363995E+04        0.0                 0.0
+      258       111        4.515391E+10        2.124945E+05        3.381955E+04        0.0                 0.0
+      259       112        4.515392E+10        2.124945E+05        3.381955E+04        0.0                 0.0
+      260       105        4.942246E+10        2.223116E+05        3.538200E+04        0.0                 0.0
+      261       108        5.246540E+10        2.290533E+05        3.645496E+04        0.0                 0.0
+      262       107        5.320626E+10        2.306648E+05        3.671145E+04        0.0                 0.0
+      263       115        5.958182E+10        2.440939E+05        3.884875E+04        0.0                 0.0
+      264       113        5.994255E+10        2.448317E+05        3.896617E+04        0.0                 0.0
+      265       116        6.005694E+10        2.450652E+05        3.900333E+04        0.0                 0.0
+      266       114        6.008823E+10        2.451290E+05        3.901349E+04        0.0                 0.0
+      267       335        6.055054E+10        2.460702E+05        3.916329E+04        0.0                 0.0
+      268       123        7.863007E+10        2.804105E+05        4.462872E+04        0.0                 0.0
+      269       122        7.863052E+10        2.804113E+05        4.462885E+04        0.0                 0.0
+      270       121        8.768253E+10        2.961124E+05        4.712775E+04        0.0                 0.0
+      271       124        8.768261E+10        2.961125E+05        4.712777E+04        0.0                 0.0
+      272       118        9.152854E+10        3.025368E+05        4.815023E+04        0.0                 0.0
+      273       117        9.874969E+10        3.142446E+05        5.001359E+04        0.0                 0.0
+      274       339        1.144486E+11        3.383025E+05        5.384251E+04        0.0                 0.0
+      275       338        1.180920E+11        3.436451E+05        5.469282E+04        0.0                 0.0
+      276       340        1.375027E+11        3.708136E+05        5.901681E+04        0.0                 0.0
+      277       119        1.462918E+11        3.824811E+05        6.087376E+04        0.0                 0.0
+      278       120        1.464561E+11        3.826958E+05        6.090792E+04        0.0                 0.0
+      279       341        1.674326E+11        4.091853E+05        6.512386E+04        0.0                 0.0
+      280       125        2.199142E+11        4.689501E+05        7.463573E+04        0.0                 0.0
+      281       127        2.345444E+11        4.842978E+05        7.707839E+04        0.0                 0.0
+      282       126        2.345538E+11        4.843076E+05        7.707994E+04        0.0                 0.0
+      283       128        2.755881E+11        5.249648E+05        8.355074E+04        0.0                 0.0
+      284       129        2.760565E+11        5.254108E+05        8.362173E+04        0.0                 0.0
+      285       132        3.207438E+11        5.663425E+05        9.013620E+04        0.0                 0.0
+      286       131        3.207479E+11        5.663461E+05        9.013678E+04        0.0                 0.0
+      287       342        3.248284E+11        5.699372E+05        9.070832E+04        0.0                 0.0
+      288       353        3.455179E+11        5.878077E+05        9.355250E+04        0.0                 0.0
+      289       343        3.455214E+11        5.878107E+05        9.355298E+04        0.0                 0.0
+      290       133        3.589301E+11        5.991078E+05        9.535096E+04        0.0                 0.0
+      291       135        3.619522E+11        6.016247E+05        9.575154E+04        0.0                 0.0
+      292       134        3.619560E+11        6.016278E+05        9.575204E+04        0.0                 0.0
+      293       130        4.142341E+11        6.436102E+05        1.024337E+05        0.0                 0.0
+      294       344        4.704167E+11        6.858693E+05        1.091595E+05        0.0                 0.0
+      295       345        5.510552E+11        7.423309E+05        1.181456E+05        0.0                 0.0
+      296       137        5.708334E+11        7.555352E+05        1.202472E+05        0.0                 0.0
+      297       136        5.798850E+11        7.615018E+05        1.211968E+05        0.0                 0.0
+      298       139        6.773615E+11        8.230198E+05        1.309877E+05        0.0                 0.0
+      299       138        6.820048E+11        8.258358E+05        1.314358E+05        0.0                 0.0
+      300       140        9.175933E+11        9.579109E+05        1.524562E+05        0.0                 0.0
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    35
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+      301       141        9.258460E+11        9.622089E+05        1.531403E+05        0.0                 0.0
+      302       142        1.304772E+12        1.142266E+06        1.817973E+05        0.0                 0.0
+      303       143        1.373518E+12        1.171972E+06        1.865251E+05        0.0                 0.0
+      304       146        1.440821E+12        1.200342E+06        1.910404E+05        0.0                 0.0
+      305       145        1.440997E+12        1.200416E+06        1.910521E+05        0.0                 0.0
+      306       144        1.473315E+12        1.213802E+06        1.931825E+05        0.0                 0.0
+      307       346        1.831744E+12        1.353420E+06        2.154034E+05        0.0                 0.0
+      308       147        2.447122E+12        1.564328E+06        2.489705E+05        0.0                 0.0
+      309       148        2.458769E+12        1.568046E+06        2.495623E+05        0.0                 0.0
+      310       150        2.598143E+12        1.611876E+06        2.565380E+05        0.0                 0.0
+      311       149        2.599050E+12        1.612157E+06        2.565828E+05        0.0                 0.0
+      312       155        3.742445E+12        1.934540E+06        3.078916E+05        0.0                 0.0
+      313       152        3.752405E+12        1.937113E+06        3.083010E+05        0.0                 0.0
+      314       151        3.774215E+12        1.942734E+06        3.091957E+05        0.0                 0.0
+      315       347        3.901655E+12        1.975261E+06        3.143725E+05        0.0                 0.0
+      316       156        4.292646E+12        2.071870E+06        3.297484E+05        0.0                 0.0
+      317       154        4.622325E+12        2.149960E+06        3.421767E+05        0.0                 0.0
+      318       157        6.962908E+12        2.638732E+06        4.199673E+05        0.0                 0.0
+      319       153        6.962911E+12        2.638733E+06        4.199673E+05        0.0                 0.0
+      320       348        7.799952E+12        2.792839E+06        4.444942E+05        0.0                 0.0
+      321       354        8.291993E+12        2.879582E+06        4.582997E+05        0.0                 0.0
+      322       159        1.646563E+13        4.057786E+06        6.458167E+05        0.0                 0.0
+      323       158        2.142883E+13        4.629128E+06        7.367487E+05        0.0                 0.0
+      324       160        2.808882E+13        5.299889E+06        8.435035E+05        0.0                 0.0
+      325       161        4.172197E+13        6.459254E+06        1.028022E+06        0.0                 0.0
+      326       165        4.673171E+13        6.836060E+06        1.087993E+06        0.0                 0.0
+      327       163        4.673219E+13        6.836094E+06        1.087998E+06        0.0                 0.0
+      328       352        5.122434E+13        7.157118E+06        1.139091E+06        0.0                 0.0
+      329       164        6.348140E+13        7.967522E+06        1.268070E+06        0.0                 0.0
+      330       162        6.349125E+13        7.968140E+06        1.268169E+06        0.0                 0.0
+      331       167        1.686915E+14        1.298813E+07        2.067125E+06        0.0                 0.0
+      332       166        2.040574E+14        1.428487E+07        2.273507E+06        0.0                 0.0
+      333       177        2.041067E+14        1.428659E+07        2.273782E+06        0.0                 0.0
+      334       168        3.633111E+14        1.906072E+07        3.033608E+06        0.0                 0.0
+      335       176        3.687540E+14        1.920297E+07        3.056248E+06        0.0                 0.0
+      336       170        3.857269E+14        1.963993E+07        3.125792E+06        0.0                 0.0
+      337       169        4.088980E+14        2.022123E+07        3.218308E+06        0.0                 0.0
+      338       175        4.742792E+14        2.177795E+07        3.466069E+06        0.0                 0.0
+      339       179        4.743142E+14        2.177876E+07        3.466196E+06        0.0                 0.0
+      340       351        9.014406E+14        3.002400E+07        4.778468E+06        0.0                 0.0
+      341       357        9.014498E+14        3.002415E+07        4.778492E+06        0.0                 0.0
+      342       178        1.160450E+15        3.406537E+07        5.421672E+06        0.0                 0.0
+      343       171        1.162113E+15        3.408978E+07        5.425557E+06        0.0                 0.0
+      344       173        5.733175E+15        7.571773E+07        1.205085E+07        0.0                 0.0
+      345       174        6.942687E+15        8.332279E+07        1.326123E+07        0.0                 0.0
+      346       359        1.681162E+16        1.296596E+08        2.063597E+07        0.0                 0.0
+      347       355        2.340145E+16        1.529753E+08        2.434678E+07        0.0                 0.0
+      348       365        2.586614E+16        1.608296E+08        2.559682E+07        0.0                 0.0
+      349       361        2.587515E+16        1.608575E+08        2.560127E+07        0.0                 0.0
+      350       356        4.745877E+16        2.178503E+08        3.467196E+07        0.0                 0.0
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    36
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ 
+                                              R E A L   E I G E N V A L U E S
+   MODE    EXTRACTION      EIGENVALUE            RADIANS             CYCLES            GENERALIZED         GENERALIZED
+    NO.       ORDER                                                                       MASS              STIFFNESS
+      351       360        6.464829E+16        2.542603E+08        4.046678E+07        0.0                 0.0
+      352       364        8.232535E+16        2.869239E+08        4.566536E+07        0.0                 0.0
+      353       362        8.607314E+16        2.933822E+08        4.669323E+07        0.0                 0.0
+      354       358        1.181005E+17        3.436576E+08        5.469480E+07        0.0                 0.0
+      355       363        1.361499E+17        3.689849E+08        5.872577E+07        0.0                 0.0
+      356       350       -3.717265E+19        6.096938E+09        9.703578E+08        0.0                 0.0
+      357       180        3.790963E+19        6.157080E+09        9.799296E+08        0.0                 0.0
+      358       366       -5.527279E+19        7.434567E+09        1.183248E+09        0.0                 0.0
+      359       349        8.033517E+19        8.962989E+09        1.426504E+09        0.0                 0.0
+      360       367       -1.366316E+20        1.168895E+10        1.860354E+09        0.0                 0.0
+      361       368       -4.491272E+20        2.119262E+10        3.372911E+09        0.0                 0.0
+      362       377        8.145041E+20        2.853952E+10        4.542205E+09        0.0                 0.0
+      363       371        8.343846E+20        2.888571E+10        4.597304E+09        0.0                 0.0
+      364       369       -9.415097E+20        3.068403E+10        4.883515E+09        0.0                 0.0
+      365       370       -1.256226E+21        3.544328E+10        5.640973E+09        0.0                 0.0
+      366       375        1.419492E+21        3.767615E+10        5.996345E+09        0.0                 0.0
+      367       376       -1.488515E+21        3.858127E+10        6.140400E+09        0.0                 0.0
+      368       374       -1.633493E+21        4.041649E+10        6.432484E+09        0.0                 0.0
+      369       372        1.682898E+21        4.102314E+10        6.529035E+09        0.0                 0.0
+      370       172        4.372873E+21        6.612770E+10        1.052455E+10        0.0                 0.0
+      371       379       -6.025233E+21        7.762237E+10        1.235398E+10        0.0                 0.0
+      372       373        6.406563E+21        8.004101E+10        1.273892E+10        0.0                 0.0
+      373       378       -1.414371E+22        1.189273E+11        1.892787E+10        0.0                 0.0
+      374       184       -3.908294E+23        6.251635E+11        9.949786E+10        0.0                 0.0
+      375       183        4.277931E+23        6.540590E+11        1.040967E+11        0.0                 0.0
+      376       181        8.414932E+23        9.173294E+11        1.459975E+11        0.0                 0.0
+      377       186       -1.467998E+24        1.211610E+12        1.928337E+11        0.0                 0.0
+      378       185        2.734587E+24        1.653659E+12        2.631880E+11        0.0                 0.0
+      379       182       -4.365180E+24        2.089301E+12        3.325226E+11        0.0                 0.0
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    37
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+0                                                  MAXIMUM  DISPLACEMENTS   
+  SUBCASE/
+  DAREA ID        T1             T2             T3             R1             R2             R3
+0        1   5.2851820E+00  4.8322353E-12  0.0000000E+00  0.0000000E+00  0.0000000E+00  1.7850737E-13
+0        2   2.7670977E-11  5.2851820E+00  0.0000000E+00  0.0000000E+00  0.0000000E+00  5.0181967E-13
+0        3   1.2608557E-11  2.3350925E-11  5.2851820E+00  4.2460592E-12  2.3362371E-12  0.0000000E+00
+0        4   2.0644035E-11  1.0960959E+00  1.2007360E+01  1.9929017E-01  3.8498081E-12  0.0000000E+00
+0        5   2.6765125E+00  1.0390707E-03  1.1538407E+01  1.8892194E-04  4.8663864E-01  0.0000000E+00
+0        6   1.1931570E+01  4.6954279E+00  0.0000000E+00  0.0000000E+00  0.0000000E+00  1.9803225E-01
+0        7   2.9806130E+00  3.1106346E+00  1.1110301E+01  5.6556994E-01  5.4192966E-01  0.0000000E+00
+0        8   8.0628271E+00  2.7670546E+00  1.0652040E+01  5.0310081E-01  1.4659686E+00  0.0000000E+00
+0        9   7.3699212E+00  2.2339845E+00  1.0604669E+01  4.0617898E-01  1.3399857E+00  0.0000000E+00
+0       10   6.5418959E-01  3.4652724E+00  7.7104301E+00  6.3004953E-01  1.9783290E-01  0.0000000E+00
+0       11   5.1798165E-01  4.9454808E+00  8.8880033E+00  8.9917833E-01  6.3385463E-01  0.0000000E+00
+0       12   5.7666020E+00  1.5314081E+00  7.4221115E+00  5.8023655E-01  1.3919458E+00  0.0000000E+00
+0       13   5.8068728E+00  3.7508082E-01  8.0869007E+00  5.8130449E-01  1.3656162E+00  0.0000000E+00
+0       14   9.2020720E-01  6.0577154E+00  7.1779256E+00  1.1014029E+00  4.7431138E-01  0.0000000E+00
+0       15   5.1487837E+00  3.7926570E-01  6.5729666E+00  6.0282123E-01  1.3602799E+00  0.0000000E+00
+0       16   3.9357984E+00  2.8245211E+00  5.5238199E+00  5.4087979E-01  1.3927370E+00  0.0000000E+00
+0       17   3.6735682E+00  6.6507354E+00  7.4392991E+00  1.2092246E+00  6.6792148E-01  0.0000000E+00
+0       18   1.5792063E+00  7.9364676E+00  8.0912085E+00  1.4429941E+00  5.6954962E-01  0.0000000E+00
+0       19   5.9512334E+00  8.3655703E-01  8.5087328E+00  7.6504982E-01  1.7360795E+00  0.0000000E+00
+0       20   5.1129289E+00  2.6939123E+00  7.4880161E+00  6.9304425E-01  1.7519317E+00  0.0000000E+00
+1    MSC.NASTRAN JOB CREATED ON 20-FEB-15 AT 15:37:03                      NOVEMBER   9, 2015  MSC Nastran  5/30/13   PAGE    38
+                                                                                                                                    
+0                                                                                                            SUBCASE 1              
+ * * * *  D B D I C T   P R I N T  * * * *      SUBDMAP = PRTSUM  ,  DMAP STATEMENT NO.     41
+
+
+
+0                                   * * * *  A N A L Y S I S  S U M M A R Y  T A B L E  * * * *
+0 SEID  PEID PROJ VERS APRCH      SEMG SEMR SEKR SELG SELR MODES DYNRED SOLLIN PVALID SOLNL LOOPID DESIGN CYCLE SENSITIVITY
+ --------------------------------------------------------------------------------------------------------------------------
+     0     0    1    1 '        '    T    T    T    T    T     T      F      T      0     F     -1            0           F
+0SEID = SUPERELEMENT ID.
+ PEID = PRIMARY SUPERELEMENT ID OF IMAGE SUPERELEMENT.
+ PROJ = PROJECT ID NUMBER.
+ VERS = VERSION ID.
+ APRCH = BLANK FOR STRUCTURAL ANALYSIS.  HEAT FOR HEAT TRANSFER ANALYSIS.
+ SEMG = STIFFNESS AND MASS MATRIX GENERATION STEP.
+ SEMR = MASS MATRIX REDUCTION STEP (INCLUDES EIGENVALUE SOLUTION FOR MODES).
+ SEKR = STIFFNESS MATRIX REDUCTION STEP.
+ SELG = LOAD MATRIX GENERATION STEP.
+ SELR = LOAD MATRIX REDUCTION STEP. 
+ MODES = T (TRUE) IF NORMAL MODES OR BUCKLING MODES CALCULATED.
+ DYNRED = T (TRUE) MEANS GENERALIZED DYNAMIC AND/OR COMPONENT MODE REDUCTION PERFORMED.
+ SOLLIN = T (TRUE) IF LINEAR SOLUTION EXISTS IN DATABASE.
+ PVALID = P-DISTRIBUTION ID OF P-VALUE FOR P-ELEMENTS
+ LOOPID = THE LAST LOOPID VALUE USED IN THE NONLINEAR ANALYSIS.  USEFUL FOR RESTARTS.
+ SOLNL = T (TRUE) IF NONLINEAR SOLUTION EXISTS IN DATABASE.
+ DESIGN CYCLE = THE LAST DESIGN CYCLE (ONLY VALID IN OPTIMIZATION).
+ SENSITIVITY = SENSITIVITY MATRIX GENERATION FLAG.
+ 
+ No PARAM values were set in the Control File.
+ 
+1                                        * * * END OF JOB * * *
+ 
+ 
+ No Symbolic Replacement variables or values were specified.
+

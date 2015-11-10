@@ -1,0 +1,34 @@
+$ $ Description of Material : Date: 20-Feb-15           Time: 15:30:09
+$ $ ----------------------------- Birch--------------------------------
+$ $1------$1------$1------$1------$1------$1------$1------$1------
+$ MAT1     901    2.01e+6         .25     2.488e-2
+$ $ ------------------------------XPS----------------------------------------
+$ $ Description of Material : Date: 20-Feb-15           Time: 15:30:09
+$ $1------$1------$1------$1------$1------$1------$1------
+$ MAT1     902    3.6e+4          .30     .0015
+$ $
+$ $
+$ $ ---------Carbon sandwich panel, effective material property values------
+$ $ Description of Material : Date: 20-Feb-15           Time: 15:30:09
+$ $1------$1------$1------$1------$1------$1------$1------
+$ $ 0.045223 lb/in^3 is obtained from AIAA 2015-0903 optimized value
+$ $ MAT1     903    6.660e+61.252e+6        .045223
+$ $ density is from prediction
+$ $ MAT1     903    6.660e+61.252e+6        .052565
+$ $ Updated data from centerbody
+$ MAT1     903    6.660e+61.252e+6        .053437
+$ MAT1     904    6.660e+61.252e+6        .052565
+$ 
+$ 
+$ 901 - Pirch plywood
+MAT1     901    2.01e+9         .25     .02493
+$ ---------Carbon sandwich panel, effective material property values------
+$ 0.045223 lb/in^3 is obtained from AIAA 2015-0903 optimized value
+$MAT1     903    6.660e+61.252e+6        .045223
+MAT1     903    6.660e+61.255e+6        .007392
+MAT1     913    6.660e+61.252e+6        .009392
+MAT1     923    6.660e+61.252e+6        .007392
+MAT1     933    6.660e+61.238e+6        .007392
+$ 905 - inner front/rear spar - wing attach
+MAT1     905    6.660e+61.252e+6        .01265
+MAT1     906    6.660e+61.252e+6        .01265
