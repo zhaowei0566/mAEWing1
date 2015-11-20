@@ -89,13 +89,15 @@ struct gps {
     double sig_ve; ///< [m/sec], Velocity error standard deviation in the East direction
     double sig_vd; ///< [m/sec], Velocity error standard deviation in the Down direction
 	double GPS_TOW;	///< [sec], GPS Time Of Week
-	double courseOverGround;///< [rad], course over the ground, relative to true North
-	double speedOverGround;	///< [rad], speed over the ground
+	//double courseOverGround;///< [rad], course over the ground, relative to true North
+	//double speedOverGround;	///< [rad], speed over the ground
 	double time;	///< [sec], timestamp of GPS data
-	double cur_time;
-	double prev_time;
-	double start_time;
 	double update;
+	double hAcc;
+	//double vAcc;
+	//double sAcc;
+	//double headingAcc;
+	//double pDOP;
 	unsigned short newData;	///< [bool], flag set when GPS data has been updated
 	unsigned short satVisible; ///< Number satellites used in the position solution
 	unsigned short navValid;///< flag indicating whether the solution is valid, 0 = valid
@@ -130,9 +132,16 @@ struct rabbit {
 	double lat;	///< [deg], Geodetic latitude
 	double lon;	///< [deg], Geodetic longitude
 	double alt;	///< [m], altitude relative to WGS84
-	double courseOverGround;///< [rad], course over the ground, relative to true North
-	double speedOverGround;	///< [rad], speed over the ground
-	
+	//double courseOverGround;///< [rad], course over the ground, relative to true North
+	//double speedOverGround;	///< [rad], speed over the ground
+	double navvn;
+	double navve;
+	double navvd;
+	double hAcc;
+	//double vAcc;
+	//double sAcc;
+	//double headingAcc;
+	//double pDOP;
 	int baudRate;		///< Baud rate for serial port
 	char* portName;		///< Name of serial port
 	int port;			///< handle for accessing serial port

@@ -143,8 +143,12 @@ void init_nav(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct
 	H[0][0] = 1.0; 	H[1][1] = 1.0; 	H[2][2] = 1.0;
 	H[3][3] = 1.0; 	H[4][4] = 1.0; 	H[5][5] = 1.0;
 	
+	// first order correlation + white noise, tau = time constant for correlation
+	// gain on white noise plus gain on correlation
+	// Rw small - trust time update, Rw more - lean on measurement update
+	// split between accels and gyros and / or noise and correlation
 	// ... Rw
-	Rw[0][0] = SIG_W_AX*SIG_W_AX;		Rw[1][1] = SIG_W_AY*SIG_W_AY;			Rw[2][2] = SIG_W_AZ*SIG_W_AZ;
+	Rw[0][0] = SIG_W_AX*SIG_W_AX;		Rw[1][1] = SIG_W_AY*SIG_W_AY;			Rw[2][2] = SIG_W_AZ*SIG_W_AZ; //1 sigma on noise
 	Rw[3][3] = SIG_W_GX*SIG_W_GX;		Rw[4][4] = SIG_W_GY*SIG_W_GY;			Rw[5][5] = SIG_W_GZ*SIG_W_GZ;
 	Rw[6][6] = 2*SIG_A_D*SIG_A_D/TAU_A;	Rw[7][7] = 2*SIG_A_D*SIG_A_D/TAU_A;		Rw[8][8] = 2*SIG_A_D*SIG_A_D/TAU_A;
 	Rw[9][9] = 2*SIG_G_D*SIG_G_D/TAU_G;	Rw[10][10] = 2*SIG_G_D*SIG_G_D/TAU_G;	Rw[11][11] = 2*SIG_G_D*SIG_G_D/TAU_G;
@@ -178,6 +182,10 @@ void init_nav(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct
 	navData_ptr->vn = sensorData_ptr->gpsData_ptr->vn;
 	navData_ptr->ve = sensorData_ptr->gpsData_ptr->ve;
 	navData_ptr->vd = sensorData_ptr->gpsData_ptr->vd;
+	
+	//navData_ptr->the = 0;//asin(sensorData_ptr->imuData_ptr->ax/g); // theta from Ax, aircraft at rest
+	//navData_ptr->phi = 0;//asin(-sensorData_ptr->imuData_ptr->ay/(g*cos(navData_ptr->the))); // phi from Ay, aircraft at rest
+	//navData_ptr->psi = 0.0;
 	
 	// ... and initialize states with IMU Data
 	navData_ptr->the = asin(sensorData_ptr->imuData_ptr->ax/g); // theta from Ax, aircraft at rest
