@@ -84,10 +84,6 @@ void init_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct
 
 void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr, struct mission *missionData_ptr){		
 
-	// latching for GPS soft start
-	static int t0_latched = FALSE;
-	static double t0 = 0;
-
 	// local pointers to keep things tidy
 	struct imu *imuData_ptr = sensorData_ptr->imuData_ptr;
 	struct gps *gpsData_ptr = sensorData_ptr->gpsData_ptr;
@@ -157,13 +153,7 @@ void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct 
 	gpsData_ptr->satVisible = rabbitData_ptr->satVisible;
 	
 	if(gpsData_ptr->satVisible>4){
-		if(t0_latched == FALSE){
-			t0 = imuData_ptr->time;
-			t0_latched = TRUE;
-		}
-		if((imuData_ptr->time-t0)>20){
-			gpsData_ptr->navValid = 0;
-		}
+		gpsData_ptr->navValid = 0;
 	}
 	else{
 		gpsData_ptr->navValid = 1;
@@ -171,17 +161,13 @@ void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct 
 	gpsData_ptr->update = 0;
 	if(gpsData_ptr->newData == 1){
 		gpsData_ptr->update = 1;
-		gpsData_ptr->cur_time = imuData_ptr->time;
 		gpsData_ptr->lat = rabbitData_ptr->lat;
 		gpsData_ptr->lon = rabbitData_ptr->lon;
 		gpsData_ptr->alt = rabbitData_ptr->alt;
-		gpsData_ptr ->courseOverGround = rabbitData_ptr->courseOverGround;
-		gpsData_ptr ->speedOverGround = rabbitData_ptr->speedOverGround;
-		gpsData_ptr->vn = cos(gpsData_ptr ->courseOverGround)*gpsData_ptr ->speedOverGround;
-		gpsData_ptr->ve = sin(gpsData_ptr ->courseOverGround)*gpsData_ptr ->speedOverGround;
-		gpsData_ptr->vd = -1*(gpsData_ptr->alt - gpsData_ptr->alt_prev)/(gpsData_ptr->cur_time - gpsData_ptr->prev_time);
-		gpsData_ptr->alt_prev = gpsData_ptr->alt;
-		gpsData_ptr->prev_time = gpsData_ptr->cur_time;
+		gpsData_ptr->vn = rabbitData_ptr->navvn;
+		gpsData_ptr->ve = rabbitData_ptr->navve;
+		gpsData_ptr->vd = rabbitData_ptr->navvd;
+		gpsData_ptr->hAcc = rabbitData_ptr->hAcc;
 	}
 	/********** End GPS Data **********/
 }

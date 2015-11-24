@@ -35,7 +35,7 @@ void read_rabbit(struct rabbit *rabbitData_ptr)
 }
 
 void read_rabbit_sensor(cyg_i2c_device* device,struct rabbit *rabbitData_ptr){
-	uint8_t localBuffer[59];
+	uint8_t localBuffer[55];
 	uint16_t ain_counts[6];
 	uint16_t ps_counts;
 	uint16_t pd_counts;
@@ -43,31 +43,41 @@ void read_rabbit_sensor(cyg_i2c_device* device,struct rabbit *rabbitData_ptr){
 	int bytesRead;
 	
 	union{	// latitude
-		double val;
-		byte b[8];
+		long val;
+		byte b[4];
 	}latitude;
 	
 	union{	// longitude
-		double val;
-		byte b[8];
+		long val;
+		byte b[4];
 	}longitude;
 
 	union{	// altitude
-		double val;
-		byte b[8];
+		long val;
+		byte b[4];
 	}alt;
 
-	union{	// ground track
-		float val;
+	union{ // north velocity
+		long val;
 		byte b[4];
-	}track;
-
-	union{	// ground speed
-		float val;
-		byte b[4];
-	}gspeed;
+	}navvn;
 	
-	bytesRead = cyg_i2c_rx(device, localBuffer, 59);
+	union{ // east velocity
+		long val;
+		byte b[4];
+	}navve;
+	
+	union{ // down velocity
+		long val;
+		byte b[4];
+	}navvd;
+	
+	union{
+		unsigned long val;
+		byte b[4];
+	}hAcc;
+
+	bytesRead = cyg_i2c_rx(device, localBuffer, 55);
 	
 	/* Analog Data */
 	// pulling the analog data off the buffer
@@ -115,45 +125,45 @@ void read_rabbit_sensor(cyg_i2c_device* device,struct rabbit *rabbitData_ptr){
 	rabbitData_ptr->isUpdated = (unsigned int)localBuffer[25];
 	rabbitData_ptr->satVisible = (unsigned int)localBuffer[26];
 	
-	latitude.b[7] = localBuffer[27];
-	latitude.b[6] = localBuffer[28];
-	latitude.b[5] = localBuffer[29];
-	latitude.b[4] = localBuffer[30];
-	latitude.b[3] = localBuffer[31];
-	latitude.b[2] = localBuffer[32];
-	latitude.b[1] = localBuffer[33];
-	latitude.b[0] = localBuffer[34];
-	rabbitData_ptr->lat = latitude.val;
+	latitude.b[3] = localBuffer[27];
+	latitude.b[2] = localBuffer[28];
+	latitude.b[1] = localBuffer[29];
+	latitude.b[0] = localBuffer[30];
+	rabbitData_ptr->lat = ((double)latitude.val)/10000000.0;
 	
-	longitude.b[7] = localBuffer[35];
-	longitude.b[6] = localBuffer[36];
-	longitude.b[5] = localBuffer[37];
-	longitude.b[4] = localBuffer[38];
-	longitude.b[3] = localBuffer[39];
-	longitude.b[2] = localBuffer[40];
-	longitude.b[1] = localBuffer[41];
-	longitude.b[0] = localBuffer[42];
-	rabbitData_ptr->lon = longitude.val;
+	longitude.b[3] = localBuffer[31];
+	longitude.b[2] = localBuffer[32];
+	longitude.b[1] = localBuffer[33];
+	longitude.b[0] = localBuffer[34];
+	rabbitData_ptr->lon = ((double)longitude.val)/10000000.0;
 	
-	alt.b[7] = localBuffer[43];
-	alt.b[6] = localBuffer[44];
-	alt.b[5] = localBuffer[45];
-	alt.b[4] = localBuffer[46];
-	alt.b[3] = localBuffer[47];
-	alt.b[2] = localBuffer[48];
-	alt.b[1] = localBuffer[49];
-	alt.b[0] = localBuffer[50];
-	rabbitData_ptr->alt = alt.val;
+	alt.b[3] = localBuffer[35];
+	alt.b[2] = localBuffer[36];
+	alt.b[1] = localBuffer[37];
+	alt.b[0] = localBuffer[38];
+	rabbitData_ptr->alt = ((double)alt.val)/1000.0;
 	
-	track.b[3] = localBuffer[51];
-	track.b[2] = localBuffer[52];
-	track.b[1] = localBuffer[53];
-	track.b[0] = localBuffer[54];
-	rabbitData_ptr->courseOverGround = track.val * D2R;
+	navvn.b[3] = localBuffer[39];
+	navvn.b[2] = localBuffer[40];
+	navvn.b[1] = localBuffer[41];
+	navvn.b[0] = localBuffer[42];
+	rabbitData_ptr->navvn = ((double)navvn.val)/1000.0;
 	
-	gspeed.b[3] = localBuffer[55];
-	gspeed.b[2] = localBuffer[56];
-	gspeed.b[1] = localBuffer[57];
-	gspeed.b[0] = localBuffer[58];
-	rabbitData_ptr->speedOverGround = gspeed.val;
+	navve.b[3] = localBuffer[43];
+	navve.b[2] = localBuffer[44];
+	navve.b[1] = localBuffer[45];
+	navve.b[0] = localBuffer[46];
+	rabbitData_ptr->navve = ((double)navve.val)/1000.0;
+	
+	navvd.b[3] = localBuffer[47];
+	navvd.b[2] = localBuffer[48];
+	navvd.b[1] = localBuffer[49];
+	navvd.b[0] = localBuffer[50];
+	rabbitData_ptr->navvd = ((double)navvd.val)/1000.0;
+	
+	hAcc.b[3] = localBuffer[51];
+	hAcc.b[2] = localBuffer[52];
+	hAcc.b[1] = localBuffer[53];
+	hAcc.b[0] = localBuffer[54];
+	rabbitData_ptr->hAcc = ((double)hAcc.val)/1000.0;
 }
