@@ -176,7 +176,7 @@ void pilot_flying(double time, double ias_cmd, struct sensordata *sensorData_ptr
 	theta_cmd 	= controlData_ptr->theta_cmd;
 	phi_cmd		= controlData_ptr->phi_cmd;
 	
-	controlData_ptr->dthr 	= speed_control(ias_cmd, ias, TIMESTEP);			// Throttle [ND 0-1]
+	speed_control(ias_cmd, ias, TIMESTEP);			// Throttle [ND 0-1]
 	controlData_ptr->l1   	= 0;												// L1 [rad]
     controlData_ptr->l2   	= roll_control(phi_cmd, phi, p, TIMESTEP, 0);		// L2 [rad]
 	controlData_ptr->l3   	= pitch_control(theta_cmd, theta, q, TIMESTEP, 0);	// L3 [rad]
