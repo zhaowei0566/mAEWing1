@@ -7,7 +7,7 @@
 
 #define NUM_DOUBLE_VARS 6	///< Number of variables that will be logged as doubles
 #define NUM_FLOAT_VARS 71	///< Number of variables that will be logged as floats
-#define NUM_INT_VARS 1		///< Number of variables that will be logged as ints
+#define NUM_INT_VARS 2		///< Number of variables that will be logged as ints
 #define NUM_SHORT_VARS 10	///< Number of variables that will be logged as shorts
 
 //Names of matlab variables MUST match pointers!!
@@ -81,10 +81,10 @@ double* saveAsFloatPointers[NUM_FLOAT_VARS] = {
 			&gpsData.update,&gpsData.hAcc};
 
 /// char array of variable names for ints
-char* saveAsIntNames[NUM_INT_VARS] = {"imuStatus"};
+char* saveAsIntNames[NUM_INT_VARS] = {"imuStatus","loopCounter"};
 
 /// int32_t pointer array to variables that will be saved as ints
-int32_t* saveAsIntPointers[NUM_INT_VARS] = {(int32_t *)&imuData.err_type};
+int32_t* saveAsIntPointers[NUM_INT_VARS] = {(int32_t *)&imuData.err_type,(int32_t *)&missionData.loop};
 
 
 /// char array of variable names for shorts

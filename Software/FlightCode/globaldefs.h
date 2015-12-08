@@ -186,6 +186,7 @@ struct mission {
 	unsigned short claw_select;		///< mode variable; 3 position depending on claw to run
 	unsigned short sysid_select;	///< mode variable; depending on sysid to run
 	unsigned short recording;
+	int loop;
 };
 
 /// Control Data structure

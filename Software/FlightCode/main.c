@@ -99,7 +99,7 @@ int main(int argc, char **argv) {
 	static int t0_latched = FALSE;
 	static int t0excitelatched = FALSE;
 	int loop_counter = 0;
-	int real_loop_counter =0;
+	uint32_t real_loop_counter =0;
 	pthread_mutex_t	mutex;
 
 	uint32_t cpuCalibrationData;
@@ -164,6 +164,9 @@ int main(int argc, char **argv) {
 
 			loop_counter++; //.increment loop counter
 
+			if(missionData.recording == 1){
+				real_loop_counter++;
+			}
 
 			//**** DATA ACQUISITION **************************************************
 			pthread_cond_wait (&trigger_daq, &mutex); // WAIT FOR DAQ ALARMS
@@ -200,9 +203,7 @@ int main(int argc, char **argv) {
 				if(missionData.recording == 0){
 					missionData.recording = 1;
 				}
-				if(missionData.recording == 1){
-					real_loop_counter++;
-				}
+
 				time = get_Time()-t0; // Time since in auto mode
 
 				//**** GUIDANCE **********************************************************
@@ -250,9 +251,9 @@ int main(int argc, char **argv) {
 			set_actuators(&controlData);
 			etime_actuators = get_Time() - tic - ACTUATORS_OFFSET; // compute execution time
 			//************************************************************************
-
+			missionData.loop = real_loop_counter;
 			//**** DATA LOGGING ******************************************************
-			if((missionData.recording == 1)&&(real_loop_counter < 80001)){
+			if((missionData.recording == 1)&&(real_loop_counter < 80000)){
 				datalogger();
 			}
 			etime_datalog = get_Time() - tic - etime_actuators - ACTUATORS_OFFSET; // compute execution time
