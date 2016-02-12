@@ -40,31 +40,32 @@ $ Subcase name : Default
    DISP(PUNCH)=ALL
 BEGIN BULK
 $ Direct Text Input for Bulk Data
-PARAM    POST    0
+PARAM    POST    -1
 PARAM   PRTMAXIM YES
 $ GROUND POINT FOR WEIGHT GENERATION
 PARAM,GRDPNT,18888
 $ PRE_PROPVERT WEIGHT TO MASS (1/386)  
 PARAM     WTMASS .002591
-$ PRE_PROPVERT FROM IN/SEC TO m/s
-PARAM       VREF  39.37
+$ PRE_PROPVERT FROM IN/SEC TO KNOTS
+PARAM       VREF  20.254
 $EIGRL    100                     20      0
 EIGR     101    MGIV                            20
          MASS
 $1------$2------$3------$4------$5------$6------$7------$8------$9------$0                             
 $ grid coordinates
 INCLUDE GRID_mAEWing1.dat
+INCLUDE WS3_spar_full.dat
 $ beam connections and properties
-INCLUDE BEAM_mAEWing1_WS3.dat
+INCLUDE BEAM_mAEWing1_updated.dat
 $ material properteis
-INCLUDE MAT1_mAEWing1.dat
+$ INCLUDE MAT1_mAEWing1.dat; move to beam_xx.dat
 $ point masses
-INCLUDE CONM2_mAEWing1_HatiWS3.dat
+INCLUDE CONM2_mAEWing1_updated.dat
 $ rigid connections
 INCLUDE RBE2_mAEWing1.dat
 $ spring connections
 INCLUDE Spring_mAEWing1.dat
-$ GVT Accels
+$ GVT accels
 INCLUDE gvt_accelerations.dat
 $
 $ Fictitious support at the CG for decoupled rigid modes 
@@ -88,5 +89,9 @@ CORD2R  201             13.64    1.16   0.0     13.64    1.16   1.0
 $ --- Right C.S.  ---
 CORD2R  202             9.753    16.016 0.0     9.753    16.016 1.0
         12.34    14.97  1.0		
+$$ ADD RBE2 FOR BOLT MODELING (http://www.eng-tips.com/viewthread.cfm?qid=271293)
+$1------$1------$1------$1------$1------$1------$1------$1------
+GRID    1000            3.08767 -7.6407  0.
+GRID    2000            3.08767  7.6407  0.
 ENDDATA 6741254d
 $
