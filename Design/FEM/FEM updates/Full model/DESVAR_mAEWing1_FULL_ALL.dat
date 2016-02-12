@@ -1,0 +1,833 @@
+$$ ==========================================
+$$         Design variables for centerbody
+$$ ==========================================
+$              nonstructural mass fuselages
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+DESVAR  1001    flicomp 0.6917220.5     2.0     0.001
+$ change the battery upper bound to 2.0 bas     ed on Jan-28 discussion
+DESVAR  1002    battery 2.8009781.0     3.0     0.001
+DESVAR  1003    motorM  1.0068140.50    2.0     0.001
+DESVAR  1071    X1      -4.36280-5.0    5.0     0.001
+DESVAR  1072    X2      -0.09652-5.0    5.0     0.001
+DESVAR  1073    X3      0.058483-5.0    5.0     0.001
+$DVPREL1 ID     TYPE    PID     FID     PMIN    PMAX 
+DVCREL1 1001    CONM2   301     M
+        1001    1.0
+DVCREL1 1002    CONM2   302     M
+        1002    1.0
+DVCREL1 1003    CONM2   303     M      
+        1003    1.0
+DVCREL1 1171    CONM2   301     X1     
+        1071    1.0
+DVCREL1 1172    CONM2   302     X1
+        1072    1.0
+DVCREL1 1173    CONM2   303     X1
+        1073    1.0
+$$
+$ DESVAR  1061    p1Ixx   1.0000  0.0     5.0
+$ DESVAR  1062    p1Iyy   1.0000  0.0     5.0
+DESVAR  1063    p2Ixx   0.0000140.0     5.0     0.001
+DESVAR  1064    p2Iyy   4.5177270.0     5.0     0.001
+$ DESVAR  1065    p3Ixx   0.1000  0.0     1.0
+$ DESVAR  1066    p3Iyy   1.0000  0.0     5.0
+$
+$ DVCREL1 1061    CONM2   301     I11      
+$         1061    1.0
+$ DVCREL1 1062    CONM2   301     I22      
+$         1062    1.0
+DVCREL1 1063    CONM2   302     I11      
+        1063    1.0
+DVCREL1 1064    CONM2   302     I22      
+        1064    1.0
+$ DVCREL1 1065    CONM2   303     I11      
+$         1065    1.0
+$ DVCREL1 1066    CONM2   303     I22      
+$         1066    1.0
+$ CG location
+$ inner wing beam elements
+DESVAR  9001    W1A1    -0.03877-1.35   1.35     0.001
+DESVAR  9002    W2A1    0.287291-1.35   1.35     0.001
+DVCREL1 1011    CBEAM   1001    W1A
+         9001   1.0  
+DVCREL1 1012    CBEAM   1001    W2A
+         9002   1.0		
+DVCREL1 1013    CBEAM   1001    W1B
+         9001   1.0  
+DVCREL1 1014    CBEAM   1001    W2B
+         9002   1.0 
+		
+DVCREL1 1021    CBEAM   1011    W1A
+         9001   1.0  
+DVCREL1 1022    CBEAM   1011    W2A
+         9002   1.0		
+DVCREL1 1023    CBEAM   1011    W1B
+         9001   1.0  
+DVCREL1 1024    CBEAM   1011    W2B
+         9002   1.0 
+$
+DVCREL1 2011    CBEAM   2001    W1A
+         9001   1.0  
+DVCREL1 2012    CBEAM   2001    W2A
+         9002   -1.0		
+DVCREL1 2013    CBEAM   2001    W1B
+         9001   1.0  
+DVCREL1 2014    CBEAM   2001    W2B
+         9002   -1.0 
+
+DVCREL1 2021    CBEAM   2011    W1A
+         9001   1.0  
+DVCREL1 2022    CBEAM   2011    W2A
+         9002   -1.0		
+DVCREL1 2023    CBEAM   2011    W1B
+         9001   1.0  
+DVCREL1 2024    CBEAM   2011    W2B
+         9002   -1.0
+$1......2.......3.......4.......5.......6.......7.......
+$ CMASS2 I updates
+$ IXX
+DESVAR  6001    conmIxx 0.0000100.00001 5.0      0.001
+DVCREL1 27001   CMASS2  270001  M               
+        6001    0.5
+DVCREL1 27002   CMASS2  270002  M
+        6001    0.5
+DVCREL1 27003   CMASS2  270003  M
+        6001    1.0
+DVCREL1 28001   CMASS2  280001  M
+        6001    0.5
+DVCREL1 28002   CMASS2  280002  M
+        6001    0.5
+DVCREL1 28003   CMASS2  280003  M
+        6001    1.0
+$ IYY
+DESVAR  6002    conmIyy 4.5426750.0001  10.0     0.001
+DVCREL1 27011   CMASS2  270011  M                
+        6002    0.5
+DVCREL1 27012   CMASS2  270012  M
+        6002    0.5
+DVCREL1 27013   CMASS2  270013  M
+        6002    1.0
+DVCREL1 28011   CMASS2  280011  M
+        6002    0.5
+DVCREL1 28012   CMASS2  280012  M
+        6002    0.5
+DVCREL1 28013   CMASS2  280013  M
+        6002    1.0
+$ NSM
+DESVAR  2002    Bconm2  0.0664930.001   0.10     0.001
+DVPREL1 2002    PBEAM   1001    NSM            
+        2002    1.0
+$$ ==========================================
+$$         Design variables for wing
+$$ ==========================================
+$$ CG location
+$ inner wing beam elements
+DESVAR  11001   W1A1    0.042349-2.00   2.00     0.001
+DESVAR  11002   W2A1    0.031317-2.00   2.00     0.001
+$ outer wing beam elements
+DESVAR  20001   W1A2    -0.26564-2.00   2.00     0.001
+DESVAR  20002   W2A2    -1.17750-2.00   2.00     0.001
+$ outermost beam element
+DESVAR  30001   W1A3    -0.54264-2.00   2.00     0.001
+DESVAR  30002   W2A3    0.140598-2.00   2.00     0.001
+$ ======== CBEAM 1002 =========
+DVCREL1 10021   CBEAM   1002    W1A
+        11001   1.0  
+DVCREL1 10022   CBEAM   1002    W2A
+        11002   1.0
+DVCREL1 10023   CBEAM   1002    W1B
+        11001   1.0  
+DVCREL1 10024   CBEAM   1002    W2B
+        11002   1.0 		
+$
+DVCREL1 10221   CBEAM   1022    W1A
+        11001   1.0  
+DVCREL1 10222   CBEAM   1022    W2A
+        11002   1.0
+DVCREL1 10223   CBEAM   1022    W1B
+        11001   1.0  
+DVCREL1 10224   CBEAM   1022    W2B
+        11002   1.0
+$
+DVCREL1 10311   CBEAM   10301   W1A
+        20001   1.0  
+DVCREL1 10312   CBEAM   10301   W2A
+        20002   1.0
+DVCREL1 10313   CBEAM   10301   W1B
+        20001   1.0  
+DVCREL1 10314   CBEAM   10301   W2B
+        20002   1.0
+$
+DVCREL1 10321    CBEAM  10302   W1A
+        20001   1.0     
+DVCREL1 10322    CBEAM  10302   W2A
+        20002   1.0     
+DVCREL1 10323    CBEAM  10302   W1B
+        20001   1.0     
+DVCREL1 10324    CBEAM  10302   W2B
+        20002   1.0
+$
+DVCREL1 10331   CBEAM   10303   W1A
+        20001   1.0  
+DVCREL1 10332   CBEAM   10303   W2A
+        20002   1.0
+DVCREL1 10333   CBEAM   10303   W1B
+        20001   1.0  
+DVCREL1 10334   CBEAM   10303   W2B
+        20002   1.0
+$
+DVCREL1 1041    CBEAM   1004    W1A
+        20001   1.0  
+DVCREL1 1042    CBEAM   1004    W2A
+        20002   1.0
+DVCREL1 1043    CBEAM   1004    W1B
+        20001   1.0  
+DVCREL1 1044    CBEAM   1004    W2B
+        20002   1.0
+$
+DVCREL1 10411   CBEAM   1041    W1A
+        20001   1.0  
+DVCREL1 10412   CBEAM   1041    W2A
+        20002   1.0
+DVCREL1 10413   CBEAM   1041    W1B
+        20001   1.0  
+DVCREL1 10414   CBEAM   1041    W2B
+        20002   1.0
+$
+DVCREL1 10421   CBEAM   1042    W1A
+        20001   1.0  
+DVCREL1 10422   CBEAM   1042    W2A
+        20002   1.0
+DVCREL1 10423   CBEAM   1042    W1B
+        20001   1.0  
+DVCREL1 10424   CBEAM   1042    W2B
+        20002   1.0
+$
+DVCREL1 1051    CBEAM   1005    W1A
+        20001   1.0  
+DVCREL1 1052    CBEAM   1005    W2A
+        20002   1.0
+DVCREL1 1053    CBEAM   1005    W1B
+        20001   1.0  
+DVCREL1 1054    CBEAM   1005    W2B
+        20002   1.0
+$
+DVCREL1 10511   CBEAM   1051    W1A
+        20001   1.0  
+DVCREL1 10512   CBEAM   1051    W2A
+        20002   1.0
+DVCREL1 10513   CBEAM   1051    W1B
+        20001   1.0  
+DVCREL1 10514   CBEAM   1051    W2B
+        20002   1.0
+$
+DVCREL1 10521   CBEAM   1052    W1A
+        20001   1.0  
+DVCREL1 10522   CBEAM   1052    W2A
+        20002   1.0
+DVCREL1 10523   CBEAM   1052    W1B
+        20001   1.0  
+DVCREL1 10524   CBEAM   1052    W2B
+        20002   1.0
+$
+DVCREL1 10061   CBEAM   1006    W1A
+        20001   1.0  
+DVCREL1 10062   CBEAM   1006    W2A
+        20002   1.0
+DVCREL1 10063   CBEAM   1006    W1B
+        20001   1.0  
+DVCREL1 10064   CBEAM   1006    W2B
+        20002   1.0
+$
+DVCREL1 10661   CBEAM   1066    W1A
+        20001   1.0  
+DVCREL1 10662   CBEAM   1066    W2A
+        20002   1.0
+DVCREL1 10663   CBEAM   1066    W1B
+        20001   1.0  
+DVCREL1 10664   CBEAM   1066    W2B
+        20002   1.0
+$
+DVCREL1 10711   CBEAM   1071    W1A
+        20001   1.0  
+DVCREL1 10712   CBEAM   1071    W2A
+        20002   1.0
+DVCREL1 10713   CBEAM   1071    W1B
+        20001   1.0  
+DVCREL1 10714   CBEAM   1071    W2B
+        20002   1.0
+$
+DVCREL1 10721   CBEAM   1072    W1A
+        20001   1.0  
+DVCREL1 10722   CBEAM   1072    W2A
+        20002   1.0
+DVCREL1 10723   CBEAM   1072    W1B
+        20001   1.0  
+DVCREL1 10724   CBEAM   1072    W2B
+        20002   1.0
+$
+DVCREL1 10771   CBEAM   1077    W1A
+        20001   1.0  
+DVCREL1 10772   CBEAM   1077    W2A
+        20002   1.0
+DVCREL1 10773   CBEAM   1077    W1B
+        20001   1.0  
+DVCREL1 10774   CBEAM   1077    W2B
+        20002   1.0
+$
+DVCREL1 1081    CBEAM   1008    W1A
+        20001   1.0  
+DVCREL1 1082    CBEAM   1008    W2A
+        20002   1.0
+DVCREL1 1083    CBEAM   1008    W1B
+        20001   1.0  
+DVCREL1 1084    CBEAM   1008    W2B
+        20002   1.0
+$
+DVCREL1 10811   CBEAM   1081    W1A
+        20001   1.0  
+DVCREL1 10812   CBEAM   1081    W2A
+        20002   1.0
+DVCREL1 10813   CBEAM   1081    W1B
+        20001   1.0  
+DVCREL1 10814   CBEAM   1081    W2B
+        20002   1.0
+$
+DVCREL1 10881   CBEAM   1088    W1A
+        20001   1.0  
+DVCREL1 10882   CBEAM   1088    W2A
+        20002   1.0
+DVCREL1 10883   CBEAM   1088    W1B
+        20001   1.0  
+DVCREL1 10884   CBEAM   1088    W2B
+        20002   1.0
+$
+DVCREL1 1091    CBEAM   1009    W1A
+        30001   1.0  
+DVCREL1 1092    CBEAM   1009    W2A
+        30002   1.0
+DVCREL1 1093    CBEAM   1009    W1B
+        30001   1.0  
+DVCREL1 1094    CBEAM   1009    W2B
+        30002   1.0
+$$
+$$ ========== Right wing ========== 
+DVCREL1 20021   CBEAM   2002    W1A
+        11001   1.0  
+DVCREL1 20022   CBEAM   2002    W2A
+        11002   -1.0
+DVCREL1 20023   CBEAM   2002    W1B
+        11001   1.0  
+DVCREL1 20024   CBEAM   2002    W2B
+        11002   -1.0 		
+$
+DVCREL1 20221   CBEAM   2022    W1A
+        11001   1.0  
+DVCREL1 20222   CBEAM   2022    W2A
+        11002   -1.0
+DVCREL1 20223   CBEAM   2022    W1B
+        11001   1.0  
+DVCREL1 20224   CBEAM   2022    W2B
+        11002   -1.0
+$
+DVCREL1 20311   CBEAM   20301   W1A
+        20001   1.0  
+DVCREL1 20312   CBEAM   20301   W2A
+        20002   -1.0
+DVCREL1 20313   CBEAM   20301   W1B
+        20001   1.0  
+DVCREL1 20314   CBEAM   20301   W2B
+        20002   -1.0
+$
+DVCREL1 20321   CBEAM   20302   W1A
+        20001   1.0     
+DVCREL1 20322   CBEAM   20302   W2A
+        20002   -1.0     
+DVCREL1 20323   CBEAM   20302   W1B
+        20001   1.0     
+DVCREL1 20324   CBEAM   20302   W2B
+        20002   -1.0
+$
+DVCREL1 20331   CBEAM   20303   W1A
+        20001   1.0  
+DVCREL1 20332   CBEAM   20303   W2A
+        20002   -1.0
+DVCREL1 20333   CBEAM   20303   W1B
+        20001   1.0  
+DVCREL1 20334   CBEAM   20303   W2B
+        20002   -1.0
+$
+DVCREL1 2041    CBEAM   2004    W1A
+        20001   1.0  
+DVCREL1 2042    CBEAM   2004    W2A
+        20002   -1.0
+DVCREL1 2043    CBEAM   2004    W1B
+        20001   1.0  
+DVCREL1 2044    CBEAM   2004    W2B
+        20002   -1.0
+$
+DVCREL1 20411   CBEAM   2041    W1A
+        20001   1.0  
+DVCREL1 20412   CBEAM   2041    W2A
+        20002   -1.0
+DVCREL1 20413   CBEAM   2041    W1B
+        20001   1.0  
+DVCREL1 20414   CBEAM   2041    W2B
+        20002   -1.0
+$
+DVCREL1 20421   CBEAM   2042    W1A
+        20001   1.0  
+DVCREL1 20422   CBEAM   2042    W2A
+        20002   -1.0
+DVCREL1 20423   CBEAM   2042    W1B
+        20001   1.0  
+DVCREL1 20424   CBEAM   2042    W2B
+        20002   -1.0
+$
+DVCREL1 2051    CBEAM   2005    W1A
+        20001   1.0  
+DVCREL1 2052    CBEAM   2005    W2A
+        20002   -1.0
+DVCREL1 2053    CBEAM   2005    W1B
+        20001   1.0  
+DVCREL1 2054    CBEAM   2005    W2B
+        20002   -1.0
+$
+DVCREL1 20511   CBEAM   2051    W1A
+        20001   1.0  
+DVCREL1 20512   CBEAM   2051    W2A
+        20002   -1.0
+DVCREL1 20513   CBEAM   2051    W1B
+        20001   1.0  
+DVCREL1 20514   CBEAM   2051    W2B
+        20002   -1.0
+$
+DVCREL1 20521   CBEAM   2052    W1A
+        20001   1.0  
+DVCREL1 20522   CBEAM   2052    W2A
+        20002   -1.0
+DVCREL1 20523   CBEAM   2052    W1B
+        20001   1.0  
+DVCREL1 20524   CBEAM   2052    W2B
+        20002   -1.0
+$
+DVCREL1 2061    CBEAM   2006    W1A
+        20001   1.0  
+DVCREL1 2062    CBEAM   2006    W2A
+        20002   -1.0
+DVCREL1 2063    CBEAM   2006    W1B
+        20001   1.0  
+DVCREL1 2064    CBEAM   2006    W2B
+        20002   -1.0
+$
+DVCREL1 20661   CBEAM   2066    W1A
+        20001   1.0  
+DVCREL1 20662   CBEAM   2066    W2A
+        20002   -1.0
+DVCREL1 20663   CBEAM   2066    W1B
+        20001   1.0  
+DVCREL1 20664   CBEAM   2066    W2B
+        20002   -1.0
+$
+DVCREL1 20711   CBEAM   2071    W1A
+        20001   1.0  
+DVCREL1 20712   CBEAM   2071    W2A
+        20002   -1.0
+DVCREL1 20713   CBEAM   2071    W1B
+        20001   1.0  
+DVCREL1 20714   CBEAM   2071    W2B
+        20002   -1.0
+$
+DVCREL1 20721   CBEAM   2072    W1A
+        20001   1.0  
+DVCREL1 20722   CBEAM   2072    W2A
+        20002   -1.0
+DVCREL1 20723   CBEAM   2072    W1B
+        20001   1.0  
+DVCREL1 20724   CBEAM   2072    W2B
+        20002   -1.0
+$
+DVCREL1 20771   CBEAM   2077    W1A
+        20001   1.0  
+DVCREL1 20772   CBEAM   2077    W2A
+        20002   -1.0
+DVCREL1 20773   CBEAM   2077    W1B
+        20001   1.0  
+DVCREL1 20774   CBEAM   2077    W2B
+        20002   -1.0
+$
+DVCREL1 2081    CBEAM   2008    W1A
+        20001   1.0  
+DVCREL1 2082    CBEAM   2008    W2A
+        20002   -1.0
+DVCREL1 2083    CBEAM   2008    W1B
+        20001   1.0  
+DVCREL1 2084    CBEAM   2008    W2B
+        20002   -1.0
+$
+DVCREL1 20811   CBEAM   2081    W1A
+        20001   1.0  
+DVCREL1 20812   CBEAM   2081    W2A
+        20002   -1.0
+DVCREL1 20813   CBEAM   2081    W1B
+        20001   1.0  
+DVCREL1 20814   CBEAM   2081    W2B
+        20002   -1.0
+$
+DVCREL1 20881   CBEAM   2088    W1A
+        20001   1.0  
+DVCREL1 20882   CBEAM   2088    W2A
+        20002   -1.0
+DVCREL1 20883   CBEAM   2088    W1B
+        20001   1.0  
+DVCREL1 20884   CBEAM   2088    W2B
+        20002   -1.0
+$
+DVCREL1 2091    CBEAM   2009    W1A
+        30001   1.0  
+DVCREL1 2092    CBEAM   2009    W2A
+        30002   -1.0
+DVCREL1 2093    CBEAM   2009    W1B
+        30001   1.0  
+DVCREL1 2094    CBEAM   2009    W2B
+        30002   -1.0
+$$
+$$$ Cross-sectional area for beam elements
+DESVAR  102     Area2   10.966295.0     15.0     0.001
+DESVAR  103     Area3   5.7170003.0     10.0     0.001
+$ DESVAR  1004    Area4   5.76    5.00    7.00
+$
+DVPREL1 1002    PBEAM   1002    A       
+        102     1.0
+DVPREL1 1003    PBEAM   1003    A       
+        103     1.0
+DVPREL1 1004    PBEAM   1004    A       
+        103     1.0
+DVPREL1 1005    PBEAM   1005    A       
+        103     1.0
+DVPREL1 1006    PBEAM   1006    A       
+        103     1.0
+DVPREL1 1007    PBEAM   1007    A       
+        103     1.0
+DVPREL1 1008    PBEAM   1008    A       
+        103     1.0
+DVPREL1 1009    PBEAM   1009    A       
+        103     1.0
+$ Material density
+DESVAR  903     Den2    0.0045281.000e-31.00e-2   0.001
+$ DESVAR  920     Den3    6.392E-34.000e-31.00e-2
+$ DESVAR  930     Den4    5.869E-34.000e-31.00e-2
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+DVMREL1 903     MAT1    903     RHO
+        903     1.0             
+DVMREL1 913     MAT1    913     RHO
+        903     1.0
+$ DVMREL1 930     MAT1    930     RHO
+$         903     1.0
+$ $
+$ $ Ixx and Iyy for point mass at the beam
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+DESVAR  40001   beamIxx 32.376360.00    50.0     0.001
+DESVAR  40002   beamIyy 14.366060.00    20.0     0.001
+$                                                
+$1------$1------$1------$1------$1------         
+DVCREL1 40001   CONM2   170001   I11             
+        40001   0.5
+DVCREL1 40002   CONM2   170002   I11
+        40001   1.0
+DVCREL1 40003   CONM2   170003   I11
+        40001   1.0
+DVCREL1 40004   CONM2   170004   I11
+        40001   1.0
+DVCREL1 40005   CONM2   170005   I11
+        40001   1.0
+DVCREL1 40006   CONM2   170006   I11
+        40001   1.0
+DVCREL1 40007   CONM2   170007   I11
+        40001   1.0
+DVCREL1 40008   CONM2   170008   I11
+        40001   1.0
+DVCREL1 40009   CONM2   170009   I11
+        40001   1.0
+DVCREL1 40010   CONM2   170010   I11
+        40001   1.0
+DVCREL1 40011   CONM2   170011   I11
+        40001   1.0
+DVCREL1 40012   CONM2   170012   I11
+        40001   1.0
+DVCREL1 40013   CONM2   170013   I11
+        40001   1.0
+DVCREL1 40014   CONM2   170014   I11
+        40001   1.0
+DVCREL1 40015   CONM2   170015   I11
+        40001   1.0
+DVCREL1 40016   CONM2   170016   I11
+        40001   0.5
+$
+DVCREL1 40101   CONM2   170001   I22
+        40002   0.5
+DVCREL1 40102   CONM2   170002   I22
+        40002   1.0
+DVCREL1 40103   CONM2   170003   I22
+        40002   1.0
+DVCREL1 40104   CONM2   170004   I22
+        40002   1.0
+DVCREL1 40105   CONM2   170005   I22
+        40002   1.0
+DVCREL1 40106   CONM2   170006   I22
+        40002   1.0
+DVCREL1 40107   CONM2   170007   I22
+        40002   1.0
+DVCREL1 40108   CONM2   170008   I22
+        40002   1.0
+DVCREL1 40109   CONM2   170009   I22
+        40002   1.0
+DVCREL1 40110   CONM2   170010   I22
+        40002   1.0
+DVCREL1 40111   CONM2   170011   I22
+        40002   1.0
+DVCREL1 40112   CONM2   170012   I22
+        40002   1.0
+DVCREL1 40113   CONM2   170013   I22
+        40002   1.0
+DVCREL1 40114   CONM2   170014   I22
+        40002   1.0
+DVCREL1 40115   CONM2   170015   I22
+        40002   1.0
+DVCREL1 40116   CONM2   170016   I22
+        40002   0.5		
+$ right wing - conm2
+DVCREL1 50001   CONM2   180001   I11
+        40001   0.5
+DVCREL1 50002   CONM2   180002   I11
+        40001   1.0
+DVCREL1 50003   CONM2   180003   I11
+        40001   1.0
+DVCREL1 50004   CONM2   180004   I11
+        40001   1.0
+DVCREL1 50005   CONM2   180005   I11
+        40001   1.0
+DVCREL1 50006   CONM2   180006   I11
+        40001   1.0
+DVCREL1 50007   CONM2   180007   I11
+        40001   1.0
+DVCREL1 50008   CONM2   180008   I11
+        40001   1.0
+DVCREL1 50009   CONM2   180009   I11
+        40001   1.0
+DVCREL1 50010   CONM2   180010   I11
+        40001   1.0
+DVCREL1 50011   CONM2   180011   I11
+        40001   1.0
+DVCREL1 50012   CONM2   180012   I11
+        40001   1.0
+DVCREL1 50013   CONM2   180013   I11
+        40001   1.0
+DVCREL1 50014   CONM2   180014   I11
+        40001   1.0
+DVCREL1 50015   CONM2   180015   I11
+        40001   1.0
+DVCREL1 50016   CONM2   180016   I11
+        40001   0.5
+$
+DVCREL1 50101   CONM2   180001   I22
+        40002   0.5     
+DVCREL1 50102   CONM2   180002   I22
+        40002   1.0     
+DVCREL1 50103   CONM2   180003   I22
+        40002   1.0     
+DVCREL1 50104   CONM2   180004   I22
+        40002   1.0     
+DVCREL1 50105   CONM2   180005   I22
+        40002   1.0     
+DVCREL1 50106   CONM2   180006   I22
+        40002   1.0     
+DVCREL1 50107   CONM2   180007   I22
+        40002   1.0     
+DVCREL1 50108   CONM2   180008   I22
+        40002   1.0     
+DVCREL1 50109   CONM2   180009   I22
+        40002   1.0     
+DVCREL1 50110   CONM2   180010   I22
+        40002   1.0     
+DVCREL1 50111   CONM2   180011   I22
+        40002   1.0     
+DVCREL1 50112   CONM2   180012   I22
+        40002   1.0     
+DVCREL1 50113   CONM2   180013   I22
+        40002   1.0     
+DVCREL1 50114   CONM2   180014   I22
+        40002   1.0     
+DVCREL1 50115   CONM2   180015   I22
+        40002   1.0     
+DVCREL1 50116   CONM2   180016   I22
+        40002   0.5		
+$ ===================== Stiffness Design Variables ===========================
+$ area of inertia
+DESVAR  200101  beamIIW 0.4809451.0E-5  1.E-0   0.001
+DESVAR  300101  beamIOW 0.1378761.0e-5  1.E-0   0.001
+$ Torsional constant                       -0
+DESVAR  200102  beamJIW 1.0000001.0e-5  1.E-0   0.001
+DESVAR  300102  beamJOW 0.0553481.0e-5  1.E-0   0.001
+$
+DVPREL1 10012   PBEAM   1002    I1       
+        200101  1.0  
+DVPREL1 10013   PBEAM   1003    I1       
+        300101  1.0
+DVPREL1 10014   PBEAM   1004    I1       
+        300101  1.0    
+DVPREL1 10015   PBEAM   1005    I1       
+        300101  1.0  
+DVPREL1 10016   PBEAM   1006    I1       
+        300101  1.0
+DVPREL1 10017   PBEAM   1007    I1       
+        300101  1.0    
+DVPREL1 10018   PBEAM   1008    I1       
+        300101  1.0  
+DVPREL1 10019   PBEAM   1009    I1       
+        300101  1.0
+$
+DVPREL1 20012   PBEAM   1002    J       
+        200102  1.0                      
+DVPREL1 20013   PBEAM   1003    J      
+        300102  1.0     
+DVPREL1 20014   PBEAM   1004    J      
+        300102  1.0     
+DVPREL1 20015   PBEAM   1005    J       
+        300102  1.0                      
+DVPREL1 20016   PBEAM   1006    J      
+        300102  1.0     
+DVPREL1 20017   PBEAM   1007    J      
+        300102  1.0     
+DVPREL1 20018   PBEAM   1008    J       
+        300102  1.0                      
+DVPREL1 20019   PBEAM   1009    J      
+        300102  1.0
+$ Material density
+$1------$2------$3------$4------$5------$6------$7------$8------
+DESVAR  1903    MAT_GO  1064366.1.000e+41.000E+7  0.001
+DESVAR  1910    MAT_GI  157447.71.000e+41.000E+7  0.001
+DVMREL1 1903    MAT1    903     G
+        1903    1.0 
+DVMREL1 1910    MAT1    913     G
+        1910    1.0 
+DESVAR  2903    MAT_EO  2589019.1.000e+41.000E+7  0.001
+DESVAR  2910    MAT_EI  201265.71.000e+41.000E+7  0.001
+DVMREL1 2903    MAT1    903     E
+        2903    1.0 
+DVMREL1 2910    MAT1    913     E
+        2910    1.0 
+$$$$ Design varialbes for foam+cover of centerbody 2 DVs; E and G are fixed; update I and J
+$ DESVAR  3903    cbfcI11 5.098e-11.000e-31.000E+1  0.001
+$ DESVAR  3910    cbfcJ   2.146e-11.000e-31.000E+1  0.001
+$ DESVAR  3904    cbfcA   20.0    5.0     30.0
+$ DVPREL1 40011   PBEAM   1001    J       
+$         3910    1.0                      
+$ DVPREL1 40012   PBEAM   1001    I1
+$         3903    1.0                 
+$ DVPREL1 40013   PBEAM   1001    A
+$         3904    1.0	
+$ Add +/- 10% uncertainty to spar E and G;
+DESVAR  10903   MAT_GS  72230.007.223e+48.828E+4  0.001
+DESVAR  10910   MAT_ES  301512.32.929e+53.579E+5  0.001
+DVMREL1 10903   MAT1    100     G
+        10903   1.0 
+DVMREL1 10910   MAT1    100     E
+        10910   1.0                
+$ =========================================================================
+$                       RESPONSE and EQUATIONS
+$ =========================================================================
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+$DTABLE	WGVT	6.988	XCG0    3.000   YCG0    0.0     IXX0    52.2827 +1
+$+1      IYY0    461.318
+$ RESPONSE
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+DRESP1	1000	W       WEIGHT
+$ 
+$ C.G.
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+DRESP1  1011    WT33    WEIGHT                   3       3
+DRESP1  1012    WT26    WEIGHT                   2       6
+DRESP1  1013    WT34    WEIGHT                   3       4
+DRESP1  1014    IXX     WEIGHT                   4       4
+DRESP1  1015    IYY     WEIGHT                   5       5
+$
+DRESP2	50      CGX     200
+        DRESP1  1011    1012
+$
+DRESP2	51      CGY     200
+        DRESP1  1011    1013
+$
+DEQATN  200     F(R1,R2) = R2/R1
+$ ===================== FREQUENCY ===================
+$ SWB1
+DRESP1  2001    Frequ1  FREQ                     7
+$ WT1
+DRESP1  2002    Frequ2  FREQ                     8
+$ WB2
+DRESP1  2003    Frequ3  FREQ                     9
+$
+DRESP1  2004    Frequ4  FREQ                     10
+$ SWB2
+DRESP1  2005    Frequ5  FREQ                     11
+$
+$ Form foam + cover fabric
+$ DRESP2  55      wingM    300
+$         DESVAR  20002    20004    20006    20008    20010    20012    20014
+$         20016   20018    20020    20022    20024    20026    20028    20030    
+$         20032
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+$ add weight of centerbody in cost function in step III
+DEQATN  2300     F(flicomp,battery,motorM,Bconm2)=                      +1
++1                 flicomp+battery+motorM+Bconm2*16.502
+DRESP2  303     CBW     2300
+        DESVAR  1001    1002    1003    2002
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+$ DEQATN	1300	F(W,IXX,IYY,Frequ1,Frequ2,Frequ3,Frequ4,Frequ5,         +01  
+$ +01                        CGX,CBW)=                                    +11
+$ +11                10.*((W-13.76)/13.76)**2+                            +12
+$ +12               ((IXX-9560.0)/9560.0)**2+                             +14
+$ +14                1.*((IYY-1643.)/1643.)**2+                           +21
+$ +21               10.*((Frequ1-7.96)/7.96)**2+                          +31
+$ +31               ((Frequ2-13.8)/13.8)**2+                              +41
+$ +41               ((Frequ3-15.97)/15.97)**2+                            +51   
+$ +51               ((Frequ4-19.07)/19.07)**2+                            +61
+$ +61               ((Frequ5-31.9)/31.9)**2+                              +71             
+$ +71               (CGX)**2+                                             +81
+$ +81                1.*((CBW-5.6302)/5.6302)**2                                        
+$ $$+4      ((CGX-3.000)/3.000)**2                                                                                
+$ DRESP2	403     Error   1300                                            +1
+$ +1      DRESP1  1000    1014    1015    2001    2002    2003     2004   +2     
+$ +2              2005                                                    +3
+$ +3      DRESP2  50      303                                                 
+$ When includes a lot of terms in the cost function, the updated results are not good
+DEQATN	1300	F(W,IXX,IYY,Frequ1,Frequ2,                              +01  
++01                        CGX)=                                        +11
++11                1.*((W-13.76)/13.76)**2+                             +12
++12               ((IXX-9560.0)/9560.0)**2+                             +14
++14                1.*((IYY-1643.)/1643.)**2+                           +21
++21               1.*((Frequ1-7.96)/7.96)**2+                           +31
++31               ((Frequ2-13.8)/13.8)**2+                              +41             
++41               (CGX)**2                                                      
+$$+4      ((CGX-3.000)/3.000)**2                                                                                
+DRESP2	403     Error   1300                                            +1
++1      DRESP1  1000    1014    1015    2001    2002                    +3     
++3      DRESP2  50    
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0		
+doptprm p1      1       p2      15      desmax  1000     
+param   despch  0
+$ write DESVAR and DRESP1 entries
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0		
+DCONSTR	90001	50      -0.01   0.01
+$ DCONSTR 90001   51      -0.01   0.01
+DCONSTR 90001   1000    13.4    14.2
+DCONSTR	90001	1014    9321.   9799.
+DCONSTR	90001	1015	1601.0  1684.1
+DCONSTR	90001	2001	7.7     8.1  
+DCONSTR	90001	2002	13.0    14.5  
+DCONSTR	90001	2003	15.5    16.45
+DCONSTR	90001	2004	18.1    20.0
+DCONSTR	90001	2005	30.3    33.5
+$ DCONSTR 90001   303     5.40    5.90
+
+
+

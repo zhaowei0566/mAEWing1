@@ -1,0 +1,175 @@
+$DESVAR ID     LABEL   XINIT   XLB     XUB     DELXV
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+$              nonstructural mass fuselages
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+DESVAR  1001    flicomp 0.6461320.5     2.0
+$ change the battery upper bound to 2.0 based on Jan-28 discussion
+DESVAR  1002    battery 2.8781211.0     3.0
+DESVAR  1003    motorM  1.1126010.50    2.0
+DESVAR  1071    X1      -4.32258-5.0    5.0
+DESVAR  1072    X2      -0.09603-5.0    5.0
+DESVAR  1073    X3      0.058588-5.0    5.0
+$DVPREL1 ID     TYPE    PID     FID     PMIN    PMAX 
+DVCREL1 1001    CONM2   301     M
+        1001    1.0
+DVCREL1 1002    CONM2   302     M
+        1002    1.0
+DVCREL1 1003    CONM2   303     M      
+        1003    1.0
+DVCREL1 1171    CONM2   301     X1     
+        1071    1.0
+DVCREL1 1172    CONM2   302     X1
+        1072    1.0
+DVCREL1 1173    CONM2   303     X1
+        1073    1.0
+$$
+$ DESVAR  1061    p1Ixx   1.0000  0.0     5.0
+$ DESVAR  1062    p1Iyy   1.0000  0.0     5.0
+DESVAR  1063    p2Ixx   0.0000140.0     5.0
+DESVAR  1064    p2Iyy   4.5273260.0     5.0
+$ DESVAR  1065    p3Ixx   0.1000  0.0     1.0
+$ DESVAR  1066    p3Iyy   1.0000  0.0     5.0
+$
+$ DVCREL1 1061    CONM2   301     I11      
+$         1061    1.0
+$ DVCREL1 1062    CONM2   301     I22      
+$         1062    1.0
+DVCREL1 1063    CONM2   302     I11      
+        1063    1.0
+DVCREL1 1064    CONM2   302     I22      
+        1064    1.0
+$ DVCREL1 1065    CONM2   303     I11      
+$         1065    1.0
+$ DVCREL1 1066    CONM2   303     I22      
+$         1066    1.0
+$ CG location
+$ inner wing beam elements
+DESVAR  10001   W1A1    -0.03874-1.35   1.35
+DESVAR  10002   W2A1    0.287340-1.35   1.35
+DVCREL1 1011    CBEAM   1001    W1A
+        10001   1.0  
+DVCREL1 1012    CBEAM   1001    W2A
+        10002   1.0		
+DVCREL1 1013    CBEAM   1001    W1B
+        10001   1.0  
+DVCREL1 1014    CBEAM   1001    W2B
+        10002   1.0 
+		
+DVCREL1 1021    CBEAM   1011    W1A
+        10001   1.0  
+DVCREL1 1022    CBEAM   1011    W2A
+        10002   1.0		
+DVCREL1 1023    CBEAM   1011    W1B
+        10001   1.0  
+DVCREL1 1024    CBEAM   1011    W2B
+        10002   1.0 
+
+$ the other side
+DVCREL1 2011    CBEAM   2001    W1A
+        10001   1.0  
+DVCREL1 2012    CBEAM   2001    W2A
+        10002   -1.0		
+DVCREL1 2013    CBEAM   2001    W1B
+        10001   1.0  
+DVCREL1 2014    CBEAM   2001    W2B
+        10002   -1.0 
+
+DVCREL1 2021    CBEAM   2011    W1A
+        10001   1.0  
+DVCREL1 2022    CBEAM   2011    W2A
+        10002   -1.0		
+DVCREL1 2023    CBEAM   2011    W1B
+        10001   1.0  
+DVCREL1 2024    CBEAM   2011    W2B
+        10002   -1.0
+$ $$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$$
+$ CMASS2 I updates
+$ IXX
+DESVAR  6001    conmIxx 0.0000100.00001 5.0
+DVCREL1 27001   CONM2   270001  I11
+        6001    0.5
+DVCREL1 27002   CONM2   270002  I11
+        6001    0.5
+DVCREL1 27003   CONM2   270003  I11
+        6001    1.0
+DVCREL1 28001   CONM2   280001  I11
+        6001    0.5
+DVCREL1 28002   CONM2   280002  I11
+        6001    0.5
+DVCREL1 28003   CONM2   280003  I11
+        6001    1.0
+$ IYY
+DESVAR  6002    conmIyy 4.5532440.00    10.0
+DVCREL1 27011   CONM2   270011  I22
+        6002    0.5
+DVCREL1 27012   CONM2   270012  I22
+        6002    0.5
+DVCREL1 27013   CONM2   270013  I22
+        6002    1.0
+DVCREL1 28011   CONM2   280011  I22
+        6002    0.5
+DVCREL1 28012   CONM2   280012  I22
+        6002    0.5
+DVCREL1 28013   CONM2   280013  I22
+        6002    1.0
+$ NSM
+DESVAR  2002    Bconm2  0.0683080.001   0.10     0.001
+DVPREL1 2002    PBEAM   101     NSM
+        2002    1.0
+$
+$ ----------------------- Body Flap ------------------------------
+$ DESVAR  8001    flapM   .126    .01     .20
+$ DESVAR   9001    flapY1  1.4652  1.0     2.0
+$ DVCREL1 8001    CONM2   401     M
+$         8001    1.0
+$ DVCREL1  8002    CONM2   401     X2
+$          9001    -1.0
+$ DVCREL1 9001    CONM2   501     M
+$         8001    1.0
+$ DVCREL1  9002    CONM2   501     X2
+$          9001    1.0
+$ ========================================================================
+$                           RESPONSE and EQUATIONS
+$ ========================================================================
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+DRESP1	1000	W       WEIGHT
+$
+$   C.G.
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+DRESP1  10111   WT33    WEIGHT                   3       3
+DRESP1  10112   WT26    WEIGHT                   2       6
+DRESP1  10113   WT34    WEIGHT                   3       4
+DRESP1  10114   IXX     WEIGHT                   4       4
+DRESP1  10115   IYY     WEIGHT                   5       5
+DRESP1  10116   IXY     WEIGHT                   4       5
+$
+DRESP2	50      CGX     200
+        DRESP1  10111   10112
+$
+DRESP2	51      CGY     200
+        DRESP1  10111   10113
+$
+DEQATN  200     F(R1,R2) = R2/R1
+$
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+DEQATN	1300	F(W,CGX)=                                               +1
++1              ((W-7.4126)/7.4126)**2+                                 +2
++2              CGX**2
+DRESP2	403     Error   1300                                            +1
++1      DRESP1  1000                                                    +2
++2      DRESP2  50                                                    
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0		
+DOPTPRM p1      1       P2      15      DESMAX  500     CONV2   1e-7
+PARAM   DESPCH  0
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0		
+DCONSTR	90001	50      -0.001  0.001
+DCONSTR 90001   10111   7.35    7.45
+$ DCONSTR	90001	10112   -.1e-3  1.0e-3
+
+$DCONSTR	90001	10113	-.1e-3  1.0e-3
+DCONSTR	90001	10114   48.60   54.83
+DCONSTR	90001	10115	469.0   518.2
+$ DCONSTR 90001   10116   -.1e-6  1.0e-6
+
+
+
