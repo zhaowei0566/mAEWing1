@@ -139,6 +139,9 @@ $                  Main spar beam properties
 $======================================================================
 $ To take account the foam GJ, a little bit increase in the J for all beam
 $ 1001 - Area for spar, EI, GJ assumed to be large in full model
+$        No density for this beam, distributed mass NSM is used. The corresponding
+$        Material ID 943 has no density input, i.e. 0. A and I1, J ara assumed to
+$        to have larger values, because the centerbody is stiff, GA,EI and GJ.
 $ 1002 - Inner wing properties
 $ 1003 -1009 Outer wing properties
 $1......2.......3.......4.......5.......6.......7.......8.......9.......
