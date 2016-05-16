@@ -24,20 +24,23 @@ $           to include the accels added in the centerline.
 $ -- Sep 14, 2015
 $        1)  Modify the RBE3 connections of body flaps to centerbody;
 $        2)  2 Grids added; modify 2 RBE3 connections; modify rear spar beam connections; 
-SOL 103
+SOL 200
 CEND
 $ Direct Text Input for Global Case Control Data
 TITLE = MSC.Nastran job created on 20-Feb-15 at 15:37:03
-ECHO = SORT
+ECHO = NONE
+DISP = ALL
+ANALYSIS = MODES
+DESOBJ(MIN) = 403
+DESSUB = 90001
 $ Using Nastran default values for RESVEC
 SUBCASE 1
 $ Subcase name : Default
    SUBTITLE=Default
    METHOD = 101
+ $  MODTRAK = 100
   $ SPC = 99
    VECTOR(SORT1,REAL)=ALL
-   SPCFORCES(SORT1,REAL)=ALL
-   DISP(PUNCH)=ALL
 BEGIN BULK
 $ Direct Text Input for Bulk Data
 PARAM    POST    -1
@@ -51,6 +54,7 @@ PARAM       VREF  20.254
 $EIGRL    100                     20      0
 EIGR     101    MGIV                            20
          MASS
+$ MODTRAK 100     7       11      0.7
 $1------$2------$3------$4------$5------$6------$7------$8------$9------$0                             
 $ grid coordinates
 INCLUDE GRID_mAEWing1.dat
@@ -58,7 +62,7 @@ INCLUDE WS3_spar_full.dat
 $ beam connections and properties
 INCLUDE BEAM_mAEWing1_updated.dat
 $ material properteis
-$ INCLUDE MAT1_mAEWing1.dat; move to beam_xx.dat
+$ INCLUDE MAT1_mAEWing1.dat $ move to beamxx.dat
 $ point masses
 INCLUDE CONM2_mAEWing1_updated.dat
 $ rigid connections
@@ -68,6 +72,7 @@ INCLUDE Spring_mAEWing1.dat
 $ GVT accels
 INCLUDE gvt_accelerations.dat
 $
+INCLUDE DESVAR_mAEWing1_FULL_ALL.DAT
 $ Fictitious support at the CG for decoupled rigid modes 
 SUPORT,18888,123456
 $
