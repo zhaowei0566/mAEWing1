@@ -226,3 +226,7 @@ pip-log.txt
 /Models
 /Simulation/Controllers/slprj
 /Simulation/Libraries/slprj
+Software/FlightCode/output
+Design/CAD/Center Body/Flight Computer Tray.SLDPRT
+Software/FlightCode/cygmpfr-1.dll
+Software/FlightCode/cyggmp-3.dll
