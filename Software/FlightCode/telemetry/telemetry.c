@@ -49,7 +49,7 @@ void send_telemetry(struct sensordata *sensorData_ptr, struct nav *navData_ptr, 
 	int bytes=0;
 	unsigned short flags=0;
 	unsigned long tmp;
-	uint16_t tele_data[23], output_CKSUM=0;
+	uint16_t tele_data[36], output_CKSUM=0;
 	static byte sendpacket[TELE_PACKET_SIZE]={'U','U','T',};
 
 	// Build send_telemetry data packet
@@ -63,25 +63,43 @@ void send_telemetry(struct sensordata *sensorData_ptr, struct nav *navData_ptr, 
 	tele_data[5] = (uint16_t)( sensorData_ptr->imuData_ptr->q*R2D / 200.0 * 0x7FFF );
 	tele_data[6] = (uint16_t)( sensorData_ptr->imuData_ptr->r*R2D / 200.0 * 0x7FFF );
 	
-	tele_data[7] = (uint16_t)( (sensorData_ptr->adData_ptr->h) / 10000.0 * 0x7FFF );			// max AGL Alt.(m) = 10000 m
-	tele_data[8] = (uint16_t)( (sensorData_ptr->adData_ptr->ias) / 80.0 * 0x7FFF );				// max Indicated Airspeed(IAS) = 80 m/s	
+	tele_data[7] = (uint16_t)( sensorData_ptr->imuData_ptr->ax / 100.0 * 0x7FFF );	// IMU accels = 100 m/sec2
+	tele_data[8] = (uint16_t)( sensorData_ptr->imuData_ptr->ay / 100.0 * 0x7FFF );
+	tele_data[9] = (uint16_t)( sensorData_ptr->imuData_ptr->az / 100.0 * 0x7FFF );
+	
+	tele_data[10] = (uint16_t)( (sensorData_ptr->adData_ptr->h) / 10000.0 * 0x7FFF );	// max AGL Alt.(m) = 10000 m
+	tele_data[11] = (uint16_t)( (sensorData_ptr->adData_ptr->ias) / 80.0 * 0x7FFF );	// max Indicated Airspeed(IAS) = 80 m/s	
 
-	tele_data[9] = (uint16_t)( navData_ptr->psi*R2D / 180.0 * 0x7FFF );		// Euler angles [psi,theta,phi] (deg)
-	tele_data[10]= (uint16_t)( navData_ptr->the*R2D / 90.0 * 0x7FFF );
-	tele_data[11]= (uint16_t)( navData_ptr->phi*R2D / 180.0 * 0x7FFF );
+	tele_data[12] = (uint16_t)( navData_ptr->psi*R2D / 180.0 * 0x7FFF );	// Euler angles [psi,theta,phi] (deg)
+	tele_data[13]= (uint16_t)( navData_ptr->the*R2D / 90.0 * 0x7FFF );
+	tele_data[14]= (uint16_t)( navData_ptr->phi*R2D / 180.0 * 0x7FFF );
 
-	tele_data[12]= (uint16_t)( controlData_ptr->l2 / L2_MAX * 0x7FFF );		// control surface commands (normalized 0-1)
-	tele_data[13]= (uint16_t)( controlData_ptr->l3 / L3_MAX * 0x7FFF );
-	tele_data[14]= (uint16_t)( controlData_ptr->dthr * 0x7FFF );
-	tele_data[15]= (uint16_t)( 0 * 0x7FFF );
+	tele_data[15]= (uint16_t)( controlData_ptr->l1 / 45 * 0x7FFF );	// control surface commands (normalized 0-1)
+	tele_data[16]= (uint16_t)( controlData_ptr->l2 / 45 * 0x7FFF );
+	tele_data[17]= (uint16_t)( controlData_ptr->l3 / 45 * 0x7FFF );
+	tele_data[18]= (uint16_t)( controlData_ptr->l4 / 45 * 0x7FFF );
+	tele_data[19]= (uint16_t)( controlData_ptr->l1 / 45 * 0x7FFF );
+	tele_data[20]= (uint16_t)( controlData_ptr->l2 / 45 * 0x7FFF );
+	tele_data[21]= (uint16_t)( controlData_ptr->l3 / 45 * 0x7FFF );
+	tele_data[22]= (uint16_t)( controlData_ptr->l4 / 45 * 0x7FFF );
+	tele_data[23]= (uint16_t)( controlData_ptr->dthr * 0x7FFF );
+	
+	tele_data[24]= (uint16_t)( sensorData_ptr->accelData_ptr->cf / 8.0 * 0x7FFF );	// accelerometers = 8 g
+	tele_data[25]= (uint16_t)( sensorData_ptr->accelData_ptr->cr / 8.0 * 0x7FFF );
+	tele_data[26]= (uint16_t)( sensorData_ptr->accelData_ptr->lf / 8.0 * 0x7FFF );
+	tele_data[27]= (uint16_t)( sensorData_ptr->accelData_ptr->lr / 8.0 * 0x7FFF );
+	tele_data[28]= (uint16_t)( sensorData_ptr->accelData_ptr->rf / 8.0 * 0x7FFF );
+	tele_data[29]= (uint16_t)( sensorData_ptr->accelData_ptr->rr / 8.0 * 0x7FFF );
+	
+	tele_data[30]= (uint16_t)( 0 * 0x7FFF );
 
 
-	tele_data[16] = cpuLoad;		/* cpuload */
+	tele_data[31] = cpuLoad;		/* cpuload */
 
 	tmp = (unsigned long)( sensorData_ptr->gpsData_ptr->lon *1e07 );
-	memcpy(&tele_data[17],&tmp,4);
+	memcpy(&tele_data[32],&tmp,4);
 	tmp = (unsigned long)( sensorData_ptr->gpsData_ptr->lat *1e07 );
-	memcpy(&tele_data[19],&tmp,4);
+	memcpy(&tele_data[33],&tmp,4);
 
 	//if (ofpMode == standby) flags = flags | 0x01;
 	if (missionData_ptr->mode == 2) flags = flags | 0x01<<1;	// Autopilot mode
@@ -91,8 +109,8 @@ void send_telemetry(struct sensordata *sensorData_ptr, struct nav *navData_ptr, 
 	if (sensorData_ptr->gpsData_ptr->err_type == data_valid || sensorData_ptr->gpsData_ptr->err_type == incompletePacket) flags = flags | 0x01<<7;
 	if (sensorData_ptr->gpsData_ptr->navValid == 0) flags = flags | 0x01<<8;
 	
-	tele_data[21] = flags;
-	tele_data[22] = (uint16_t)sensorData_ptr->gpsData_ptr->satVisible;
+	tele_data[34] = flags;
+	tele_data[35] = (uint16_t)sensorData_ptr->gpsData_ptr->satVisible;
 	
 	
 	memcpy(&sendpacket[3],&tele_data,46);
