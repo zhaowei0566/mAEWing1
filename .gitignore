@@ -230,5 +230,8 @@ Software/FlightCode/output
 Design/CAD/Center Body/Flight Computer Tray.SLDPRT
 Software/FlightCode/cygmpfr-1.dll
 Software/FlightCode/cyggmp-3.dll
+<<<<<<< HEAD
 Design/CAD/Center Body/Flight Computer Tray.SLDPRT
-Software/FlightCode/output
+=======
+Design/CAD/Center Body/flight computer tray.SLDPRT
+>>>>>>> refs/remotes/origin/master

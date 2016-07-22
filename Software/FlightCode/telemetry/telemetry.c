@@ -101,10 +101,13 @@ void send_telemetry(struct sensordata *sensorData_ptr, struct nav *navData_ptr, 
 	tmp = (unsigned long)( sensorData_ptr->gpsData_ptr->lat *1e07 );
 	memcpy(&tele_data[33],&tmp,4);
 
-	//if (ofpMode == standby) flags = flags | 0x01;
+	if (missionData_ptr->recording == 1) flags = flags | 0x01<<0; // Logging
+	//if (missionData_ptr->mode == 1) flags = flags | 0x01<<0;  // Manual mode
 	if (missionData_ptr->mode == 2) flags = flags | 0x01<<1;	// Autopilot mode
-	if (missionData_ptr->mode == 1) flags = flags | 0x01<<4;  // Manual mode
-	if (missionData_ptr->recording == 1) flags = flags | 0x01<<0; // Recording?
+	if (missionData_ptr->claw_mode == 1) flags = flags | 0x01<<2;	// Claw mode = 1
+	if (missionData_ptr->claw_mode == 2) flags = flags | 0x01<<3;	// Claw mode = 2
+	if (missionData_ptr->claw_select == 1) flags = flags | 0x01<<4;	// Claw select = 1
+	if (missionData_ptr->claw_select == 2) flags = flags | 0x01<<5;	// Claw select = 2
 	if ( (sensorData_ptr->imuData_ptr->err_type != checksum_err) && (sensorData_ptr->imuData_ptr->err_type != got_invalid) ) flags = flags | 0x01<<6;
 	if (sensorData_ptr->gpsData_ptr->err_type == data_valid || sensorData_ptr->gpsData_ptr->err_type == incompletePacket) flags = flags | 0x01<<7;
 	if (sensorData_ptr->gpsData_ptr->navValid == 0) flags = flags | 0x01<<8;
