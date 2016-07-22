@@ -157,6 +157,7 @@ int main(int argc, char **argv) {
 
 		// Initialize data logging
 		init_datalogger();
+
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 		//main-loop
 		//++++++++++++++++++++++++++++++++++++++++++++++++++++++++
