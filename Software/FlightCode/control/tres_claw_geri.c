@@ -16,19 +16,25 @@ static double pilot_phi(struct sensordata *sensorData_ptr);
 static double roll_control (double phi_ref, double roll_angle, double rollrate, double delta_t, unsigned short gain_selector);
 static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t, unsigned short gain_selector);
 static double speed_control(double speed_ref, double airspeed, double delta_t);
+static double alt_control(double alt_ref, double alt, double delta_t);
 
 void approach_control(double time, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
 void flare_control(double time, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
 void pilot_flying(double time, double ias_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
 void pilot_flying_inner(double time, double ias_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
 void open_loop(double time, double ias_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
+void alt_hold(double time, double ias_cmd, double alt_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
 void reset_tracker();
+void reset_roll();
+void reset_pitch();
+void reset_speed();
+void reset_alt();
 
 // initialize pitch and roll angle tracking errors, integrators, and anti wind-up operators
-// 0 values correspond to the roll tracker, 1 values correspond to the theta tracker
-static double e[3] = {0,0,0};
-static double integrator[3] = {0,0,0};
-static short anti_windup[3]={1,1,1};   // integrates when anti_windup is 1
+// 0 values correspond to the roll tracker, 1 values correspond to the theta tracker, 2 values to the speed tracker, 3 values to the altitude tracker
+static double e[4] = {0,0,0};
+static double integrator[4] = {0,0,0,0};
+static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 
 /// ****************************************************************************************
 
@@ -49,6 +55,15 @@ static short anti_windup[3]={1,1,1};   // integrates when anti_windup is 1
 	static double v_gain[2]     		= {0.1, 0.020};			// PI gains for speed tracker
 #endif
 
+#ifdef AIRCRAFT_GERI
+	static double roll_gain[3]  		= {0.5,0.15,0.01};  	// PI gains for roll tracker and roll damper
+	static double roll_gain_single[3]  	= {1.5,0.5,0.0};  		// PI gains for roll tracker and roll damper when using only Flap2
+	static double pitch_gain[3] 		= {-0.3,-0.40,0.0};  	// PI gains for pitch tracker and pitch damper
+	static double pitch_gain_single[3] 	= {-0.75,-1.0,0.0};  	// PI gains for pitch tracker and pitch damper when using only Flap3
+	static double v_gain[2]     		= {0.1, 0.020};			// PI gains for speed tracker
+	static double alt_gain[2]     		= {0.1*D2R, 0.0*D2R};	// PI gains for speed tracker
+#endif
+
 double base_pitch_cmd		= 0.0698;  				// Trim value 4 deg
 double trim_speed			= 23;					// Trim airspeed, m/s
 double approach_theta 		= -6.5*D2R;				// Absolute angle for the initial approach
@@ -56,7 +71,8 @@ double approach_speed 		= 20;					// Approach airspeed, m/s
 double flare_theta 			= 1*D2R;				// Absolute angle for the flare
 double flare_speed 			= 17;					// Flare airspeed, m/s
 double pilot_flare_delta	= 1;					// Delta flare airspeed if the pilot is landing, m/s
-double exp_speed			= 26;					// Speed to run the experiments at, m/s
+double exp_speed[3]			= {26,26, 26};			// Speed to run the experiments at, m/s
+double alt_cmd;
 
 /// *****************************************************************************************
 
@@ -71,6 +87,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	unsigned short claw_mode 	= missionData_ptr -> claw_mode; 	// mode switching
 	unsigned short claw_select 	= missionData_ptr -> claw_select; 	// mode switching
 	static int t0_latched = FALSE;	// time latching
+	static int altCmd_latched = FALSE;	// altitude latching
 	static double t0 = 0;
 	double flare_time;
 
@@ -78,23 +95,23 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 		case 0: // experiment mode
 			t0_latched = FALSE;
 			switch(claw_select){
-				case 0: // chirp, open loop L3/R3, L4/R4 at 23 m/s
-					reset_tracker();
+				case 0: // chirp, altitude hold, L3/R3, L4/R4 at 26 m/s
+			if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 0;
-					open_loop(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
+					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
-				case 1: // chirp, open loop L3/R3 at 26 m/s
-					reset_tracker();
+				case 1: // chirp, altitude hold, L3/R3 at 26 m/s
+			if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 1;
-					open_loop(time, exp_speed, sensorData_ptr, navData_ptr, controlData_ptr);
+					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
-				default: // chirp, open loop L4/R4 at 26 m/s
-					reset_tracker();
+				default: // chirp, altitude hold, L4/R4 at 26 m/s
+			if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 2;
-					open_loop(time, exp_speed, sensorData_ptr, navData_ptr, controlData_ptr);
+					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
 			break;
@@ -121,8 +138,9 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 			break;
 		default: // pilot mode
 			missionData_ptr -> run_excitation = 0;
+			altCmd_latched = FALSE;
 			t0_latched = FALSE;
-			pilot_flying(time, trim_speed,sensorData_ptr, navData_ptr, controlData_ptr);
+			pilot_flying(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 			break;
 	}
 }
@@ -175,6 +193,35 @@ void pilot_flying(double time, double ias_cmd, struct sensordata *sensorData_ptr
 	
 	theta_cmd 	= controlData_ptr->theta_cmd;
 	phi_cmd		= controlData_ptr->phi_cmd;
+	
+	controlData_ptr->dthr 	= speed_control(ias_cmd, ias, TIMESTEP);			// Throttle [ND 0-1]
+	controlData_ptr->l1   	= 0;												// L1 [rad]
+    controlData_ptr->l2   	= roll_control(phi_cmd, phi, p, TIMESTEP, 0);		// L2 [rad]
+	controlData_ptr->l3   	= pitch_control(theta_cmd, theta, q, TIMESTEP, 0);	// L3 [rad]
+	controlData_ptr->l4   	= controlData_ptr->l3 + controlData_ptr->l2; 		// L4 [rad]
+    controlData_ptr->r1   	= 0; 												// R1 [rad]
+	controlData_ptr->r2   	= -1*controlData_ptr->l2; 							// R2 [rad]
+	controlData_ptr->r3   	= controlData_ptr->l3;								// R3 [rad]
+	controlData_ptr->r4   	= controlData_ptr->r3 + controlData_ptr->r2; 		// R4 [rad]
+}
+
+void alt_hold(double time, double ias_cmd, double alt_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr){
+	double phi   = navData_ptr->phi;						// roll angle
+	double theta = navData_ptr->the - base_pitch_cmd; 		// subtract theta trim value to convert to delta coordinates
+	double p     = sensorData_ptr->imuData_ptr->p; 			// roll rate
+	double q     = sensorData_ptr->imuData_ptr->q; 			// pitch rate
+	double ias   = sensorData_ptr->adData_ptr->ias_filt;	// filtered airspeed
+	double phi_cmd, theta_cmd;
+	double alt   = navData_ptr->alt;                        // altitude
+	
+	controlData_ptr->phi_cmd = pilot_phi(sensorData_ptr);		// phi from the pilot stick
+	controlData_ptr->ias_cmd = ias_cmd;
+	controlData_ptr->alt_cmd = alt_cmd;
+	
+	phi_cmd		= controlData_ptr->phi_cmd;
+		
+	theta_cmd 	= alt_control(alt_cmd, alt, TIMESTEP) + pilot_theta(sensorData_ptr); // Altitude tracker + Pilot stick
+	controlData_ptr->theta_cmd	= theta_cmd;		// theta from altitude tracker
 	
 	controlData_ptr->dthr 	= speed_control(ias_cmd, ias, TIMESTEP);			// Throttle [ND 0-1]
 	controlData_ptr->l1   	= 0;												// L1 [rad]
@@ -355,7 +402,7 @@ static double speed_control(double speed_ref, double airspeed, double delta_t)
 	
 	// Speed tracker
 	e[2] = speed_ref - airspeed;
-	integrator[2] += e[2]*delta_t*anti_windup[2]; // altitude error integral
+	integrator[2] += e[2]*delta_t*anti_windup[2]; // airspeed error integral
 
 	// proportional term  + integral term
 	dthr = v_gain[0]*e[2] + v_gain[1]*integrator[2];    // Throttle output
@@ -369,19 +416,59 @@ static double speed_control(double speed_ref, double airspeed, double delta_t)
 
 	return dthr; // non dimensional
 }
+static double alt_control(double alt_ref, double alt, double delta_t)
+{
+	double theta_cmd;
 
+	// Altitude tracker
+	e[3] = alt_ref - alt;                         // altitude error
+	integrator[3] += e[3]*delta_t*anti_windup[3]; // altitude error integral
+
+	// proportional term  + integral term
+	theta_cmd = alt_gain[0]*e[3] + alt_gain[1]*integrator[3];    // Theta Command output
+
+	//eliminate wind-up on altitude integral
+	if      (theta_cmd >= THETA_MAX && e[3] < 0) {anti_windup[3] = 1; theta_cmd = THETA_MAX;}
+	else if (theta_cmd >= THETA_MAX && e[3] > 0) {anti_windup[3] = 0; theta_cmd = THETA_MAX;}  //stop integrating
+	else if (theta_cmd <= THETA_MIN && e[3] < 0) {anti_windup[3] = 0; theta_cmd = THETA_MIN;}  //stop integrating
+	else if (theta_cmd <= THETA_MIN && e[3] > 0) {anti_windup[3] = 1; theta_cmd = THETA_MIN;}
+	else {anti_windup[3] = 1;}
+
+	return theta_cmd; // non dimensional
+}
+
+
+void reset_roll(){
+	integrator[0] = 0;
+	anti_windup[0] = 1;
+	e[0] = 0;
+}
+void reset_pitch(){
+	integrator[1] = 0;
+	anti_windup[1] = 1;
+	e[1] = 0;
+}
+void reset_speed(){
+	integrator[2] = 0;
+	anti_windup[2] = 1;
+	e[2] = 0;
+}
+void reset_alt(){
+	integrator[3] = 0;
+	anti_windup[3] = 1;
+	e[3] = 0;
+}
 void reset_tracker(){
-	integrator[0] = integrator[1] = integrator[2] = 0;
-	anti_windup[0] = anti_windup[1] = anti_windup[2] = 1;
-	e[0] = e[1] = e[2] = 0;
+	reset_roll();
+	reset_pitch();
+	reset_speed();
+	reset_alt();
 }
 
 // Reset parameters to initial values
 extern void reset_control(struct control *controlData_ptr){
 
-	integrator[0] = integrator[1] = integrator[2] = 0;
-	anti_windup[0] = anti_windup[1] = anti_windup[2] = 1;
-	e[0] = e[1] = e[2] = 0;
+	reset_tracker();
 
 	controlData_ptr->dthr = 0; 	// throttle
 	controlData_ptr->l1   = 0;	// L1 [rad]

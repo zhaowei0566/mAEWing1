@@ -65,7 +65,7 @@ void send_telemetry(struct sensordata *sensorData_ptr, struct nav *navData_ptr, 
 	//tele_data[6] = (uint16_t)( sensorData_ptr->imuData_ptr->ay / 100.0 * 0x7FFF );
 	tele_data[4] = (uint16_t)( sensorData_ptr->imuData_ptr->az / 100.0 * 0x7FFF );
 	
-	tele_data[5] = (uint16_t)( (sensorData_ptr->adData_ptr->h) / 10000.0 * 0x7FFF );	// max AGL Alt.(m) = 10000 m
+	tele_data[5] = (uint16_t)( (sensorData_ptr->adData_ptr->h) / 1000.0 * 0x7FFF );	// max AGL Alt.(m) = 1000 m
 	tele_data[6] = (uint16_t)( (sensorData_ptr->adData_ptr->ias) / 80.0 * 0x7FFF );	// max Indicated Airspeed(IAS) = 80 m/s	
 
 	tele_data[7] = (uint16_t)(navData_ptr->psi*R2D / 180.0 * 0x7FFF );	// Euler angles [psi,theta,phi] (deg)
@@ -82,12 +82,12 @@ void send_telemetry(struct sensordata *sensorData_ptr, struct nav *navData_ptr, 
 	tele_data[17]= (uint16_t)(controlData_ptr->r4 / R4_MAX * 0x7FFF );
 	tele_data[18]= (uint16_t)(controlData_ptr->dthr * 0x7FFF );
 	
-	tele_data[19]= (uint16_t)(sensorData_ptr->accelData_ptr->cf / 8.0 * 0x7FFF );	// accelerometers = 8 g
-	tele_data[20]= (uint16_t)(sensorData_ptr->accelData_ptr->cr / 8.0 * 0x7FFF );
-	tele_data[21]= (uint16_t)(sensorData_ptr->accelData_ptr->lf / 8.0 * 0x7FFF );
-	tele_data[22]= (uint16_t)(sensorData_ptr->accelData_ptr->lr / 8.0 * 0x7FFF );
-	tele_data[23]= (uint16_t)(sensorData_ptr->accelData_ptr->rf / 8.0 * 0x7FFF );
-	tele_data[24]= (uint16_t)(sensorData_ptr->accelData_ptr->rr / 8.0 * 0x7FFF );
+	tele_data[19]= (uint16_t)(sensorData_ptr->accelData_ptr->cf / 80.0 * 0x7FFF );	// accelerometers = 8 g = 90 mps2
+	tele_data[20]= (uint16_t)(sensorData_ptr->accelData_ptr->cr / 80.0 * 0x7FFF );
+	tele_data[21]= (uint16_t)(sensorData_ptr->accelData_ptr->lf / 80.0 * 0x7FFF );
+	tele_data[22]= (uint16_t)(sensorData_ptr->accelData_ptr->lr / 80.0 * 0x7FFF );
+	tele_data[23]= (uint16_t)(sensorData_ptr->accelData_ptr->rf / 80.0 * 0x7FFF );
+	tele_data[24]= (uint16_t)(sensorData_ptr->accelData_ptr->rr / 80.0 * 0x7FFF );
 	
 	tmp = (unsigned long)(sensorData_ptr->gpsData_ptr->lon *1e07 );
 	memcpy(&tele_data[25], &tmp, 4);

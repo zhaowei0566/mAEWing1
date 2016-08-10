@@ -13,6 +13,9 @@
 #define PITCH_SURF_TRIM   	-0.0872	///< [rad], approximate elevator trim value
 #define ROLL_SURF_TRIM    	0.0 	///< [rad], approximate aileron trim value
 
+// Altitude Controller Theta Command limits
+#define THETA_MAX 	 5.0*D2R // 
+#define	THETA_MIN	 -5.0*D2R
 
 // Control Surface limits, max and min
 #define THROTTLE_MAX 	 1.0
