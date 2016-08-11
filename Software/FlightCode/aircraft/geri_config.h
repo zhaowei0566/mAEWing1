@@ -38,15 +38,15 @@
 #define R4_MIN		-0.6109	///< [rad],-35deg -- R4 Flutter Suppression Surface
 
 // MPC5200 PWM output command calibration parameters
-#define PWMOUT_DTHR_CAL {520, 1272} ///< linear calibration for throttle
-#define PWMOUT_L1_CAL   {-143.626237953301,     -132.783454757918,  -92.0783736935874 , -199.678887862221,  -910.167093563455,   1528.21543448172} ///< cubic calibration for L1
-#define PWMOUT_L2_CAL   {-566.407605020075,		1527.14167709886} ///< cubic calibration for L2
-#define PWMOUT_L3_CAL   {3.0087206599002,       31.9862866347609,   -579.335957214452,  1524.63162852191} ///< cubic calibration for L3
-#define PWMOUT_L4_CAL   {-171.915125136958,     -74.6863892998373,  101.495677716979,   7.42427452657357,   -597.144019497296,   1522.32589726225} ///< cubic calibration for L4
-#define PWMOUT_R1_CAL   {-66.953450806647,      191.561896357966,   294.229805819839,   344.887761238374,   932.810034411236,    1526.769801352} ///< cubic calibration for R1
-#define PWMOUT_R2_CAL   {29.6004221777595,      78.5612056546868,   610.8154113537,     1526.1000796273} ///< cubic calibration for R2
-#define PWMOUT_R3_CAL   {6.97058173567647,      -232.337598812444,  -2.0606830907155,   81.1117529844788,   576.852949132383,    1528.29224510245} ///< cubic calibration for R3
-#define PWMOUT_R4_CAL   {149.377096231853,      -86.157508793284,   -10.2517072726338,  99.5351760078058,   590.64980123108,     1527.54971803378} ///< cubic calibration for R4
+#define PWMOUT_DTHR_CAL {520, 1272} ///< Calibration for throttle
+#define PWMOUT_L1_CAL   { 23.65731,	-78.34749,	770.0316,	1548.055} ///< Calibration for L1
+#define PWMOUT_L2_CAL   { -23.64406,	0.7737799,	723.8292,	1553.741} ///< Calibration for L2
+#define PWMOUT_L3_CAL   { 310.5530,	-148.8107,	719.6825,	1553.219} ///< Calibration for L3
+#define PWMOUT_L4_CAL   { 153.0319,	-178.0020,	812.2671,	1544.434} ///< Calibration for L4
+#define PWMOUT_R1_CAL   { 47.91341,	265.7748,	-892.1562,	1537.289} ///< Calibration for R1
+#define PWMOUT_R2_CAL   { -61.02339,	149.4639,	-782.3937,	1541.148} ///< Calibration for R2
+#define PWMOUT_R3_CAL   { -20.95530,	154.2702,	-767.2924,	1538.620} ///< Calibration for R3
+#define PWMOUT_R4_CAL   { 155.3547,	-732.6522,	1536.338} ///< Calibration for R4
 
 // Pilot inceptor calibration parameters
 #define SELECT_INCP_CAL	{0.000863352048698032, -1.58376998680006} ///<  linear calibration for pilot select inceptor
