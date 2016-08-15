@@ -13,8 +13,8 @@
 static double pilot_theta(struct sensordata *sensorData_ptr);
 static double pilot_phi(struct sensordata *sensorData_ptr);
 
-static double roll_control (double phi_ref, double roll_angle, double rollrate, double delta_t, unsigned short gain_selector);
-static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t, unsigned short gain_selector);
+static double roll_control (double phi_ref, double phi_meas, double rollrate, double delta_t, unsigned short gain_selector);
+static double pitch_control(double the_ref, double the_meas, double pitchrate, double delta_t, unsigned short gain_selector);
 static double speed_control(double speed_ref, double airspeed, double delta_t);
 static double alt_control(double alt_ref, double alt, double delta_t);
 
@@ -96,22 +96,23 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 			t0_latched = FALSE;
 			switch(claw_select){
 				case 0: // chirp, altitude hold, L3/R3, L4/R4 at 26 m/s
-			if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
+					if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 0;
 					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				case 1: // chirp, altitude hold, L3/R3 at 26 m/s
-			if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
+					if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 1;
 					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				default: // chirp, altitude hold, L4/R4 at 26 m/s
-			if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
+					if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 2;
-					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
+					//alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
+					open_loop(time, exp_speed[claw_select], sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
 			break;
@@ -170,8 +171,8 @@ void open_loop(double time, double ias_cmd, struct sensordata *sensorData_ptr, s
 	
 	controlData_ptr->dthr 	= speed_control(ias_cmd, ias, TIMESTEP);			// Throttle [ND 0-1]
 	controlData_ptr->l1   	= 0;												// L1 [rad]
-    controlData_ptr->l2   	= roll_incp*L2_MAX;									// L2 [rad]
-	controlData_ptr->l3   	= -1*pitch_incp*(L3_MAX-15*D2R);					// L3 [rad]
+    controlData_ptr->l2   	= roll_incp*L2_MAX;								    // L2 [rad]
+	controlData_ptr->l3   	= -1*pitch_incp*(L3_MAX-15*D2R);			     	// L3 [rad]
 	controlData_ptr->l4   	= 0; 												// L4 [rad]
     controlData_ptr->r1   	= 0; 												// R1 [rad]
 	controlData_ptr->r2   	= -1*controlData_ptr->l2; 							// R2 [rad]
@@ -344,12 +345,12 @@ void approach_control(double time, struct sensordata *sensorData_ptr, struct nav
 }
 
 // Roll get_control law: angles in radians. Rates in rad/s. Time in seconds
-static double roll_control (double phi_ref, double roll_angle, double rollrate, double delta_t, unsigned short gain_selector)
+static double roll_control (double phi_ref, double phi_meas, double rollrate, double delta_t, unsigned short gain_selector)
 {
 	double da;
 
 	// roll attitude tracker
-	e[0] = phi_ref - roll_angle;
+	e[0] = phi_ref - phi_meas;
 	integrator[0] += e[0]*delta_t*anti_windup[0]; //roll error integral (rad)
 
 	//proportional term + integral term              - roll damper term
@@ -370,12 +371,12 @@ static double roll_control (double phi_ref, double roll_angle, double rollrate, 
 }
 
 // Pitch get_control law: angles in radians. Rates in rad/s. Time in seconds
-static double pitch_control(double the_ref, double pitch, double pitchrate, double delta_t, unsigned short gain_selector)
+static double pitch_control(double the_ref, double the_meas, double pitchrate, double delta_t, unsigned short gain_selector)
 {
 	double de;
 	
 	// pitch attitude tracker
-	e[1] = the_ref - pitch;
+	e[1] = the_ref - the_meas;
 	integrator[1] += e[1]*delta_t*anti_windup[1]; //pitch error integral
 
     // proportional term + integral term               - pitch damper term
@@ -439,24 +440,24 @@ static double alt_control(double alt_ref, double alt, double delta_t)
 
 
 void reset_roll(){
+	e[0] = 0;
 	integrator[0] = 0;
 	anti_windup[0] = 1;
-	e[0] = 0;
 }
 void reset_pitch(){
+	e[1] = 0;
 	integrator[1] = 0;
 	anti_windup[1] = 1;
-	e[1] = 0;
 }
 void reset_speed(){
+	e[2] = 0;
 	integrator[2] = 0;
 	anti_windup[2] = 1;
-	e[2] = 0;
 }
 void reset_alt(){
+	e[3] = 0;
 	integrator[3] = 0;
 	anti_windup[3] = 1;
-	e[3] = 0;
 }
 void reset_tracker(){
 	reset_roll();
