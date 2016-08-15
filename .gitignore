@@ -232,3 +232,4 @@ Software/FlightCode/cygmpfr-1.dll
 Software/FlightCode/cyggmp-3.dll
 Design/CAD/Center Body/flight computer tray.SLDPRT
 Software/FlightCode/output
+*.mat
