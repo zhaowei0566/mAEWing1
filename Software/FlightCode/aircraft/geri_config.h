@@ -39,19 +39,19 @@
 
 // MPC5200 PWM output command calibration parameters
 #define PWMOUT_DTHR_CAL {520, 1272} ///< Calibration for throttle
-#define PWMOUT_L1_CAL   { -189.99202340,	832.95141241,	1524.09636609} ///< Calibration for L1
-#define PWMOUT_L2_CAL   { -46.82358528,		760.93077176,	1526.22224555} ///< Calibration for L2
-#define PWMOUT_L3_CAL   { -62.07654383,		766.78117734,	1525.60480110} ///< Calibration for L3
-#define PWMOUT_L4_CAL   { -196.98365492,	853.28589158,	1520.07877899} ///< Calibration for L4
-#define PWMOUT_R1_CAL   { 340.87281001,		-974.21294551,	1523.21589323} ///< Calibration for R1
-#define PWMOUT_R2_CAL   { 139.44104607,		-805.34005395,	1524.56888084} ///< Calibration for R2
-#define PWMOUT_R3_CAL   { 135.30664906,		-780.16312386,	1505.99839192} ///< Calibration for R3
-#define PWMOUT_R4_CAL   { 110.51319380,		-770.63215961,	1522.96201081} ///< Calibration for R4
+#define PWMOUT_L1_CAL   { 189.99202340,		-832.95141241,	1524.09636609} ///< Calibration for L1
+#define PWMOUT_L2_CAL   { 46.82358528,		-760.93077176,	1526.22224555} ///< Calibration for L2
+#define PWMOUT_L3_CAL   { 62.07654383,		-766.78117734,	1525.60480110} ///< Calibration for L3
+#define PWMOUT_L4_CAL   { 196.98365492,		-853.28589158,	1520.07877899} ///< Calibration for L4
+#define PWMOUT_R1_CAL   { -340.87281001,	974.21294551,	1523.21589323} ///< Calibration for R1
+#define PWMOUT_R2_CAL   { -139.44104607,	805.34005395,	1524.56888084} ///< Calibration for R2
+#define PWMOUT_R3_CAL   { -135.30664906,	780.16312386,	1505.99839192} ///< Calibration for R3
+#define PWMOUT_R4_CAL   { -110.51319380,	770.63215961,	1522.96201081} ///< Calibration for R4
 
 // Pilot inceptor calibration parameters
-#define SELECT_INCP_CAL	{0.000863352048698032, -1.58376998680006} ///<  linear calibration for pilot select inceptor
 #define PITCH_INCP_CAL	{0.00130197301142324,	-3.96975198221257}	///<  linear calibration for pilot pitch inceptor
-#define MODE_INCP_CAL	{0.000850088662947068, -1.56545206486567} ///<  linear calibration for pilot mode inceptor
 #define ROLL_INCP_CAL	{-0.00121277738367002,	3.69435537314005}	///<  linear calibration for pilot roll inceptor
+#define MODE_INCP_CAL	{0.000850088662947068, -1.56545206486567} ///<  linear calibration for pilot mode inceptor
+#define SELECT_INCP_CAL	{0.000863352048698032, -1.58376998680006} ///<  linear calibration for pilot select inceptor
 
 #endif	

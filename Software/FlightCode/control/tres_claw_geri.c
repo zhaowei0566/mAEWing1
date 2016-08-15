@@ -64,14 +64,14 @@ static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 	static double alt_gain[2]     		= {0.1*D2R, 0.0*D2R};	// PI gains for speed tracker
 #endif
 
-double base_pitch_cmd		= 0.0698;  				// Trim value 4 deg
+double base_pitch_cmd		= 4.0*D2R;  			// Trim value 4 deg
 double trim_speed			= 23;					// Trim airspeed, m/s
 double approach_theta 		= -6.5*D2R;				// Absolute angle for the initial approach
 double approach_speed 		= 20;					// Approach airspeed, m/s
 double flare_theta 			= 1*D2R;				// Absolute angle for the flare
 double flare_speed 			= 17;					// Flare airspeed, m/s
 double pilot_flare_delta	= 1;					// Delta flare airspeed if the pilot is landing, m/s
-double exp_speed[3]			= {26,26, 26};			// Speed to run the experiments at, m/s
+double exp_speed[3]			= {20, 20, 20};			// Speed to run the experiments at, m/s
 double alt_cmd;
 
 /// *****************************************************************************************
@@ -96,23 +96,22 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 			t0_latched = FALSE;
 			switch(claw_select){
 				case 0: // chirp, altitude hold, L3/R3, L4/R4 at 26 m/s
-					if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 0;
+					if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				case 1: // chirp, altitude hold, L3/R3 at 26 m/s
-					if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 1;
+					if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				default: // chirp, altitude hold, L4/R4 at 26 m/s
-					if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 2;
-					//alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
-					open_loop(time, exp_speed[claw_select], sensorData_ptr, navData_ptr, controlData_ptr);
+					if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
+					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
 			break;
@@ -215,14 +214,13 @@ void alt_hold(double time, double ias_cmd, double alt_cmd, struct sensordata *se
 	double phi_cmd, theta_cmd;
 	double alt   = navData_ptr->alt;                        // altitude
 	
-	controlData_ptr->phi_cmd = pilot_phi(sensorData_ptr);		// phi from the pilot stick
-	controlData_ptr->ias_cmd = ias_cmd;
-	controlData_ptr->alt_cmd = alt_cmd;
+	controlData_ptr->phi_cmd   = pilot_phi(sensorData_ptr);		// phi from the pilot stick
+	controlData_ptr->theta_cmd = alt_control(alt_cmd, alt, TIMESTEP) + pilot_theta(sensorData_ptr); // Altitude tracker + Pilot stick
+	controlData_ptr->ias_cmd   = ias_cmd;
+	controlData_ptr->alt_cmd   = alt_cmd;
 	
+	theta_cmd	= controlData_ptr->theta_cmd;
 	phi_cmd		= controlData_ptr->phi_cmd;
-		
-	theta_cmd 	= alt_control(alt_cmd, alt, TIMESTEP) + pilot_theta(sensorData_ptr); // Altitude tracker + Pilot stick
-	controlData_ptr->theta_cmd	= theta_cmd;		// theta from altitude tracker
 	
 	controlData_ptr->dthr 	= speed_control(ias_cmd, ias, TIMESTEP);			// Throttle [ND 0-1]
 	controlData_ptr->l1   	= 0;												// L1 [rad]

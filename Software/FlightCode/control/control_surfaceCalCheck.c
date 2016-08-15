@@ -86,13 +86,13 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 		case 0: // Check Calibrations
 			switch(claw_select){
 				case 0:
-					angleCmd = angleUp;
+					angleCmd = angleDown;
 					break;
 				case 1:
 					angleCmd = angleZero;
 					break;
 				default:
-					angleCmd = angleDown;
+					angleCmd = angleUp;
 					break;
 			}
 			
