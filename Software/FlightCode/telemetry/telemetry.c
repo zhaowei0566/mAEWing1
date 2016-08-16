@@ -72,22 +72,22 @@ void send_telemetry(struct sensordata *sensorData_ptr, struct nav *navData_ptr, 
 	tele_data[8]= (uint16_t)(navData_ptr->the*R2D / 90.0 * 0x7FFF );
 	tele_data[9]= (uint16_t)(navData_ptr->phi*R2D / 180.0 * 0x7FFF );
 
-	tele_data[10]= (uint16_t)(controlData_ptr->l1 / L1_MAX * 0x7FFF );	// control surface commands (normalized 0-1)
-	tele_data[11]= (uint16_t)(controlData_ptr->l2 / L2_MAX * 0x7FFF );
-	tele_data[12]= (uint16_t)(controlData_ptr->l3 / L3_MAX * 0x7FFF );
-	tele_data[13]= (uint16_t)(controlData_ptr->l4 / L4_MAX * 0x7FFF );
-	tele_data[14]= (uint16_t)(controlData_ptr->r1 / R1_MAX * 0x7FFF );
-	tele_data[15]= (uint16_t)(controlData_ptr->r2 / R2_MAX * 0x7FFF );
-	tele_data[16]= (uint16_t)(controlData_ptr->r3 / R3_MAX * 0x7FFF );
-	tele_data[17]= (uint16_t)(controlData_ptr->r4 / R4_MAX * 0x7FFF );
+	tele_data[10]= (uint16_t)(controlData_ptr->l1*R2D / 45.0 * 0x7FFF );	// control surface commands (normalized 0-1)
+	tele_data[11]= (uint16_t)(controlData_ptr->l2*R2D / 45.0 * 0x7FFF );
+	tele_data[12]= (uint16_t)(controlData_ptr->l3*R2D / 45.0 * 0x7FFF );
+	tele_data[13]= (uint16_t)(controlData_ptr->l4*R2D / 45.0 * 0x7FFF );
+	tele_data[14]= (uint16_t)(controlData_ptr->r1*R2D / 45.0 * 0x7FFF );
+	tele_data[15]= (uint16_t)(controlData_ptr->r2*R2D / 45.0 * 0x7FFF );
+	tele_data[16]= (uint16_t)(controlData_ptr->r3*R2D / 45.0 * 0x7FFF );
+	tele_data[17]= (uint16_t)(controlData_ptr->r4*R2D / 45.0 * 0x7FFF );
 	tele_data[18]= (uint16_t)(controlData_ptr->dthr * 0x7FFF );
 	
-	tele_data[19]= (uint16_t)(sensorData_ptr->accelData_ptr->cf / 80.0 * 0x7FFF );	// accelerometers = 8 g = 90 mps2
-	tele_data[20]= (uint16_t)(sensorData_ptr->accelData_ptr->cr / 80.0 * 0x7FFF );
-	tele_data[21]= (uint16_t)(sensorData_ptr->accelData_ptr->lf / 80.0 * 0x7FFF );
-	tele_data[22]= (uint16_t)(sensorData_ptr->accelData_ptr->lr / 80.0 * 0x7FFF );
-	tele_data[23]= (uint16_t)(sensorData_ptr->accelData_ptr->rf / 80.0 * 0x7FFF );
-	tele_data[24]= (uint16_t)(sensorData_ptr->accelData_ptr->rr / 80.0 * 0x7FFF );
+	tele_data[19]= (uint16_t)(sensorData_ptr->accelData_ptr->cf / 100.0 * 0x7FFF );	// accelerometers = 8 g = 90 mps2
+	tele_data[20]= (uint16_t)(sensorData_ptr->accelData_ptr->cr / 100.0 * 0x7FFF );
+	tele_data[21]= (uint16_t)(sensorData_ptr->accelData_ptr->lf / 100.0 * 0x7FFF );
+	tele_data[22]= (uint16_t)(sensorData_ptr->accelData_ptr->lr / 100.0 * 0x7FFF );
+	tele_data[23]= (uint16_t)(sensorData_ptr->accelData_ptr->rf / 100.0 * 0x7FFF );
+	tele_data[24]= (uint16_t)(sensorData_ptr->accelData_ptr->rr / 100.0 * 0x7FFF );
 	
 	tmp = (unsigned long)(sensorData_ptr->gpsData_ptr->lon *1e07 );
 	memcpy(&tele_data[25], &tmp, 4);
@@ -105,9 +105,9 @@ void send_telemetry(struct sensordata *sensorData_ptr, struct nav *navData_ptr, 
 	if (sensorData_ptr->gpsData_ptr->err_type == data_valid || sensorData_ptr->gpsData_ptr->err_type == incompletePacket) flags |= 0x01<<7;
 	if (sensorData_ptr->gpsData_ptr->navValid == 0) flags |= 0x01<<8;
 	
-	tele_data[29] = flags << 8 | sensorData_ptr->gpsData_ptr->satVisible;
+	tele_data[29] = flags;
 	
-	tele_data[30] = cpuLoad;
+	tele_data[30] = (uint8_t) cpuLoad << 8 | sensorData_ptr->gpsData_ptr->satVisible;
 	
 	// Copy tele_data into sendpacket
 	memcpy(&sendpacket[3], &tele_data, (2 * TELE_PACKET_SIZE));
