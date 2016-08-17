@@ -58,10 +58,10 @@ static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 #ifdef AIRCRAFT_GERI
 	static double roll_gain[3]  		= {0.5,0.15,0.01};  	// PI gains for roll tracker and roll damper
 	static double roll_gain_single[3]  	= {1.5,0.5,0.0};  		// PI gains for roll tracker and roll damper when using only Flap2
-	static double pitch_gain[3] 		= {-0.3,-0.40,0.0};  	// PI gains for pitch tracker and pitch damper
-	static double pitch_gain_single[3] 	= {-0.75,-1.0,0.0};  	// PI gains for pitch tracker and pitch damper when using only Flap3
-	static double v_gain[2]     		= {0.1, 0.020};			// PI gains for speed tracker
-	static double alt_gain[2]     		= {0.1*D2R, 0.0*D2R};	// PI gains for speed tracker
+	static double pitch_gain[3] 		= {-0.3,-0.15,0.0};  	// PI gains for pitch tracker and pitch damper
+	static double pitch_gain_single[3] 	= {-0.75,-0.375,0.0};  	// PI gains for pitch tracker and pitch damper when using only Flap3
+	static double v_gain[2]     		= {0.0278, 0.006};		// PI gains for speed tracker
+	static double alt_gain[2]     		= {0.054*D2R, 0.0*D2R};	// PI gains for speed tracker
 #endif
 
 double base_pitch_cmd		= 4.0*D2R;  			// Trim value 4 deg
