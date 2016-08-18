@@ -159,7 +159,7 @@ byte pwm_byte[8]; // pwm input bytes
 int modePin = 2;
 byte modeVal;
 
-// light blinking stuff
+// LED blinking stuff
 int j = 0;
 
 // servos
@@ -169,7 +169,7 @@ float cmd;
 
 void setup() {
   // port for debugging
-  Serial.begin(9600);
+  //Serial.begin(9600);
 
   // serial connection with GPS
   Serial1.begin(115200);
@@ -183,7 +183,7 @@ void setup() {
   Wire1.onReceive(receiveEvent);
 
   // sets the digital mode pin as input
-  pinMode(modePin, INPUT);      
+  pinMode(modePin, INPUT);
 
   // sets the LED pin as an output
   pinMode(13, OUTPUT);
@@ -209,7 +209,6 @@ void setup() {
 }
 
 void loop() {
-
   // read GPS data
   if( processGPS() ){
     longitude.val = pospvt.longitude;
@@ -227,7 +226,7 @@ void loop() {
 
 void requestEvent()
 {
-  // make the light blink at roughly 1 Hz
+  // make the LED blink at roughly 1 Hz
   if(j > 100){
     digitalWrite(13,LOW);
   }

@@ -193,13 +193,13 @@ struct mission {
 struct control {
 	double dthr;		///< [0-1], throttle command
 	double l1; 			///< [rad], L1 command, +TED
-	double l2; 			///< [rad], L1 command, +TED
-	double l3; 			///< [rad], L1 command, +TED
-	double l4; 			///< [rad], L1 command, +TED
-	double r1;			///< [rad], R1, +TED
-	double r2;			///< [rad], R1, +TED
-	double r3;			///< [rad], R1, +TED
-	double r4;			///< [rad], R4, +TED
+	double l2; 			///< [rad], L2 command, +TED
+	double l3; 			///< [rad], L3 command, +TED
+	double l4; 			///< [rad], L4 command, +TED
+	double r1;			///< [rad], R1 command, +TED
+	double r2;			///< [rad], R2 command, +TED
+	double r3;			///< [rad], R3 command, +TED
+	double r4;			///< [rad], R4 command, +TED
 	double pitch_cmd_pilot;
 	double pitch_cmd_damper;
 	double pitch_cmd_excite;

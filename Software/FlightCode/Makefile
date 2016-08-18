@@ -14,7 +14,8 @@
 #AIRCRAFT = HIL_SIM
 #AIRCRAFT = FENRIR
 #AIRCRAFT = SKOLL
-AIRCRAFT = HATI
+#AIRCRAFT = HATI
+AIRCRAFT = GERI
 
 ##### GUIDANCE LAW #####
 # Point to the desired guidance code here
@@ -35,8 +36,8 @@ MISSION = mission/tres_claw_switch.c
 
 ##### FLIGHT CONTROL LAW #####
 # Point to the desired flight control law code here
-CONTROL =  control/tres_claw_hati_hs.c
-#CONTROL =  control/tres_claw_hati_ls.c
+CONTROL =  control/tres_claw_geri_hs.c
+#CONTROL =  control/tres_claw_geri_ls.c
 
 ##### MATLAB RTW AUTOCODE #####
 # Make sure #include "simstruc.h" and #include "fixedpoint.h" are commented out in the <modelname>.h file
@@ -83,6 +84,13 @@ endif
 ifeq ($(strip $(AIRCRAFT)),HATI)
 AIRCRAFT_CONFIG = aircraft/hati_config.h
 DATALOG_CONFIG = datalog/hati_datalog.h
+SENSORS = sensors/IMU/IMU_iSensor.c sensors/GPIO/gpio.c  sensors/Rabbit/rabbit.c
+ACTUATORS = actuators/actuator_PWM.c
+endif
+
+ifeq ($(strip $(AIRCRAFT)),GERI)
+AIRCRAFT_CONFIG = aircraft/geri_config.h
+DATALOG_CONFIG = datalog/geri_datalog.h
 SENSORS = sensors/IMU/IMU_iSensor.c sensors/GPIO/gpio.c  sensors/Rabbit/rabbit.c
 ACTUATORS = actuators/actuator_PWM.c
 endif
