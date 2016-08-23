@@ -169,7 +169,7 @@ float cmd;
 
 void setup() {
   // port for debugging
-  //Serial.begin(9600);
+  Serial.begin(9600);
 
   // serial connection with GPS
   Serial1.begin(115200);
@@ -259,6 +259,8 @@ void requestEvent()
   Wire.requestFrom(0x79,8); // 8 bytes from address 0x79
   for(int i = 0; i<8; i++){
     pwm_byte[i] = Wire.read(); // put the data somewhere
+Serial.print(pwm_byte[i]);
+Serial.print("\t");
   }
 
   // only bother if GPS has a 3D fix
@@ -281,6 +283,9 @@ void requestEvent()
   else{
     modeVal = 0;
   }
+
+Serial.print(modeVal);
+Serial.println();
 
   /* Analog Data */
   pack[0]   = (byte) (ain[0] & 0xff);

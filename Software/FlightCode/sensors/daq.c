@@ -116,12 +116,12 @@ void get_daq(struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct 
 	
 	/********** Accel Data **********/
 	// wing accels
-	accelData_ptr->cf = -0.000273078332842 * rabbitData_ptr->cf + 7.742238063105910;
-	accelData_ptr->cr = -0.000269523058150 * rabbitData_ptr->cr + 7.814222789423759;
-	accelData_ptr->lf = -0.000268806873922 * rabbitData_ptr->lf + 7.726154559272704;
-	accelData_ptr->lr = -0.000272350282188 * rabbitData_ptr->lr + 7.872448203279353;
-	accelData_ptr->rf = -0.000268687001946 * rabbitData_ptr->rf + 7.821689311861752;
-	accelData_ptr->rr = -0.000276623204005 * rabbitData_ptr->rr + 7.789597072961309;
+	accelData_ptr->cf = -0.002792171162691 * rabbitData_ptr->cf + 78.991080787495406;
+	accelData_ptr->cr = -0.002786298431500 * rabbitData_ptr->cr + 77.478954034626199;
+	accelData_ptr->lf = -0.002781607395971 * rabbitData_ptr->lf + 79.378425594836386;
+	accelData_ptr->lr = -0.002768581768960 * rabbitData_ptr->lr + 78.547893245721880;
+	accelData_ptr->rf = -0.002772372420037 * rabbitData_ptr->rf + 79.427022614440062;
+	accelData_ptr->rr = -0.002775588698917 * rabbitData_ptr->rr + 78.686813520179555;
 	/********** End Accel Data **********/
 	
 	/********** PWM Data **********/

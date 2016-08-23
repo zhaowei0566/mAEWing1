@@ -210,7 +210,7 @@ struct control {
 	double theta_cmd;
 	double ias_cmd;
 	double init_alt;
-	double h_cmd;
+	double alt_cmd;
 	double zdot_cmd;
 	double cmp_status;
 };
