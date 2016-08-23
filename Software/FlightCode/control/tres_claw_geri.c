@@ -60,8 +60,8 @@ static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 	static double roll_gain_single[3]  	= {1.5,0.5,0.0};  		// PI gains for roll tracker and roll damper when using only Flap2
 	static double pitch_gain[3] 		= {-0.3,-0.15,0.0};  	// PI gains for pitch tracker and pitch damper
 	static double pitch_gain_single[3] 	= {-0.75,-0.375,0.0};  	// PI gains for pitch tracker and pitch damper when using only Flap3
-	static double v_gain[2]     		= {0.0278, 0.006};		// PI gains for speed tracker
-	static double alt_gain[2]     		= {0.054*D2R, 0.0*D2R};	// PI gains for speed tracker
+	static double v_gain[2]     		= {0.0278, 0.0061};		// PI gains for speed tracker
+	static double alt_gain[2]     		= {0.0543*D2R, 0.0*D2R};	// PI gains for speed tracker
 #endif
 
 double base_pitch_cmd		= 4.0*D2R;  			// Trim value 4 deg
@@ -73,6 +73,8 @@ double flare_speed 			= 17;					// Flare airspeed, m/s
 double pilot_flare_delta	= 1;					// Delta flare airspeed if the pilot is landing, m/s
 double exp_speed[3]			= {20, 20, 20};			// Speed to run the experiments at, m/s
 double alt_cmd;
+double alt_min              = 100 * 0.3048;         // Minimum altitude hold engage height, m
+double alt_max              = 400 * 0.3048;         // Maximum altitude hold engage height, m
 
 /// *****************************************************************************************
 
@@ -98,19 +100,19 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 				case 0: // chirp, altitude hold, L3/R3, L4/R4 at 26 m/s
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 0;
-					if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
+					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				case 1: // chirp, altitude hold, L3/R3 at 26 m/s
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 1;
-					if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
+					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				default: // chirp, altitude hold, L4/R4 at 26 m/s
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 2;
-					if(altCmd_latched == FALSE){alt_cmd = navData_ptr -> alt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
+					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
@@ -212,12 +214,18 @@ void alt_hold(double time, double ias_cmd, double alt_cmd, struct sensordata *se
 	double q     = sensorData_ptr->imuData_ptr->q; 			// pitch rate
 	double ias   = sensorData_ptr->adData_ptr->ias_filt;	// filtered airspeed
 	double phi_cmd, theta_cmd;
-	double alt   = navData_ptr->alt;                        // altitude
+	double alt   = sensorData_ptr->adData_ptr->h_filt;         // altitude
 	
-	controlData_ptr->phi_cmd   = pilot_phi(sensorData_ptr);		// phi from the pilot stick
-	controlData_ptr->theta_cmd = alt_control(alt_cmd, alt, TIMESTEP) + pilot_theta(sensorData_ptr); // Altitude tracker + Pilot stick
+	controlData_ptr->phi_cmd   = pilot_phi(sensorData_ptr); // phi from the pilot stick
 	controlData_ptr->ias_cmd   = ias_cmd;
-	controlData_ptr->alt_cmd   = alt_cmd;
+	if((alt_cmd > alt_min) & (alt_cmd < alt_max)){
+		controlData_ptr->alt_cmd   = alt_cmd;
+		controlData_ptr->theta_cmd = alt_control(alt_cmd, alt, TIMESTEP) + pilot_theta(sensorData_ptr); // Altitude tracker + Pilot stick
+	}
+	else {
+		controlData_ptr->alt_cmd   = -100;
+		controlData_ptr->theta_cmd = pilot_theta(sensorData_ptr); // Pilot stick
+	}
 	
 	theta_cmd	= controlData_ptr->theta_cmd;
 	phi_cmd		= controlData_ptr->phi_cmd;
@@ -418,6 +426,7 @@ static double speed_control(double speed_ref, double airspeed, double delta_t)
 static double alt_control(double alt_ref, double alt, double delta_t)
 {
 	double theta_cmd;
+	double theta_lim = 5.0*D2R;              // Theta command limit from alt hold        
 
 	// Altitude tracker
 	e[3] = alt_ref - alt;                         // altitude error
@@ -427,10 +436,10 @@ static double alt_control(double alt_ref, double alt, double delta_t)
 	theta_cmd = alt_gain[0]*e[3] + alt_gain[1]*integrator[3];    // Theta Command output
 
 	//eliminate wind-up on altitude integral
-	if      (theta_cmd >= THETA_MAX && e[3] < 0) {anti_windup[3] = 1; theta_cmd = THETA_MAX;}
-	else if (theta_cmd >= THETA_MAX && e[3] > 0) {anti_windup[3] = 0; theta_cmd = THETA_MAX;}  //stop integrating
-	else if (theta_cmd <= THETA_MIN && e[3] < 0) {anti_windup[3] = 0; theta_cmd = THETA_MIN;}  //stop integrating
-	else if (theta_cmd <= THETA_MIN && e[3] > 0) {anti_windup[3] = 1; theta_cmd = THETA_MIN;}
+	if      (theta_cmd >= theta_lim && e[3] < 0) {anti_windup[3] = 1; theta_cmd = theta_lim;}
+	else if (theta_cmd >= theta_lim && e[3] > 0) {anti_windup[3] = 0; theta_cmd = theta_lim;}  //stop integrating
+	else if (theta_cmd <= -theta_lim && e[3] < 0) {anti_windup[3] = 0; theta_cmd = -theta_lim;}  //stop integrating
+	else if (theta_cmd <= -theta_lim && e[3] > 0) {anti_windup[3] = 1; theta_cmd = -theta_lim;}
 	else {anti_windup[3] = 1;}
 
 	return theta_cmd; // non dimensional
