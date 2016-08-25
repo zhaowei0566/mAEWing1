@@ -200,6 +200,10 @@ struct control {
 	double r2;			///< [rad], R2 command, +TED
 	double r3;			///< [rad], R3 command, +TED
 	double r4;			///< [rad], R4 command, +TED
+	double surf1_excite;
+	double surf2_excite;
+	double surf3_excite;
+	double surf4_excite;
 	double pitch_cmd_pilot;
 	double pitch_cmd_damper;
 	double pitch_cmd_excite;

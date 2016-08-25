@@ -71,10 +71,10 @@ double approach_speed 		= 20;					// Approach airspeed, m/s
 double flare_theta 			= 1*D2R;				// Absolute angle for the flare
 double flare_speed 			= 17;					// Flare airspeed, m/s
 double pilot_flare_delta	= 1;					// Delta flare airspeed if the pilot is landing, m/s
-double exp_speed[3]			= {20, 20, 20};			// Speed to run the experiments at, m/s
+double exp_speed     		= 23;			// Speed to run the experiments at, m/s
 double alt_cmd;
-double alt_min              = 100 * 0.3048;         // Minimum altitude hold engage height, m
-double alt_max              = 400 * 0.3048;         // Maximum altitude hold engage height, m
+double alt_min              = 30;                   // Minimum altitude hold engage height, m
+double alt_max              = 125;                  // Maximum altitude hold engage height, m
 
 /// *****************************************************************************************
 
@@ -97,23 +97,23 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 		case 0: // experiment mode
 			t0_latched = FALSE;
 			switch(claw_select){
-				case 0: // chirp, altitude hold, L3/R3, L4/R4 at 26 m/s
+				case 0: // SYSID #1
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 0;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
-					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
+					alt_hold(time, exp_speed, alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
-				case 1: // chirp, altitude hold, L3/R3 at 26 m/s
+				case 1: // SYSID #2
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 1;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
-					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
+					alt_hold(time, exp_speed, alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
-				default: // chirp, altitude hold, L4/R4 at 26 m/s
+				default: // SYSID #3
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 2;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
-					alt_hold(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
+					alt_hold(time, exp_speed, alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
 			break;
