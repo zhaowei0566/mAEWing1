@@ -24,6 +24,7 @@ void pilot_flying(double time, double ias_cmd, struct sensordata *sensorData_ptr
 void pilot_flying_inner(double time, double ias_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
 void open_loop(double time, double ias_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
 void alt_hold(double time, double ias_cmd, double alt_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
+void alt_hold_inner(double time, double ias_cmd, double alt_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
 void reset_tracker();
 void reset_roll();
 void reset_pitch();
@@ -58,10 +59,10 @@ static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 #ifdef AIRCRAFT_GERI
 	static double roll_gain[3]  		= {0.5,0.15,0.01};  	// PI gains for roll tracker and roll damper
 	static double roll_gain_single[3]  	= {1.5,0.5,0.0};  		// PI gains for roll tracker and roll damper when using only Flap2
-	static double pitch_gain[3] 		= {-0.3,-0.15,0.0};  	// PI gains for pitch tracker and pitch damper
-	static double pitch_gain_single[3] 	= {-0.75,-0.375,0.0};  	// PI gains for pitch tracker and pitch damper when using only Flap3
+	static double pitch_gain[3] 		= {-0.3,-0.15,0.0};    // PI gains for pitch tracker and pitch damper
+	static double pitch_gain_single[3] 	= {-0.3,-0.15,0.0};  	// PI gains for pitch tracker and pitch damper when using only Flap3
 	static double v_gain[2]     		= {0.0278, 0.0061};		// PI gains for speed tracker
-	static double alt_gain[2]     		= {0.0543*D2R, 0.0*D2R};	// PI gains for speed tracker
+	static double alt_gain[2]     		= {0.0543*D2R, 0.0*D2R};// PI gains for speed tracker
 #endif
 
 double base_pitch_cmd		= 4.0*D2R;  			// Trim value 4 deg
@@ -71,7 +72,7 @@ double approach_speed 		= 20;					// Approach airspeed, m/s
 double flare_theta 			= 1*D2R;				// Absolute angle for the flare
 double flare_speed 			= 17;					// Flare airspeed, m/s
 double pilot_flare_delta	= 1;					// Delta flare airspeed if the pilot is landing, m/s
-double exp_speed     		= 23;			// Speed to run the experiments at, m/s
+double exp_speed[3]     	= {23, 23, 23};	       	// Speed to run the experiments at, m/s
 double alt_cmd;
 double alt_min              = 30;                   // Minimum altitude hold engage height, m
 double alt_max              = 125;                  // Maximum altitude hold engage height, m
@@ -101,19 +102,19 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 0;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
-					alt_hold(time, exp_speed, alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
+					alt_hold_inner(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				case 1: // SYSID #2
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 1;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
-					alt_hold(time, exp_speed, alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
+					alt_hold_inner(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				default: // SYSID #3
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 2;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
-					alt_hold(time, exp_speed, alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
+					alt_hold_inner(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
 			break;
@@ -151,7 +152,7 @@ static double pilot_theta(struct sensordata *sensorData_ptr){
 	double pitch_incp = sensorData_ptr->inceptorData_ptr->pitch;
 	double theta_cmd;
 	
-	theta_cmd = 20*D2R*pitch_incp;
+	theta_cmd = 30*D2R*pitch_incp;
 	return theta_cmd;
 }
 
@@ -207,6 +208,40 @@ void pilot_flying(double time, double ias_cmd, struct sensordata *sensorData_ptr
 	controlData_ptr->r4   	= controlData_ptr->r3 + controlData_ptr->r2; 		// R4 [rad]
 }
 
+void alt_hold_inner(double time, double ias_cmd, double alt_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr){
+	double phi   = navData_ptr->phi;						// roll angle
+	double theta = navData_ptr->the - base_pitch_cmd; 		// subtract theta trim value to convert to delta coordinates
+	double p     = sensorData_ptr->imuData_ptr->p; 			// roll rate
+	double q     = sensorData_ptr->imuData_ptr->q; 			// pitch rate
+	double ias   = sensorData_ptr->adData_ptr->ias_filt;	// filtered airspeed
+	double phi_cmd, theta_cmd;
+	double alt   = sensorData_ptr->adData_ptr->h_filt;         // altitude
+	
+	controlData_ptr->phi_cmd   = pilot_phi(sensorData_ptr); // phi from the pilot stick
+	controlData_ptr->ias_cmd   = ias_cmd;
+	if((alt_cmd > alt_min) & (alt_cmd < alt_max)){
+		controlData_ptr->alt_cmd   = alt_cmd;
+		controlData_ptr->theta_cmd = alt_control(alt_cmd, alt, TIMESTEP) + pilot_theta(sensorData_ptr); // Altitude tracker + Pilot stick
+	}
+	else {
+		controlData_ptr->alt_cmd   = alt_max; // no effect
+		controlData_ptr->theta_cmd = pilot_theta(sensorData_ptr); // Pilot stick
+	}
+	
+	theta_cmd	= controlData_ptr->theta_cmd;
+	phi_cmd		= controlData_ptr->phi_cmd;
+	
+	controlData_ptr->dthr 	= speed_control(ias_cmd, ias, TIMESTEP);			// Throttle [ND 0-1]
+	controlData_ptr->l1   	= 0;												// L1 [rad]
+    controlData_ptr->l2   	= roll_control(phi_cmd, phi, p, TIMESTEP, 0);		// L2 [rad]
+	controlData_ptr->l3   	= pitch_control(theta_cmd, theta, q, TIMESTEP, 1);	// L3 [rad]
+	controlData_ptr->l4   	= controlData_ptr->l2; 		                        // L4 [rad]
+    controlData_ptr->r1   	= 0; 												// R1 [rad]
+	controlData_ptr->r2   	= -1*controlData_ptr->l2; 							// R2 [rad]
+	controlData_ptr->r3   	= controlData_ptr->l3;								// R3 [rad]
+	controlData_ptr->r4   	= controlData_ptr->r2; 		                        // R4 [rad]
+}
+
 void alt_hold(double time, double ias_cmd, double alt_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr){
 	double phi   = navData_ptr->phi;						// roll angle
 	double theta = navData_ptr->the - base_pitch_cmd; 		// subtract theta trim value to convert to delta coordinates
@@ -223,7 +258,7 @@ void alt_hold(double time, double ias_cmd, double alt_cmd, struct sensordata *se
 		controlData_ptr->theta_cmd = alt_control(alt_cmd, alt, TIMESTEP) + pilot_theta(sensorData_ptr); // Altitude tracker + Pilot stick
 	}
 	else {
-		controlData_ptr->alt_cmd   = -100;
+		controlData_ptr->alt_cmd   = alt_max; // no effect
 		controlData_ptr->theta_cmd = pilot_theta(sensorData_ptr); // Pilot stick
 	}
 	

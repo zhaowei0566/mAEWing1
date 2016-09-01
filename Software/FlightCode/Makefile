@@ -36,8 +36,8 @@ MISSION = mission/tres_claw_switch.c
 
 ##### FLIGHT CONTROL LAW #####
 # Point to the desired flight control law code here
-CONTROL =  control/tres_claw_geri.c
 #CONTROL =  control/control_surfaceCalCheck.c
+CONTROL =  control/tres_claw_geri.c
 
 ##### MATLAB RTW AUTOCODE #####
 # Make sure #include "simstruc.h" and #include "fixedpoint.h" are commented out in the <modelname>.h file
