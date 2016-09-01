@@ -1,0 +1,213 @@
+$ Center body
+$ 13001 - node for avionics battery
+$ 3002  - node for avionics cover; a little bit difference in cg location
+$ 3002 - node also for flight computer
+$ 
+$ 3004 - node for proplusion battery
+$ 3006 - engine motor
+INIT MASTER(S)
+SOL 103
+CEND
+$ Direct Text Input for Global Case Control Data
+TITLE = MSC.Nastran job created on 20-Feb-15 at 15:37:03
+ECHO = SORT
+$ Using Nastran default values for RESVEC
+SUBCASE 1
+$ Subcase name : Default
+   SUBTITLE=Default
+   METHOD = 101
+  $ SPC = 99
+   VECTOR(SORT1,REAL)=ALL
+   SPCFORCES(SORT1,REAL)=ALL
+$   DISP(PUNCH)=ALL
+BEGIN BULK
+$ Direct Text Input for Bulk Data
+PARAM,POST,0
+PARAM   PRTMAXIM YES
+$ GROUND POINT FOR WEIGHT GENERATION
+PARAM,GRDPNT,28888
+$ PRE_PROPVERT WEIGHT TO MASS (1/386)  
+PARAM , WTMASS,.002591
+$ PRE_PROPVERT FROM IN/SEC TO KNOTS
+PARAM ,VREF,20.254
+$EIGRL    100                     20      0
+EIGR     101    MGIV                            20
+         MASS
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0                             
+$=====================================================
+$                  GRIDS for fuselage
+$=====================================================
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0    
+GRID    3001            -15.55   0.     0.
+GRID    9001            -12.36   0.     0.
+GRID    13001           -10.93   0.     0.
+GRID    3002            -6.490   0.     0.
+GRID    3000             0.      0.     0.
+$ C.G. location is grid 28888
+GRID    3004            3.730    0.     0.
+GRID	28888           3.85     0.     0.
+GRID    13002           5.080    0.     0.
+GRID    9002            7.36     0.     0.
+GRID    3005            8.66000  0.     0.
+GRID    3006            16.7710  0.     0.
+GRID    3007            18.00    0.     0.
+$
+GRID    999011          1.5457   -3.825 0.0
+GRID    1010            3.09142  -7.65  0.
+GRID    1011            0.8000   -7.65  0.
+GRID    1012            8.66     -7.65  0.
+GRID    999021          1.5457   3.825  0.0
+GRID    2010            3.09142  7.65   0.
+GRID    2011            0.800    7.65   0.
+GRID    2012            8.66     7.65   0.
+$ servos locations
+GRID    100001          10.170   -4.855 0.
+GRID    200001          10.170   4.855  0.
+$======================================================
+$                  fuselage rod elements
+CBAR    3001    3007    3001    9001    0.      0.      1.
+CBAR    3002    3007    9001    13001   0.      0.      1.
+CBAR    13001   3007    13001   3002    0.      0.      1.
+CBAR    3003    3007    3002    3000    0.      0.      1.
+CBAR    3004    3007    3000    3004    0.      0.      1.
+CBAR    3005    3007    3004    28888   0.      0.      1.
+CBAR    30051   3007    28888   13002   0.      0.      1.
+CBAR    3006    3007    13002   9002    0.      0.      1.
+CBAR    3007    3007    9002    3005    0.      0.      1.
+CBAR    3008    3007    3005    3006	0.      0.      1.
+CBAR    3009    3007    3006    3007    0.      0.      1.
+PBARL   3007    901             BAR
+$       DIM1    DIM2    NSM
+        0.5     1.680
+$ 901 - Pirch plywood
+MAT1     901    2.01e+6         .25     .02493
+$------------------- FRONT SPAR TOP+BOTTOM ---------------------------
+$Elem    PID    MID      A      I1      I2      I12     J       NSM
+PBEAM   201     905     0.686   3.9322e15.179e+1        0.3165e1
+PBEAM   202     905     0.482   2.4322e15.179e+1        0.1105e1
+MAT1    905     2.01e+6         .25     .01265
+$ left wing front spar+rear spar
+CBEAM   10002   201     1011    3000    0.0     0.0     1.0
+CBEAM   10003   202     1012    3005    0.0     0.0     1.0
+$ right wing front spar+rear spar
+CBEAM   20002   201     2011    3000    0.0     0.0     1.0
+CBEAM   20003   202     2012    3005    0.0     0.0     1.0
+$
+$------------------- Beam for foam+cover of CB -------------------------
+$ centerbody foam+cover mass amd mass moments of inertia; 
+$ If we consider the cb foam+cover as uniform beam; the mass moment of inertia for the beam
+$ Referenced Coordinate Frames for control surfaces and body flaps
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+PBEAM   101     903     .1E-10  5.098e-31.529e+1        5.098e-20.080955
+CBEAM   1001    101     3000    999011  0.0     0.0     1.0
+                        -0.105090.0752980.0     -0.105090.0752980.0  
+CBEAM   1011    101     999011  1010    0.0     0.0     1.0
+                        -0.105090.0752980.0     -0.105090.0752980.0  
+$
+CBEAM   2001    101     3000    999021  0.0     0.0     1.0
+                        -0.10509-0.075290.0     -0.10509-0.075290.0  
+CBEAM   2011    101     999021  2010    0.0     0.0     1.0
+                        -0.10509-0.075290.0     -0.10509-0.075290.0  
+$ Change of the cg location lead to the moment of inertia around the elastic axis
+$ LHS
+$ Ixx
+CMASS2  270001  0.0000053000     4                                           
+CMASS2  270002  0.0000051010     4                                           
+CMASS2  270003  0.000010999011   4                                           
+$ IYY  
+CMASS2  270011  4.9954473000     5                                           
+CMASS2  270012  4.9954471010     5                                           
+CMASS2  270013  9.990893999011   5                                           
+$ RHS 
+CMASS2  280001  0.0000053000     4                                           
+CMASS2  280002  0.0000052010     4                                           
+CMASS2  280003  0.000010999021   4                                           
+$
+CMASS2  280011  4.9954473000     5                                           
+CMASS2  280012  4.9954472010     5                                           
+CMASS2  280013  9.990893999021   5                                           
+$ ---------Carbon sandwich panel, effective material property values------
+MAT1     903    6.660e+61.252e+6        .009392
+$ density is from prediction
+$MAT1     903    6.660e+61.252e+6        .052565
+$=====================================================================
+$                      INNER Rib - BAR   
+$=====================================================================
+CBAR    1031    301     1010    1011    0.      0.      1.
+CBAR    1032    301     1010    1012    0.      0.      1.
+CBAR    2031    301     2010    2011    0.      0.      1.
+CBAR    2032    301     2010    2012    0.      0.      1.
+$ bar properties
+PBARL   301     905             BAR
+$       DIM1    DIM2    NSM
+        0.25    1.48
+$
+$ ------------------body flaps ----------------------------
+$ body flaps GRIDS
+GRID    100001          10.170  -4.855  0.
+GRID    200001          10.170  4.855   0.
+$ 10001 10011 10101 20001 20021 20201 points for spring connections
+GRID    10001   101     1.63    -4.7648 0.
+GRID    10011   101     0.01    -4.7648 0.
+GRID    10101   101     -0.01   -4.7648 0.
+GRID    20001   201     1.63    4.7648  0.
+GRID    20021   201     0.01    4.7648  0.
+GRID    20201   201     -0.01   4.7648  0.
+$ $ CONM2 for servos 
+$ Spring connections
+CBUSH   11001   10000   10011   10101                            101
+CBUSH   22001   10000   20021   20201                            201 
+PBUSH   10000   K        1.0E6  1.0E6   1.0E6   1.0E6   1.0E6    1.0E6
+$ body flaps
+RBE2    70004   100001  123456  10101
+RBE2    70104   10011   123456  10001
+RBE2    900001  1012    123456  100001
+$ servos to main wing
+RBE2    80004   200001  123456  20201
+RBE2    80204   20021   123456  20001
+RBE2    900002  2012    123456  200001
+$ Fictitious support at the CG for decoupled rigid modes 
+SUPORT,28888,123456
+$========================= UPDATED CONM2 ================================
+$ Servos
+CONM2   100     100001  101     0.1235  0.0     0.0     0.0
+CONM2   200     200001  201     0.1235  0.0     0.0     0.0  
+$ fuselage lumped mass 
+$ CONM2*               301            3002               0  1.05988121E+00*   (orginal Skoll)
+$ CONM2*               301            3002               0  1.09126248E+00*   (fixed skoll) 
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+CONM2   301     3002            0.986170-0.177100.0     0.0  
+CONM2   302     3004            2.197448-0.319780.0     0.0  
+        0.0000010.0     3.318892     0.0     0.0     0.0
+CONM2   303     3006            1.1095750.0113680.0     0.0     
+$ body flaps mass updated (Center of the body flap)
+CONM2   401     10001   101     0.09323 -0.746  -1.4652 0.0
+CONM2   501     20001   201     0.09323 -0.746  1.4652  0.0  
+$ accelerometers
+CONM2   9001    9001            6.20e-3 0.0     0.0     0.0   
+CONM2   9002    9002            6.20e-3 0.0     0.0     0.0   
+$ ballast mass removed
+$ CONM2*              9100            3001               0  2.63600007E-01*   
+$ *         4.61999989E+00  0.00000000E+00  0.00000000E+00                *   
+$ *         0.00000000E+00  0.00000000E+00  0.00000000E+00  0.00000000E+00*   
+$ *         0.00000000E+00  0.00000000E+00    
+$ Avionics battery 9200
+CONM2   9200    13002           0.1565  0.0     0.0     0.0
+$ avionics cover 9300
+CONM2   9300    3002            0.1155  0.0     0.0     0.0
+$ y-axis align the hinge line
+$1------$2------$3------$4------$5------$6------$7------$8------$9------$0
+$ --- Left body flap ---
+CORD2R  101             13.64   -1.16   0.0     13.64    -1.16  1.0
+        17.34   -2.75   0.0   
+$ --- Left C.S.----
+CORD2R  102             9.753   -16.016 0.0     9.753   -16.016 1.0
+        12.34   -14.97  1.0 
+$ --- Right body flap ---
+CORD2R  201             13.64    1.16   0.0     13.64    1.16   1.0
+        17.34   2.75    0.0
+$ --- Right C.S.  ---
+CORD2R  202             9.753    16.016 0.0     9.753    16.016 1.0
+        12.34    14.97  1.0		
+ENDDATA 6741254d
+$
