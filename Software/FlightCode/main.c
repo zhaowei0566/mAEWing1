@@ -242,10 +242,13 @@ int main(int argc, char **argv) {
 					t0_latched = FALSE;
 				}
 				reset_control(&controlData); // reset controller states and set get_control surfaces to zero
-			} // end if (controlData.mode == 2) 
-
+			} // end if (controlData.mode == 2)
+  
+  			// Add trim biases to get_control surface commands
+  			add_trim_bias(&controlData);
+  
 			//**** ACTUATORS *********************************************************
-			pthread_cond_wait (&trigger_actuators, &mutex);		   // WAIT FOR ACTUATOR ALARMS
+			pthread_cond_wait(&trigger_actuators, &mutex);		   // WAIT FOR ACTUATOR ALARMS
 			set_actuators(&controlData);
 			etime_actuators = get_Time() - tic - ACTUATORS_OFFSET; // compute execution time
 			//************************************************************************

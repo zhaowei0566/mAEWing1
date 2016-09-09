@@ -9,8 +9,8 @@
 #define TELEMETRY_BAUDRATE	B115200			///< Baud rate of serial port for telemetry()
 
 // Control Surface Trims
-#define THROTTLE_TRIM      	0.72		///< [ND], approximate throttle trim value
-#define PITCH_SURF_TRIM   	-0.0872	///< [rad], approximate elevator trim value
+#define THROTTLE_TRIM      	0.72		///< [ND], approximate throttle trim value, 0.72
+#define PITCH_SURF_TRIM   	-0.0872  	///< [rad], approximate elevator trim value, -0.0872
 #define ROLL_SURF_TRIM    	0.0 	///< [rad], approximate aileron trim value
 
 // Altitude Controller Theta Command limits
