@@ -1,5 +1,5 @@
 This routine is mainly used to read the stiffness and mass matrices from NASTRAN output file
-Go to each test folder, run readKM_test_XXXX.m, select the correspoing *.pch file of interest
+Go to each test folder, run readKM_test_XXXX.m, select the corresponding *.pch file of interest
 when you use it for other model, something you need to change as follow.
 Keep improving... (Wei Zhao: weizhao@vt.edu), enjoy!
 ============================================================================================
