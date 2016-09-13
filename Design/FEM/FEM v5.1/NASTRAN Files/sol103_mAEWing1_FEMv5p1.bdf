@@ -25,7 +25,7 @@ $ -- Sep 14, 2015
 $        1)  Modify the RBE3 connections of body flaps to centerbody;
 $        2)  2 Grids added; modify 2 RBE3 connections; modify rear spar beam connections; 
 $ -- Aut,18, 2016 FEM v5.1 for Geri+WS4
-$        1) Update FEM v4.2.1 for FEM v4.3 for Geri+ws3, then run FEM update based on FEM v4.3 for FEM v5.1
+$        1) Update FEM v4.2.1 for FEM v4.3 for Geri+ws4, then run FEM update based on FEM v4.3 for FEM v5.1
 SOL 103
 CEND
 $ Direct Text Input for Global Case Control Data
