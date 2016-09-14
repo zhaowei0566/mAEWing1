@@ -11,3 +11,6 @@ Keep improving... (Wei Zhao: weizhao@vt.edu), enjoy!
 5. *.f06 includes eigenvalues and the corresponding eigenvectors from NASTRAN analysis - sol103
 6. For nodal labels, it is better to copy them from *.pch after the line 'DMIG*   VAX                            1               0' and unique these values. 
    because some grids could possibly not considered in FEM, such as the massless point.
+===
+7. Because Github cannot identify *.pch file automatically, the uploaded stiffness and mass matrices are stored in *.pch1 file.
+   change them to *.pch when you download them, and run the program.
