@@ -65,7 +65,7 @@ static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 	static double alt_gain[2]     		= {0.0543*D2R, 0.0*D2R};// PI gains for speed tracker
 #endif
 
-double base_pitch_cmd		= 4.0*D2R;  			// Trim value 4 deg
+double base_pitch_cmd		= 2.0*D2R;  			// Trim value 4 deg
 double trim_speed			= 23;					// Trim airspeed, m/s
 double approach_theta 		= -6.5*D2R;				// Absolute angle for the initial approach
 double approach_speed 		= 20;					// Approach airspeed, m/s
@@ -75,7 +75,7 @@ double pilot_flare_delta	= 1;					// Delta flare airspeed if the pilot is landin
 double exp_speed[3]     	= {23, 23, 23};	       	// Speed to run the experiments at, m/s
 double alt_cmd;
 double alt_min              = 30;                   // Minimum altitude hold engage height, m
-double alt_max              = 125;                  // Maximum altitude hold engage height, m
+double alt_max              = 150;                  // Maximum altitude hold engage height, m
 
 /// *****************************************************************************************
 
@@ -235,11 +235,11 @@ void alt_hold_inner(double time, double ias_cmd, double alt_cmd, struct sensorda
 	controlData_ptr->l1   	= 0;												// L1 [rad]
     controlData_ptr->l2   	= roll_control(phi_cmd, phi, p, TIMESTEP, 0);		// L2 [rad]
 	controlData_ptr->l3   	= pitch_control(theta_cmd, theta, q, TIMESTEP, 1);	// L3 [rad]
-	controlData_ptr->l4   	= controlData_ptr->l2; 		                        // L4 [rad]
+	controlData_ptr->l4   	= 0; 		                                        // L4 [rad]
     controlData_ptr->r1   	= 0; 												// R1 [rad]
 	controlData_ptr->r2   	= -1*controlData_ptr->l2; 							// R2 [rad]
 	controlData_ptr->r3   	= controlData_ptr->l3;								// R3 [rad]
-	controlData_ptr->r4   	= controlData_ptr->r2; 		                        // R4 [rad]
+	controlData_ptr->r4   	= 0; 		                                        // R4 [rad]
 }
 
 void alt_hold(double time, double ias_cmd, double alt_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr){

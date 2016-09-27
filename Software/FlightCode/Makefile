@@ -56,8 +56,8 @@ $(RTW_ROOT)rt_nonfinite.c
 # Point to the desired system ID code here
 #SYSTEM_ID = system_id/systemid_none.c
 #SYSTEM_ID = system_id/sysid_geri.c
-#SYSTEM_ID = system_id/sysid_geri_FLT02.c
-SYSTEM_ID = system_id/sysid_geri_FLT03.c
+#SYSTEM_ID = system_id/sysid_geri_FLT04.c
+SYSTEM_ID = system_id/sysid_geri_FLT05.c
 
 #### Determine which aircraft config file, data logging, actuator, and sensor files to compile
 ifeq ($(strip $(AIRCRAFT)),HIL_SIM)
