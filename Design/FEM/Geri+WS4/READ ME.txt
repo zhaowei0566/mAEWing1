@@ -1,0 +1,2 @@
+FEM shown here converts all CBAR elements in previous FEM to CBEAM elements to get a full rank mass matrix
+mass properties and mode results are almost same.
