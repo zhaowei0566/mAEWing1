@@ -58,8 +58,8 @@ static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 
 #ifdef AIRCRAFT_GERI
 	static double roll_gain[3]  		= {0.5,0.15,0.01};  	// PI gains for roll tracker and roll damper
-	static double roll_gain_single[3]  	= {1.5,0.5,0.0};  		// PI gains for roll tracker and roll damper when using only Flap2
-	static double pitch_gain[3] 		= {-0.3,-0.15,0.0};    // PI gains for pitch tracker and pitch damper
+	static double roll_gain_single[3]  	= {0.5,0.15,0.01};  	// PI gains for roll tracker and roll damper when using only Flap2
+	static double pitch_gain[3] 		= {-0.3,-0.15,0.0};  	// PI gains for pitch tracker and pitch damper
 	static double pitch_gain_single[3] 	= {-0.3,-0.15,0.0};  	// PI gains for pitch tracker and pitch damper when using only Flap3
 	static double v_gain[2]     		= {0.0278, 0.0061};		// PI gains for speed tracker
 	static double alt_gain[2]     		= {0.0543*D2R, 0.0*D2R};// PI gains for speed tracker
@@ -143,7 +143,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 			missionData_ptr -> run_excitation = 0;
 			altCmd_latched = FALSE;
 			t0_latched = FALSE;
-			pilot_flying(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
+			pilot_flying_inner(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
 			break;
 	}
 }
@@ -175,6 +175,32 @@ void open_loop(double time, double ias_cmd, struct sensordata *sensorData_ptr, s
 	controlData_ptr->l1   	= 0;												// L1 [rad]
     controlData_ptr->l2   	= roll_incp*L2_MAX;								    // L2 [rad]
 	controlData_ptr->l3   	= -1*pitch_incp*(L3_MAX-15*D2R);			     	// L3 [rad]
+	controlData_ptr->l4   	= 0; 												// L4 [rad]
+    controlData_ptr->r1   	= 0; 												// R1 [rad]
+	controlData_ptr->r2   	= -1*controlData_ptr->l2; 							// R2 [rad]
+	controlData_ptr->r3   	= controlData_ptr->l3;								// R3 [rad]
+	controlData_ptr->r4   	= 0; 												// R4 [rad]
+}
+
+void pilot_flying_inner(double time, double ias_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr){
+	double phi   = navData_ptr->phi;						// roll angle
+	double theta = navData_ptr->the - base_pitch_cmd; 		// subtract theta trim value to convert to delta coordinates
+	double p     = sensorData_ptr->imuData_ptr->p; 			// roll rate
+	double q     = sensorData_ptr->imuData_ptr->q; 			// pitch rate
+	double ias   = sensorData_ptr->adData_ptr->ias_filt;	// filtered airspeed
+	double phi_cmd, theta_cmd;
+	
+	controlData_ptr->phi_cmd	= pilot_phi(sensorData_ptr);	// phi from the pilot stick + guidance
+	controlData_ptr->theta_cmd	= pilot_theta(sensorData_ptr);	// theta from the pilot stick + guidance
+	controlData_ptr->ias_cmd = ias_cmd;
+	
+	theta_cmd 	= controlData_ptr->theta_cmd;
+	phi_cmd		= controlData_ptr->phi_cmd;
+	
+	controlData_ptr->dthr 	= speed_control(ias_cmd, ias, TIMESTEP);			// Throttle [ND 0-1]
+	controlData_ptr->l1   	= 0;												// L1 [rad]
+    controlData_ptr->l2   	= roll_control(phi_cmd, phi, p, TIMESTEP, 1);		// L2 [rad]
+	controlData_ptr->l3   	= pitch_control(theta_cmd, theta, q, TIMESTEP, 1);	// L3 [rad]
 	controlData_ptr->l4   	= 0; 												// L4 [rad]
     controlData_ptr->r1   	= 0; 												// R1 [rad]
 	controlData_ptr->r2   	= -1*controlData_ptr->l2; 							// R2 [rad]
@@ -274,32 +300,6 @@ void alt_hold(double time, double ias_cmd, double alt_cmd, struct sensordata *se
 	controlData_ptr->r2   	= -1*controlData_ptr->l2; 							// R2 [rad]
 	controlData_ptr->r3   	= controlData_ptr->l3;								// R3 [rad]
 	controlData_ptr->r4   	= controlData_ptr->r3 + controlData_ptr->r2; 		// R4 [rad]
-}
-
-void pilot_flying_inner(double time, double ias_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr){
-	double phi   = navData_ptr->phi;						// roll angle
-	double theta = navData_ptr->the - base_pitch_cmd; 		// subtract theta trim value to convert to delta coordinates
-	double p     = sensorData_ptr->imuData_ptr->p; 			// roll rate
-	double q     = sensorData_ptr->imuData_ptr->q; 			// pitch rate
-	double ias   = sensorData_ptr->adData_ptr->ias_filt;	// filtered airspeed
-	double phi_cmd, theta_cmd;
-	
-	controlData_ptr->phi_cmd	= pilot_phi(sensorData_ptr) + controlData_ptr->phi_cmd;		// phi from the pilot stick + guidance
-	controlData_ptr->theta_cmd	= pilot_theta(sensorData_ptr) + controlData_ptr->theta_cmd;	// theta from the pilot stick + guidance
-	controlData_ptr->ias_cmd = ias_cmd;
-	
-	theta_cmd 	= controlData_ptr->theta_cmd;
-	phi_cmd		= controlData_ptr->phi_cmd;
-	
-	controlData_ptr->dthr 	= speed_control(ias_cmd, ias, TIMESTEP);			// Throttle [ND 0-1]
-	controlData_ptr->l1   	= 0;												// L1 [rad]
-    controlData_ptr->l2   	= roll_control(phi_cmd, phi, p, TIMESTEP, 1);		// L2 [rad]
-	controlData_ptr->l3   	= pitch_control(theta_cmd, theta, q, TIMESTEP, 1);	// L3 [rad]
-	controlData_ptr->l4   	= 0; 												// L4 [rad]
-    controlData_ptr->r1   	= 0; 												// R1 [rad]
-	controlData_ptr->r2   	= -1*controlData_ptr->l2; 							// R2 [rad]
-	controlData_ptr->r3   	= controlData_ptr->l3;								// R3 [rad]
-	controlData_ptr->r4   	= 0; 												// R4 [rad]
 }
 
 void flare_control(double time, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr){
