@@ -31,7 +31,7 @@ struct NAV_POSPVT {
   long nanoSec;
   unsigned char fixType;
   byte flags;
-  unsigned char reserved1;
+  byte flags2;
   unsigned char satVisible;
   long longitude;
   long lattitude;
@@ -43,12 +43,14 @@ struct NAV_POSPVT {
   long navve;
   long navvd;
   long gspeed;
-  long heading;
+  long headMot;
   unsigned long sAcc;
-  unsigned long headingAcc;
+  unsigned long headAcc;
   unsigned short pDOP;
-  unsigned short reserved2;
-  unsigned long reserved3;
+  unsigned short reserved1a; // Unsigned 6 byte - first 2 bytes
+  unsigned long reserved1b; // Unsigned 6 byte - last 4 bytes
+  long headVeh;
+  unsigned long reserved2;
 };
 
 // UBLOX UBX header definition
