@@ -114,20 +114,17 @@ void three_multi_sine (double t,	///< [sec], current time
 		double*dr					///< pointer to rudder control surface
 		);
 
-/// Auxiliary function that adds an Pseudo-Random signal
+/// Auxiliary function that adds a pre-defined OMS signal
 double playback_OMS2_1(int i, 	        ///< [sec], current time
 		double amp);			    ///< [rad], amplitude of sine signal
-		
-/// Auxiliary function that adds an Pseudo-Random signal
-double playback_OMS2_2(int i, 	        ///< [sec], current time
-		double amp);			    ///< [rad], amplitude of sine signal
+double playback_OMS2_2(int i, double amp);
 
-/// Auxiliary function that adds an Pseudo-Random signal
-double playback_PR2_1(int i, 	        ///< [sec], current time
+/// Auxiliary function that adds a pre-defined OMS signal
+double playback_OMS4_1(int i, 	        ///< [sec], current time
 		double amp);			    ///< [rad], amplitude of sine signal
+double playback_OMS4_2(int i, double amp);
+double playback_OMS4_3(int i, double amp);
+double playback_OMS4_4(int i, double amp);
 		
-/// Auxiliary function that adds an Pseudo-Random signal
-double playback_PR2_2(int i, 	        ///< [sec], current time
-		double amp);			    ///< [rad], amplitude of sine signal
 		
 #endif /* SYSTEMID_INTERFACE_H_ */
