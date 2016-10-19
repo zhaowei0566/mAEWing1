@@ -90,9 +90,9 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	unsigned short claw_mode 	= missionData_ptr -> claw_mode; 	// mode switching
 	unsigned short claw_select 	= missionData_ptr -> claw_select; 	// mode switching
 	static int t0_latched = FALSE;	// time latching
-	static int altCmd_latched = FALSE;	// altitude latching
 	static double t0 = 0;
-	double flare_time;
+	double claw_time; // time since claw mode started
+	static int altCmd_latched = FALSE;	// altitude latching
 
 	switch(claw_mode){
 		case 0: // experiment mode
@@ -130,8 +130,8 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 						t0 = time;
 						t0_latched = TRUE;
 					}
-					flare_time = time - t0;
-					flare_control(flare_time, sensorData_ptr, navData_ptr, controlData_ptr);
+					claw_time = time - t0;
+					flare_control(claw_time, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				default: // pilot guidance
 					t0_latched = FALSE;

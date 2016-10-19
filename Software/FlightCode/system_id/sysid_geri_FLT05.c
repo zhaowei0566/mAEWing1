@@ -38,7 +38,7 @@ extern void get_system_id(double time, struct sensordata *sensorData_ptr, struct
 			controlData_ptr->surf2_excite = cos_chirp(time, 3, 20.0, 0.5, 18.5, 3.2, 3.2);
 			if(overspeed == FALSE) {
 				controlData_ptr->l2    += controlData_ptr->surf2_excite;
-				controlData_ptr->r2    -= controlData_ptr->surf3_excite;
+				controlData_ptr->r2    -= controlData_ptr->surf2_excite;
 			}
 			
 			controlData_ptr->cmp_status = time / (23.0) * 100.0;

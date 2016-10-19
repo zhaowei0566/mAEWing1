@@ -91,9 +91,9 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 	unsigned short claw_mode 	= missionData_ptr -> claw_mode; 	// mode switching
 	unsigned short claw_select 	= missionData_ptr -> claw_select; 	// mode switching
 	static int t0_latched = FALSE;	// time latching
-	static int altCmd_latched = FALSE;	// altitude latching
 	static double t0 = 0;
-	double flare_time;
+	double claw_time; // time since claw mode started
+	static int altCmd_latched = FALSE;	// altitude latching
 
 	switch(claw_mode){
 		case 0: // experiment mode
@@ -116,10 +116,13 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 					missionData_ptr -> sysid_select = 2;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					
-					if(time <= 4){ // Decel
-						ias_cmd = 17;
+					if(t0_latched == FALSE){t0 = time; t0_latched = TRUE; }// get the time since control mode started
+					claw_time = time - t0;
+					
+					if(claw_time < 4.0){
+						ias_cmd = 17.0;
 					}
-					else if(time > 4){ // Accel
+					else{
 						ias_cmd = exp_speed[claw_select];
 					}
 					
@@ -139,8 +142,8 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 						t0 = time;
 						t0_latched = TRUE;
 					}
-					flare_time = time - t0;
-					flare_control(flare_time, sensorData_ptr, navData_ptr, controlData_ptr);
+					claw_time = time - t0;
+					flare_control(claw_time, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				default: // pilot guidance
 					t0_latched = FALSE;

@@ -83,10 +83,10 @@ extern void get_system_id(double time, struct sensordata *sensorData_ptr, struct
 			break;
 		case 2:
 			// SysID#3
-			if (time < 12){
+			if (time < 12.0){
 				// 
 			}
-			else if((time >= 12) && (time < 24.0)){
+			else if((time >= 12.0) && (time < 24.0)){
 				controlData_ptr->surf1_excite = playback_OMS4_1(indx - 12*150, 5.0*D2R);
 				controlData_ptr->surf2_excite = playback_OMS4_2(indx - 12*150, 5.0*D2R);
 				controlData_ptr->surf3_excite = playback_OMS4_3(indx - 12*150, 2.5*D2R);
