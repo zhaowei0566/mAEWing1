@@ -66,13 +66,13 @@ static short anti_windup[4]={1,1,1,1};   // integrates when anti_windup is 1
 #endif
 
 double base_pitch_cmd		= 2.3*D2R;  			// Trim value 4 deg
-double trim_speed			= 20;					// Trim airspeed, m/s
+double trim_speed[3]		= {20, 23, 20};			// Trim airspeed, m/s, 20
 double approach_theta 		= -6.5*D2R;				// Absolute angle for the initial approach
-double approach_speed 		= 20;					// Approach airspeed, m/s
+double approach_speed 		= 18;					// Approach airspeed, m/s, 20
 double flare_theta 			= 1*D2R;				// Absolute angle for the flare
-double flare_speed 			= 17;					// Flare airspeed, m/s
+double flare_speed 			= 15;					// Flare airspeed, m/s, 17
 double pilot_flare_delta	= 1;					// Delta flare airspeed if the pilot is landing, m/s
-double exp_speed[3]     	= {20, 20, 23};	       	// Speed to run the experiments at, m/s
+double exp_speed[3]     	= {20, 23, 20};	       	// Speed to run the experiments at, m/s
 double alt_cmd;
 double alt_min              = 30;                   // Minimum altitude hold engage height, m
 double alt_max              = 150;                  // Maximum altitude hold engage height, m
@@ -116,18 +116,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 2;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
-					
-					if(t0_latched == FALSE){t0 = time; t0_latched = TRUE; }// get the time since control mode started
-					claw_time = time - t0;
-					
-					if(claw_time < 4.0){
-						ias_cmd = 17.0;
-					}
-					else{
-						ias_cmd = exp_speed[claw_select];
-					}
-					
-					alt_hold_inner(time, ias_cmd, alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
+					alt_hold_inner(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
 			break;
@@ -156,8 +145,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 			missionData_ptr -> run_excitation = 0;
 			altCmd_latched = FALSE;
 			t0_latched = FALSE;
-			pilot_flying_inner(time, trim_speed, sensorData_ptr, navData_ptr, controlData_ptr);
-			break;
+			pilot_flying_inner(time, trim_speed[claw_select], sensorData_ptr, navData_ptr, controlData_ptr);
 	}
 }
 
@@ -316,9 +304,9 @@ void alt_hold(double time, double ias_cmd, double alt_cmd, struct sensordata *se
 }
 
 void flare_control(double time, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr){
-	double ramp_time = 6.0;
+	double ramp_time = 5.0;
 	double min_speed = 8;
-	double cut_time  = 5;
+	double cut_time  = 3;
 	double phi   = navData_ptr->phi;						// roll angle
 	double theta = navData_ptr->the - base_pitch_cmd; 		// subtract theta trim value to convert to delta coordinates
 	double p     = sensorData_ptr->imuData_ptr->p; 			// roll rate
