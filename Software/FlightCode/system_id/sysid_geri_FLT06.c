@@ -100,9 +100,9 @@ extern void get_system_id(double time, struct sensordata *sensorData_ptr, struct
 				controlData_ptr->surf4_excite = playback_OMS2_2(indx - 15.0*150, 3.2*D2R);
 				if(overspeed == FALSE) {
 					controlData_ptr->l2    += controlData_ptr->surf2_excite;
-					controlData_ptr->r2    += controlData_ptr->surf2_excite;
+					controlData_ptr->r2    -= controlData_ptr->surf2_excite;
 					controlData_ptr->l4    += controlData_ptr->surf4_excite;
-					controlData_ptr->r4    += controlData_ptr->surf4_excite;
+					controlData_ptr->r4    -= controlData_ptr->surf4_excite;
 				}
 			}
 			controlData_ptr->cmp_status = time / (27.0) * 100.0;
