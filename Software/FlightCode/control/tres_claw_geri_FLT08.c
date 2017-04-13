@@ -26,6 +26,7 @@ void pilot_flying_inner(double time, double ias_cmd, struct sensordata *sensorDa
 void open_loop(double time, double ias_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
 void alt_hold(double time, double ias_cmd, double alt_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
 void alt_hold_inner(double time, double ias_cmd, double alt_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
+void alt_hold_flutsup(double time, double ias_cmd, double alt_cmd, struct sensordata *sensorData_ptr, struct nav *navData_ptr, struct control *controlData_ptr);
 void reset_tracker();
 void reset_roll();
 void reset_pitch();
@@ -79,7 +80,7 @@ double alt_min              = 30;                   // Minimum altitude hold eng
 double alt_max              = 150;                  // Maximum altitude hold engage height, m
 double ias_cmd;
 double ss_output[2] 		= {0, 0}; 				// Delta L1R1 and L4R4 for FlutterSuppression
-double ss_input[3] 			= {0,0,0};				// Inputs for FlutterSuppression (q, az, acc)
+double ss_input[3] 			= {0, 0, 0};			// Inputs for FlutterSuppression (q, az, acc)
 
 /// *****************************************************************************************
 
@@ -118,10 +119,10 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 					alt_hold_inner(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				default: // SYSID #3
-					missionData_ptr -> run_excitation = 1;
+					missionData_ptr -> run_excitation = 0;
 					missionData_ptr -> sysid_select = 2;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
-					alt_hold_inner(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
+					alt_hold_flutsup(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 			}
 			break;
@@ -180,7 +181,7 @@ void open_loop(double time, double ias_cmd, struct sensordata *sensorData_ptr, s
 	controlData_ptr->dthr 	= speed_control(ias_cmd, ias, TIMESTEP);			// Throttle [ND 0-1]
 	controlData_ptr->l1   	= 0;												// L1 [rad]
     controlData_ptr->l2   	= roll_incp*L2_MAX;								    // L2 [rad]
-	controlData_ptr->l3   	= -1*pitch_incp*(L3_MAX-15*D2R);			     	// L3 [rad]
+	controlData_ptr->l3   	= -1 * pitch_incp*(L3_MAX-15*D2R);			     	// L3 [rad]
 	controlData_ptr->l4   	= 0; 												// L4 [rad]
     controlData_ptr->r1   	= 0; 												// R1 [rad]
 	controlData_ptr->r2   	= -1*controlData_ptr->l2; 							// R2 [rad]
@@ -315,7 +316,7 @@ void alt_hold_flutsup(double time, double ias_cmd, double alt_cmd, struct sensor
 	controlData_ptr->l3   	= pitch_control(theta_cmd, theta, q, TIMESTEP, 1);	// L3 [rad]
 	controlData_ptr->l4   	= ss_output[1]; 		                            // L4 [rad]
     controlData_ptr->r1   	= controlData_ptr->l1; 								// R1 [rad]
-	controlData_ptr->r2   	= -1*controlData_ptr->l2; 							// R2 [rad]
+	controlData_ptr->r2   	= -1 * controlData_ptr->l2; 							// R2 [rad]
 	controlData_ptr->r3   	= controlData_ptr->l3;								// R3 [rad]
 	controlData_ptr->r4   	= controlData_ptr->l4; 		                        // R4 [rad]
 }
