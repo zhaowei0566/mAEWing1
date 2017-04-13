@@ -20,11 +20,9 @@
  * \ingroup control_fcns
  */
  
-extern void init_control(void
-); 
+extern void init_control(void); 
  
-extern void close_control(void
-); 
+extern void close_control(void); 
  
  
 extern void get_control(double time, 			///< [sec], time since in autopilot mode
@@ -35,19 +33,9 @@ extern void get_control(double time, 			///< [sec], time since in autopilot mode
 );
 
 /// Standard function to reset internal states of the control law
-/*!
- * \sa get_control()
- * \ingroup control_fcns
- */
-extern void reset_control(struct control * controlData_ptr	///< pointer to controlData structure
-);
+extern void reset_control(struct control * controlData_ptr);	///< pointer to controlData structure
 
 ///Standard function to add trim biases to the control law outputs. Implemented in control_functions.c
-/*!
- * \sa get_control(), reset_control(), subtract_trim_bias()
- * \ingroup control_fcns
- */
-extern void add_trim_bias(struct control * controlData_ptr	///< pointer to controlData structure
-);
+extern void add_trim_bias(struct control * controlData_ptr);	///< pointer to controlData structure
 
 #endif /* CONTROL_LAW_INTERFACE_H_ */
