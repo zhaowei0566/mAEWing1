@@ -112,21 +112,21 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 		case 0: // experiment mode
 			switch(claw_select){
 				case 0: // SYSID #1
-					missionData_ptr -> run_excitation = 0;
+					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 0;
 					t0_latched = FALSE;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					alt_hold_flutsupHinf(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				case 1: // SYSID #2
-					missionData_ptr -> run_excitation = 0;
+					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 1;
 					t0_latched = FALSE;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					alt_hold_flutsupMidaas(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					break;
 				default: // SYSID #3
-					missionData_ptr -> run_excitation = 0;
+					missionData_ptr -> run_excitation = 1;
 					missionData_ptr -> sysid_select = 2;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					alt_hold_flutsupClas(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
