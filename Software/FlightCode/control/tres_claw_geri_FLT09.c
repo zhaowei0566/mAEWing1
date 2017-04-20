@@ -98,7 +98,7 @@ double ss02_input[3] 		= {0, 0, 0};			// Inputs for FlutterSuppression
 double ss02_output[2] 		= {0, 0}; 				// Control Deflections for FlutterSuppression
 double ss03_input[1] 		= {0};					// Inputs for FlutterSuppression
 double ss03_output[1] 		= {0}; 					// Control Deflections for FlutterSuppression
-double ss_outputLim			= 5*D2R;				// Limit the output of the flutter suppression
+double ss_outputLim			= 8*D2R;				// Limit the output of the flutter suppression
 
 /// *****************************************************************************************
 
