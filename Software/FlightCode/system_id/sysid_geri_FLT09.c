@@ -26,17 +26,17 @@ extern void get_system_id(double time, struct sensordata *sensorData_ptr, struct
 		case 0: 
 			// SysID#1
 			
-			if (time < 2.0){
+			if (time < 10.0){
 			}
-			else if((time >= 2.0) && (time < 14.0)){
-				controlData_ptr->surf3_excite = playback_OMS2_1(indx - 2.0*150, 3.5*D2R);
+			else if((time >= 10.0) && (time < 22.0)){
+				controlData_ptr->surf3_excite = playback_OMS2_1(indx - 10.0*150, 3.5*D2R);
 				if(overspeed == FALSE) {
 					controlData_ptr->l3    += controlData_ptr->surf3_excite;
 					controlData_ptr->r3    += controlData_ptr->surf3_excite;
 				}
 			}
 			
-			controlData_ptr->cmp_status = time / (14.0) * 100.0;
+			controlData_ptr->cmp_status = time / (22.0) * 100.0;
 			break;
 		case 1:
 			// SysID#2

@@ -39,14 +39,14 @@
 
 // MPC5200 PWM output command calibration parameters
 #define PWMOUT_DTHR_CAL {520, 1272} ///< Calibration for throttle
-#define PWMOUT_L1_CAL   { 189.99202340,		-832.95141241,	1524.09636609} ///< Calibration for L1
-#define PWMOUT_L2_CAL   { 46.82358528,		-760.93077176,	1526.22224555} ///< Calibration for L2
-#define PWMOUT_L3_CAL   { 62.07654383,		-766.78117734,	1525.60480110} ///< Calibration for L3
-#define PWMOUT_L4_CAL   { 196.98365492,		-853.28589158,	1520.07877899} ///< Calibration for L4
-#define PWMOUT_R1_CAL   { -340.87281001,	974.21294551,	1523.21589323} ///< Calibration for R1
-#define PWMOUT_R2_CAL   { -139.44104607,	805.34005395,	1524.56888084} ///< Calibration for R2
-#define PWMOUT_R3_CAL   { -135.30664906,	780.16312386,	1505.99839192} ///< Calibration for R3
-#define PWMOUT_R4_CAL   { -110.51319380,	770.63215961,	1522.96201081} ///< Calibration for R4
+#define PWMOUT_L1_CAL   { -144.43170783,-820.19072581,	1543.15711915} ///< Calibration for L1
+#define PWMOUT_L2_CAL   { -53.32348564,	-760.23389499,	1524.81134152} ///< Calibration for L2
+#define PWMOUT_L3_CAL   { -52.83977826,	-752.46016210,	1511.31848199} ///< Calibration for L3
+#define PWMOUT_L4_CAL   { -81.06664538,	-796.09967584,	1541.69887045} ///< Calibration for L4
+#define PWMOUT_R1_CAL   { 340.10688126,	968.03686218,	1506.81203110} ///< Calibration for R1
+#define PWMOUT_R2_CAL   { 127.52011685,	791.22252790,	1526.66319395} ///< Calibration for R2
+#define PWMOUT_R3_CAL   { 148.61266792,	800.55914892,	1553.68263783} ///< Calibration for R3
+#define PWMOUT_R4_CAL   { 149.57298139,	784.58009692,	1536.84060700} ///< Calibration for R4
 
 // Pilot inceptor calibration parameters
 #define PITCH_INCP_CAL	{0.00130197301142324,	-3.96975198221257}	///<  linear calibration for pilot pitch inceptor

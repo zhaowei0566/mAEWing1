@@ -39,6 +39,7 @@ MISSION = mission/tres_claw_switch.c
 #CONTROL =  control/control_surfaceCalCheck.c
 #CONTROL =  control/tres_claw_geri.c
 CONTROL =  control/tres_claw_geri_FLT08.c
+#CONTROL =  control/tres_claw_geri_FLT09.c
 CONTROLFS01 =  control/ss_flutter_suppression01.c
 CONTROLFS02 =  control/ss_flutter_suppression02.c
 CONTROLFS03 =  control/ss_flutter_suppression03.c
@@ -61,6 +62,7 @@ $(RTW_ROOT)rt_nonfinite.c
 #SYSTEM_ID = system_id/systemid_none.c
 #SYSTEM_ID = system_id/sysid_geri.c
 SYSTEM_ID = system_id/sysid_geri_FLT08.c
+#SYSTEM_ID = system_id/sysid_geri_FLT09.c
 
 #### Determine which aircraft config file, data logging, actuator, and sensor files to compile
 ifeq ($(strip $(AIRCRAFT)),HIL_SIM)
