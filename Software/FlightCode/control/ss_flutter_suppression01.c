@@ -1,5 +1,5 @@
 /*! \file ss_flutter_supression.c
- *	\brief 
+ *	\Hinf Controller for Flutter Suppression
  *
  *	\details  none yet
  *
@@ -40,8 +40,7 @@ extern void init_ss01_control(void){
 	u		= mat_creat(NCONT, 1, ZERO_MATRIX);		// Controller Output
 	y		= mat_creat(NMEAS, 1, ZERO_MATRIX);		// Controller Input
 
-	/*START ASSEMBLY OF MATRICES */ 
-	SS_A[0][0] = 0.9101162153889226;
+	/*START ASSEMBLY OF MATRICES */ SS_A[0][0] = 0.9101162153889226;
 	SS_A[1][0] = -0.2623230440982453;
 	SS_A[2][0] = 0.1430231692488762;
 	SS_A[3][0] = 0.0366526986635676;
