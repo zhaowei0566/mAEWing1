@@ -113,18 +113,19 @@ void three_multi_sine (double t,	///< [sec], current time
 		double *da,					///< pointer to aileron control surface
 		double*dr					///< pointer to rudder control surface
 		);
-
 /// Auxiliary function that adds a pre-defined OMS signal
-double playback_OMS2_1(int i, 	        ///< [sec], current time
+double playback_OMS1_1(int i, 	        ///< [sec], current time
 		double amp);			    ///< [rad], amplitude of sine signal
+		
+/// Auxiliary function that adds a pre-defined OMS signal
+double playback_OMS2_1(int i, double amp);
 double playback_OMS2_2(int i, double amp);
 
 /// Auxiliary function that adds a pre-defined OMS signal
-double playback_OMS4_1(int i, 	        ///< [sec], current time
-		double amp);			    ///< [rad], amplitude of sine signal
-double playback_OMS4_2(int i, double amp);
-double playback_OMS4_3(int i, double amp);
-double playback_OMS4_4(int i, double amp);
+//double playback_OMS4_1(int i, double amp);
+//double playback_OMS4_2(int i, double amp);
+//double playback_OMS4_3(int i, double amp);
+//double playback_OMS4_4(int i, double amp);
 		
 		
 #endif /* SYSTEMID_INTERFACE_H_ */
