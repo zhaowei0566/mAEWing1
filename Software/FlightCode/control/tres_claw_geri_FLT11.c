@@ -75,7 +75,7 @@ double approach_theta 		= -6.0*D2R;				// Absolute angle for the initial approac
 double approach_speed 		= 16;					// Approach airspeed, m/s, 20
 double flare_theta 			= 1.5*D2R;				// Absolute angle for the flare
 double flare_speed 			= 12;					// Flare airspeed, m/s, 17
-double pilot_flare_delta	= 1;					// Delta flare airspeed if the pilot is landing, m/s
+double pilot_flare_delta	= 2;					// Delta flare airspeed if the pilot is landing, m/s
 double trim_speed[3]		= {23, 23, 23};			// Trim airspeed, m/s, 20
 double exp_speed[3]     	= {23, 23, 23};	       	// Speed to run the experiments at, m/s
 double alt_cmd;
@@ -143,7 +143,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 					t0_latched = FALSE;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					if(flutsup_latched == FALSE){flutsup_init = TRUE; reset_flutsup(); flutsup_latched = TRUE;} // Catch first pass to latch current sensor values
-					alt_hold_flutsupMidaas(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, flutsup_init, controlData_ptr);
+					alt_hold_flutsupHinf(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, flutsup_init, controlData_ptr);
 					if(flutsup_init==TRUE){flutsup_init=FALSE;}
 					break;
 				default: // SYSID #3
@@ -151,7 +151,7 @@ extern void get_control(double time, struct sensordata *sensorData_ptr, struct n
 					missionData_ptr -> sysid_select = 2;
 					if(altCmd_latched == FALSE){alt_cmd = sensorData_ptr->adData_ptr->h_filt; reset_alt(); altCmd_latched = TRUE;} // Catch first pass to latch current altitude
 					if(flutsup_latched == FALSE){flutsup_init = TRUE; reset_flutsup(); flutsup_latched = TRUE;} // Catch first pass to latch current sensor values
-					alt_hold_flutsupClas(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, flutsup_init, controlData_ptr);
+					alt_hold_inner(time, exp_speed[claw_select], alt_cmd, sensorData_ptr, navData_ptr, controlData_ptr);
 					if(flutsup_init==TRUE){flutsup_init=FALSE;}
 					break;
 			}
