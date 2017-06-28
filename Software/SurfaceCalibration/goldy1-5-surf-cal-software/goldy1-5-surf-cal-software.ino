@@ -7,7 +7,8 @@ float tempangle;
 float zeroangle;
 int steps = 11;
 float angles[11];
-float pwmvals[11] = {1120,1220,1320,1420,1500,1520,1540,1620,1720,1820,1920};
+//float pwmvals[11] = {1120,1220,1320,1420,1500,1520,1540,1620,1720,1820,1920}; // Left Side
+float pwmvals[11] = {1920,1820,1720,1620,1540,1520,1500,1420,1320,1220,1120}; // Right Side
 
 
 union{
