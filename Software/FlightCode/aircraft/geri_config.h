@@ -37,10 +37,10 @@
 #define R4_MAX	 	 0.6109	///< [rad], 35deg -- R4 Flutter Suppression Surface
 #define R4_MIN		-0.6109	///< [rad],-35deg -- R4 Flutter Suppression Surface
 
-// MPC5200 PWM output command calibration parameters
+// MPC5200 PWM output command calibration parameters, Calibration 31June2017
 #define PWMOUT_DTHR_CAL {520, 1272} ///< Calibration for throttle
 #define PWMOUT_L4_CAL   { -171.72145144,	-847.33445453,	1520.85442302} ///< Calibration for L4
-#define PWMOUT_L3_CAL   { -59.71310755,	-753.80091351,	1546.22387587} ///< Calibration for L3
+#define PWMOUT_L3_CAL   { -59.71310755,	-753.80091351,	1526.22387587} ///< Calibration for L3
 #define PWMOUT_L2_CAL   { -58.23881363,	-763.06163025,	1523.12448423} ///< Calibration for L2
 #define PWMOUT_L1_CAL   { -161.42201220,	-831.26137611,	1525.08273792} ///< Calibration for L1
 #define PWMOUT_R1_CAL   { 378.30274928,	1013.47799102,	1517.32702014} ///< Calibration for R1
