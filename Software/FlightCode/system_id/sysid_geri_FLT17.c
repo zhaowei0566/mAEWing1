@@ -28,13 +28,13 @@ extern void get_system_id(double time, struct sensordata *sensorData_ptr, struct
 	switch(missionData_ptr -> sysid_select){
 		case 0: // SysID#1
 		timeStart = 6.0;
-		timeExcite = 12.0;
+		timeExcite = 8.0;
 		timeEnd = timeStart + timeExcite;
 		
 			if (time < timeStart){
 			}
 			else if((time >= timeStart) && (time < timeEnd)){
-				controlData_ptr->surf3_excite = playback_OMS1_1_12(indx - timeStart*150, 3.5*D2R);
+				controlData_ptr->surf3_excite = playback_OMS1_1_8(indx - timeStart*150, 0.0*D2R);
 				if(overspeed == FALSE) {
 					controlData_ptr->l3    += controlData_ptr->surf3_excite;
 					controlData_ptr->r3    += controlData_ptr->surf3_excite;
@@ -45,13 +45,13 @@ extern void get_system_id(double time, struct sensordata *sensorData_ptr, struct
 			break;
 		case 1: // SysID#2
 		timeStart = 6.0;
-		timeExcite = 12.0;
+		timeExcite = 8.0;
 		timeEnd = timeStart + timeExcite;
 		
 			if (time < timeStart){
 			}
 			else if((time >= timeStart) && (time < timeEnd)){
-				controlData_ptr->surf3_excite = playback_OMS1_1_12(indx - timeStart*150, 3.5*D2R);
+				controlData_ptr->surf3_excite = playback_OMS1_1_8(indx - timeStart*150, 0.0*D2R);
 				if(overspeed == FALSE) {
 					controlData_ptr->l3    += controlData_ptr->surf3_excite;
 					controlData_ptr->r3    += controlData_ptr->surf3_excite;
@@ -62,13 +62,13 @@ extern void get_system_id(double time, struct sensordata *sensorData_ptr, struct
 			break;
 		case 2: // SysID#3
 		timeStart = 6.0;
-		timeExcite = 12.0;
+		timeExcite = 8.0;
 		timeEnd = timeStart + timeExcite;
 		
 			if (time < timeStart){
 			}
 			else if((time >= timeStart) && (time < timeEnd)){
-				controlData_ptr->surf3_excite = playback_OMS1_1_12(indx - timeStart*150, 3.5*D2R);
+				controlData_ptr->surf3_excite = playback_OMS1_1_8(indx - timeStart*150, 0.0*D2R);
 				if(overspeed == FALSE) {
 					controlData_ptr->l3    += controlData_ptr->surf3_excite;
 					controlData_ptr->r3    += controlData_ptr->surf3_excite;

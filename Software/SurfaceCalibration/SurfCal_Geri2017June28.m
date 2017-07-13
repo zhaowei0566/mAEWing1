@@ -8,7 +8,7 @@ fitOrder = 2; % Start with quadratic, alter as required
 % pwm_us = [1120.00  1220.00  1320.00  1420.00  1500.00  1520.00  1540.00  1620.00  1720.00  1820.00  1920.00  ];
 % angle_deg = -[-30.97  -24.09  -17.11  -9.61  -3.52  -1.90  -0.43  5.68  13.51  21.44  29.58  ]; % Ensure Inclinometer and AC convention are the same!!
 
-pwm_us = [1120.00  1220.00  1420.00  1500.00  1520.00  1540.00  1620.00  1720.00  1820.00  1920.00  ];
+pwm_us = [1120.00  1220.00  1420.00  1500.00  1520.00  1540.00  1620.00  1720.00  1820.00  1920.00  ] - 20;
 angle_deg = -[-30.97  -24.09  -9.61  -3.52  -1.90  -0.43  5.68  13.51  21.44  29.58  ]; % Ensure Inclinometer and AC convention are the same!!
 fitOrder = 2; % Start with quadratic, alter as required
 [polyCoef, pwmZero_us] = SurfCal(pwm_us, angle_deg, fitOrder);
